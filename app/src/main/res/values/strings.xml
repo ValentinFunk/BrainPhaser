@@ -6,6 +6,6 @@
     <string name="cancel">Abbrechen</string>
     <string name="select">Auswählen</string>
     <string name="create_profile">Um deinen Lernfortschritt zu speichern, erstelle ein Profil.</string>
-    <string name="welcome">Hallo! Wilkommen zu BrainPhaser</string>
+    <string name="welcome">Hallo! Wilkommen zu BrainPhaser.</string>
     <string name="username">Benutzername</string>
 </resources>
