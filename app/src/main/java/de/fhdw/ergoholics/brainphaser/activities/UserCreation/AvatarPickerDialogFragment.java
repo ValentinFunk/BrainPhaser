@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -137,12 +139,14 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
         }
 
         // Use device independent pixels for uniform border width
-        float borderWidthDip = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16.f, getResources().getDisplayMetrics());
+        float borderWidthDip = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20.f, getResources().getDisplayMetrics());
 
-        // Set border on currently selected avatar
+        // Animate border on currently selected avatar
         RoundedImageView imageView = (RoundedImageView) view;
-        imageView.setBorderWidth(borderWidthDip);
-
+        ObjectAnimator anim = ObjectAnimator.ofFloat(imageView, "borderWidth", 0f, borderWidthDip);
+        anim.setDuration(300);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator());
+        anim.start();
 
         int accentColor = ContextCompat.getColor(getContext(), R.color.colorAccent);
         imageView.setBorderColor(accentColor);
