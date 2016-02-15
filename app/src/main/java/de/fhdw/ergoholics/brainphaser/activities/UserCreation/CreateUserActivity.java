@@ -2,16 +2,16 @@ package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import de.fhdw.ergoholics.brainphaser.R;
 
@@ -26,16 +26,65 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     public final static String EXTRA_USERNAME = "USERNAME";
     public final static String EXTRA_AVATAR_RESOURCE_NAME = "AVATAR";
 
+    public final static int MAX_USERNAME_LENGTH = 30;
+
+    private TextView mUsernameInput;
+    private TextInputLayout mUsernameInputLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView input = (TextView) findViewById(R.id.input_username);
-        input.setOnEditorActionListener(this);
+        mUsernameInput = (TextView) findViewById(R.id.input_username);
+        mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_username_layout);
+        mUsernameInput.setOnEditorActionListener(this);
+        // Watch for changes and trigger validation
+        mUsernameInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateUsernameDuplicate();
+                validateUsernameLength();
+            }
+        });
 
         ImageView avatar = (ImageView) findViewById(R.id.avatar);
         avatar.setImageResource(Avatars.getDefaultAvatarResourceId());
+    }
+
+    /*
+     * Validate username and update GUI with errors
+     */
+    private boolean validateUsernameLength() {
+        boolean isValid = true;
+        String username = mUsernameInput.getText().toString().trim();
+        if (username.length() == 0) {
+            mUsernameInput.setError(getString(R.string.empty_username));
+            mUsernameInputLayout.setErrorEnabled(true);
+            isValid = false;
+        } else if (username.length() > MAX_USERNAME_LENGTH) {
+            mUsernameInput.setError(getString(R.string.too_long_username));
+            mUsernameInputLayout.setErrorEnabled(true);
+            isValid = false;
+        } else {
+            mUsernameInputLayout.setErrorEnabled(false);
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    private boolean validateUsernameDuplicate() {
+        // TODO: Query datasource for username
+        String username = mUsernameInput.getText().toString();
+        return true;
     }
 
     /*
@@ -45,7 +94,9 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
-            createAvatarSelectDialog();
+            if (validateUsernameDuplicate() && validateUsernameLength()) {
+                createAvatarSelectDialog();
+            }
         }
         return false;
     }
@@ -77,8 +128,8 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     /**
      * Called when the profile creation has been finished.
      *
-     * @param username
-     * @param avatarResourceName
+     * @param username Username that was entered
+     * @param avatarResourceName Resource name of the user's selected avatar
      */
     private void profileCreationFinished(String username, String avatarResourceName) {
         // Update avatar for smooth transition via shared element

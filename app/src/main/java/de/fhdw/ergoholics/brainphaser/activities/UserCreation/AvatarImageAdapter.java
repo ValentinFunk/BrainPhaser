@@ -1,6 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,7 +11,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
  * Created by funkv on 13.02.2016, adapted from http://developer.android.com/guide/topics/ui/layout/gridview.html
- *
+ * <p/>
  * Creates RoundedImages for each Avatar from the AvatarPickerDialogFragment.
  */
 public class AvatarImageAdapter extends BaseAdapter {
@@ -38,7 +39,13 @@ public class AvatarImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new RoundedImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+
+            int sizeDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                    85.f,
+                    mContext.getResources().getDisplayMetrics());
+
+            imageView.setLayoutParams(new GridView.LayoutParams(sizeDip, sizeDip));
+
             //imageView.setScaleType(ImageView.ScaleType.);
             imageView.setOval(true);
             imageView.setPadding(8, 8, 8, 8);

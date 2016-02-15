@@ -8,4 +8,6 @@
     <string name="create_profile">Um deinen Lernfortschritt zu speichern, erstelle ein Profil.</string>
     <string name="welcome">Hallo! Wilkommen zu BrainPhaser.</string>
     <string name="username">Benutzername</string>
+    <string name="empty_username">Der Benutzername darf nicht leer sein.</string>
+    <string name="too_long_username">Der Benutzername ist zu lang.</string>
 </resources>
