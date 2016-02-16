@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<categories>
+    <category title="Test Kategorie" description="This is an example text">
+        <challenge type="1" question="Test">
+            <answer text="Richtig" answer_correct="true" />
+            <answer text="Falsch1" answer_correct="false" />
+            <answer text="Falsch2" answer_correct="false" />
+            <answer text="Falsch3" answer_correct="false" />
+        </challenge>
+    </category>
+</categories>

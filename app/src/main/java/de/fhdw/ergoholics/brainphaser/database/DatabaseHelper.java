@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseStatics.CREATE_TABLE_USER);
         db.execSQL(DatabaseStatics.CREATE_TABLE_CHALLENGE);
         db.execSQL(DatabaseStatics.CREATE_TABLE_CATEGORY);
+        db.execSQL(DatabaseStatics.CREATE_TABLE_ANSWER);
     }
 
     @Override

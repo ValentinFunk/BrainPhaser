@@ -16,42 +16,42 @@ public class Challenge
     int mChallengeType;
     String mQuestion;
 
-    public Challenge(int mId, int mCategoryId, int mChallengeType, String mQuestion) {
-        this.mId = mId;
-        this.mCategoryId = mCategoryId;
-        this.mChallengeType = mChallengeType;
-        this.mQuestion = mQuestion;
+    public Challenge(int id, int categoryId, int challengeType, String question) {
+        this.mId = id;
+        this.mCategoryId = categoryId;
+        this.mChallengeType = challengeType;
+        this.mQuestion = question;
     }
 
     public int getId() {
         return mId;
     }
 
-    public void setId(int mId) {
-        this.mId = mId;
+    public void setId(int id) {
+        this.mId = id;
     }
 
     public int getCategoryId() {
         return mCategoryId;
     }
 
-    public void setCategoryId(int mCategoryId) {
-        this.mCategoryId = mCategoryId;
+    public void setCategoryId(int categoryId) {
+        this.mCategoryId = categoryId;
     }
 
     public int getChallengeType() {
         return mChallengeType;
     }
 
-    public void setChallengeType(int mChallengeType) {
-        this.mChallengeType = mChallengeType;
+    public void setChallengeType(int challengeType) {
+        this.mChallengeType = challengeType;
     }
 
     public String getQuestion() {
         return mQuestion;
     }
 
-    public void setQuestion(String mQuestion) {
-        this.mQuestion = mQuestion;
+    public void setQuestion(String question) {
+        this.mQuestion = question;
     }
 }

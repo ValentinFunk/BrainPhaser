@@ -49,10 +49,7 @@ public class ChallengeDataSource extends DataSource {
      */
     public boolean deleteChallenge(Challenge challenge){
         long rowId = mDatabase.delete(DatabaseStatics.CHALLENGE_TABLE_NAME, DatabaseStatics.CHALLENGE_COL_1 + "=" + challenge.getId(), null);
-        if(rowId!=-1) {
-            return true;
-        }
-        return false;
+        return rowId != -1;
     }
 
     /**
@@ -92,7 +89,7 @@ public class ChallengeDataSource extends DataSource {
     public List<Challenge> getChallenges(){
 
         //Create empty list
-        List<Challenge> allChallenges = new ArrayList<Challenge>();
+        List<Challenge> allChallenges = new ArrayList<>();
 
         //Create cursor on the challenge table
         Cursor cursor = mDatabase.query(DatabaseStatics.CHALLENGE_TABLE_NAME,columns,null,null,null,null,null);
@@ -145,9 +142,6 @@ public class ChallengeDataSource extends DataSource {
         values.put(DatabaseStatics.CHALLENGE_COL_3, challenge.getChallengeType());
         values.put(DatabaseStatics.CHALLENGE_COL_4, challenge.getQuestion());
         long rowNo = mDatabase.update(DatabaseStatics.CHALLENGE_TABLE_NAME,values,DatabaseStatics.CHALLENGE_COL_1 + "=" + challenge.getId(),null);
-        if(rowNo!=0) {
-            return true;
-        }
-        return false;
+        return rowNo != 0;
     }
 }

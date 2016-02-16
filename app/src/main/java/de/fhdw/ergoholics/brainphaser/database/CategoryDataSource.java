@@ -47,10 +47,7 @@ public class CategoryDataSource extends DataSource {
      */
     public boolean deleteCategory(Category category){
         long rowId = mDatabase.delete(DatabaseStatics.CATEGORY_TABLE_NAME, DatabaseStatics.CATEGORY_COL_1 + "=" + category.getId(), null);
-        if(rowId!=-1) {
-            return true;
-        }
-        return false;
+        return rowId != -1;
     }
 
     /**
@@ -90,7 +87,7 @@ public class CategoryDataSource extends DataSource {
     public List<Category> getCategorys(){
 
         //Create empty list
-        List<Category> allCategories = new ArrayList<Category>();
+        List<Category> allCategories = new ArrayList<>();
 
         //Create cursor on the category table
         Cursor cursor = mDatabase.query(DatabaseStatics.CATEGORY_TABLE_NAME,columns,null,null,null,null,null);
@@ -140,9 +137,6 @@ public class CategoryDataSource extends DataSource {
         values.put(DatabaseStatics.CATEGORY_COL_2,category.getTitle());
         values.put(DatabaseStatics.CATEGORY_COL_3, category.getDescription());
         long rowNo = mDatabase.update(DatabaseStatics.CATEGORY_TABLE_NAME,values,DatabaseStatics.CATEGORY_COL_1 + "=" + category.getId(),null);
-        if(rowNo!=0) {
-            return true;
-        }
-        return false;
+        return rowNo != 0;
     }
 }

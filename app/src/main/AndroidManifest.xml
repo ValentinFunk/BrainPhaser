@@ -17,6 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.bpc" />
+                <data android:host="*" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.UserSelection.ListViewLoader"
             android:label="@string/title_activity_main"

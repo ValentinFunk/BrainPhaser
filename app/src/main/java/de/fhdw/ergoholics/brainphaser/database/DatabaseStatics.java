@@ -29,7 +29,13 @@ public class DatabaseStatics {
     public static final String CATEGORY_COL_1 = "";
     public static final String CATEGORY_COL_2 = "";
     public static final String CATEGORY_COL_3 = "";
-    public static final String CATEGORY_COL_4 = "";
     public static final String CREATE_TABLE_CATEGORY = "";
 
+    //Answer table - to be filled with data!!!
+    public static final String ANSWER_TABLE_NAME = "";
+    public static final String ANSWER_COL_1 = "";
+    public static final String ANSWER_COL_2 = "";
+    public static final String ANSWER_COL_3 = "";
+    public static final String ANSWER_COL_4 = "";
+    public static final String CREATE_TABLE_ANSWER = "";
 }
