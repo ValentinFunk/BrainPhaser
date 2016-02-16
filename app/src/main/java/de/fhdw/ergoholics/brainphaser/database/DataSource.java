@@ -1,6 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
-import android.content.Context;
+
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -9,28 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
  * Class to open and close the database
  */
 public class DataSource {
-
-
     protected SQLiteDatabase mDatabase;
     protected DatabaseHelper mDbHelper;
 
     //Constructor
-    public DataSource(Context context) {
-        mDbHelper = new DatabaseHelper(context);
+    public DataSource() {
+        mDbHelper = DatabaseHelper.getInstance();
+        mDatabase = mDbHelper.getWritableDatabase();
     }
-
-    /**
-     * Open the database connection
-     */
-    public void open(){
-        mDatabase=mDbHelper.getWritableDatabase();
-    }
-
-    /**
-     * Close the database connection
-     */
-    public void close(){
-        mDbHelper.close();
-    }
-
 }

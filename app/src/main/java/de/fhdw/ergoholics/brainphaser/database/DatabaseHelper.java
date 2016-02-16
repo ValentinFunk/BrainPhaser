@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -10,11 +9,19 @@ import android.database.sqlite.SQLiteOpenHelper;
  * DatabaseHelper to create and upgrade the database
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+    // Singleton
+    private static DatabaseHelper dbHelper;
+
+    public static DatabaseHelper getInstance(){
+        if (dbHelper == null) {
+            dbHelper = new DatabaseHelper();
+        }
+        return  dbHelper;
+    }
 
     //Constructor
-    public DatabaseHelper(Context context) {
-        super(context, DatabaseStatics.DATABASE_NAME, null, DatabaseStatics.DB_VERSION);
-
+    public DatabaseHelper() {
+        super(null, DatabaseStatics.DATABASE_NAME, null, DatabaseStatics.DB_VERSION);
     }
 
     @Override

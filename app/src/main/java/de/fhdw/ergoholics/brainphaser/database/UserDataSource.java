@@ -1,7 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
  * Inherits from DataSource
  * Persistent: User-Data
  */
-public class UserDataSource extends DataSource{
+public class UserDataSource extends DataSource {
 
     //Array of the columns
     private String[] columns = {
@@ -20,10 +19,6 @@ public class UserDataSource extends DataSource{
             DatabaseStatics.USER_COL_2,
             DatabaseStatics.USER_COL_3
     };
-    //Constructor
-    public UserDataSource(Context context) {
-        super(context);
-    }
 
     /**
      * Create user in database
