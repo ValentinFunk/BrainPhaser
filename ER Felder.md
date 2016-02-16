@@ -1,34 +1,39 @@
 #Persistente Daten 
 
-## Settings 
-- ID 
-- Zeitspannen für Fälligkeit 
+## Settings
+- id
+- user_id
+- timebox_class1
+- timebox_class2
+- timebox_class3
+- timebox_class4
+- timebox_class5
+- timebox_class6
 
-## Benutzer 
-- ID 
-- Name 
-- Avatar
-- Settings-ID 
+## User 
+- id
+- name
+- avatar
  
-## Benutzer – Karteikarte 
-- Benutzer-ID 
-- Challenge-ID 
-- Klasse 
-- Letzte Bearbeitung 
+## Completed 
+- user_id
+- challenge_id
+- class
+- time_last_completed
 
-## Karteikarte 
-- ID 
-- Kartei-ID 
-- Typ 
-- Frage 
+## Challenge
+- id
+- category_id
+- type
+- question
 
-## Antworten 
-- ID 
-- Karteikarte-ID 
-- Antwort 
-- Antwort richtig? 
+## Answers 
+- id 
+- challenge_id
+- text
+- answer_correct
 
-## Kartei 
-- ID 
-- Bezeichnung 
-- Beschreibung
+## Category 
+- id
+- title
+- description
