@@ -2,42 +2,43 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 /**
  * Created by Chris on 2/15/2016.
+ * User class
  */
 public class User {
 
-    private int id;
-    private String name;
-    private String avatar;
+    private int mId;
+    private String mName;
+    private String mAvatar;
 
-
+    //Constructors
     public User(int id, String name, String avatar) {
-        this.id = id;
-        this.name = name;
-        this.avatar = avatar;
+        this.mId = id;
+        this.mName = name;
+        this.mAvatar = avatar;
     }
-
+    //Get and Set methods
     public int getId() {
-        return id;
+        return mId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getAvatar() {
-        return avatar;
+        return mAvatar;
     }
 
     public void setAvatar(String avatar) {
-        this.avatar = avatar;
+        this.mAvatar = avatar;
     }
 
 
