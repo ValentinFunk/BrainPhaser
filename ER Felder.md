@@ -2,14 +2,15 @@
 
 ## Settings 
 - ID 
-- Zeitspannen für Fälligkeit 
+- Zeitspannen fÃ¼r FÃ¤lligkeit 
 
 ## Benutzer 
 - ID 
 - Name 
+- Avatar
 - Settings-ID 
  
-## Benutzer – Karteikarte 
+## Benutzer â€“ Karteikarte 
 - Benutzer-ID 
 - Challenge-ID 
 - Klasse 
@@ -21,17 +22,13 @@
 - Typ 
 - Frage 
 
-## Karteikarte Multiple Choice 
+## Antworten 
 - ID 
 - Karteikarte-ID 
 - Antwort 
 - Antwort richtig? 
 
-## Karteikarte Freie Antwortmöglichkeit 
-- ID 
-- Karteikarte-ID 
-- Richtige Antwort 
-
 ## Kartei 
 - ID 
 - Bezeichnung 
+- Beschreibung
