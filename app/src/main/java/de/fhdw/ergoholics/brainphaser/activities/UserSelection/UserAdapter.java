@@ -36,7 +36,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         ImageView userImage = (ImageView)customView.findViewById(R.id.userItemImage);
         //set the user-data to the list-item-compoments
         userText.setText(user.getName());
-        userImage.setImageResource(R.drawable.anonymous); //TODO Avatare setzen
         userImage.setImageResource(Avatars.getAvatarResourceId(getContext(), user.getAvatar()));
 
         return customView;
