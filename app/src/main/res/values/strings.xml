@@ -10,5 +10,7 @@
     <string name="username">Benutzername</string>
     <string name="empty_username">Der Benutzername darf nicht leer sein.</string>
     <string name="too_long_username">Der Benutzername ist zu lang.</string>
+    <string name="taken_username">Der Benutzername ist bereits vergeben.</string>
+
     <string name="import_challenge_text">Möchten Sie die Bibliothek wirklich importieren?</string>
 </resources>
