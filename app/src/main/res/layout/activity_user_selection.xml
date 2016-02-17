@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.UserSelection.UserSelectionActivity">
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/userList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+    </ListView>
+    <Button android:layout_width="50dp"
+        android:id="@+id/createUserBtn"
+        android:layout_height="50dp"
+        android:text="+"
+        android:textSize="30dp"
+        android:textColor="@color/colorButtonText"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background = "@drawable/round_button"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="20dp" />
+</RelativeLayout>

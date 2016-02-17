@@ -16,6 +16,12 @@ public class User {
         this.mName = name;
         this.mAvatar = avatar;
     }
+
+    public User(String name, String avatar) {
+        this.mId = -1;
+        this.mName = name;
+        this.mAvatar = avatar;
+    }
     //Get and Set methods
     public int getId() {
         return mId;

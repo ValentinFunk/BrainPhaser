@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
 import de.fhdw.ergoholics.brainphaser.database.User;
 
 /**
@@ -36,6 +37,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         //set the user-data to the list-item-compoments
         userText.setText(user.getName());
         userImage.setImageResource(R.drawable.anonymous); //TODO Avatare setzen
+        userImage.setImageResource(Avatars.getAvatarResourceId(getContext(), user.getAvatar()));
 
         return customView;
     }

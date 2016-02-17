@@ -34,6 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO
+        db.execSQL(DatabaseStatics.CREATE_TABLE_USER);
+        db.execSQL(DatabaseStatics.CREATE_TABLE_CHALLENGE);
+        db.execSQL(DatabaseStatics.CREATE_TABLE_CATEGORY);
+        db.execSQL(DatabaseStatics.CREATE_TABLE_ANSWER);
     }
 }

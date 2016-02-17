@@ -7,7 +7,7 @@ package de.fhdw.ergoholics.brainphaser.database;
 public class DatabaseStatics {
     //General
     public static final String DATABASE_NAME = "brainphaser.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     //User Table
     public static final String USER_TABLE_NAME = "user";
@@ -39,4 +39,7 @@ public class DatabaseStatics {
     public static final String ANSWER_COL_3 = "";
     public static final String ANSWER_COL_4 = "";
     public static final String CREATE_TABLE_ANSWER = "";
+
+
+    //DROP TABLES AUCH!
 }

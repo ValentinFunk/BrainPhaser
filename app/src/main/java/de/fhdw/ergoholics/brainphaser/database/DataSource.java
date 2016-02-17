@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by Christian on 16.02.2016.
