@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.ChallengeSelect;
+package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -28,8 +28,10 @@ public class SelectCategoryActivity extends FragmentActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         CategoryDataSource dataSource = new CategoryDataSource();
-        List<Category> categories = dataSource.getCategories();
-        categories = Arrays.asList(
+
+        // List<Category> categories = dataSource.getCategories();
+
+        List<Category> categories = Arrays.asList(
             new Category("Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
             new Category("Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/englisch"),
             new Category("Computer", "Lerne neue, coole Fakten über Computer und Informationstechnologie. Du wirst mit Fragen zu Netzwerken, Hardware, Software, Programmiersprachen und Softwareprojekten getestet.", "@drawable/computer"),
