@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.database.User;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 
 /**
  * Activity used to create an user. Queries Username and avatar.
@@ -82,9 +84,20 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     }
 
     private boolean validateUsernameDuplicate() {
-        // TODO: Query datasource for username
+        boolean isValid;
+
+        UserDataSource ds = new UserDataSource();
         String username = mUsernameInput.getText().toString();
-        return true;
+        User user = ds.getUser(username);
+        if (user != null) {
+            mUsernameInput.setError(getString(R.string.taken_username));
+            mUsernameInputLayout.setErrorEnabled(true);
+            isValid = false;
+        } else {
+            mUsernameInputLayout.setErrorEnabled(false);
+            isValid = true;
+        }
+        return isValid;
     }
 
     /*
