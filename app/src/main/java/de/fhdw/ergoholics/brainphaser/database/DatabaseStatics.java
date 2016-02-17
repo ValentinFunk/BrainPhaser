@@ -7,7 +7,7 @@ package de.fhdw.ergoholics.brainphaser.database;
 public class DatabaseStatics {
     //General
     public static final String DATABASE_NAME = "brainphaser.db";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     //User Table
     public static final String USER_TABLE_NAME = "user";
@@ -16,6 +16,8 @@ public class DatabaseStatics {
     public static final String USER_COL_3 = "avatar";
     public static final String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE_NAME + " (" + USER_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_COL_2 + " TEXT NOT NULL, " + USER_COL_3 + " TEXT);";
 
+
+    public static final String INSERT_USER = "INSERT INTO " + USER_TABLE_NAME + " (" + USER_COL_2 + ", " + USER_COL_3 + ") VALUES('DOLOR','budist'),('Günther','anonymous');";
     //Challenge table - to be filled with data!!!
     public static final String CHALLENGE_TABLE_NAME = "";
     public static final String CHALLENGE_COL_1 = "";
@@ -42,4 +44,5 @@ public class DatabaseStatics {
 
 
     //DROP TABLES AUCH!
+    public static final String DROP_TABLE_USER = "DROP TABLE " + USER_TABLE_NAME;
 }
