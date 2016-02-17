@@ -49,9 +49,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DatabaseStatics.CREATE_TABLE_USER);
-        db.execSQL(DatabaseStatics.CREATE_TABLE_CHALLENGE);
-        db.execSQL(DatabaseStatics.CREATE_TABLE_CATEGORY);
-        db.execSQL(DatabaseStatics.CREATE_TABLE_ANSWER);
+        if (oldVersion == 0) {
+            db.execSQL(DatabaseStatics.CREATE_TABLE_USER);
+            /*db.execSQL(DatabaseStatics.CREATE_TABLE_CHALLENGE);
+            db.execSQL(DatabaseStatics.CREATE_TABLE_CATEGORY);
+            db.execSQL(DatabaseStatics.CREATE_TABLE_ANSWER);*/
+        } else if(oldVersion != newVersion) {
+            /*
+            db.execSQL("DROP TABLE " + DatabaseStatics.ANSWER_TABLE_NAME);
+            db.execSQL("DROP TABLE " + DatabaseStatics.CATEGORY_TABLE_NAME);
+            db.execSQL("DROP TABLE " + DatabaseStatics.CHALLENGE_TABLE_NAME);*/
+            System.out.println(oldVersion + " " + newVersion);
+            db.execSQL("DROP TABLE " + DatabaseStatics.USER_TABLE_NAME);
+
+            db.execSQL(DatabaseStatics.CREATE_TABLE_USER);
+            /*db.execSQL(DatabaseStatics.CREATE_TABLE_CHALLENGE);
+            db.execSQL(DatabaseStatics.CREATE_TABLE_CATEGORY);
+            db.execSQL(DatabaseStatics.CREATE_TABLE_ANSWER);*/
+        }
     }
 }
