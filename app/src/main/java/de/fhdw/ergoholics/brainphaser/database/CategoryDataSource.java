@@ -18,7 +18,8 @@ public class CategoryDataSource extends DataSource {
     private String[] columns = {
             DatabaseStatics.CATEGORY_COL_1,
             DatabaseStatics.CATEGORY_COL_2,
-            DatabaseStatics.CATEGORY_COL_3
+            DatabaseStatics.CATEGORY_COL_3,
+            DatabaseStatics.CATEGORY_COL_4
     };
 
     /**
@@ -31,6 +32,7 @@ public class CategoryDataSource extends DataSource {
         ContentValues values = new ContentValues();
         values.put(DatabaseStatics.CATEGORY_COL_2, category.getTitle());
         values.put(DatabaseStatics.CATEGORY_COL_3, category.getDescription());
+        values.put(DatabaseStatics.CATEGORY_COL_4, category.getImage());
         long rowId = mDatabase.insert(DatabaseStatics.CATEGORY_TABLE_NAME, null, values);
         if(rowId!=-1) {
             category.setId((int) rowId);
@@ -81,10 +83,10 @@ public class CategoryDataSource extends DataSource {
     /**
      * Builds and returns Category objects from the rows in the database
      *
-     * @return ArrayList of all categorys
+     * @return ArrayList of all categories
      */
 
-    public List<Category> getCategorys(){
+    public List<Category> getCategories(){
 
         //Create empty list
         List<Category> allCategories = new ArrayList<>();
@@ -102,6 +104,7 @@ public class CategoryDataSource extends DataSource {
             allCategories.add(category);
             cursor.moveToNext();
         }
+
         cursor.close();
         return allCategories;
     }
@@ -117,13 +120,15 @@ public class CategoryDataSource extends DataSource {
         int idId = cursor.getColumnIndex(DatabaseStatics.CATEGORY_COL_1);
         int idTitle = cursor.getColumnIndex(DatabaseStatics.CATEGORY_COL_2);
         int idDescription = cursor.getColumnIndex(DatabaseStatics.CATEGORY_COL_3);
+        int idImage = cursor.getColumnIndex(DatabaseStatics.CATEGORY_COL_4);
 
         //retrieve the column values
         int id = cursor.getInt(idId);
         String title = cursor.getString(idTitle);
         String description = cursor.getString(idDescription);
+        String image = cursor.getString(idImage);
 
-        return new Category(id,title,description);
+        return new Category(id,title,description, image);
     }
 
     /**
@@ -136,6 +141,7 @@ public class CategoryDataSource extends DataSource {
         ContentValues values=new ContentValues();
         values.put(DatabaseStatics.CATEGORY_COL_2,category.getTitle());
         values.put(DatabaseStatics.CATEGORY_COL_3, category.getDescription());
+        values.put(DatabaseStatics.CATEGORY_COL_4, category.getImage());
         long rowNo = mDatabase.update(DatabaseStatics.CATEGORY_TABLE_NAME,values,DatabaseStatics.CATEGORY_COL_1 + "=" + category.getId(),null);
         return rowNo != 0;
     }
