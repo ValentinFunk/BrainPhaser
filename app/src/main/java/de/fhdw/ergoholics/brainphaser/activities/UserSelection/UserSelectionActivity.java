@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class UserSelectionActivity extends Activity {
     public final static String CURRENT_USER_ID = "USER_ID";
     //Components of the activity
     private ListView mUserList;
-    private Button mCreateUserBtn;
+    private ImageButton mCreateUserBtn;
 
     //list of all users
     private List<User> mAllUsers;
@@ -45,7 +46,7 @@ public class UserSelectionActivity extends Activity {
 
         //loading of the components
         mUserList =(ListView) findViewById(R.id.userList);
-        mCreateUserBtn =(Button) findViewById(R.id.createUserBtn);
+        mCreateUserBtn =(ImageButton) findViewById(R.id.createUserBtn);
         //load the users from the database
         mUserData = new UserDataSource();
         mAllUsers = mUserData.getUsers();
