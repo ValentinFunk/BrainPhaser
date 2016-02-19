@@ -37,3 +37,4 @@
 - id
 - title
 - description
+- image
