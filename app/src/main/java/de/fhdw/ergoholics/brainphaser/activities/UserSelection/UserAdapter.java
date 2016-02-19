@@ -1,12 +1,9 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -101,7 +98,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         } else {
             //bind the add
             String addUser = holder.itemView.getResources().getString(R.string.add_user);
-            holder.bindUser(addUser, R.drawable.btnAdd, position);
+            holder.bindUser(addUser, R.drawable.btn_add, position);
         }
     }
 
