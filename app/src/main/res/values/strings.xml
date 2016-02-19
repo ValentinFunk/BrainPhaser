@@ -12,4 +12,5 @@
     <string name="too_long_username">Der Benutzername ist zu lang.</string>
     <string name="import_challenge_text">Möchten Sie die Bibliothek wirklich importieren?</string>
     <string name="select_user">Benutzerauswahl</string>
+    <string name="add_user">Benutzer Hinzufügen</string>
 </resources>
