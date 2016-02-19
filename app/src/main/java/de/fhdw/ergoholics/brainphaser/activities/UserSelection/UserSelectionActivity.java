@@ -59,7 +59,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mUserList.setLayoutManager(layoutManager);
 
-
+        //Create the View
         UserAdapter listAdapter = new UserAdapter(mAllUsers, this);
         mUserList.setAdapter(listAdapter);
 
@@ -77,12 +77,19 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         finish();
     }
 
+    /**
+     * Is a user selected finish this activity and load Challenge-Set-Activity
+     * @param user
+     */
     @Override
     public void onUserSelected(User user) {
         //Chosen user will be intent
         profileSelectionFinished(user);
     }
 
+    /**
+     * Is the add button selected finish this activity and load Create-User-Activity
+     */
     @Override
     public void onUserAdd() {
         startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));

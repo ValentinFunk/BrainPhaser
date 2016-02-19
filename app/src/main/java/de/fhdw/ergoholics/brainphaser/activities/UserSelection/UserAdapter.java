@@ -19,16 +19,22 @@ import de.fhdw.ergoholics.brainphaser.database.User;
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
+    /**
+     * Interface for ClickListener
+     */
     public interface ResultListener {
         void onUserSelected(User user);
         void onUserAdd();
     }
-    //User View holds the items
+    /**
+     *User View Holder holds the items in the UserList
+     */
     public class UserViewHolder extends RecyclerView.ViewHolder {
         private TextView mUserText;
         private ImageView mUserImage;
         private UserAdapter mAdapter;
 
+        //Constructor
         public UserViewHolder(View itemView, UserAdapter adapter) {
             super(itemView);
 
@@ -37,7 +43,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             mAdapter = adapter;
         }
 
-        //set text and image
+        /**
+         * Create the item in the View Holder and add an OnClickListener
+         * @param username Username
+         * @param avatarId AvatarID
+         * @param position Position of the item
+         */
         public void bindUser(String username, int avatarId, final int position) {
             mUserText.setText(username);
             mUserImage.setImageResource(avatarId);
@@ -52,8 +63,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
 
-    ResultListener mResultListener;
-    List<User> mUsers;
+    private ResultListener mResultListener;
+    private List<User> mUsers;
+
     public UserAdapter(List<User> allUsers, ResultListener resultListener) {
         mUsers = allUsers;
         mResultListener = resultListener;
@@ -62,6 +74,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private static final int VIEWTYPE_ADDUSER = 1;
     private static final int VIEWTYPE_USER = 2;
     //User or Add Button TYPE
+
+    /**
+     * Returns the type of the item depending on its position
+     * @param position Position of the item in the List
+     * @return Viewtype of the item
+     */
     @Override
     public int getItemViewType(int position) {
         if (position >= mUsers.size()) {
@@ -79,7 +97,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return new UserViewHolder(customView, this);
     }
 
-    //is the clicked item an user start onUserSelection otherwise start onAddUser
+    /**
+     * Starts the interface. If the clicked item is an user, start onUserSelection otherwise start onAddUser.
+     * @param position item's position
+     */
     public void onElementSelected(int position) {
         if (getItemViewType(position) == VIEWTYPE_USER) {
             mResultListener.onUserSelected(mUsers.get(position));
@@ -92,8 +113,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         if (getItemViewType(position) == VIEWTYPE_USER) {
-            User user = mUsers.get(position);
             //bind the user
+            User user = mUsers.get(position);
             holder.bindUser(user.getName(), Avatars.getAvatarResourceId(holder.itemView.getContext(), user.getAvatar()), position);
         } else {
             //bind the add
