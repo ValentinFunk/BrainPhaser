@@ -7,9 +7,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.List;
 
@@ -24,14 +23,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitle;
         private TextView mDescription;
-        private RoundedImageView mImage;
+        private ImageView mImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             mTitle = (TextView) itemView.findViewById(R.id.categoryTitle);
             mDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
-            mImage = (RoundedImageView) itemView.findViewById(R.id.categoryImage);
+            mImage = (ImageView) itemView.findViewById(R.id.categoryImage);
         }
 
         public TextView getTitle() {
@@ -42,7 +41,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             return mDescription;
         }
 
-        public RoundedImageView getImage() {
+        public ImageView getImage() {
             return mImage;
         }
 

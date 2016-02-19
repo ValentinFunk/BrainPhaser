@@ -10,15 +10,6 @@
         android:theme="@style/AppTheme"
         android:name=".BrainPhaserApplication"
         >
-        <activity
-            android:name=".activities.UserCreation.CreateUserActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-            </intent-filter>
-        </activity>
         <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -35,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.UserSelection.UserSelectionActivity"
+            android:name=".activities.CategorySelect.SelectCategoryActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
