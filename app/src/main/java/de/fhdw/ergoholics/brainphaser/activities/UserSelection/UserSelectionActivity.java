@@ -3,15 +3,15 @@ package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
@@ -27,10 +27,10 @@ import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
  * Return: CURRENT_USER_ID
  */
 
-public class UserSelectionActivity extends Activity {
+public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
     public final static String CURRENT_USER_ID = "USER_ID";
     //Components of the activity
-    private ListView mUserList;
+    private RecyclerView mUserList;
     private ImageButton mCreateUserBtn;
 
     //list of all users
@@ -45,7 +45,7 @@ public class UserSelectionActivity extends Activity {
         setContentView(R.layout.activity_user_selection);
 
         //loading of the components
-        mUserList =(ListView) findViewById(R.id.userList);
+        mUserList =(RecyclerView) findViewById(R.id.userList);
         mCreateUserBtn =(ImageButton) findViewById(R.id.createUserBtn);
         //load the users from the database
         mUserData = new UserDataSource();
@@ -55,33 +55,16 @@ public class UserSelectionActivity extends Activity {
             startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
         }
         //Adapter which sets all users into the list
-        ListAdapter listAdapter = new UserAdapter(this, mAllUsers);
+        mUserList.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mUserList.setLayoutManager(layoutManager);
+
+
+        UserAdapter listAdapter = new UserAdapter(mAllUsers, this);
         mUserList.setAdapter(listAdapter);
 
-        //If a user is clicked, he will log in
-        mUserList.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        User CurrentUser; //chosen user
-                        CurrentUser = mAllUsers.get(parent.getPositionForView(view));
-                        //TODO User übergeben oder global speichern?   Challenge Set Activity load
-                        Toast.makeText(getBaseContext(), CurrentUser.getName(), Toast.LENGTH_LONG).show();
-                        //Chosen user will be intent
-                        //profileSelectionFinished(mAllUsers.get(parent.getPositionForView(view)));
-
-                    }
-                });
-
-        //Create a user -> load the Create the User Activity
-        mCreateUserBtn.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
-                    }
-                }
-        );
     }
 
     /**
@@ -93,7 +76,17 @@ public class UserSelectionActivity extends Activity {
         Intent resultData = new Intent();
         resultData.putExtra(CURRENT_USER_ID, user.getId());
         setResult(Activity.RESULT_OK, resultData);
-
         finish();
+    }
+
+    @Override
+    public void onUserSelected(User user) {
+        //Chosen user will be intent
+        profileSelectionFinished(user);
+    }
+
+    @Override
+    public void onUserAdd() {
+        startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
     }
 }

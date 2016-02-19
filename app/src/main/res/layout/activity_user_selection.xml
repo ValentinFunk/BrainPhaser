@@ -26,13 +26,13 @@
             android:layout_gravity="center"
             android:id="@+id/textView3" />
 
-        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/userList"
             android:layout_gravity="center"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:gravity="center">
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
