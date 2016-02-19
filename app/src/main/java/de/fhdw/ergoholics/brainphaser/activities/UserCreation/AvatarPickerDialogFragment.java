@@ -103,11 +103,13 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
         final AvatarPickerDialogFragment self = this;
         builder.setMessage(R.string.dialog_pick_avatar)
                 .setPositiveButton(R.string.select, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onAvatarSelected(self, mSelectedAvatarResourceEntryName);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onCancelled(self);
                     }

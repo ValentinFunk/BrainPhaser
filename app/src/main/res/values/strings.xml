@@ -13,4 +13,5 @@
     <string name="taken_username">Der Benutzername ist bereits vergeben.</string>
 
     <string name="import_challenge_text">Möchten Sie die Bibliothek wirklich importieren?</string>
+    <string name="select_user">Benutzerauswahl</string>
 </resources>

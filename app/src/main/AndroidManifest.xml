@@ -7,7 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".BrainPhaserApplication"
+        >
         <activity
             android:name=".activities.UserCreation.CreateUserActivity"
             android:label="@string/title_activity_main"
@@ -21,11 +23,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="file" />
-                <data android:mimeType="*/*" />
-                <data android:pathPattern=".*\\.bpc" />
                 <data android:host="*" />
+                <data android:pathPattern=".*\\.bpc" />
+                <data android:pathPattern=".*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
+                <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
         <activity
