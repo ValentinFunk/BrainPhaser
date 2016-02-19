@@ -23,7 +23,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="file" android:mimeType="*/*" android:pathPattern=".*\\.bpc" android:host="*" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathPattern=".*\\.bpc" />
+                <data android:pathPattern=".*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.bpc"/>
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
+                <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
         <activity
