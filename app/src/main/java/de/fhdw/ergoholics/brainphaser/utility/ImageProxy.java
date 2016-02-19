@@ -21,7 +21,7 @@ public class ImageProxy {
     }
 
     public static RequestCreator loadImage(String imagePath, Context context) {
-        if (isDrawableImage(imagePath)) {
+        if (!isDrawableImage(imagePath)) {
             return Picasso.with(context).load(new File(imagePath));
         } else {
             Resources resources = context.getResources();

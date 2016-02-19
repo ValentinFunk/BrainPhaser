@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class UserDataSource extends DataSource {
      */
     public User getUser(int id){
         User user;
-        Cursor cursor=mDatabase.query(DatabaseStatics.USER_TABLE_NAME, columns, DatabaseStatics.USER_COL_1 + "=" + id, null, null, null, null);
+        Cursor cursor=mDatabase.query(DatabaseStatics.USER_TABLE_NAME,columns,DatabaseStatics.USER_COL_1 + "=" + id,null,null,null,null);
         user = cursorToUser(cursor);
         cursor.close();
         return user;
@@ -72,7 +73,7 @@ public class UserDataSource extends DataSource {
      */
     public User getUser(String name){
         User user;
-        Cursor cursor=mDatabase.query(DatabaseStatics.USER_TABLE_NAME,columns,DatabaseStatics.USER_COL_2 + "= ?" , new String[]{name},null,null,null);
+        Cursor cursor = mDatabase.query(DatabaseStatics.USER_TABLE_NAME, columns, DatabaseStatics.USER_COL_2 + "=\"" + name + "\"", null, null, null, null);
         user = cursorToUser(cursor);
         cursor.close();
         return user;
@@ -87,7 +88,7 @@ public class UserDataSource extends DataSource {
     public List<User> getUser(String param,String column){
         List<User> allUsers = new ArrayList<User>();
         //cursor on the user table
-        Cursor cursor=mDatabase.query(DatabaseStatics.USER_TABLE_NAME,columns,column + "= ?",new String[]{param},null,null,null);
+        Cursor cursor=mDatabase.query(DatabaseStatics.USER_TABLE_NAME,columns,column + "=" + param,null,null,null,null);
         //reset cursor
         cursor.moveToFirst();
         User user;
