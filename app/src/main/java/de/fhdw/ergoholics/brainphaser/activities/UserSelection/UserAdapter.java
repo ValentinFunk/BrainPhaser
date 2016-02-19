@@ -64,7 +64,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     //User or Add Button TYPE
     @Override
     public int getItemViewType(int position) {
-        if (position > mUsers.size()) {
+        if (position >= mUsers.size()) {
             return VIEWTYPE_ADDUSER;
         }
         return VIEWTYPE_USER;
@@ -98,7 +98,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         } else {
             //bind the add
             String addUser = holder.itemView.getResources().getString(R.string.add_user);
-            holder.bindUser(addUser, R.drawable.btn_add, position);
+            holder.bindUser(addUser, R.drawable.add_circle_black, position);
         }
     }
 

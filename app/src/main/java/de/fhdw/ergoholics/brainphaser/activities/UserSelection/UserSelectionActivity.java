@@ -31,7 +31,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
     public final static String CURRENT_USER_ID = "USER_ID";
     //Components of the activity
     private RecyclerView mUserList;
-    private ImageButton mCreateUserBtn;
 
     //list of all users
     private List<User> mAllUsers;
@@ -46,7 +45,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         //loading of the components
         mUserList =(RecyclerView) findViewById(R.id.userList);
-        mCreateUserBtn =(ImageButton) findViewById(R.id.createUserBtn);
         //load the users from the database
         mUserData = new UserDataSource();
         mAllUsers = mUserData.getUsers();
