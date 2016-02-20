@@ -11,7 +11,7 @@ import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
-import de.fhdw.ergoholics.brainphaser.database.User;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Christian on 16.02.2016.

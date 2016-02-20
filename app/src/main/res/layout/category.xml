@@ -24,7 +24,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="150dip"
+                android:layout_height="120dip"
                 android:scaleType="centerCrop"
                 android:src="@drawable/computer"
                 android:id="@+id/categoryImage"
@@ -41,6 +41,7 @@
                 android:layout_marginBottom="16dip"
                 android:layout_marginLeft="16dip"
                 android:textColor="#FFFFFF"
+                android:includeFontPadding="false"
                 />
 
             <LinearLayout
@@ -50,15 +51,18 @@
                 android:layout_below="@+id/categoryTitle"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/linearLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp" >
 
                 <TextView
                     android:id="@+id/categoryDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pixel C"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Text"
+                    android:textAppearance="?android:attr/textAppearance"
+                    android:includeFontPadding="false"
                     />
             </LinearLayout>
         </RelativeLayout>
