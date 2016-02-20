@@ -2,21 +2,18 @@ package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.database.User;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Christian on 16.02.2016.
@@ -28,15 +25,6 @@ import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
  */
 
 public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
-    public final static String CURRENT_USER_ID = "USER_ID";
-    //Components of the activity
-    private RecyclerView mUserList;
-
-    //list of all users
-    private List<User> mAllUsers;
-    //connection to the user table
-    private UserDataSource mUserData;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -44,24 +32,25 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         setContentView(R.layout.activity_user_selection);
 
         //loading of the components
-        mUserList =(RecyclerView) findViewById(R.id.userList);
+        RecyclerView userList =(RecyclerView) findViewById(R.id.userList);
+
         //load the users from the database
-        mUserData = new UserDataSource();
-        mAllUsers = mUserData.getUsers();
+        List<User> allUsers = UserDatasource.getAll();
+
         //if no users are available go to create user activity
-        if(mAllUsers ==null || mAllUsers.size()<1){
+        if(allUsers ==null || allUsers.size()<1){
             startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
         }
         //Adapter which sets all users into the list
-        mUserList.setHasFixedSize(true);
+        userList.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        mUserList.setLayoutManager(layoutManager);
+        userList.setLayoutManager(layoutManager);
 
         //Create the View
-        UserAdapter listAdapter = new UserAdapter(mAllUsers, this);
-        mUserList.setAdapter(listAdapter);
+        UserAdapter listAdapter = new UserAdapter(allUsers, this);
+        userList.setAdapter(listAdapter);
 
     }
 
@@ -71,9 +60,10 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
      * @param user the user that was selected
      */
     private void profileSelectionFinished(User user) {
-        Intent resultData = new Intent();
-        resultData.putExtra(CURRENT_USER_ID, user.getId());
-        setResult(Activity.RESULT_OK, resultData);
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        app.switchUser(user);
+
+        setResult(Activity.RESULT_OK);
         finish();
     }
 
@@ -92,6 +82,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
      */
     @Override
     public void onUserAdd() {
-        startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
+        startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
     }
 }

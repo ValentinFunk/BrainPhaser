@@ -13,9 +13,14 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.database.User;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
+import de.fhdw.ergoholics.brainphaser.database.DaoManager;
+import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
+import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Activity used to create an user. Queries Username and avatar.
@@ -25,9 +30,6 @@ import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
  * Return: EXTRA_USERNAME and EXTRA_AVATAR_RESOURCE_NAME
  */
 public class CreateUserActivity extends FragmentActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
-    public final static String EXTRA_USERNAME = "USERNAME";
-    public final static String EXTRA_AVATAR_RESOURCE_NAME = "AVATAR";
-
     public final static int MAX_USERNAME_LENGTH = 30;
 
     private TextView mUsernameInput;
@@ -41,6 +43,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         mUsernameInput = (TextView) findViewById(R.id.input_username);
         mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_username_layout);
         mUsernameInput.setOnEditorActionListener(this);
+        ImageView avatar = (ImageView) findViewById(R.id.avatar);
         // Watch for changes and trigger validation
         mUsernameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -58,8 +61,22 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             }
         });
 
-        ImageView avatar = (ImageView) findViewById(R.id.avatar);
-        avatar.setImageResource(Avatars.getDefaultAvatarResourceId());
+        if (getIntent().getAction() == Intent.ACTION_EDIT) {
+            // Read user to edit
+            long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
+            User user = UserDatasource.getById(userId);
+            if (BuildConfig.DEBUG && user == null) {
+                throw new AssertionError();
+            }
+
+            // Pre-fill view
+            avatar.setImageResource(Avatars.getAvatarResourceId(getApplicationContext(), user.getAvatar()));
+            mUsernameInput.setText(user.getName());
+
+        } else {
+            avatar.setImageResource(Avatars.getDefaultAvatarResourceId());
+        }
+
     }
 
     /*
@@ -86,10 +103,8 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     private boolean validateUsernameDuplicate() {
         boolean isValid;
 
-        UserDataSource ds = new UserDataSource();
         String username = mUsernameInput.getText().toString();
-        User user = ds.getUser(username);
-        if (user != null) {
+        if (UserDatasource.findOneByName(username) != null) {
             mUsernameInput.setError(getString(R.string.taken_username));
             mUsernameInputLayout.setErrorEnabled(true);
             isValid = false;
@@ -139,7 +154,8 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     }
 
     /**
-     * Called when the profile creation has been finished.
+     * Called when the profile creation has been finished. Depending on the intent the activity was
+     * called with, the user is created or updated.
      *
      * @param username Username that was entered
      * @param avatarResourceName Resource name of the user's selected avatar
@@ -149,11 +165,30 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         ImageView avatar = (ImageView) findViewById(R.id.avatar);
         avatar.setImageResource(Avatars.getAvatarResourceId(getApplicationContext(), avatarResourceName));
 
-        Intent resultData = new Intent();
-        resultData.putExtra(EXTRA_USERNAME, username);
-        resultData.putExtra(EXTRA_AVATAR_RESOURCE_NAME, avatarResourceName);
-        setResult(Activity.RESULT_OK, resultData);
+        if (getIntent().getAction().equals(Intent.ACTION_INSERT)) {
+            // Create user
+            User user = new User();
+            user.setAvatar(avatarResourceName);
+            user.setName(username);
+            UserDatasource.create(user);
 
+            // Login user and change to category selection
+            BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+            app.switchUser(user);
+            startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+        } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
+            long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
+            User user = UserDatasource.getById(userId);
+            if (BuildConfig.DEBUG && user == null) {
+                throw new AssertionError();
+            }
+
+            user.setAvatar(avatarResourceName);
+            user.setName(username);
+            UserDatasource.update(user);
+        }
+
+        setResult(RESULT_OK);
         finish();
     }
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.database.Category;
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.utility.ImageProxy;
 
 /**

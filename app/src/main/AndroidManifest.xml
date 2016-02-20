@@ -34,7 +34,8 @@
                 <data android:mimeType="*/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UserCreation.CreateUserActivity"></activity>
+        <activity android:name=".activities.UserCreation.CreateUserActivity" />
+        <activity android:name=".activities.CategorySelect.SelectCategoryActivity" />
     </application>
 
 </manifest>

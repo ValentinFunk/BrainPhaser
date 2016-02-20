@@ -1,14 +1,12 @@
 package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.database.DatabaseHelper;
-import de.fhdw.ergoholics.brainphaser.database.User;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.database.DaoManager;
+import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
+import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by funkv on 17.02.2016.
@@ -22,12 +20,14 @@ public class BrainPhaserApplication extends Application {
     private User mCurrentUser;
 
     /**
-     * initializes the DatabaseHelper with the Application context
+     * initializes the DaoManager with a writeable database
      */
     @Override
     public void onCreate() {
         super.onCreate();
-        DatabaseHelper.initialize(getApplicationContext());
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this.getApplicationContext(), DaoManager.DATABASE_NAME, null);
+        DaoManager.intialize(helper.getWritableDatabase());
     }
 
     /**
@@ -36,11 +36,10 @@ public class BrainPhaserApplication extends Application {
      */
     public boolean logInLastUser() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        int lastLoggedInUserId = settings.getInt(KEY_PERSISTENT_USER_ID, -1);
+        long lastLoggedInUserId = settings.getLong(KEY_PERSISTENT_USER_ID, -1);
         if (lastLoggedInUserId != -1) {
-            UserDataSource ds = new UserDataSource();
-            User user = ds.getUser(lastLoggedInUserId);
-            switchUser(user);
+            User user = UserDatasource.getById(lastLoggedInUserId);
+            mCurrentUser = user;
             return true;
         }
 
@@ -61,16 +60,15 @@ public class BrainPhaserApplication extends Application {
      */
     public void switchUser(User user) {
         mCurrentUser = user;
-        persistUser(user);
+        persistCurrentUser();
     }
 
     /**
      * Save the selected user to persistent storage
-     * @param user to persist
      */
-    public void persistUser(User user) {
+    public void persistCurrentUser() {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(KEY_PERSISTENT_USER_ID, user.getId());
+        editor.putLong(KEY_PERSISTENT_USER_ID, mCurrentUser.getId());
     }
 }
