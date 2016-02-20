@@ -15,7 +15,9 @@
                                         card_view:cardUseCompatPadding="true"
                                         card_view:contentPadding="0dp"
                                         card_view:cardPreventCornerOverlap="false"
-                                        android:weightSum="2">
+                                        android:weightSum="2"
+                                        android:foreground="?android:attr/selectableItemBackground"
+                                        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="fill_parent"

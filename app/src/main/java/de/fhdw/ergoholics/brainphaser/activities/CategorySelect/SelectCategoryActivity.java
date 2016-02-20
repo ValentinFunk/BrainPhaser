@@ -1,24 +1,22 @@
 package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 
-import java.util.Arrays;
-import java.util.List;
-
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Category;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by funkv on 17.02.2016.
  */
-public class SelectCategoryActivity extends FragmentActivity {
+public class SelectCategoryActivity extends FragmentActivity implements CategoryAdapter.SelectionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +51,16 @@ public class SelectCategoryActivity extends FragmentActivity {
             new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch")
         );
 
-        recyclerView.setAdapter(new CategoryAdapter(categories));
+        recyclerView.setAdapter(new CategoryAdapter(categories, this));
+    }
+
+    @Override
+    public void onCategorySelected(Category category) {
+
+    }
+
+    @Override
+    public void onAllCategoriesSelected() {
+
     }
 }

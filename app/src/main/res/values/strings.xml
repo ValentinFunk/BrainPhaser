@@ -15,4 +15,7 @@
     <string name="import_challenge_text">Möchten Sie die Bibliothek wirklich importieren?</string>
     <string name="select_user">Benutzerauswahl</string>
     <string name="add_user">Benutzer Hinzufügen</string>
+
+    <string name="all_categories">Alle Kategorien</string>
+    <string name="all_categories_desc">Alle fälligen Challenges über alle Kategorien hinweg bearbeiten.</string>
 </resources>
