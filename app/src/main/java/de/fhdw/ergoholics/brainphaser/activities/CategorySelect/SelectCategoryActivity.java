@@ -39,7 +39,7 @@ public class SelectCategoryActivity extends FragmentActivity {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         recyclerView.setLayoutManager(layoutManager);
 
-        // categoires = CategoryDatasource.getAll( )
+        // categoires = CategoryDataSource.getAll( )
         List<Category> categories = Arrays.asList(
             new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
             new Category(-1l, "Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/architektur"),

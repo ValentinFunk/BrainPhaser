@@ -12,7 +12,7 @@ import java.util.List;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -35,7 +35,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         RecyclerView userList =(RecyclerView) findViewById(R.id.userList);
 
         //load the users from the database
-        List<User> allUsers = UserDatasource.getAll();
+        List<User> allUsers = UserDataSource.getAll();
 
         //if no users are available go to create user activity
         if(allUsers ==null || allUsers.size()<1){

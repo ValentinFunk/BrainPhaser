@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by funkv on 20.02.2016.
  */
-public class UserDatasource {
+public class UserDataSource {
     public static List<User> getAll() {
         return DaoManager.getSession().getUserDao().loadAll();
     }

@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import de.fhdw.ergoholics.brainphaser.database.DaoManager;
-import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -38,7 +38,7 @@ public class BrainPhaserApplication extends Application {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         long lastLoggedInUserId = settings.getLong(KEY_PERSISTENT_USER_ID, -1);
         if (lastLoggedInUserId != -1) {
-            User user = UserDatasource.getById(lastLoggedInUserId);
+            User user = UserDataSource.getById(lastLoggedInUserId);
             mCurrentUser = user;
             return true;
         }

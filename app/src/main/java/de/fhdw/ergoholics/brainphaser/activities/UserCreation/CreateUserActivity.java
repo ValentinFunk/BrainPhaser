@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -17,9 +16,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
-import de.fhdw.ergoholics.brainphaser.database.DaoManager;
-import de.fhdw.ergoholics.brainphaser.database.UserDatasource;
-import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -64,7 +61,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         if (getIntent().getAction() == Intent.ACTION_EDIT) {
             // Read user to edit
             long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
-            User user = UserDatasource.getById(userId);
+            User user = UserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
@@ -104,7 +101,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         boolean isValid;
 
         String username = mUsernameInput.getText().toString();
-        if (UserDatasource.findOneByName(username) != null) {
+        if (UserDataSource.findOneByName(username) != null) {
             mUsernameInput.setError(getString(R.string.taken_username));
             mUsernameInputLayout.setErrorEnabled(true);
             isValid = false;
@@ -170,7 +167,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             User user = new User();
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDatasource.create(user);
+            UserDataSource.create(user);
 
             // Login user and change to category selection
             BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
@@ -178,14 +175,14 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
         } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
-            User user = UserDatasource.getById(userId);
+            User user = UserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
 
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDatasource.update(user);
+            UserDataSource.update(user);
         }
 
         setResult(RESULT_OK);
