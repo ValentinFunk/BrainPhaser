@@ -15,9 +15,9 @@ public class UserDataSource extends DataSource {
 
     //Array of the columns
     private String[] columns = {
-            DatabaseStatics.USER_COL_1,
-            DatabaseStatics.USER_COL_2,
-            DatabaseStatics.USER_COL_3
+        DatabaseStatics.USER_COL_1,
+        DatabaseStatics.USER_COL_2,
+        DatabaseStatics.USER_COL_3
     };
 
     /**
