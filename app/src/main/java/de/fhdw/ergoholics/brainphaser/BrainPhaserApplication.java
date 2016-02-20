@@ -70,5 +70,6 @@ public class BrainPhaserApplication extends Application {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putLong(KEY_PERSISTENT_USER_ID, mCurrentUser.getId());
+        editor.apply();
     }
 }
