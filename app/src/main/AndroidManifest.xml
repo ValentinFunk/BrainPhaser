@@ -10,6 +10,15 @@
         android:theme="@style/AppTheme"
         android:name=".BrainPhaserApplication"
         >
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -23,15 +32,6 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.bpc"/>
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
                 <data android:mimeType="*/*" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.CategorySelect.SelectCategoryActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
