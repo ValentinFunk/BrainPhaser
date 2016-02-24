@@ -11,6 +11,7 @@ import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -55,26 +56,17 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
     }
 
     /**
-     * Called when a user has been selected.
-     *
-     * @param user the user that was selected
-     */
-    private void profileSelectionFinished(User user) {
-        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-        app.switchUser(user);
-
-        setResult(Activity.RESULT_OK);
-        finish();
-    }
-
-    /**
      * Is a user selected finish this activity and load Challenge-Set-Activity
      * @param user
      */
     @Override
     public void onUserSelected(User user) {
-        //Chosen user will be intent
-        profileSelectionFinished(user);
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        app.switchUser(user);
+        startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     /**
@@ -83,5 +75,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
     @Override
     public void onUserAdd() {
         startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
