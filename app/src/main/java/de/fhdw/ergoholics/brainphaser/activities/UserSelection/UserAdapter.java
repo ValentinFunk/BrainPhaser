@@ -24,7 +24,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      */
     public interface ResultListener {
         void onUserSelected(User user);
-        void onUserAdd();
     }
     /**
      *User View Holder holds the items in the UserList
@@ -71,22 +70,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         mResultListener = resultListener;
     }
 
-    private static final int VIEWTYPE_ADDUSER = 1;
-    private static final int VIEWTYPE_USER = 2;
     //User or Add Button TYPE
-
-    /**
-     * Returns the type of the item depending on its position
-     * @param position Position of the item in the List
-     * @return Viewtype of the item
-     */
-    @Override
-    public int getItemViewType(int position) {
-        if (position >= mUsers.size()) {
-            return VIEWTYPE_ADDUSER;
-        }
-        return VIEWTYPE_USER;
-    }
 
 
     @Override
@@ -102,30 +86,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      * @param position item's position
      */
     public void onElementSelected(int position) {
-        if (getItemViewType(position) == VIEWTYPE_USER) {
             mResultListener.onUserSelected(mUsers.get(position));
-        } else if (getItemViewType(position) == VIEWTYPE_ADDUSER) {
-            mResultListener.onUserAdd();
         }
-    }
+
 
     //Create a list item
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        if (getItemViewType(position) == VIEWTYPE_USER) {
-            //bind the user
-            User user = mUsers.get(position);
-            holder.bindUser(user.getName(), Avatars.getAvatarResourceId(holder.itemView.getContext(), user.getAvatar()), position);
-        } else {
-            //bind the add
-            String addUser = holder.itemView.getResources().getString(R.string.add_user);
-            holder.bindUser(addUser, R.drawable.add_circle_black, position);
-        }
+        //bind the user
+        User user = mUsers.get(position);
+        holder.bindUser(user.getName(), Avatars.getAvatarResourceId(holder.itemView.getContext(), user.getAvatar()), position);
     }
 
-    //Length of View is all users + an add item
+    //Length of View is all users
     @Override
     public int getItemCount() {
-        return mUsers.size() + 1;
+        return mUsers.size();
     }
 }

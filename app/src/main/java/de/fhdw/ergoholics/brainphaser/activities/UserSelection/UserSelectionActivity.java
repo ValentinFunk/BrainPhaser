@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.List;
 
@@ -53,6 +56,19 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         UserAdapter listAdapter = new UserAdapter(allUsers, this);
         userList.setAdapter(listAdapter);
 
+        /**
+         * Is the add button selected finish this activity and load Create-User-Activity
+         */
+        FloatingActionButton btnAddUser = (FloatingActionButton) findViewById(R.id.addUser);
+        btnAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+
     }
 
     /**
@@ -65,16 +81,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         app.switchUser(user);
         startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
 
-        setResult(Activity.RESULT_OK);
-        finish();
-    }
-
-    /**
-     * Is the add button selected finish this activity and load Create-User-Activity
-     */
-    @Override
-    public void onUserAdd() {
-        startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
         setResult(Activity.RESULT_OK);
         finish();
     }
