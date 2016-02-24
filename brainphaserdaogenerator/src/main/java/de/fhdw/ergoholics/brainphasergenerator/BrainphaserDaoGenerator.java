@@ -12,26 +12,44 @@ public class BrainphaserDaoGenerator {
         Schema schema = new Schema(1, "de.fhdw.ergoholics.brainphaser.model");
 
         // Create entities
-        createUserEntity(schema);
+        Entity userEntity = createUserEntity(schema);
         Entity categoryEntity = createCategoryEntity(schema);
         Entity challengeEntity = createChallengeEntity(schema);
         Entity answerEntity = createAnswerEntity(schema);
+        Entity completedEntity = createCompletedEntity(schema);
 
         // category HAS MANY challenge
         Property categoryId = challengeEntity.addLongProperty("categoryId").notNull().getProperty();
         ToMany categoryToChallenge = categoryEntity.addToMany(challengeEntity, categoryId);
         categoryToChallenge.setName("challenges");
 
-        // Todo: challenge HAS MANY answer?
+        // challenge HAS MANY answer
+        Property challengeIdAnswer = answerEntity.addLongProperty("challengeId").notNull().getProperty();
+        ToMany challengeToAnswer = challengeEntity.addToMany(answerEntity, challengeIdAnswer);
+        categoryToChallenge.setName("answers");
+
+        // Todo: check if correct
+        // completed HAS MANY challenge
+        Property challengeIdCompleted = completedEntity.addLongProperty("challengeId").notNull().getProperty();
+        ToMany completedToChallenge = challengeEntity.addToMany(challengeEntity, challengeIdCompleted);
+        categoryToChallenge.setName("userCompletions");
+
+        // Todo: check if correct
+        // completed HAS MANY user
+        Property userId = completedEntity.addLongProperty("userId").notNull().getProperty();
+        ToMany completedToUser = userEntity.addToMany(userEntity, userId);
+        categoryToChallenge.setName("userCompletions");
 
         new DaoGenerator().generateAll(schema, "../app/src/main/java/");
     }
 
-    public static void createUserEntity(Schema schema) {
+    public static Entity createUserEntity(Schema schema) {
         Entity user = schema.addEntity("User");
         user.addIdProperty();
         user.addStringProperty("name").notNull();
         user.addStringProperty("avatar").notNull();
+
+        return user;
     }
 
     public static Entity createCategoryEntity(Schema schema) {
@@ -55,10 +73,18 @@ public class BrainphaserDaoGenerator {
     public static Entity createAnswerEntity(Schema schema) {
         Entity answer = schema.addEntity("Answer");
         answer.addIdProperty();
-        answer.addIntProperty("challenge_id");
         answer.addStringProperty("text").notNull();
-        answer.addBooleanProperty("answer_correct");
+        answer.addBooleanProperty("answerCorrect");
 
         return answer;
+    }
+
+    public static Entity createCompletedEntity(Schema schema) {
+        Entity completed = schema.addEntity("Completed");
+        completed.addIdProperty();
+        completed.addIntProperty("class");
+        completed.addDateProperty("timeLastCompleted");
+
+        return completed;
     }
 }
