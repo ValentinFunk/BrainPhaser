@@ -15,11 +15,14 @@ public class BrainphaserDaoGenerator {
         createUserEntity(schema);
         Entity categoryEntity = createCategoryEntity(schema);
         Entity challengeEntity = createChallengeEntity(schema);
+        Entity answerEntity = createAnswerEntity(schema);
 
         // category HAS MANY challenge
         Property categoryId = challengeEntity.addLongProperty("categoryId").notNull().getProperty();
         ToMany categoryToChallenge = categoryEntity.addToMany(challengeEntity, categoryId);
         categoryToChallenge.setName("challenges");
+
+        // Todo: challenge HAS MANY answer?
 
         new DaoGenerator().generateAll(schema, "../app/src/main/java/");
     }
@@ -47,5 +50,15 @@ public class BrainphaserDaoGenerator {
         challenge.addStringProperty("question").notNull();
 
         return challenge;
+    }
+
+    public static Entity createAnswerEntity(Schema schema) {
+        Entity answer = schema.addEntity("Answer");
+        answer.addIdProperty();
+        answer.addIntProperty("challenge_id");
+        answer.addStringProperty("text").notNull();
+        answer.addBooleanProperty("answer_correct");
+
+        return answer;
     }
 }
