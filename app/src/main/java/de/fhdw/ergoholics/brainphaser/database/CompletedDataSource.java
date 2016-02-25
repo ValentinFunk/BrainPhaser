@@ -1,11 +1,13 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
 import java.util.Date;
+import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.model.Completed;
 import de.fhdw.ergoholics.brainphaser.model.CompletedDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Chris on 2/25/2016.
@@ -22,6 +24,13 @@ public class CompletedDataSource {
 
     public static long create(Completed completed) {
         return DaoManager.getSession().getCompletedDao().insert(completed);
+    }
+
+    public static List<Completed> getByUserAndStage(User user, int stage) {
+        QueryBuilder completed = DaoManager.getSession().getCompletedDao().queryBuilder()
+                .where(CompletedDao.Properties.UserId.eq(user.getId()),
+                        CompletedDao.Properties.Stage.eq(stage));
+        return completed.list();
     }
 
     /**
