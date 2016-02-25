@@ -26,8 +26,9 @@ public class BPCWrite {
 
         for (Challenge challenge : challengeList) {
             if (challenge.getCategoryId() == oldCategoryId) {
-                challenge.setId(categoryId);
+                challenge.setCategoryId(categoryId);
                 writeChallenge(challenge, answerList);
+                challenge.setCategoryId(-1);
             }
         }
     }
@@ -41,6 +42,7 @@ public class BPCWrite {
             if (answer.getChallengeId() == oldChallengeId) {
                 answer.setChallengeId(challengeId);
                 writeAnswer(answer);
+                answer.setChallengeId(-1);
             }
         }
     }

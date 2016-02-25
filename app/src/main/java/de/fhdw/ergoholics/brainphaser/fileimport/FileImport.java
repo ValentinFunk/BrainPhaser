@@ -46,7 +46,7 @@ public class FileImport {
             childCategories = childCategories.getNextSibling();
         }
 
-        //Todo: No syntax errors were found, so the read information is being written
+        //No syntax errors were found, so the read information is being written
         BPCWrite.writeAll(categoryList, challengeList, answerList);
     }
 }

@@ -55,9 +55,9 @@ public class BPCObjects {
         return challengeId;
     }
 
-    private static void readChallenge(Node challengeNode, long categoryId,
-                                      long challengeId, List<Challenge> challengeList,
-                                      List<Answer> answerList) throws UnexpectedElementException {
+    private static void readChallenge(Node challengeNode, long categoryId, long challengeId,
+                                      List<Challenge> challengeList, List<Answer> answerList)
+            throws UnexpectedElementException {
         //Check if the node is the correct element type
         if (!challengeNode.getNodeName().equals("challenge")) {
             throw new UnexpectedElementException(challengeNode.getNodeName());
