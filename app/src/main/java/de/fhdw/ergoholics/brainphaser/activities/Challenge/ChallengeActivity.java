@@ -9,9 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import java.util.ArrayList;
+import java.util.Date;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
+import de.fhdw.ergoholics.brainphaser.database.CompletedDataSource;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 public class ChallengeActivity extends AppCompatActivity{
 
@@ -46,16 +51,22 @@ public class ChallengeActivity extends AppCompatActivity{
                     startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
                     setResult(Activity.RESULT_OK);
                     finish();
+                    return;
                 }
 
                 if(mAnswerChecked ==false) {
                     //TODO Ändern, sodass überprüfen immer möglich ist (Text)
                     MultipleChoiceFragment multipleChoiceFragment = (MultipleChoiceFragment) mFManager.findFragmentById(R.id.challenge_fragment);
+
+                    BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+                    User currentUser = app.getCurrentUser();
+                    currentUser=new User((long)1,"Adolf","anonymous");
                     if (multipleChoiceFragment.getCheckedAnswersRight()) {
-                        //TODO Answer Right
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo-1), currentUser.getId(),1);
                     } else {
-                        //TODO Answer Wrong
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo-1), currentUser.getId(),-1);
                     }
+
                     btnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
                     mAnswerChecked =true;
                     if(mChallengeNo>=allChallenges.size()){
