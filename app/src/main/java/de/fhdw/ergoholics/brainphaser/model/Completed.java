@@ -10,7 +10,7 @@ import de.greenrobot.dao.DaoException;
 public class Completed {
 
     private Long id;
-    private Integer class;
+    private Integer stage;
     private java.util.Date timeLastCompleted;
     private long userId;
     private long challengeId;
@@ -32,9 +32,9 @@ public class Completed {
         this.id = id;
     }
 
-    public Completed(Long id, Integer class, java.util.Date timeLastCompleted, long userId, long challengeId) {
+    public Completed(Long id, Integer stage, java.util.Date timeLastCompleted, long userId, long challengeId) {
         this.id = id;
-        this.class = class;
+        this.stage = stage;
         this.timeLastCompleted = timeLastCompleted;
         this.userId = userId;
         this.challengeId = challengeId;
@@ -54,12 +54,12 @@ public class Completed {
         this.id = id;
     }
 
-    public Integer getClass() {
-        return class;
+    public Integer getStage() {
+        return stage;
     }
 
-    public void setClass(Integer class) {
-        this.class = class;
+    public void setStage(Integer stage) {
+        this.stage = stage;
     }
 
     public java.util.Date getTimeLastCompleted() {

@@ -82,7 +82,7 @@ public class BrainphaserDaoGenerator {
     public static Entity createCompletedEntity(Schema schema) {
         Entity completed = schema.addEntity("Completed");
         completed.addIdProperty();
-        completed.addIntProperty("class");
+        completed.addIntProperty("stage");
         completed.addDateProperty("timeLastCompleted");
 
         return completed;
