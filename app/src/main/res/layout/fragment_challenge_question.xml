@@ -9,7 +9,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Hier steht meine Frage"
                 android:id="@+id/challengeQuestion"
                 android:textColor="@color/colorAccent"
                 android:textAlignment="center" />

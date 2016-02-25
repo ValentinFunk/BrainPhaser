@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
@@ -28,8 +26,8 @@ public class QuestionFragment extends Fragment {
         mQuestionText =(TextView)view.findViewById(R.id.challengeQuestion);
 
         Bundle bundle=getArguments();
-        int id = bundle.getInt(ChallengeActivity.KEY_CHALLENGE_ID);
-        mChallenge= ChallengeDataSource.getById((long)id);
+        long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
+        mChallenge= ChallengeDataSource.getById(id);
         changeQuestion(mChallenge);
         return view;
     }
@@ -39,6 +37,9 @@ public class QuestionFragment extends Fragment {
      * @param challenge The new challenge, which question will be loaded
      */
     public void changeQuestion(Challenge challenge){
+        if(challenge==null){
+            return;
+        }
         //Set question text
         mQuestionText.setText(challenge.getQuestion());
     }

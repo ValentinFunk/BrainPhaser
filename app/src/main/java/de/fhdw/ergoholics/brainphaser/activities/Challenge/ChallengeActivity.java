@@ -1,19 +1,24 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import java.util.ArrayList;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 
 public class ChallengeActivity extends AppCompatActivity{
 
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
-    private int mChallengeId;
-
+    private int mChallengeNo = 1;
+    private boolean mAnswerChecked;
+    private boolean mChallengeDone=false;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
     @Override
@@ -24,15 +29,46 @@ public class ChallengeActivity extends AppCompatActivity{
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
-        mChallengeId = 1;
-        loadChallenge(mChallengeId);
+        loadChallenge(mChallengeNo);
+        mAnswerChecked =false;
 
-        Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
+        //TODO: Uebergeben
+        final ArrayList<Long> allChallenges = new ArrayList<Long>();
+        allChallenges.add((long)1);
+        allChallenges.add((long)2);
+
+
+        final Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
         btnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mChallengeId += 1;
-                loadChallenge(mChallengeId);
+                if(mChallengeDone){
+                    startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+                    setResult(Activity.RESULT_OK);
+                    finish();
+                }
+
+                if(mAnswerChecked ==false) {
+                    //TODO Ändern, sodass überprüfen immer möglich ist (Text)
+                    MultipleChoiceFragment multipleChoiceFragment = (MultipleChoiceFragment) mFManager.findFragmentById(R.id.challenge_fragment);
+                    if (multipleChoiceFragment.getCheckedAnswersRight()) {
+                        //TODO Answer Right
+                    } else {
+                        //TODO Answer Wrong
+                    }
+                    btnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
+                    mAnswerChecked =true;
+                    if(mChallengeNo>=allChallenges.size()){
+                        //Load End Screen
+                        mChallengeDone=true;
+                        btnNextChallenge.setText(getResources().getString(R.string.end_Challenge));
+                    }
+                }else{
+                    mChallengeNo += 1;
+                    loadChallenge(allChallenges.get(mChallengeNo-1));
+                    btnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
+                    mAnswerChecked = false;
+                }
             }
         });
 
@@ -42,10 +78,10 @@ public class ChallengeActivity extends AppCompatActivity{
      *
      * @param challengeId The challenge's id to be solved
      */
-    private void loadChallenge(int challengeId){
+    private void loadChallenge(long challengeId){
         //Bundle to transfer the ChallengeId to the fragments
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_CHALLENGE_ID, challengeId);
+        bundle.putLong(KEY_CHALLENGE_ID, challengeId);
 
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
@@ -64,6 +100,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
                 //Commit the bundle
                 multipleChoiceFragment.setArguments(bundle);
+                mFTransaction.add(R.id.challenge_fragment, multipleChoiceFragment);
                 //Inflate the MultipleChoiceFragment in the challenge_fragment
                 mFTransaction.replace(R.id.challenge_fragment, multipleChoiceFragment);
 
@@ -85,6 +122,4 @@ public class ChallengeActivity extends AppCompatActivity{
         mFTransaction.commit();
         mFManager.executePendingTransactions();
     }
-
-
 }
