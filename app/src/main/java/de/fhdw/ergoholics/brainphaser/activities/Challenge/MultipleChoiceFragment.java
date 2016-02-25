@@ -14,14 +14,30 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 /**
  * Created by Chris on 2/25/2016.
  */
-public class MultipleChoiceFragment extends Fragment {
+public class MultipleChoiceFragment extends Fragment{
 
-    private View mView;
+
+
+    private Challenge mChallenge;
+    CheckBox mCheckBox1;
+    CheckBox mCheckBox2;
+    CheckBox mCheckBox3;
+    CheckBox mCheckBox4;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container,false);
-        return mView;
+        View view = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container,false);
+        mCheckBox1 =(CheckBox) view.findViewById(R.id.checkbox1);
+        mCheckBox2 =(CheckBox) view.findViewById(R.id.checkbox2);
+        mCheckBox3 =(CheckBox) view.findViewById(R.id.checkbox3);
+        mCheckBox4 =(CheckBox) view.findViewById(R.id.checkbox4);
+
+        Bundle bundle=getArguments();
+        bundle.getInt(ChallengeActivity.KEY_CHALLENGE_ID);
+
+        return view;
     }
 
     /**
@@ -29,14 +45,10 @@ public class MultipleChoiceFragment extends Fragment {
      * @param challenge The new challenge, which answers will be loaded
      */
     public void changeAnswers(Challenge challenge){
-        CheckBox cb1=(CheckBox)mView.findViewById(R.id.checkbox1);
-        CheckBox cb2=(CheckBox)mView.findViewById(R.id.checkbox2);
-        CheckBox cb3=(CheckBox)mView.findViewById(R.id.checkbox3);
-        CheckBox cb4=(CheckBox)mView.findViewById(R.id.checkbox4);
         //TODO Get Answers from DB
-        cb1.setText("A");
-        cb2.setText("B");
-        cb3.setText("C");
-        cb4.setText("D");
+        mCheckBox1.setText("A");
+        mCheckBox2.setText("B");
+        mCheckBox3.setText("C");
+        mCheckBox4.setText("D");
     }
 }

@@ -15,20 +15,20 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
  * Created by Chris on 2/25/2016.
  */
 public class QuestionFragment extends Fragment {
-
-    private View mView;
     private TextView mQuestionText;
-    enum ChallengeType{
-        MULTIPLE_CHOICE, TEXT
-    }
+    private Challenge mChallenge;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView =inflater.inflate(R.layout.fragment_challenge_question,container,false);
-        mQuestionText =(TextView)mView.findViewById(R.id.challengeQuestion);
+        View view =inflater.inflate(R.layout.fragment_challenge_question, container, false);
+        mQuestionText =(TextView)view.findViewById(R.id.challengeQuestion);
 
-        return mView;
+        Bundle bundle=getArguments();
+        bundle.getInt(ChallengeActivity.KEY_CHALLENGE_ID);
+
+        return view;
     }
 
     /**
@@ -39,4 +39,6 @@ public class QuestionFragment extends Fragment {
         //Set question text
         mQuestionText.setText(challenge.getQuestion());
     }
+
+
 }

@@ -11,12 +11,13 @@ import android.widget.Button;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
-public class ChallengeActivity extends AppCompatActivity {
+public class ChallengeActivity extends AppCompatActivity{
+
+    public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
 
     private enum ChallengeType{
         MULTIPLE_CHOICE, TEXT
     }
-
 
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
@@ -28,41 +29,43 @@ public class ChallengeActivity extends AppCompatActivity {
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
+        mChallenge=new Challenge((long)2,2,"Dies ist meine Frage",(long)3);
 
-
+        loadChallenge(mChallenge);
 
         Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
         btnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadChallenge(new Challenge((long)2,2,"Hallo",(long)1));
+                mChallenge = new Challenge((long) 2, 2, "Dies ist meine 2. Frage", (long) 3);
+                loadChallenge(mChallenge);
             }
         });
 
     }
-
 
     /**
      *
      * @param challenge The challenge to be solved
      */
     private void loadChallenge(Challenge challenge){
-
+        QuestionFragment questionFragment;
+        MultipleChoiceFragment multipleChoiceFragment;
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
         //Create the QuestionFragment
-        QuestionFragment qFragment=new QuestionFragment();
+        questionFragment =new QuestionFragment(this);
         //Inflate the QuestionFragment in the question_fragment
-        mFTransaction.replace(R.id.challenge_fragment_question, qFragment);
+        mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        //Create a MultipleChoiceFragment
-        MultipleChoiceFragment mFragment = new MultipleChoiceFragment();
         //TODO ChallengeType evaluieren
         ChallengeType type=ChallengeType.MULTIPLE_CHOICE;
         switch (type){
             case MULTIPLE_CHOICE:
+                //Create a MultipleChoiceFragment
+                multipleChoiceFragment = new MultipleChoiceFragment(this);
                 //Inflate the MultipleChoiceFragment in the challenge_fragment
-                mFTransaction.replace(R.id.challenge_fragment, mFragment);
+                mFTransaction.replace(R.id.challenge_fragment, multipleChoiceFragment);
 
                 break;
             case TEXT:
@@ -77,10 +80,8 @@ public class ChallengeActivity extends AppCompatActivity {
         mFTransaction.addToBackStack(null);
         //Commit the changes
         mFTransaction.commit();
-
-        //Change the text in the fragment
-        qFragment.changeQuestion(challenge);
-        //Change the answers in the fragment
-        mFragment.changeAnswers(challenge);
+        mFManager.executePendingTransactions();
     }
+
+
 }
