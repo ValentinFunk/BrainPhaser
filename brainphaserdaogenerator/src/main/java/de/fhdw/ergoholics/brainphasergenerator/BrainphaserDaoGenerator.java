@@ -5,6 +5,7 @@ import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
 import de.greenrobot.daogenerator.ToMany;
+import de.greenrobot.daogenerator.ToOne;
 
 public class BrainphaserDaoGenerator {
     public static int DATABASE_VERSION = 1;
@@ -26,19 +27,18 @@ public class BrainphaserDaoGenerator {
         // challenge HAS MANY answer
         Property challengeIdAnswer = answerEntity.addLongProperty("challengeId").notNull().getProperty();
         ToMany challengeToAnswer = challengeEntity.addToMany(answerEntity, challengeIdAnswer);
-        categoryToChallenge.setName("answers");
+        challengeToAnswer.setName("answers");
 
-        // Todo: check if correct
-        // completed HAS MANY challenge
-        Property challengeIdCompleted = completedEntity.addLongProperty("challengeId").notNull().getProperty();
-        ToMany completedToChallenge = challengeEntity.addToMany(challengeEntity, challengeIdCompleted);
-        categoryToChallenge.setName("userCompletions");
-
-        // Todo: check if correct
-        // completed HAS MANY user
+        // user HAS MANY completed
         Property userId = completedEntity.addLongProperty("userId").notNull().getProperty();
-        ToMany completedToUser = userEntity.addToMany(userEntity, userId);
-        categoryToChallenge.setName("userCompletions");
+        ToMany userToCompleted = userEntity.addToMany(completedEntity, userId);
+        userToCompleted.setName("userCompletions");
+
+        // Todo: check if correct
+        // completed TO ONE challenge
+        Property challengeIdCompleted = completedEntity.addLongProperty("challengeId").notNull().getProperty();
+        ToOne completedToChallenge = completedEntity.addToOne(challengeEntity, challengeIdCompleted);
+        completedToChallenge.setName("challengeCompletions");
 
         new DaoGenerator().generateAll(schema, "../app/src/main/java/");
     }

@@ -32,6 +32,8 @@ public class ChallengeDao extends AbstractDao<Challenge, Long> {
         public final static Property CategoryId = new Property(3, long.class, "categoryId", false, "CATEGORY_ID");
     };
 
+    private DaoSession daoSession;
+
     private Query<Challenge> category_ChallengesQuery;
 
     public ChallengeDao(DaoConfig config) {
@@ -40,6 +42,7 @@ public class ChallengeDao extends AbstractDao<Challenge, Long> {
     
     public ChallengeDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -70,6 +73,12 @@ public class ChallengeDao extends AbstractDao<Challenge, Long> {
         stmt.bindLong(2, entity.getChallengeType());
         stmt.bindString(3, entity.getQuestion());
         stmt.bindLong(4, entity.getCategoryId());
+    }
+
+    @Override
+    protected void attachEntity(Challenge entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
