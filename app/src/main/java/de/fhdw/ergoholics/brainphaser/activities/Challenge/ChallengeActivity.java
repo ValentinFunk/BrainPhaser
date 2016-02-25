@@ -6,18 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-
-
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 
 public class ChallengeActivity extends AppCompatActivity{
 
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
-
-    private enum ChallengeType{
-        MULTIPLE_CHOICE, TEXT
-    }
+    private int mChallengeId;
 
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
@@ -29,16 +24,15 @@ public class ChallengeActivity extends AppCompatActivity{
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
-        mChallenge=new Challenge((long)2,2,"Dies ist meine Frage",(long)3);
-
-        loadChallenge(mChallenge);
+        mChallengeId = 1;
+        loadChallenge(mChallengeId);
 
         Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
         btnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mChallenge = new Challenge((long) 2, 2, "Dies ist meine 2. Frage", (long) 3);
-                loadChallenge(mChallenge);
+                mChallengeId += 1;
+                loadChallenge(mChallengeId);
             }
         });
 
@@ -46,33 +40,42 @@ public class ChallengeActivity extends AppCompatActivity{
 
     /**
      *
-     * @param challenge The challenge to be solved
+     * @param challengeId The challenge's id to be solved
      */
-    private void loadChallenge(Challenge challenge){
-        QuestionFragment questionFragment;
-        MultipleChoiceFragment multipleChoiceFragment;
+    private void loadChallenge(int challengeId){
+        //Bundle to transfer the ChallengeId to the fragments
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_CHALLENGE_ID, challengeId);
+
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
         //Create the QuestionFragment
-        questionFragment =new QuestionFragment(this);
+        QuestionFragment questionFragment =new QuestionFragment();
+        //Commit the bundle
+        questionFragment.setArguments(bundle);
         //Inflate the QuestionFragment in the question_fragment
         mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
         //TODO ChallengeType evaluieren
-        ChallengeType type=ChallengeType.MULTIPLE_CHOICE;
+        ChallengeDataSource.ChallengeType type = ChallengeDataSource.ChallengeType.MULTIPLE_CHOICE;
         switch (type){
             case MULTIPLE_CHOICE:
                 //Create a MultipleChoiceFragment
-                multipleChoiceFragment = new MultipleChoiceFragment(this);
+                MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
+                //Commit the bundle
+                multipleChoiceFragment.setArguments(bundle);
                 //Inflate the MultipleChoiceFragment in the challenge_fragment
                 mFTransaction.replace(R.id.challenge_fragment, multipleChoiceFragment);
 
                 break;
             case TEXT:
+                //TODO TextFragment integrieren
                 //Create a TextFragment
-                TextFragment tFragment = new TextFragment();
+                TextFragment textFragment = new TextFragment();
+                //Commit the bundle
+                textFragment.setArguments(bundle);
                 //Inflate the TextFragment in the challenge_fragment
-                mFTransaction.replace(R.id.challenge_fragment, tFragment);
+                mFTransaction.replace(R.id.challenge_fragment, textFragment);
                 break;
         }
 
