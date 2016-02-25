@@ -9,8 +9,9 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
  * Created by Daniel Hoogen on 25/02/2016.
  */
 public class ChallengeDataSource {
-    public static List<Challenge> getAll() {
-        return DaoManager.getSession().getChallengeDao().loadAll();
+
+    public enum ChallengeType{
+        MULTIPLE_CHOICE, TEXT
     }
 
     public static Challenge getById(long id) {

@@ -18,4 +18,9 @@
 
     <string name="all_categories">Alle Kategorien</string>
     <string name="all_categories_desc">Alle fälligen Challenges über alle Kategorien hinweg bearbeiten.</string>
+    <string name="title_activity_challenge">Challenge</string>
+
+    <string name="next_Challenge">Nächste Challenge</string>
+    <string name="check_Challenge">Überprüfe Antwort</string>
+    <string name="end_Challenge">Ende</string>
 </resources>
