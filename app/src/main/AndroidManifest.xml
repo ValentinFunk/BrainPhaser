@@ -35,7 +35,7 @@
         <activity android:name=".activities.UserCreation.CreateUserActivity" />
         <activity android:name=".activities.UserSelection.UserSelectionActivity" />
         <activity android:name=".activities.CategorySelect.SelectCategoryActivity" />
-        <activity android:name=".activities.Challenge.Challenge">
+        <activity android:name=".activities.Challenge.ChallengeActivity">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
