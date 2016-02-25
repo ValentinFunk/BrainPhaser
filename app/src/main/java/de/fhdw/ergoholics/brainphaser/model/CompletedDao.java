@@ -29,7 +29,7 @@ public class CompletedDao extends AbstractDao<Completed, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Class = new Property(1, Integer.class, "class", false, "CLASS");
+        public final static Property Stage = new Property(1, Integer.class, "stage", false, "STAGE");
         public final static Property TimeLastCompleted = new Property(2, java.util.Date.class, "timeLastCompleted", false, "TIME_LAST_COMPLETED");
         public final static Property UserId = new Property(3, long.class, "userId", false, "USER_ID");
         public final static Property ChallengeId = new Property(4, long.class, "challengeId", false, "CHALLENGE_ID");
@@ -53,7 +53,7 @@ public class CompletedDao extends AbstractDao<Completed, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"COMPLETED\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"CLASS\" INTEGER," + // 1: class
+                "\"STAGE\" INTEGER," + // 1: stage
                 "\"TIME_LAST_COMPLETED\" INTEGER," + // 2: timeLastCompleted
                 "\"USER_ID\" INTEGER NOT NULL ," + // 3: userId
                 "\"CHALLENGE_ID\" INTEGER NOT NULL );"); // 4: challengeId
@@ -75,9 +75,9 @@ public class CompletedDao extends AbstractDao<Completed, Long> {
             stmt.bindLong(1, id);
         }
  
-        Integer class = entity.getClass();
-        if (class != null) {
-            stmt.bindLong(2, class);
+        Integer stage = entity.getStage();
+        if (stage != null) {
+            stmt.bindLong(2, stage);
         }
  
         java.util.Date timeLastCompleted = entity.getTimeLastCompleted();
@@ -105,7 +105,7 @@ public class CompletedDao extends AbstractDao<Completed, Long> {
     public Completed readEntity(Cursor cursor, int offset) {
         Completed entity = new Completed( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // class
+            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // stage
             cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)), // timeLastCompleted
             cursor.getLong(offset + 3), // userId
             cursor.getLong(offset + 4) // challengeId
@@ -117,7 +117,7 @@ public class CompletedDao extends AbstractDao<Completed, Long> {
     @Override
     public void readEntity(Cursor cursor, Completed entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setClass(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setStage(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
         entity.setTimeLastCompleted(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
         entity.setUserId(cursor.getLong(offset + 3));
         entity.setChallengeId(cursor.getLong(offset + 4));
