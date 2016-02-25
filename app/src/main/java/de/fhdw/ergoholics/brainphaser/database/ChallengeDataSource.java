@@ -1,5 +1,8 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import java.util.List;
+
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
