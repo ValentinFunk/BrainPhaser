@@ -13,7 +13,10 @@
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
             <intent-filter>
@@ -36,10 +39,7 @@
         <activity android:name=".activities.UserSelection.UserSelectionActivity" />
         <activity android:name=".activities.CategorySelect.SelectCategoryActivity" />
         <activity android:name=".activities.Challenge.ChallengeActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+</activity>
     </application>
 
 </manifest>
