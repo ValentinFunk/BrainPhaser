@@ -40,10 +40,10 @@ public class BrainphaserDaoGenerator {
         ToOne completedToChallenge = completedEntity.addToOne(challengeEntity, challengeIdCompleted);
         completedToChallenge.setName("challengeCompletions");
 
-        // Todo: settings TO ONE user
-        Property userIdSettings = settingsEntity.addLongProperty("userId").notNull().getProperty();
-        ToOne settingsToUser = userEntity.addToOne(settingsEntity, userIdSettings);
-        settingsToUser.setName("user");
+        // user HAS ONE settings
+        Property userIdSettings = userEntity.addLongProperty("settingsId").notNull().getProperty();
+        ToOne userToSettings = userEntity.addToOne(settingsEntity, userIdSettings);
+        userToSettings.setName("settings");
 
         new DaoGenerator().generateAll(schema, "../app/src/main/java/");
     }

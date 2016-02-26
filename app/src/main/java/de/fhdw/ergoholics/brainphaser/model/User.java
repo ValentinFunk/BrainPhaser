@@ -15,12 +15,16 @@ public class User {
     private String name;
     /** Not-null value. */
     private String avatar;
+    private long settingsId;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
     private transient UserDao myDao;
+
+    private Settings settings;
+    private Long settings__resolvedKey;
 
     private List<Completed> userCompletions;
 
@@ -31,10 +35,11 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, String name, String avatar) {
+    public User(Long id, String name, String avatar, long settingsId) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
+        this.settingsId = settingsId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -69,6 +74,42 @@ public class User {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public long getSettingsId() {
+        return settingsId;
+    }
+
+    public void setSettingsId(long settingsId) {
+        this.settingsId = settingsId;
+    }
+
+    /** To-one relationship, resolved on first access. */
+    public Settings getSettings() {
+        long __key = this.settingsId;
+        if (settings__resolvedKey == null || !settings__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            SettingsDao targetDao = daoSession.getSettingsDao();
+            Settings settingsNew = targetDao.load(__key);
+            synchronized (this) {
+                settings = settingsNew;
+            	settings__resolvedKey = __key;
+            }
+        }
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        if (settings == null) {
+            throw new DaoException("To-one property 'settingsId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.settings = settings;
+            settingsId = settings.getId();
+            settings__resolvedKey = settingsId;
+        }
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

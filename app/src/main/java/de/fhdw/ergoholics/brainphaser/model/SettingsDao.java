@@ -1,14 +1,11 @@
 package de.fhdw.ergoholics.brainphaser.model;
 
-import java.util.List;
-import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
 
 import de.fhdw.ergoholics.brainphaser.model.Settings;
@@ -33,10 +30,7 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
         public final static Property TimeBoxStage4 = new Property(4, java.util.Date.class, "timeBoxStage4", false, "TIME_BOX_STAGE4");
         public final static Property TimeBoxStage5 = new Property(5, java.util.Date.class, "timeBoxStage5", false, "TIME_BOX_STAGE5");
         public final static Property TimeBoxStage6 = new Property(6, java.util.Date.class, "timeBoxStage6", false, "TIME_BOX_STAGE6");
-        public final static Property UserId = new Property(7, long.class, "userId", false, "USER_ID");
     };
-
-    private DaoSession daoSession;
 
 
     public SettingsDao(DaoConfig config) {
@@ -45,7 +39,6 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
     
     public SettingsDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
-        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -58,8 +51,7 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
                 "\"TIME_BOX_STAGE3\" INTEGER," + // 3: timeBoxStage3
                 "\"TIME_BOX_STAGE4\" INTEGER," + // 4: timeBoxStage4
                 "\"TIME_BOX_STAGE5\" INTEGER," + // 5: timeBoxStage5
-                "\"TIME_BOX_STAGE6\" INTEGER," + // 6: timeBoxStage6
-                "\"USER_ID\" INTEGER NOT NULL );"); // 7: userId
+                "\"TIME_BOX_STAGE6\" INTEGER);"); // 6: timeBoxStage6
     }
 
     /** Drops the underlying database table. */
@@ -107,13 +99,6 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
         if (timeBoxStage6 != null) {
             stmt.bindLong(7, timeBoxStage6.getTime());
         }
-        stmt.bindLong(8, entity.getUserId());
-    }
-
-    @Override
-    protected void attachEntity(Settings entity) {
-        super.attachEntity(entity);
-        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
@@ -132,8 +117,7 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
             cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // timeBoxStage3
             cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)), // timeBoxStage4
             cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)), // timeBoxStage5
-            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)), // timeBoxStage6
-            cursor.getLong(offset + 7) // userId
+            cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)) // timeBoxStage6
         );
         return entity;
     }
@@ -148,7 +132,6 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
         entity.setTimeBoxStage4(cursor.isNull(offset + 4) ? null : new java.util.Date(cursor.getLong(offset + 4)));
         entity.setTimeBoxStage5(cursor.isNull(offset + 5) ? null : new java.util.Date(cursor.getLong(offset + 5)));
         entity.setTimeBoxStage6(cursor.isNull(offset + 6) ? null : new java.util.Date(cursor.getLong(offset + 6)));
-        entity.setUserId(cursor.getLong(offset + 7));
      }
     
     /** @inheritdoc */
@@ -174,97 +157,4 @@ public class SettingsDao extends AbstractDao<Settings, Long> {
         return true;
     }
     
-    private String selectDeep;
-
-    protected String getSelectDeep() {
-        if (selectDeep == null) {
-            StringBuilder builder = new StringBuilder("SELECT ");
-            SqlUtils.appendColumns(builder, "T", getAllColumns());
-            builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getUserDao().getAllColumns());
-            builder.append(" FROM SETTINGS T");
-            builder.append(" LEFT JOIN USER T0 ON T.\"USER_ID\"=T0.\"_id\"");
-            builder.append(' ');
-            selectDeep = builder.toString();
-        }
-        return selectDeep;
-    }
-    
-    protected Settings loadCurrentDeep(Cursor cursor, boolean lock) {
-        Settings entity = loadCurrent(cursor, 0, lock);
-        int offset = getAllColumns().length;
-
-        User settings = loadCurrentOther(daoSession.getUserDao(), cursor, offset);
-         if(settings != null) {
-            entity.setSettings(settings);
-        }
-
-        return entity;    
-    }
-
-    public Settings loadDeep(Long key) {
-        assertSinglePk();
-        if (key == null) {
-            return null;
-        }
-
-        StringBuilder builder = new StringBuilder(getSelectDeep());
-        builder.append("WHERE ");
-        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
-        String sql = builder.toString();
-        
-        String[] keyArray = new String[] { key.toString() };
-        Cursor cursor = db.rawQuery(sql, keyArray);
-        
-        try {
-            boolean available = cursor.moveToFirst();
-            if (!available) {
-                return null;
-            } else if (!cursor.isLast()) {
-                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
-            }
-            return loadCurrentDeep(cursor, true);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
-    public List<Settings> loadAllDeepFromCursor(Cursor cursor) {
-        int count = cursor.getCount();
-        List<Settings> list = new ArrayList<Settings>(count);
-        
-        if (cursor.moveToFirst()) {
-            if (identityScope != null) {
-                identityScope.lock();
-                identityScope.reserveRoom(count);
-            }
-            try {
-                do {
-                    list.add(loadCurrentDeep(cursor, false));
-                } while (cursor.moveToNext());
-            } finally {
-                if (identityScope != null) {
-                    identityScope.unlock();
-                }
-            }
-        }
-        return list;
-    }
-    
-    protected List<Settings> loadDeepAllAndCloseCursor(Cursor cursor) {
-        try {
-            return loadAllDeepFromCursor(cursor);
-        } finally {
-            cursor.close();
-        }
-    }
-    
-
-    /** A raw-style query where you can pass any WHERE clause and arguments. */
-    public List<Settings> queryDeep(String where, String... selectionArg) {
-        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
-        return loadDeepAllAndCloseCursor(cursor);
-    }
- 
 }
