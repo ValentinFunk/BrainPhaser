@@ -33,7 +33,7 @@ public class BrainphaserDaoGenerator {
         // user HAS MANY completed
         Property userIdCompleted = completedEntity.addLongProperty("userId").notNull().getProperty();
         ToMany userToCompleted = userEntity.addToMany(completedEntity, userIdCompleted);
-        userToCompleted.setName("userCompletions");
+        userToCompleted.setName("completions");
 
         // Todo: completed TO ONE challenge
         Property challengeIdCompleted = completedEntity.addLongProperty("challengeId").notNull().getProperty();
@@ -85,10 +85,10 @@ public class BrainphaserDaoGenerator {
     }
 
     public static Entity createCompletedEntity(Schema schema) {
-        Entity completed = schema.addEntity("Completed");
+        Entity completed = schema.addEntity("Completion");
         completed.addIdProperty();
         completed.addIntProperty("stage");
-        completed.addDateProperty("timeLastCompleted");
+        completed.addDateProperty("lastCompleted");
 
         return completed;
     }

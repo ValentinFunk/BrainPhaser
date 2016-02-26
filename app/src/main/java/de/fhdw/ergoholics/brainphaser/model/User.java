@@ -26,7 +26,7 @@ public class User {
     private Settings settings;
     private Long settings__resolvedKey;
 
-    private List<Completed> userCompletions;
+    private List<Completion> completions;
 
     public User() {
     }
@@ -113,25 +113,25 @@ public class User {
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<Completed> getUserCompletions() {
-        if (userCompletions == null) {
+    public List<Completion> getCompletions() {
+        if (completions == null) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            CompletedDao targetDao = daoSession.getCompletedDao();
-            List<Completed> userCompletionsNew = targetDao._queryUser_UserCompletions(id);
+            CompletionDao targetDao = daoSession.getCompletionDao();
+            List<Completion> completionsNew = targetDao._queryUser_Completions(id);
             synchronized (this) {
-                if(userCompletions == null) {
-                    userCompletions = userCompletionsNew;
+                if(completions == null) {
+                    completions = completionsNew;
                 }
             }
         }
-        return userCompletions;
+        return completions;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetUserCompletions() {
-        userCompletions = null;
+    public synchronized void resetCompletions() {
+        completions = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
