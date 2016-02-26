@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * Created by funkv on 17.02.2016.
@@ -16,10 +17,23 @@ import java.io.File;
  * then the resource name.
  */
 public class ImageProxy {
+    private static Map<Integer, RequestCreator> requestCache;
+
+    /**
+     * Returns whether the path represents a drawable resource.
+     * @param imagePath the path to analyze
+     * @return true if the path represents a drawable resource
+     */
     public static boolean isDrawableImage(String imagePath) {
         return imagePath.startsWith("@drawable/");
     }
 
+    /**
+     * Loads an image using Picasso while caching it.
+     * @param imagePath path as described above
+     * @param context context to use
+     * @return cached or newly created RequestCreator
+     */
     public static RequestCreator loadImage(String imagePath, Context context) {
         if (!isDrawableImage(imagePath)) {
             return Picasso.with(context).load(new File(imagePath));
@@ -27,7 +41,14 @@ public class ImageProxy {
             Resources resources = context.getResources();
             String resourceName = imagePath.substring("@drawable/".length());
             int resourceId =  resources.getIdentifier(resourceName, "drawable", context.getPackageName());
-            return Picasso.with(context).load(resourceId);
+
+            RequestCreator requestCreator = requestCache.get(resourceId);
+            if (requestCreator == null) {
+                requestCreator = Picasso.with(context).load(resourceId);
+                requestCache.put(resourceId, requestCreator);
+            }
+
+            return requestCreator;
         }
     }
 }
