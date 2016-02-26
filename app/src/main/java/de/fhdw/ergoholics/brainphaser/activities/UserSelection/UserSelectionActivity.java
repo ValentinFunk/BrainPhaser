@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -52,19 +56,19 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         UserAdapter listAdapter = new UserAdapter(allUsers, this);
         userList.setAdapter(listAdapter);
 
-    }
+        /**
+         * Is the add button selected finish this activity and load Create-User-Activity
+         */
+        FloatingActionButton btnAddUser = (FloatingActionButton) findViewById(R.id.addUser);
+        btnAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
 
-    /**
-     * Called when a user has been selected.
-     *
-     * @param user the user that was selected
-     */
-    private void profileSelectionFinished(User user) {
-        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-        app.switchUser(user);
-
-        setResult(Activity.RESULT_OK);
-        finish();
     }
 
     /**
@@ -73,15 +77,11 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
      */
     @Override
     public void onUserSelected(User user) {
-        //Chosen user will be intent
-        profileSelectionFinished(user);
-    }
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        app.switchUser(user);
+        startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
 
-    /**
-     * Is the add button selected finish this activity and load Create-User-Activity
-     */
-    @Override
-    public void onUserAdd() {
-        startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
