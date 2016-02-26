@@ -28,4 +28,8 @@ public class UserDataSource {
     public static void update(User user) {
         DaoManager.getSession().update(user);
     }
+
+    public static void delete(User user) {
+        DaoManager.getSession().delete(user);
+    }
 }
