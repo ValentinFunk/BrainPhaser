@@ -24,8 +24,7 @@ public class DueChallengeLogic {
 
         //Get due challenges that have entries in the database
         //Create objects
-        //Todo: replace following line if possible (= user.getSettings())
-        Settings settings = SettingsDataSource.getByUserId(user.getId());
+        Settings settings = user.getSettings();
         if (settings==null) {
             settings = getDefaultSettings();
         }
@@ -87,8 +86,8 @@ public class DueChallengeLogic {
         settings.setTimeBoxStage2(new Date(1000*60*60));        //1 hour
         settings.setTimeBoxStage3(new Date(1000*60*60*24));     //1 day
         settings.setTimeBoxStage4(new Date(1000*60*60*24*7));   //7 days
-        settings.setTimeBoxStage5(new Date(1000*60*60*24*30));  //30 days
-        settings.setTimeBoxStage6(new Date(1000*60*60*24*180)); //180 days
+        settings.setTimeBoxStage5(new Date(1000l*60*60*24*30));  //30 days
+        settings.setTimeBoxStage6(new Date(1000l*60*60*24*180)); //180 days
 
         return settings;
     }
