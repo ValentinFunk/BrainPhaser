@@ -59,7 +59,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
                     BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
                     User currentUser = app.getCurrentUser();
-                    currentUser=new User((long)1,"Adolf","anonymous");
+
                     if (multipleChoiceFragment.getCheckedAnswersRight()) {
                         CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo - 1), currentUser.getId(), 1);
                     } else {
