@@ -6,30 +6,32 @@ import java.util.List;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.model.Completed;
 import de.fhdw.ergoholics.brainphaser.model.CompletedDao;
+import de.fhdw.ergoholics.brainphaser.model.Completion;
+import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Chris on 2/25/2016.
  */
-public class CompletedDataSource {
+public class CompletionDataSource {
 
-    public static Completed fingByChallengeAndUser(long challengeId, long userId) {
-        return DaoManager.getSession().getCompletedDao().queryBuilder().where(CompletedDao.Properties.ChallengeId.eq(challengeId),CompletedDao.Properties.UserId.eq(userId)).unique();
+    public static Completion fingByChallengeAndUser(long challengeId, long userId) {
+        return DaoManager.getSession().getCompletionDao().queryBuilder().where(CompletionDao.Properties.ChallengeId.eq(challengeId),CompletionDao.Properties.UserId.eq(userId)).unique();
     }
 
-    public static void update (Completed completed){
+    public static void update (Completion completed){
         DaoManager.getSession().update(completed);
     }
 
-    public static long create(Completed completed) {
-        return DaoManager.getSession().getCompletedDao().insert(completed);
+    public static long create(Completion completed) {
+        return DaoManager.getSession().getCompletionDao().insert(completed);
     }
 
-    public static List<Completed> getByUserAndStage(User user, int stage) {
-        QueryBuilder completed = DaoManager.getSession().getCompletedDao().queryBuilder()
-                .where(CompletedDao.Properties.UserId.eq(user.getId()),
-                        CompletedDao.Properties.Stage.eq(stage));
+    public static List<Completion> getByUserAndStage(User user, int stage) {
+        QueryBuilder completed = DaoManager.getSession().getCompletionDao().queryBuilder()
+                .where(CompletionDao.Properties.UserId.eq(user.getId()),
+                        CompletionDao.Properties.Stage.eq(stage));
         return completed.list();
     }
 
@@ -40,12 +42,12 @@ public class CompletedDataSource {
      * @param stageUp 1 for StageUp -1 for StageDown (answer right, answer wrong)
      */
     public static void updateAfterAnswer(long challengeId, long userId, int stageUp){
-        if(stageUp!=-1 && stageUp!=1){
+        if(stageUp!=-1 && stageUp!=1) {
             return;
         }
-        Completed completed = fingByChallengeAndUser(challengeId,userId);
+        Completion completed = fingByChallengeAndUser(challengeId,userId);
         if (completed==null){
-            completed = new Completed(null, 2, new Date(), userId, challengeId);
+            completed = new Completion(null, 2, new Date(), userId, challengeId);
             if (stageUp==-1){
                 completed.setStage(1);
             }
@@ -57,7 +59,7 @@ public class CompletedDataSource {
             }else if (completed.getStage()>6){
                 completed.setStage(6);
             }
-            completed.setTimeLastCompleted(new Date());
+            completed.setLastCompleted(new Date());
             update(completed);
         }
 

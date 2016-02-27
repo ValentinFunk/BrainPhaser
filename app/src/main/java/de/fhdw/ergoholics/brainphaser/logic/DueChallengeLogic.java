@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.database.CompletedDataSource;
-import de.fhdw.ergoholics.brainphaser.database.DaoManager;
-import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
+import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completed;
+import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -32,12 +30,12 @@ public class DueChallengeLogic {
         Date timebox;
 
         for (int stage = 1; stage<=6; stage++) {
-            List<Completed> completedInStage = CompletedDataSource.getByUserAndStage(user, stage);
+            List<Completion> completedInStage = CompletionDataSource.getByUserAndStage(user, stage);
 
             timebox = getTimeboxByStage(settings, stage);
 
-            for (Completed completed : completedInStage) {
-                Date lastCompleted = completed.getTimeLastCompleted();
+            for (Completion completed : completedInStage) {
+                Date lastCompleted = completed.getLastCompleted();
 
                 if (now.getTime() - lastCompleted.getTime() >= timebox.getTime()) {
                     dueActivities.add(completed.getChallengeId());
@@ -46,14 +44,14 @@ public class DueChallengeLogic {
         }
 
         //Todo: Create missing entries
-        List<Challenge> notCompletedYet = ChallengeDataSource.getNotCompletedByUser(user);
+        List<Challenge> notCompletedYet = user.getUncompletedChallanges();
 
         Date dateChallengesDue = new Date(now.getTime() - settings.getTimeBoxStage1().getTime());
 
         for (Challenge challenge : notCompletedYet)
         {
-            Completed completed = new Completed(null, 1, dateChallengesDue, user.getId(), challenge.getId());
-            CompletedDataSource.create(completed);
+            Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(), challenge.getId());
+            CompletionDataSource.create(completed);
             dueActivities.add(challenge.getId());
         }
 

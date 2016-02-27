@@ -8,7 +8,8 @@ import de.greenrobot.daogenerator.ToMany;
 import de.greenrobot.daogenerator.ToOne;
 
 public class BrainphaserDaoGenerator {
-    public static int DATABASE_VERSION = 5;
+    public static int DATABASE_VERSION = 6;
+
     public static void main(String args[]) throws Exception {
         Schema schema = new Schema(1, "de.fhdw.ergoholics.brainphaser.model");
 
@@ -53,6 +54,7 @@ public class BrainphaserDaoGenerator {
         user.addIdProperty();
         user.addStringProperty("name").notNull();
         user.addStringProperty("avatar").notNull();
+        user.setHasKeepSections(true);
 
         return user;
     }
