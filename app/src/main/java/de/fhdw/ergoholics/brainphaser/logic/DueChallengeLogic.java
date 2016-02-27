@@ -7,7 +7,6 @@ import java.util.List;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-import de.fhdw.ergoholics.brainphaser.model.Completed;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -23,9 +22,7 @@ public class DueChallengeLogic {
         //Get due challenges that have entries in the database
         //Create objects
         Settings settings = user.getSettings();
-        if (settings==null) {
-            settings = getDefaultSettings();
-        }
+
         Date now = new Date();
         Date timebox;
 
@@ -75,18 +72,5 @@ public class DueChallengeLogic {
             default:
                 return null;
         }
-    }
-
-    private static Settings getDefaultSettings() {
-        Settings settings = new Settings();
-
-        settings.setTimeBoxStage1(new Date(1000*60*5));         //5 minutes
-        settings.setTimeBoxStage2(new Date(1000*60*60));        //1 hour
-        settings.setTimeBoxStage3(new Date(1000*60*60*24));     //1 day
-        settings.setTimeBoxStage4(new Date(1000*60*60*24*7));   //7 days
-        settings.setTimeBoxStage5(new Date(1000l*60*60*24*30));  //30 days
-        settings.setTimeBoxStage6(new Date(1000l*60*60*24*180)); //180 days
-
-        return settings;
     }
 }

@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.model.Completed;
-import de.fhdw.ergoholics.brainphaser.model.CompletedDao;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
