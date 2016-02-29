@@ -26,7 +26,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
                 android:id="@+id/userItemText"
-                android:textColor="@color/colorAccent"
                 android:layout_margin="5dp"
                 android:gravity="center_vertical"
                 android:textAlignment="center" />

@@ -1,12 +1,15 @@
 package de.fhdw.ergoholics.brainphaser.utility;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.SparseArray;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +20,7 @@ import java.util.Map;
  * then the resource name.
  */
 public class ImageProxy {
-    private static Map<Integer, RequestCreator> requestCache;
+    private static SparseArray<RequestCreator> requestCache = new SparseArray<RequestCreator>( );
 
     /**
      * Returns whether the path represents a drawable resource.
