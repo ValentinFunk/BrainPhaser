@@ -20,7 +20,7 @@ public class UserDataSource {
      * @return id of the created user
      */
     public static long create(User user) {
-        if (user.getSettings() == null && user.getSettingsId() == 0) {
+        if (user.getSettingsId() == 0) {
             user.setSettings(SettingsDataSource.getNewDefaultSettings());
         }
 
