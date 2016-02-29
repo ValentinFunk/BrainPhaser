@@ -16,6 +16,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
+import de.fhdw.ergoholics.brainphaser.activities.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -172,7 +173,8 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             // Login user and change to category selection
             BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
             app.switchUser(user);
-            startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
         } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
             User user = UserDataSource.getById(userId);
