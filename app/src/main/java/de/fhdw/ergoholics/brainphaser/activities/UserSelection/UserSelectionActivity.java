@@ -51,18 +51,28 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         userList.setAdapter(listAdapter);
 
         /**
-         * Is the add button selected finish this activity and load Create-User-Activity
+         * Is the add button selected load Create-User-Activity.
          */
         FloatingActionButton btnAddUser = (FloatingActionButton) findViewById(R.id.addUser);
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
-                setResult(Activity.RESULT_OK);
-                finish();
+            startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
 
+    }
+
+    /*
+     * Used to track when the create user activity has finished. If it was cancelled, do nothing,
+     * else finish this activity (as the user is automatically logged in).
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 
     /**
