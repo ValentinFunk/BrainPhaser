@@ -3,13 +3,18 @@ package de.fhdw.ergoholics.brainphaser.database;
 import java.util.Date;
 
 import de.fhdw.ergoholics.brainphaser.model.Settings;
-import de.fhdw.ergoholics.brainphaser.model.SettingsDao;
-import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
+ *
+ * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
+    /**
+     * Returns the Settings object with the given id
+     * @param id settings id in the database
+     * @return Settings object with the given id
+     */
     public static Settings getById(long id) {
         return DaoManager.getSession().getSettingsDao().load(id);
     }
@@ -18,7 +23,7 @@ public class SettingsDataSource {
      * Creates a new Settings object with default values in the database.
      * @return Setttings Object containing default values
      */
-    public static Settings getNewDefaultSettings( ) {
+    public static Settings getDefaultSettings( ) {
         Settings settings = new Settings();
 
         settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes

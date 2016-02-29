@@ -3,7 +3,6 @@ package de.fhdw.ergoholics.brainphaser.database;
 import java.util.Date;
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -14,7 +13,7 @@ import de.greenrobot.dao.query.QueryBuilder;
  */
 public class CompletionDataSource {
 
-    public static Completion fingByChallengeAndUser(long challengeId, long userId) {
+    public static Completion getByChallengeAndUser(long challengeId, long userId) {
         return DaoManager.getSession().getCompletionDao().queryBuilder().where(CompletionDao.Properties.ChallengeId.eq(challengeId),CompletionDao.Properties.UserId.eq(userId)).unique();
     }
 
@@ -43,7 +42,7 @@ public class CompletionDataSource {
         if(stageUp!=-1 && stageUp!=1) {
             return;
         }
-        Completion completed = fingByChallengeAndUser(challengeId,userId);
+        Completion completed = getByChallengeAndUser(challengeId,userId);
         if (completed==null){
             completed = new Completion(null, 2, new Date(), userId, challengeId);
             if (stageUp==-1){
