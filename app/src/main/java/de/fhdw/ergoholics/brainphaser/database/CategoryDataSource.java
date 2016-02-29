@@ -15,4 +15,9 @@ public class CategoryDataSource {
     public static long create(Category category) {
         return DaoManager.getSession().getCategoryDao().insert(category);
     }
+
+    public static Category getById(long id) {
+        return DaoManager.getSession().getCategoryDao().load(id);
+    }
+
 }

@@ -14,8 +14,10 @@ import java.util.Date;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletedDataSource;
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 public class ChallengeActivity extends AppCompatActivity{
@@ -34,6 +36,9 @@ public class ChallengeActivity extends AppCompatActivity{
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
+
+        Intent i = getIntent();
+        Category currentCategory = CategoryDataSource.getById(i.getLongExtra(CURRENT_CATEGORY));
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
         final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, currentCategory);
