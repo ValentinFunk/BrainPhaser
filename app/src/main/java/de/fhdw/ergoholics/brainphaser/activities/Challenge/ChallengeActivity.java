@@ -21,7 +21,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class ChallengeActivity extends AppCompatActivity{
 
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
-    private int mChallengeNo = 1;
+    private int mChallengeNo = 0;
     private boolean mAnswerChecked;
     private boolean mChallengeDone=false;
     private FragmentManager mFManager;
@@ -34,14 +34,12 @@ public class ChallengeActivity extends AppCompatActivity{
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
-        loadChallenge(mChallengeNo);
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        final User currentUser = app.getCurrentUser();
+        final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, currentCategory);
+
+        loadChallenge(allChallenges.get(mChallengeNo));
         mAnswerChecked =false;
-
-        //TODO: Uebergeben
-        final ArrayList<Long> allChallenges = new ArrayList<Long>();
-        allChallenges.add((long)1);
-        allChallenges.add((long)2);
-
 
         final Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
         btnNextChallenge.setOnClickListener(new View.OnClickListener() {
@@ -58,13 +56,11 @@ public class ChallengeActivity extends AppCompatActivity{
                     //TODO Ändern, sodass überprüfen immer möglich ist (Text)
                     MultipleChoiceFragment multipleChoiceFragment = (MultipleChoiceFragment) mFManager.findFragmentById(R.id.challenge_fragment);
 
-                    BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-                    User currentUser = app.getCurrentUser();
-                    currentUser=new User((long)1,"Adolf","anonymous");
+
                     if (multipleChoiceFragment.getCheckedAnswersRight()) {
-                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo-1), currentUser.getId(),1);
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(),1);
                     } else {
-                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo-1), currentUser.getId(),-1);
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(),-1);
                     }
 
                     btnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
