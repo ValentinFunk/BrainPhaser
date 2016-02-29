@@ -25,7 +25,6 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Activity used to chose an existing user. Can load the create user activity
  * Persistent data: none
  * Parameters: none
- * Return: CURRENT_USER_ID
  */
 
 public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
@@ -35,7 +34,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         setContentView(R.layout.activity_user_selection);
 
         //loading of the components
-        RecyclerView userList =(RecyclerView) findViewById(R.id.userList);
+        RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
 
         //load the users from the database
         List<User> allUsers = UserDataSource.getAll();
