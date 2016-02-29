@@ -22,6 +22,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 public class ChallengeActivity extends AppCompatActivity{
 
+    public static final String KEY_CATEGORY_ID="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
     private int mChallengeNo = 0;
     private boolean mAnswerChecked;
@@ -38,7 +39,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
 
         Intent i = getIntent();
-        Category currentCategory = CategoryDataSource.getById(i.getLongExtra(CURRENT_CATEGORY));
+        Category currentCategory = CategoryDataSource.getById(i.getLongExtra(KEY_CATEGORY_ID,-1));
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
         final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, currentCategory);

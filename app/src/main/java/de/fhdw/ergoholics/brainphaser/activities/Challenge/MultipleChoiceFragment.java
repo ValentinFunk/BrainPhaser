@@ -44,15 +44,15 @@ public class MultipleChoiceFragment extends Fragment{
             mChallenge = ChallengeDataSource.getById(id);
 
             if (mChallenge == null) {
-                throw new NullPointerException("No challenge with id: " + id);
+                throw new NullPointerException("Whops. No challenge with id: " + id);
             }
             //Load its Answers
             mAnswerList = mChallenge.getAnswers();
             if (mAnswerList == null) {
-                throw new NullPointerException("No Answers to challenge " + id);
+                throw new NullPointerException("Whops. No Answers to challenge " + id);
             }
             if(mAnswerList.size()!=4){
-                throw new FormatException(mAnswerList.size() + "instead of 4 answers for challenge " +id);
+                throw new FormatException("Whops. " + mAnswerList.size() + "instead of 4 answers for challenge " +id);
             }
             //Fill Checkboxes
             mCheckBoxArray = new CheckBox[mAnswerList.size()];
