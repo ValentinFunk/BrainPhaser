@@ -31,7 +31,6 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
@@ -41,10 +40,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         //load the users from the database
         List<User> allUsers = UserDataSource.getAll();
 
-        //if no users are available go to create user activity
-        if(allUsers ==null || allUsers.size()<1){
-            startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
-        }
         //Adapter which sets all users into the list
         userList.setHasFixedSize(true);
 
