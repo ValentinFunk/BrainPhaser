@@ -1,8 +1,13 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.model.Completion;
+import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
+import de.fhdw.ergoholics.brainphaser.model.User;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -44,5 +49,25 @@ public class ChallengeDataSource {
      */
     public static long create(Challenge challenge) {
         return DaoManager.getSession().getChallengeDao().insert(challenge);
+    }
+
+    /**
+     * Returns all challenges that have never been completed by the given user before
+     * @param user the user whose not completed challenges will be returned
+     * @return list of uncompleted challenges
+     */
+    public static List<Challenge> getUncompletedChallenges(User user) {
+        List<Challenge> notCompleted = new ArrayList<>();
+        long userId = user.getId();
+
+        List<Challenge> challenges = DaoManager.getSession().getChallengeDao().queryBuilder().list();
+
+        for (Challenge challenge : challenges) {
+            if (CompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
+                notCompleted.add(challenge);
+            }
+        }
+
+        return notCompleted;
     }
 }

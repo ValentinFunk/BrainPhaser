@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
@@ -25,7 +28,7 @@ public class DueChallengeLogic {
      * @param categoryId the id of the category whose due challenges will be returned
      * @return List object containing the ids of all due challenges
      */
-    public List<Long> getDueChallenges(User user, long categoryId) {
+    public static List<Long> getDueChallenges(User user, long categoryId) {
         //Create list that will be returned in the end
         List<Long> dueChallenges = new ArrayList<>();
 
@@ -89,11 +92,11 @@ public class DueChallengeLogic {
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = user.getUncompletedChallanges();
+        List<Challenge> notCompletedYet = ChallengeDataSource.getUncompletedChallenges(user);
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
-                user.getSettings().getTimeBoxStage1().getTime());
+                getTimeboxByStage(user.getSettings(), 1).getTime());
 
         /*
         If categoryId is -1 or matches the challenge's id, the challenge will be added to the
@@ -116,21 +119,41 @@ public class DueChallengeLogic {
      * @return the Date object containing the timebox of the given settings object
      */
     private static Date getTimeboxByStage(Settings settings, int stage) {
-        switch (stage) {
-            case 1:
-                return settings.getTimeBoxStage1();
-            case 2:
-                return settings.getTimeBoxStage2();
-            case 3:
-                return settings.getTimeBoxStage3();
-            case 4:
-                return settings.getTimeBoxStage4();
-            case 5:
-                return settings.getTimeBoxStage5();
-            case 6:
-                return settings.getTimeBoxStage6();
-            default:
-                return null;
+        if (settings!=null) {
+            switch (stage) {
+                case 1:
+                    return settings.getTimeBoxStage1();
+                case 2:
+                    return settings.getTimeBoxStage2();
+                case 3:
+                    return settings.getTimeBoxStage3();
+                case 4:
+                    return settings.getTimeBoxStage4();
+                case 5:
+                    return settings.getTimeBoxStage5();
+                case 6:
+                    return settings.getTimeBoxStage6();
+                default:
+                    return null;
+            }
+        }
+        else{
+            switch (stage) {
+                case 1:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage1();
+                case 2:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage2();
+                case 3:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage3();
+                case 4:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage4();
+                case 5:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage5();
+                case 6:
+                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage6();
+                default:
+                    return null;
+            }
         }
     }
 }

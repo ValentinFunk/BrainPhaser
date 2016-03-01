@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <categories>
-    <category title="Test Kategorie" description="This is an example text" image="@drawable/englisch">
-        <challenge type="1" question="Test">
-            <answer text="Richtig" correct="true" />
-            <answer text="Falsch1" correct="false" />
-            <answer text="Falsch2" correct="false" />
-            <answer text="Falsch3" correct="false" />
-        </challenge>
-        <challenge type="2" question="Testfrage">
-            <answer text="Richtig2" correct="true" />
-            <answer text="Falsch4" correct="false" />
-            <answer text="Falsch5" correct="false" />
-            <answer text="Falsch6" correct="false" />
-        </challenge>
-    </category>
-    <category title="Kategorie2" description="This is an example text again" image="@drawable/englisch">
-            <challenge type="3" question="Test2">
-                <answer text="Richtig3" correct="true" />
-                <answer text="Falsch11" correct="true" />
-                <answer text="Falsch12" correct="true" />
-                <answer text="Falsch13" correct="false" />
+    <category title="C1" description="T1" image="englisch">
+            <challenge type="1" question="Q1">
+                <answer text="R1" correct="true" />
+                <answer text="F1" correct="false" />
+                <answer text="F2" correct="false" />
+                <answer text="F3" correct="false" />
             </challenge>
-            <challenge type="2" question="Testfrage2">
-                <answer text="Richtig4" correct="true" />
-                <answer text="Falsch14" correct="false" />
-                <answer text="Falsch15" correct="false" />
-                <answer text="Falsch16" correct="true" />
+            <challenge type="2" question="Q2">
+                <answer text="R2" correct="true" />
+                <answer text="R3" correct="true" />
+                <answer text="F4" correct="false" />
+                <answer text="F5" correct="false" />
             </challenge>
         </category>
+        <category title="C2" description="T2" image="englisch">
+                <challenge type="1" question="Q3">
+                    <answer text="R4" correct="true" />
+                    <answer text="R5" correct="true" />
+                    <answer text="R6" correct="true" />
+                    <answer text="F6" correct="false" />
+                </challenge>
+                <challenge type="2" question="Q4">
+                    <answer text="R7" correct="true" />
+                    <answer text="R8" correct="true" />
+                    <answer text="R9" correct="true" />
+                    <answer text="R10" correct="true" />
+                </challenge>
+            </category>
 </categories>
