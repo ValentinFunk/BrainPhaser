@@ -57,16 +57,6 @@ public class ImportChallengeActivity extends Activity {
         }
 
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-        for (Category c : CategoryDataSource.getAll()) {
-            Log.d("Category", c.getId() + "/" + c.getTitle() + "/" + c.getDescription() + "/" + c.getImage());
-        }
-        for (Challenge c : ChallengeDataSource.getAll()) {
-            Log.d("Challenge", c.getId() + "/" + c.getChallengeType() + "/" + c.getQuestion() + "/" + c.getCategoryId());
-        }
-        for (Answer a : AnswerDataSource.getAll()) {
-            Log.d("Answer", a.getId() + "/" + a.getText() + "/" + a.getAnswerCorrect() + "/" + a.getChallengeId());
-        }
     }
 
     public void onButtonNoClicked(View v) {
