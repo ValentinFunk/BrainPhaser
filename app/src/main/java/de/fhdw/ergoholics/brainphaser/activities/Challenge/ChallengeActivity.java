@@ -39,10 +39,10 @@ public class ChallengeActivity extends AppCompatActivity{
 
 
         Intent i = getIntent();
-        Category currentCategory = CategoryDataSource.getById(i.getLongExtra(KEY_CATEGORY_ID,-1));
+        long categoryId= i.getLongExtra(KEY_CATEGORY_ID,-1);
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
-        final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, currentCategory);
+        final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, categoryId);
 
         loadChallenge(allChallenges.get(mChallengeNo));
         mAnswerChecked =false;
