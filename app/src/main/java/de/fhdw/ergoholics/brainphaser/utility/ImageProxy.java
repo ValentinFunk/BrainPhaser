@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Map;
  * then the resource name.
  */
 public class ImageProxy {
-    private static Map<Integer, RequestCreator> requestCache;
+    private static Map<Integer, RequestCreator> requestCache = new HashMap<>();
 
     /**
      * Returns whether the path represents a drawable resource.
