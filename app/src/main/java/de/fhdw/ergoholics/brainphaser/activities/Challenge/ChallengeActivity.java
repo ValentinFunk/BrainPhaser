@@ -9,18 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.CompletedDataSource;
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 public class ChallengeActivity extends AppCompatActivity{
 
+    public static final String KEY_CATEGORY_ID="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
-    private int mChallengeNo = 1;
+    private int mChallengeNo = 0;
     private boolean mAnswerChecked;
     private boolean mChallengeDone=false;
     private FragmentManager mFManager;
@@ -33,14 +36,15 @@ public class ChallengeActivity extends AppCompatActivity{
         //FragementManager manges the fragments in the activity
         mFManager=getFragmentManager();
 
-        loadChallenge(mChallengeNo);
+
+        Intent i = getIntent();
+        long categoryId= i.getLongExtra(KEY_CATEGORY_ID,-1);
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        final User currentUser = app.getCurrentUser();
+        final ArrayList<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, categoryId);
+
+        loadChallenge(allChallenges.get(mChallengeNo));
         mAnswerChecked =false;
-
-        //TODO: Uebergeben
-        final ArrayList<Long> allChallenges = new ArrayList<Long>();
-        allChallenges.add((long)1);
-        allChallenges.add((long)2);
-
 
         final Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
         btnNextChallenge.setOnClickListener(new View.OnClickListener() {
@@ -61,9 +65,9 @@ public class ChallengeActivity extends AppCompatActivity{
                     User currentUser = app.getCurrentUser();
 
                     if (multipleChoiceFragment.getCheckedAnswersRight()) {
-                        CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo - 1), currentUser.getId(), 1);
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(),1);
                     } else {
-                        CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo - 1), currentUser.getId(), -1);
+                        CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(),-1);
                     }
 
                     btnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
