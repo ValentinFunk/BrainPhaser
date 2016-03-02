@@ -14,7 +14,6 @@ import java.util.Date;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
-import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletedDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
@@ -62,6 +61,8 @@ public class ChallengeActivity extends AppCompatActivity{
                     //TODO Ändern, sodass überprüfen immer möglich ist (Text)
                     MultipleChoiceFragment multipleChoiceFragment = (MultipleChoiceFragment) mFManager.findFragmentById(R.id.challenge_fragment);
 
+                    BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+                    User currentUser = app.getCurrentUser();
 
                     if (multipleChoiceFragment.getCheckedAnswersRight()) {
                         CompletedDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(),1);

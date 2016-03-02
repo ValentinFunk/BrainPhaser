@@ -8,7 +8,8 @@ import de.greenrobot.daogenerator.ToMany;
 import de.greenrobot.daogenerator.ToOne;
 
 public class BrainphaserDaoGenerator {
-    public static int DATABASE_VERSION = 4;
+    public static int DATABASE_VERSION = 6;
+
     public static void main(String args[]) throws Exception {
         Schema schema = new Schema(1, "de.fhdw.ergoholics.brainphaser.model");
 
@@ -18,6 +19,7 @@ public class BrainphaserDaoGenerator {
         Entity challengeEntity = createChallengeEntity(schema);
         Entity answerEntity = createAnswerEntity(schema);
         Entity completedEntity = createCompletedEntity(schema);
+        Entity settingsEntity = createSettingsEntity(schema);
 
         // category HAS MANY challenge
         Property categoryId = challengeEntity.addLongProperty("categoryId").notNull().getProperty();
@@ -30,14 +32,19 @@ public class BrainphaserDaoGenerator {
         challengeToAnswer.setName("answers");
 
         // user HAS MANY completed
-        Property userId = completedEntity.addLongProperty("userId").notNull().getProperty();
-        ToMany userToCompleted = userEntity.addToMany(completedEntity, userId);
-        userToCompleted.setName("userCompletions");
+        Property userIdCompleted = completedEntity.addLongProperty("userId").notNull().getProperty();
+        ToMany userToCompleted = userEntity.addToMany(completedEntity, userIdCompleted);
+        userToCompleted.setName("completions");
 
-        // completed TO ONE challenge
+        // Todo: completed TO ONE challenge
         Property challengeIdCompleted = completedEntity.addLongProperty("challengeId").notNull().getProperty();
         ToOne completedToChallenge = completedEntity.addToOne(challengeEntity, challengeIdCompleted);
         completedToChallenge.setName("challengeCompletions");
+
+        // user HAS ONE settings
+        Property userIdSettings = userEntity.addLongProperty("settingsId").notNull().getProperty();
+        ToOne userToSettings = userEntity.addToOne(settingsEntity, userIdSettings);
+        userToSettings.setName("settings");
 
         new DaoGenerator().generateAll(schema, "../app/src/main/java/");
     }
@@ -47,6 +54,7 @@ public class BrainphaserDaoGenerator {
         user.addIdProperty();
         user.addStringProperty("name").notNull();
         user.addStringProperty("avatar").notNull();
+        user.setHasKeepSections(true);
 
         return user;
     }
@@ -79,10 +87,25 @@ public class BrainphaserDaoGenerator {
     }
 
     public static Entity createCompletedEntity(Schema schema) {
-        Entity completed = schema.addEntity("Completed");
+        Entity completed = schema.addEntity("Completion");
         completed.addIdProperty();
         completed.addIntProperty("stage");
-        completed.addDateProperty("timeLastCompleted");
+        completed.addDateProperty("lastCompleted");
+
         return completed;
+    }
+
+    public static Entity createSettingsEntity(Schema schema) {
+        Entity settings = schema.addEntity("Settings");
+
+        settings.addIdProperty();
+        settings.addDateProperty("timeBoxStage1");
+        settings.addDateProperty("timeBoxStage2");
+        settings.addDateProperty("timeBoxStage3");
+        settings.addDateProperty("timeBoxStage4");
+        settings.addDateProperty("timeBoxStage5");
+        settings.addDateProperty("timeBoxStage6");
+
+        return settings;
     }
 }

@@ -36,8 +36,8 @@ public class ImportChallengeActivity extends Activity {
         Intent intent = getIntent();
         File file;
 
+        //Todo: fix content scheme
         if (intent.getScheme().equals("content")) {
-            //Todo: fix
             file = new File("/sdcard/Download/test.bpc");
         }
         else if (intent.getScheme().equals("file")) {
