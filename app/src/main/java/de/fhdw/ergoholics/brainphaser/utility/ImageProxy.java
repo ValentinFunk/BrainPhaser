@@ -32,6 +32,22 @@ public class ImageProxy {
     }
 
     /**
+     * Gets the resource id of an abstract path.
+     * @param imagePath imagePath the path to analyze
+     * @param context context to use
+     * @return resource id of the corresponding drawable
+     */
+    public static int getResourceId(String imagePath, Context context) {
+        if (!isDrawableImage(imagePath)) {
+            throw new IllegalArgumentException("Drawable is not a resource drawable.");
+        }
+
+        Resources resources = context.getResources();
+        String resourceName = imagePath.substring("@drawable/".length());
+        return resources.getIdentifier(resourceName, "drawable", context.getPackageName());
+    }
+
+    /**
      * Loads an image using Picasso while caching it.
      * @param imagePath path as described above
      * @param context context to use
@@ -41,10 +57,7 @@ public class ImageProxy {
         if (!isDrawableImage(imagePath)) {
             return Picasso.with(context).load(new File(imagePath));
         } else {
-            Resources resources = context.getResources();
-            String resourceName = imagePath.substring("@drawable/".length());
-            int resourceId =  resources.getIdentifier(resourceName, "drawable", context.getPackageName());
-
+            int resourceId = getResourceId(imagePath, context);
             RequestCreator requestCreator = requestCache.get(resourceId);
             if (requestCreator == null) {
                 requestCreator = Picasso.with(context).load(resourceId);

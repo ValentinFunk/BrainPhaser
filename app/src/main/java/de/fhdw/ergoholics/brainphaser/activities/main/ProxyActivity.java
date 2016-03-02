@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities;
+package de.fhdw.ergoholics.brainphaser.activities.main;
 
 import android.content.Intent;
 import android.net.Uri;
