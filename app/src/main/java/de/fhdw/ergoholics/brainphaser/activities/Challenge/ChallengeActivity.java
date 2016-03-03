@@ -1,6 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.List;
@@ -48,9 +50,9 @@ public class ChallengeActivity extends AppCompatActivity{
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
-        //FragementManager manges the fragments in the activity
-        mFManager=getSupportFragmentManager();
 
+        //FragementManager manages the fragments in the activity
+        mFManager=getSupportFragmentManager();
 
         Intent i = getIntent();
         long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
@@ -76,14 +78,12 @@ public class ChallengeActivity extends AppCompatActivity{
                     return;
                 }
 
-                if(mAnswerChecked ==false) {
-                    //TODO Ändern, sodass überprüfen immer möglich ist (Text)
-                    MultipleChoiceFragment multipleChoiceFragment = (MultipleChoiceFragment) mFManager.findFragmentById(R.id.challenge_fragment);
-
+                if(!mAnswerChecked) {
+                    AnswerFragment currentFragment =(AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
                     BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
                     User currentUser = app.getCurrentUser();
 
-                    if (multipleChoiceFragment.getCheckedAnswersRight()) {
+                    if (currentFragment.checkAnswers()) {
                         CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
                     } else {
                         CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
@@ -98,7 +98,7 @@ public class ChallengeActivity extends AppCompatActivity{
                     }
                 }else{
                     mChallengeNo += 1;
-                    loadChallenge(allChallenges.get(mChallengeNo-1));
+                    loadChallenge(allChallenges.get(mChallengeNo));
                     btnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
                     mAnswerChecked = false;
                 }
@@ -108,8 +108,8 @@ public class ChallengeActivity extends AppCompatActivity{
     }
 
     /**
-     *
-     * @param challengeId The challenge's id to be solved
+     * Loads the current challenge depending and its fragment depending on the challenge-type
+     * @param challengeId The challenge's id to be loaded
      */
     private void loadChallenge(long challengeId){
         //Bundle to transfer the ChallengeId to the fragments
@@ -125,21 +125,18 @@ public class ChallengeActivity extends AppCompatActivity{
         //Inflate the QuestionFragment in the question_fragment
         mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        //TODO ChallengeType evaluieren
-        ChallengeDataSource.ChallengeType type = ChallengeDataSource.ChallengeType.MULTIPLE_CHOICE;
-        switch (type){
-            case MULTIPLE_CHOICE:
+        Challenge currentChallenge = ChallengeDataSource.getById(challengeId);
+
+        switch (currentChallenge.getChallengeType()){
+            case 1:
                 //Create a MultipleChoiceFragment
                 MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
                 //Commit the bundle
                 multipleChoiceFragment.setArguments(bundle);
-                mFTransaction.add(R.id.challenge_fragment, multipleChoiceFragment);
                 //Inflate the MultipleChoiceFragment in the challenge_fragment
                 mFTransaction.replace(R.id.challenge_fragment, multipleChoiceFragment);
-
                 break;
-            case TEXT:
-                //TODO TextFragment integrieren
+            case 2:
                 //Create a TextFragment
                 TextFragment textFragment = new TextFragment();
                 //Commit the bundle
@@ -148,7 +145,6 @@ public class ChallengeActivity extends AppCompatActivity{
                 mFTransaction.replace(R.id.challenge_fragment, textFragment);
                 break;
         }
-
         //All actions are bundled as on action
         mFTransaction.addToBackStack(null);
         //Commit the changes
