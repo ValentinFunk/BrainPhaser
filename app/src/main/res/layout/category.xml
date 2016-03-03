@@ -1,71 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:minWidth="300dp"
+    android:padding="10dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true"
+    card_view:contentPadding="0dp">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                        android:id="@+id/cardView"
-                                        android:layout_width="fill_parent"
-                                        android:layout_height="fill_parent"
-                                        android:minWidth="300dp"
-                                        android:padding="10dp"
-                                        card_view:cardCornerRadius="4dp"
-                                        card_view:cardElevation="8dp"
-                                        card_view:cardUseCompatPadding="true"
-                                        card_view:contentPadding="0dp"
-                                        card_view:cardPreventCornerOverlap="false"
-                                        android:foreground="?android:attr/selectableItemBackground"
-                                        android:clickable="true">
+    <RelativeLayout
+        android:id="@+id/imageLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/categoryImage"
+            android:layout_width="match_parent"
+            android:layout_height="100dip"
+            android:scaleType="centerCrop"
+            android:src="@drawable/computer" />
+
+        <TextView
+            android:id="@+id/categoryTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageLayout">
+            android:layout_alignBottom="@+id/categoryImage"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dip"
+            android:layout_marginLeft="16dip"
+            android:includeFontPadding="false"
+            android:text="Computer"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:scaleType="centerCrop"
-                android:src="@drawable/computer"
-                android:id="@+id/categoryImage"
-                />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/categoryTitle"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:id="@+id/categoryDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:text="Computer"
-                android:id="@+id/categoryTitle"
-                android:layout_alignBottom="@+id/categoryImage"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="16dip"
-                android:layout_marginLeft="16dip"
-                android:textColor="#FFFFFF"
                 android:includeFontPadding="false"
-                />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/categoryTitle"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/linearLayout"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp" >
-
-                <TextView
-                    android:id="@+id/categoryDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Text"
-                    android:textAppearance="?android:attr/textAppearance"
-                    android:includeFontPadding="false"
-                    />
-            </LinearLayout>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+                android:text="Text"
+                android:textAppearance="?android:attr/textAppearance" />
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
