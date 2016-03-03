@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
@@ -118,41 +119,24 @@ public class DueChallengeLogic {
      * @return the Date object containing the timebox of the given settings object
      */
     private static Date getTimeboxByStage(Settings settings, int stage) {
-        if (settings!=null) {
-            switch (stage) {
-                case 1:
-                    return settings.getTimeBoxStage1();
-                case 2:
-                    return settings.getTimeBoxStage2();
-                case 3:
-                    return settings.getTimeBoxStage3();
-                case 4:
-                    return settings.getTimeBoxStage4();
-                case 5:
-                    return settings.getTimeBoxStage5();
-                case 6:
-                    return settings.getTimeBoxStage6();
-                default:
-                    return null;
-            }
-        }
-        else{
-            switch (stage) {
-                case 1:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage1();
-                case 2:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage2();
-                case 3:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage3();
-                case 4:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage4();
-                case 5:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage5();
-                case 6:
-                    return SettingsDataSource.getDefaultSettings().getTimeBoxStage6();
-                default:
-                    return null;
-            }
+        switch (stage) {
+            case 1:
+                return settings.getTimeBoxStage1();
+            case 2:
+                return settings.getTimeBoxStage2();
+            case 3:
+                return settings.getTimeBoxStage3();
+            case 4:
+                return settings.getTimeBoxStage4();
+            case 5:
+                return settings.getTimeBoxStage5();
+            case 6:
+                return settings.getTimeBoxStage6();
+            default:
+                if (BuildConfig.DEBUG) {
+                    throw new RuntimeException("Attempting to get invalid timebox " + stage);
+                }
+                return null;
         }
     }
 }

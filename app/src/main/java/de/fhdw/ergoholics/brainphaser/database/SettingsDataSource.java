@@ -23,7 +23,7 @@ public class SettingsDataSource {
      * Creates a new Settings object with default values in the database.
      * @return Setttings Object containing default values
      */
-    public static Settings getDefaultSettings( ) {
+    public static Settings getNewDefaultSettings() {
         Settings settings = new Settings();
 
         settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes
