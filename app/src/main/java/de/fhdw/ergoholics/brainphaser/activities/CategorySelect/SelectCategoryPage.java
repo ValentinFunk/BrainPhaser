@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 
@@ -22,7 +24,7 @@ import java.util.List;
 /**
  * Created by funkv on 17.02.2016.
  */
-public class SelectCategoryActivity extends Fragment implements CategoryAdapter.SelectionListener {
+public class SelectCategoryPage extends Fragment implements CategoryAdapter.SelectionListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,20 +45,7 @@ public class SelectCategoryActivity extends Fragment implements CategoryAdapter.
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         recyclerView.setLayoutManager(layoutManager);
 
-        //List<Category>categories = CategoryDataSource.getAll();
-        List<Category> categories = Arrays.asList(
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/architektur"),
-            new Category(-1l, "Computer", "Lerne neue, coole Fakten über Computer und Informationstechnologie. Du wirst mit Fragen zu Netzwerken, Hardware, Software, Programmiersprachen und Softwareprojekten getestet.", "@drawable/computer"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(-1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch")
-        );
-
+        List<Category> categories = CategoryDataSource.getAll();
         recyclerView.setAdapter(new CategoryAdapter(categories, this));
 
         return rootView;
@@ -64,7 +53,9 @@ public class SelectCategoryActivity extends Fragment implements CategoryAdapter.
 
     @Override
     public void onCategorySelected(Category category) {
-        // TODO
+        Intent intent = new Intent(getContext(), ChallengeActivity.class);
+        intent.putExtra(ChallengeActivity.EXTRA_CATEGORY_ID, category.getId());
+        startActivity(intent);
     }
 
     @Override

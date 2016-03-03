@@ -4,13 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.SparseArray;
-
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by funkv on 29.02.2016.

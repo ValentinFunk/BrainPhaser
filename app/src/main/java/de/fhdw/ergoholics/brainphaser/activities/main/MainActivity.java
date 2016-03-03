@@ -1,39 +1,20 @@
 package de.fhdw.ergoholics.brainphaser.activities.main;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
-
-import java.util.Arrays;
 
 /**
  * Created by funkv on 20.02.2016.

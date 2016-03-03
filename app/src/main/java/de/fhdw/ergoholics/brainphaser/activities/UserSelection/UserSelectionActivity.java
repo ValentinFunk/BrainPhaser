@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +13,6 @@ import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;

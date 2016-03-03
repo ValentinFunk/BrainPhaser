@@ -1,14 +1,10 @@
 package de.fhdw.ergoholics.brainphaser.activities.main;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
-import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 
 /**
  * Created by funkv on 02.03.2016.
@@ -58,7 +54,7 @@ public class Navigation {
         navigationItems.put(NavigationState.NAV_LEARN.ordinal(), new NavigationItem(R.string.nav_learn) {
             @Override
             public Fragment getFragment() {
-                return new SelectCategoryActivity();
+                return new SelectCategoryPage();
             }
         });
     }

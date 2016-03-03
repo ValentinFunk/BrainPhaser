@@ -1,17 +1,21 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
@@ -21,25 +25,36 @@ import java.util.List;
 
 public class ChallengeActivity extends AppCompatActivity{
 
-    public static final String KEY_CATEGORY_ID="KEY_CURRENT_CATEGORY_ID";
+    public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
     private int mChallengeNo = 0;
     private boolean mAnswerChecked;
     private boolean mChallengeDone=false;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
+        Toolbar myChildToolbar =
+            (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
         //FragementManager manges the fragments in the activity
-        mFManager=getFragmentManager();
+        mFManager=getSupportFragmentManager();
 
 
         Intent i = getIntent();
-        long categoryId= i.getLongExtra(KEY_CATEGORY_ID,-1);
+        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
+
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
         final List<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, categoryId);
@@ -52,7 +67,10 @@ public class ChallengeActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 if(mChallengeDone){
-                    startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), SelectCategoryPage.class);
+                    intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
+                    startActivity(intent);
+
                     setResult(Activity.RESULT_OK);
                     finish();
                     return;
