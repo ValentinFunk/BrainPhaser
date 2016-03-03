@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.model.UserDao;
 
@@ -19,6 +20,10 @@ public class UserDataSource {
      * @return id of the created user
      */
     public static long create(User user) {
+        if (user.getSettingsId() == 0) {
+            user.setSettings(SettingsDataSource.getNewDefaultSettings());
+        }
+
         return DaoManager.getSession().getUserDao().insert(user);
     }
 

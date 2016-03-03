@@ -14,8 +14,7 @@ import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
- * Created by Christian on 16.02.2016.
- * Adapter and ViewHolder for the UserLists
+ * Created by Christian on 16.02.2016. Adapter and ViewHolder for the UserLists
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
@@ -25,8 +24,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public interface ResultListener {
         void onUserSelected(User user);
     }
+
     /**
-     *User View Holder holds the items in the UserList
+     * User View Holder holds the items in the UserList
      */
     public class UserViewHolder extends RecyclerView.ViewHolder {
         private TextView mUserText;
@@ -37,13 +37,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         public UserViewHolder(View itemView, UserAdapter adapter) {
             super(itemView);
 
-            mUserText = (TextView)itemView.findViewById(R.id.userItemText);
-            mUserImage = (ImageView)itemView.findViewById(R.id.userItemImage);
+            mUserText = (TextView) itemView.findViewById(R.id.userItemText);
+            mUserImage = (ImageView) itemView.findViewById(R.id.userItemImage);
             mAdapter = adapter;
         }
 
         /**
          * Create the item in the View Holder and add an OnClickListener
+         *
          * @param username Username
          * @param avatarId AvatarID
          * @param position Position of the item
@@ -55,7 +56,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAdapter.onElementSelected(position);
+                mAdapter.onElementSelected(position);
                 }
             });
         }
@@ -82,12 +83,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     /**
-     * Starts the interface. If the clicked item is an user, start onUserSelection otherwise start onAddUser.
+     * Starts the interface. If the clicked item is an user, start onUserSelection otherwise start
+     * onAddUser.
+     *
      * @param position item's position
      */
     public void onElementSelected(int position) {
-            mResultListener.onUserSelected(mUsers.get(position));
-        }
+        mResultListener.onUserSelected(mUsers.get(position));
+    }
 
 
     //Create a list item

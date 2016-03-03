@@ -1,7 +1,9 @@
 package de.fhdw.ergoholics.brainphaser.utility;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.SparseArray;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
@@ -18,7 +20,7 @@ import java.util.Map;
  * then the resource name.
  */
 public class ImageProxy {
-    private static Map<Integer, RequestCreator> requestCache = new HashMap<>();
+    private static SparseArray<RequestCreator> requestCache = new SparseArray<RequestCreator>( );
 
     /**
      * Returns whether the path represents a drawable resource.
@@ -27,6 +29,22 @@ public class ImageProxy {
      */
     public static boolean isDrawableImage(String imagePath) {
         return imagePath.startsWith("@drawable/");
+    }
+
+    /**
+     * Gets the resource id of an abstract path.
+     * @param imagePath imagePath the path to analyze
+     * @param context context to use
+     * @return resource id of the corresponding drawable
+     */
+    public static int getResourceId(String imagePath, Context context) {
+        if (!isDrawableImage(imagePath)) {
+            throw new IllegalArgumentException("Drawable is not a resource drawable.");
+        }
+
+        Resources resources = context.getResources();
+        String resourceName = imagePath.substring("@drawable/".length());
+        return resources.getIdentifier(resourceName, "drawable", context.getPackageName());
     }
 
     /**
@@ -39,10 +57,7 @@ public class ImageProxy {
         if (!isDrawableImage(imagePath)) {
             return Picasso.with(context).load(new File(imagePath));
         } else {
-            Resources resources = context.getResources();
-            String resourceName = imagePath.substring("@drawable/".length());
-            int resourceId =  resources.getIdentifier(resourceName, "drawable", context.getPackageName());
-
+            int resourceId = getResourceId(imagePath, context);
             RequestCreator requestCreator = requestCache.get(resourceId);
             if (requestCreator == null) {
                 requestCreator = Picasso.with(context).load(resourceId);

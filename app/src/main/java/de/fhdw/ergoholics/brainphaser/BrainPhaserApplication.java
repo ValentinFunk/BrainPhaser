@@ -39,6 +39,10 @@ public class BrainPhaserApplication extends Application {
         long lastLoggedInUserId = settings.getLong(KEY_PERSISTENT_USER_ID, -1);
         if (lastLoggedInUserId != -1) {
             User user = UserDataSource.getById(lastLoggedInUserId);
+            if (user == null) {
+                return false;
+            }
+
             mCurrentUser = user;
             return true;
         }

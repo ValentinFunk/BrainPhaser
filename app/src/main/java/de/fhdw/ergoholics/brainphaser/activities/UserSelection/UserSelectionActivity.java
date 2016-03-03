@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -25,26 +28,20 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Activity used to chose an existing user. Can load the create user activity
  * Persistent data: none
  * Parameters: none
- * Return: CURRENT_USER_ID
  */
 
 public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
         //loading of the components
-        RecyclerView userList =(RecyclerView) findViewById(R.id.userList);
+        RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
 
         //load the users from the database
         List<User> allUsers = UserDataSource.getAll();
 
-        //if no users are available go to create user activity
-        if(allUsers ==null || allUsers.size()<1){
-            startActivity(new Intent(getApplicationContext(), CreateUserActivity.class));
-        }
         //Adapter which sets all users into the list
         userList.setHasFixedSize(true);
 
@@ -57,29 +54,42 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
         userList.setAdapter(listAdapter);
 
         /**
-         * Is the add button selected finish this activity and load Create-User-Activity
+         * Is the add button selected load Create-User-Activity.
          */
         FloatingActionButton btnAddUser = (FloatingActionButton) findViewById(R.id.addUser);
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
-                setResult(Activity.RESULT_OK);
-                finish();
+            startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
 
     }
 
+    /*
+     * Used to track when the create user activity has finished. If it was cancelled, do nothing,
+     * else finish this activity (as the user is automatically logged in).
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
+    }
+
     /**
-     * Is a user selected finish this activity and load Challenge-Set-Activity
+     * When a user has been selected, finish this activity and load learning activity
      * @param user
      */
     @Override
     public void onUserSelected(User user) {
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         app.switchUser(user);
-        startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
+        startActivity(intent);
 
         setResult(Activity.RESULT_OK);
         finish();

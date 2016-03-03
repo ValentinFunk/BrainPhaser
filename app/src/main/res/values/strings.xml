@@ -5,7 +5,7 @@
     <string name="dialog_pick_avatar">Wähle deinen Avatar</string>
     <string name="cancel">Abbrechen</string>
     <string name="select">Auswählen</string>
-    <string name="create_profile">Bitte erstelle ein Profil.</string>
+    <string name="create_profile">Speichere Lernfortschritt im Profil.</string>
     <string name="welcome">Wilkommen zu BrainPhaser.</string>
     <string name="username">Benutzername</string>
     <string name="empty_username">Der Benutzername darf nicht leer sein.</string>
@@ -23,4 +23,10 @@
     <string name="next_Challenge">Nächste Challenge</string>
     <string name="check_Challenge">Überprüfe Antwort</string>
     <string name="end_Challenge">Ende</string>
+
+    <string name="switch_user">Benutzer wechseln</string>
+    <string name="settings">Einstellungen</string>
+    <string name="about">Über</string>
+
+    <string name="nav_learn">Lernen</string>
 </resources>

@@ -1,6 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -56,7 +57,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             final Category category = mCategories.get(position - 1);
             holder.getTitle().setText(category.getTitle());
             holder.getDescription().setText(category.getDescription());
-            ImageProxy.loadImage(category.getImage(), holder.getContext()).into(holder.getImage());
+            if (ImageProxy.isDrawableImage(category.getImage())) {
+                holder.getImage().setImageResource(ImageProxy.getResourceId(category.getImage(), holder.getContext()));
+            } else {
+                ImageProxy.loadImage(category.getImage(), holder.getContext()).into(holder.getImage());
+            }
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
