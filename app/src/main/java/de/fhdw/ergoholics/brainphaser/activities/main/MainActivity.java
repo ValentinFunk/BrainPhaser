@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
@@ -41,6 +42,10 @@ import java.util.Arrays;
  * been launched before.
  */
 public class MainActivity extends AppCompatActivity {
+    public static String EXTRA_NAVIGATE_TO = "NAVIGATE_TO";
+
+    private ViewPager mViewPager;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -83,8 +88,37 @@ public class MainActivity extends AppCompatActivity {
         TabLayout layout = (TabLayout)findViewById(R.id.tabs);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
+        mViewPager = viewPager;
+
 
         layout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Intent intent = getIntent();
+        if (intent == null) {
+            return;
+        }
+
+        Navigation.NavigationState state = (Navigation.NavigationState) intent.getSerializableExtra(EXTRA_NAVIGATE_TO);
+        if (state != null) {
+            navigateToState(state);
+        }
+    }
+
+    /**
+     * Navigate to a given view state by ID
+     * @param state Id of the state to navigate to.
+     */
+    public void navigateToState(Navigation.NavigationState state) {
+        if (BuildConfig.DEBUG && state == null) {
+            throw new RuntimeException("Attempting to switch to invalid navigation state");
+        }
+
+        mViewPager.setCurrentItem(state.ordinal());
     }
 }

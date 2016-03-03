@@ -31,11 +31,11 @@ public class SelectCategoryActivity extends Fragment implements CategoryAdapter.
         // Set orientation to horizontal
         RecyclerView recyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
 
-        // get 200dpi in px
+        // get 300dpi in px
         float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        float cardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
+        float cardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f - 48.f, getResources().getDisplayMetrics());
 
         int spans = isLandscape ? (int)Math.floor(getResources().getDisplayMetrics().heightPixels / cardHeight) : (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
         int orientation = isLandscape ? StaggeredGridLayoutManager.HORIZONTAL : StaggeredGridLayoutManager.VERTICAL;

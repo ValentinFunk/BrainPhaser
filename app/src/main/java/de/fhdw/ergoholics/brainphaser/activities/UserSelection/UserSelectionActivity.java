@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -76,14 +79,17 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
     }
 
     /**
-     * Is a user selected finish this activity and load Challenge-Set-Activity
+     * When a user has been selected, finish this activity and load learning activity
      * @param user
      */
     @Override
     public void onUserSelected(User user) {
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         app.switchUser(user);
-        startActivity(new Intent(getApplicationContext(), SelectCategoryActivity.class));
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
+        startActivity(intent);
 
         setResult(Activity.RESULT_OK);
         finish();

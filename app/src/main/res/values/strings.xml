@@ -27,4 +27,6 @@
     <string name="switch_user">Benutzer wechseln</string>
     <string name="settings">Einstellungen</string>
     <string name="about">Über</string>
+
+    <string name="nav_learn">Lernen</string>
 </resources>
