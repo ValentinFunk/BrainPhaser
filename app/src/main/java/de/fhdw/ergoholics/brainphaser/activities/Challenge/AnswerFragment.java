@@ -35,7 +35,7 @@ public abstract class AnswerFragment extends Fragment {
             mAnswerList = mChallenge.getAnswers();
             //Check if answers are okay
             if (mAnswerList == null) {
-                throw new NullPointerException("Whops. Leider konnten die Antworten der Challenge " + id + " nciht geladen werden. :(");
+                throw new NullPointerException("Whops. Leider konnten die Antworten der Challenge " + id + " nicht geladen werden. :(");
             }
             if (mChallenge.getChallengeType() == 1 && mAnswerList.size() != 4) {
                 throw new FormatException("Whops. Leider sind die Antworten der Challenge " + id + " nicht korrekt. :(");

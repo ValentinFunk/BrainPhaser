@@ -1,9 +1,15 @@
 package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,11 +78,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
-    public void onExpand(View view)
-    {
-
-    }
-
     @Override
     public int getItemCount() {
         return mCategories.size() + 1;
@@ -95,13 +96,42 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private TextView mTitle;
         private TextView mDescription;
         private ImageView mImage;
+        private ImageView mExpandButton;
+        private boolean mExpanded;
+        private CardView mStatisticsView;
+        private StatisticsFragment mStatisticsFragment;
 
-        public ViewHolder(View itemView) {
+        private static Drawable BTN_LESS;
+        private static Drawable BTN_MORE;
+
+        public ViewHolder(final View itemView) {
             super(itemView);
+
+            BTN_LESS = getContext().getResources().getDrawable(R.drawable.ic_expand_less_black_48dp);
+            BTN_MORE = getContext().getResources().getDrawable(R.drawable.ic_expand_more_black_48dp);
 
             mTitle = (TextView) itemView.findViewById(R.id.categoryTitle);
             mDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
             mImage = (ImageView) itemView.findViewById(R.id.categoryImage);
+
+            mExpandButton = (ImageView) itemView.findViewById(R.id.expandButton);
+            mExpandButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onToggle(itemView);
+                }
+            });
+            mExpanded = false;
+
+            mStatisticsView = (CardView) itemView.findViewById(R.id.statisticsView);
+
+            mStatisticsFragment = new StatisticsFragment();
+
+            //Show StatisticsFragment in CardView
+            FragmentManager fragmentManager = ((Activity) getContext()).getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.statisticsView, mStatisticsFragment);
+            fragmentTransaction.commit();
         }
 
         public TextView getTitle() {
@@ -118,6 +148,21 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         public Context getContext() {
             return itemView.getContext();
+        }
+
+        public void onToggle(View itemView) {
+            if (mExpanded) {
+                mExpandButton.setImageDrawable(BTN_MORE);
+
+                mStatisticsFragment.setVisible(false);
+            }
+            else {
+                mExpandButton.setImageDrawable(BTN_LESS);
+
+                mStatisticsFragment.setVisible(true);
+
+            }
+            mExpanded = !mExpanded;
         }
     }
 }

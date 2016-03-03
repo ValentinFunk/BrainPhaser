@@ -72,14 +72,14 @@
             android:nestedScrollingEnabled="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:onClick="onExpand"
             android:layout_alignParentBottom="false"
             android:layout_alignBottom="@+id/linearLayout" />
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/view2"
+            android:layout_marginTop="8dp"
+            android:id="@+id/statisticsView"
             android:layout_below="@+id/expandButton" />
 
     </RelativeLayout>
