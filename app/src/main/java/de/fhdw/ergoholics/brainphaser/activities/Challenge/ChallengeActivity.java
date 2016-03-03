@@ -1,7 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -11,13 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
+import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
@@ -118,6 +117,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
+        mFTransaction.disallowAddToBackStack();
         //Create the QuestionFragment
         QuestionFragment questionFragment =new QuestionFragment();
         //Commit the bundle
@@ -128,7 +128,7 @@ public class ChallengeActivity extends AppCompatActivity{
         Challenge currentChallenge = ChallengeDataSource.getById(challengeId);
 
         switch (currentChallenge.getChallengeType()){
-            case 1:
+            case ChallengeType.MULTIPLE_CHOICE:
                 //Create a MultipleChoiceFragment
                 MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
                 //Commit the bundle
@@ -136,7 +136,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 //Inflate the MultipleChoiceFragment in the challenge_fragment
                 mFTransaction.replace(R.id.challenge_fragment, multipleChoiceFragment);
                 break;
-            case 2:
+            case ChallengeType.TEXT:
                 //Create a TextFragment
                 TextFragment textFragment = new TextFragment();
                 //Commit the bundle
@@ -144,9 +144,10 @@ public class ChallengeActivity extends AppCompatActivity{
                 //Inflate the TextFragment in the challenge_fragment
                 mFTransaction.replace(R.id.challenge_fragment, textFragment);
                 break;
+            case ChallengeType.SELF_TEST:
+                //Create a SelfCheckFragment
+                break;
         }
-        //All actions are bundled as on action
-        mFTransaction.addToBackStack(null);
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-import de.fhdw.ergoholics.brainphaser.model.Completion;
-import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -29,9 +26,7 @@ public class ChallengeDataSource {
      * TEXT: type for text entry challenges
      * DECIDE: type for challenges, where the user makes the decision if his answer was correct
      */
-    public enum ChallengeType{
-        MULTIPLE_CHOICE, TEXT,
-    }
+
 
     /**
      * Returns the Challenge object with the given id

@@ -3,7 +3,6 @@ package de.fhdw.ergoholics.brainphaser.logic;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;

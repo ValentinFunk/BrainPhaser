@@ -35,18 +35,17 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         //loading of the components
         RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
+        userList.setHasFixedSize(true);
 
         //load the users from the database
         List<User> allUsers = UserDataSource.getAll();
-
-        //Adapter which sets all users into the list
-        userList.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         userList.setLayoutManager(layoutManager);
 
         //Create the View
+        //Adapter which sets all users into the list
         UserAdapter listAdapter = new UserAdapter(allUsers, this);
         userList.setAdapter(listAdapter);
 

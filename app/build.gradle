@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "de.fhdw.ergoholics.brainphaser"
-        minSdkVersion 21
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
