@@ -72,6 +72,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
+    public void onExpand(View view)
+    {
+
+    }
+
     @Override
     public int getItemCount() {
         return mCategories.size() + 1;
