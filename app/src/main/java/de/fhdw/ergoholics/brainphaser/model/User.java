@@ -10,7 +10,6 @@ import de.greenrobot.dao.DaoException;
 import de.greenrobot.dao.query.QueryBuilder;
 import de.fhdw.ergoholics.brainphaser.database.DaoManager;
 // KEEP INCLUDES END
-
 /**
  * Entity mapped to table "USER".
  */
@@ -168,16 +167,6 @@ public class User {
     }
 
     // KEEP METHODS - put your custom methods here
-
-    public List<Challenge> getUncompletedChallanges( ) {
-        //Todo: Test
-        QueryBuilder challenges = DaoManager.getSession().getChallengeDao().queryBuilder();
-        challenges.join(CompletionDao.Properties.ChallengeId, Completion.class)
-            .where(CompletionDao.Properties.ChallengeId.isNull(),
-                CompletionDao.Properties.UserId.eq(this.getId()));
-
-        return challenges.list();
-    }
     // KEEP METHODS END
 
 }
