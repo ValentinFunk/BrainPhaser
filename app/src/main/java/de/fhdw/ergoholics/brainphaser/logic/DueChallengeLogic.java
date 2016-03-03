@@ -113,12 +113,14 @@ public class DueChallengeLogic {
     }
 
     /**
-     * Returns the timebox of the given stage in the given Settings object
+     * Returns the timebox of the given stage in the given Settings object. If the given settings
+     * object is a null pointer this method returns the default timebox in the given stage.
      * @param settings Settings object whose timebox will be returned
      * @param stage number of the stage whose timebox will be returned
      * @return the Date object containing the timebox of the given settings object
      */
     private static Date getTimeboxByStage(Settings settings, int stage) {
+        settings = (settings == null) ? SettingsDataSource.getNewDefaultSettings() : settings;
         switch (stage) {
             case 1:
                 return settings.getTimeBoxStage1();
