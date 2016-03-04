@@ -3,12 +3,14 @@ package de.fhdw.ergoholics.brainphaser.activities.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
@@ -24,6 +26,7 @@ import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActi
  */
 public class MainActivity extends AppCompatActivity {
     public static String EXTRA_NAVIGATE_TO = "NAVIGATE_TO";
+    public static String EXTRA_SHOW_LOGGEDIN_SNACKBAR = "SHOW_SNACKBAR";
 
     private ViewPager mViewPager;
 
@@ -54,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.mainactivity);
 
         BrainPhaserApplication application = (BrainPhaserApplication)getApplication();
-        if (application.logInLastUser()) {
-            // TODO: Go to
-        } else {
+        if (!application.logInLastUser()) {
             startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
             finish();
         }
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
         mViewPager = viewPager;
-
 
         layout.setupWithViewPager(viewPager);
     }
@@ -88,6 +88,26 @@ public class MainActivity extends AppCompatActivity {
         Navigation.NavigationState state = (Navigation.NavigationState) intent.getSerializableExtra(EXTRA_NAVIGATE_TO);
         if (state != null) {
             navigateToState(state);
+        }
+
+        // If EXTRA_SHOW_LOGGEDIN_SNACKBAR is passed,
+        // show a little snackbar that shows the currently logged in user's name
+        if (intent.getBooleanExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false)) {
+            BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
+            View rootView = findViewById(R.id.main_content);
+            String text = String.format(getResources().getString(R.string.logged_in_as), app.getCurrentUser().getName());
+            Snackbar
+                .make(rootView, text, Snackbar.LENGTH_LONG)
+                .setAction(R.string.switch_user, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), UserSelectionActivity.class);
+                        startActivity(intent);
+                    }
+                }).show();
+
+            // Update the intent so it doesn't show again on back navigation and thus only when explicitly requested
+            intent.putExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false);
         }
     }
 

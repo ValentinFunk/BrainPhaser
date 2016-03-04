@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 
 import de.fhdw.ergoholics.brainphaser.database.DaoManager;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;

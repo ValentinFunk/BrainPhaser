@@ -37,7 +37,7 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
         float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        float cardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f - 48.f, getResources().getDisplayMetrics());
+        float cardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250.f, getResources().getDisplayMetrics());
 
         int spans = isLandscape ? (int)Math.floor(getResources().getDisplayMetrics().heightPixels / cardHeight) : (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
         int orientation = isLandscape ? StaggeredGridLayoutManager.HORIZONTAL : StaggeredGridLayoutManager.VERTICAL;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,7 +47,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         //Create the View
         //Adapter which sets all users into the list
-        UserAdapter listAdapter = new UserAdapter(allUsers, this);
+        UserAdapter listAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
         userList.setAdapter(listAdapter);
 
         /**
@@ -85,6 +86,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
+        intent.putExtra(MainActivity.EXTRA_SHOW_LOGGEDIN_SNACKBAR, true);
         startActivity(intent);
 
         setResult(Activity.RESULT_OK);

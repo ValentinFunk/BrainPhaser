@@ -23,7 +23,10 @@ public class ProxyActivity extends AppCompatActivity {
 
         BrainPhaserApplication application = (BrainPhaserApplication)getApplication();
         if (application.logInLastUser()) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra(MainActivity.EXTRA_SHOW_LOGGEDIN_SNACKBAR, true);
+
+            startActivity(intent);
             finish();
         } else {
             startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
