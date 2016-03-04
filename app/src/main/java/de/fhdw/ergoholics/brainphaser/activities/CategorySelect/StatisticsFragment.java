@@ -17,30 +17,28 @@ import de.fhdw.ergoholics.brainphaser.R;
  * Created by Daniel on 03/03/2016.
  */
 public class StatisticsFragment extends Fragment {
-        ViewGroup mParentGroup;
+        View mView;
 
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            mParentGroup = container;
+            mView = inflater.inflate(R.layout.fragment_category_statistics, container, false);
 
-            View view = inflater.inflate(R.layout.fragment_category_statistics, container, false);
-
-            BarChart barChart = (BarChart) mParentGroup.findViewById(R.id.barChart);
-            PieChart pieChart = (PieChart) mParentGroup.findViewById(R.id.pieChart);
+            BarChart barChart = (BarChart) mView.findViewById(R.id.barChart);
+            PieChart pieChart = (PieChart) mView.findViewById(R.id.pieChart);
 
             setVisible(false);
 
-            return view;
+            return mView;
         }
 
     public void setVisible(boolean visible)
     {
         if (visible) {
-            mParentGroup.findViewById(R.id.statisticsView).setVisibility(View.VISIBLE);
+            mView.setVisibility(View.VISIBLE);
         }
         else {
-            mParentGroup.findViewById(R.id.statisticsView).setVisibility(View.GONE);
+            mView.setVisibility(View.GONE);
         }
     }
 }
