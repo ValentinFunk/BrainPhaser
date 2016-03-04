@@ -19,7 +19,12 @@
     <string name="all_categories">Alle Kategorien</string>
     <string name="all_categories_desc">Alle fälligen Challenges über alle Kategorien hinweg bearbeiten.</string>
     <string name="title_activity_challenge">Challenge</string>
-    <string name="challenges_due">%1$i Challenges fällig</string>
+
+    <plurals name="challenges_due">
+        <item quantity="one">Eine Challenge fällig.</item>
+        <item quantity="other">%d Challenges fällig.</item>
+    </plurals>
+    <string name="no_challenges_due">Keine Challenges fällig.</string>
 
     <string name="next_Challenge">Nächste Challenge</string>
     <string name="check_Challenge">Überprüfe Antwort</string>
