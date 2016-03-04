@@ -71,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Pass the intent containing the file URI on to the Import Challenge method
         if (requestCode == CODE_FILEPICKER) {
-            data.setClass(getApplicationContext(), ImportChallengeActivity.class);
-            startActivity(data);
+            if (data != null) {
+                data.setClass(getApplicationContext(), ImportChallengeActivity.class);
+                startActivity(data);
+            }
             return;
         }
 
