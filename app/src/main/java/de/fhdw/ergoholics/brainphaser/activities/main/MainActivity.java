@@ -126,15 +126,23 @@ public class MainActivity extends AppCompatActivity {
             BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
             View rootView = findViewById(R.id.main_content);
             String text = String.format(getResources().getString(R.string.logged_in_as), app.getCurrentUser().getName());
-            Snackbar
+            final Snackbar snackbar = Snackbar
                 .make(rootView, text, Snackbar.LENGTH_LONG)
-                .setAction(R.string.switch_user, new View.OnClickListener() {
+                .setAction(R.string.switch_user_short, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(getApplicationContext(), UserSelectionActivity.class);
                         startActivity(intent);
                     }
-                }).show();
+                });
+
+            // Delay the snackbar a quater second for a smoother experience
+            rootView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    snackbar.show();
+                }
+            }, 250);
 
             // Update the intent so it doesn't show again on back navigation and thus only when explicitly requested
             intent.putExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false);

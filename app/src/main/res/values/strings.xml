@@ -31,9 +31,10 @@
     <string name="end_Challenge">Ende</string>
 
     <string name="switch_user">Benutzer wechseln</string>
+    <string name="switch_user_short">Wechseln</string>
     <string name="settings">Einstellungen</string>
     <string name="about">Über</string>
-    <string name="logged_in_as">Eingeloggt als %1$s</string>
+    <string name="logged_in_as">%1$s eingeloggt.</string>
 
     <string name="nav_learn">Lernen</string>
 </resources>

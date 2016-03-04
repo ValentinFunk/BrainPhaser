@@ -86,7 +86,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
-        intent.putExtra(MainActivity.EXTRA_SHOW_LOGGEDIN_SNACKBAR, true);
         startActivity(intent);
 
         setResult(Activity.RESULT_OK);
