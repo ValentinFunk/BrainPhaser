@@ -1,6 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
@@ -29,8 +30,8 @@ public class ChallengeActivity extends AppCompatActivity{
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
     private int mChallengeNo = 0;
+    private Button mBtnNextChallenge;
     private boolean mAnswerChecked;
-    private boolean mChallengeDone=false;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
 
@@ -48,7 +49,8 @@ public class ChallengeActivity extends AppCompatActivity{
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
+        //get the button
+        mBtnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
 
         //FragementManager manages the fragments in the activity
         mFManager=getSupportFragmentManager();
@@ -59,46 +61,44 @@ public class ChallengeActivity extends AppCompatActivity{
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
         final List<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, categoryId);
+        if (allChallenges==null || allChallenges.size()<1){
+            loadFinishScreen();
+            return;
+        }
 
         loadChallenge(allChallenges.get(mChallengeNo));
         mAnswerChecked =false;
 
-        final Button btnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
-        btnNextChallenge.setOnClickListener(new View.OnClickListener() {
+        mBtnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mChallengeDone){
-                    Intent intent = new Intent(getApplicationContext(), SelectCategoryPage.class);
-                    intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
-                    startActivity(intent);
-
-                    setResult(Activity.RESULT_OK);
-                    finish();
-                    return;
-                }
-
-                if(!mAnswerChecked) {
+                if(!mAnswerChecked) {//Check the current answer and load the finish screen
+                    //Find the current fragment and user
                     AnswerFragment currentFragment =(AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
                     BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
                     User currentUser = app.getCurrentUser();
 
+                    //Check if the answer is right
                     if (currentFragment.checkAnswers()) {
                         CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
                     } else {
                         CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
                     }
 
-                    btnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
+                    //Activate next challenge
+                    mBtnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
                     mAnswerChecked =true;
-                    if(mChallengeNo>=allChallenges.size()){
-                        //Load End Screen
-                        mChallengeDone=true;
-                        btnNextChallenge.setText(getResources().getString(R.string.end_Challenge));
+                    //If the challenge is completed load the finish screen
+                    if(mChallengeNo==allChallenges.size()-1){
+                        loadFinishScreen();
                     }
-                }else{
+                }else{//Load the next challenge
+                    //increment counter
                     mChallengeNo += 1;
+                    //load the next challenge
                     loadChallenge(allChallenges.get(mChallengeNo));
-                    btnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
+                    //reset values
+                    mBtnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
                     mAnswerChecked = false;
                 }
             }
@@ -106,6 +106,24 @@ public class ChallengeActivity extends AppCompatActivity{
 
     }
 
+    private void loadFinishScreen(){
+        //Load End Screen
+        mFTransaction=mFManager.beginTransaction();
+        mFTransaction.disallowAddToBackStack();
+        //Create the finish-challenge
+        FinishChallengeFragment finishChallengeFragment =new FinishChallengeFragment();
+        //Inflate the finish-challenge in the question_fragment
+        mFTransaction.replace(R.id.challenge_fragment_question, finishChallengeFragment);
+        //Remove the challenge-fragment
+        Fragment fragment = mFManager.findFragmentById(R.id.challenge_fragment);
+        if(fragment!=null) {
+            mFTransaction.remove(fragment);
+        }
+        //Commit the changes
+        mFTransaction.commit();
+        mFManager.executePendingTransactions();
+        mBtnNextChallenge.setVisibility(View.INVISIBLE);
+    }
     /**
      * Loads the current challenge depending and its fragment depending on the challenge-type
      * @param challengeId The challenge's id to be loaded
