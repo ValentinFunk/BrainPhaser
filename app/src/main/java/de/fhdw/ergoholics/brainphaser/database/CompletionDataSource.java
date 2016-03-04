@@ -26,7 +26,7 @@ public class CompletionDataSource {
     }
 
     public static List<Completion> getByUserAndStage(User user, int stage) {
-        QueryBuilder completed = DaoManager.getSession().getCompletionDao().queryBuilder()
+        QueryBuilder<Completion> completed = DaoManager.getSession().getCompletionDao().queryBuilder()
                 .where(CompletionDao.Properties.UserId.eq(user.getId()),
                         CompletionDao.Properties.Stage.eq(stage));
         return completed.list();
