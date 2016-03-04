@@ -25,8 +25,8 @@ public class TextFragment extends AnswerFragment {
         mView = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container, false);
         mAnswerText = (EditText) mView.findViewById(R.id.answerText);
         loadChallengeAndAnswers();
-        return mView;
 
+        return mView;
     }
 
     /**

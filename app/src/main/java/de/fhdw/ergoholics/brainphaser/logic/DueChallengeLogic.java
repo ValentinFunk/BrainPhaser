@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
@@ -19,9 +20,9 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class DueChallengeLogic {
     /**
      * Returns a list with the ids of all due challenges of the given user in the category with the
-     * given id. If the given category id is -1, the due challenges of all categories will be
-     * returned. Challenges without entries in the completed table will be returned and the missing
-     * entries will be created.
+     * given id. If the given category id is CategoryDataSource.CATEGORY_ID_ALL, the due challenges
+     * of all categories will be returned. Challenges without entries in the completed table will be
+     * returned and the missing entries will be created.
      * @param user the user whose due challenges will be returned
      * @param categoryId the id of the category whose due challenges will be returned
      * @return List object containing the ids of all due challenges
@@ -42,8 +43,8 @@ public class DueChallengeLogic {
 
     /**
      * Adds the ids of all due challenges of the given user in the category with the given id to
-     * the given list. If the given category id is -1, the due challenges of all categories will be
-     * added.
+     * the given list. If the given category id is CategoryDataSource.CATEGORY_ID_ALL, the due
+     * challenges of all categories will be added.
      * @param dueChallenges the list object the due challenges will be added to
      * @param user the user whose due challenges will be added
      * @param categoryId the id of the category whose due challenges will be returned
@@ -68,8 +69,8 @@ public class DueChallengeLogic {
                 Date lastCompleted = completed.getLastCompleted();
 
                 if (now.getTime() - lastCompleted.getTime() >= timebox.getTime()) {
-                    if (categoryId==-1 || categoryId ==
-                            completed.getChallengeCompletions().getCategoryId()) {
+                    if (categoryId== CategoryDataSource.CATEGORY_ID_ALL ||
+                            categoryId == completed.getChallengeCompletions().getCategoryId()) {
                         dueChallenges.add(completed.getChallengeId());
                     }
                 }
@@ -97,11 +98,11 @@ public class DueChallengeLogic {
                 getTimeboxByStage(user.getSettings(), 1).getTime());
 
         /*
-        If categoryId is -1 or matches the challenge's id, the challenge will be added to the
-        list and an entry will be created
+         * If categoryId is CategoryDataSource.CATEGORY_ID_ALL or matches the challenge's id, the
+         * challenge will be added to the list and an entry will be created.
         */
         for (Challenge challenge : notCompletedYet) {
-            if (categoryId == -1 || challenge.getCategoryId() == categoryId) {
+            if (categoryId == CategoryDataSource.CATEGORY_ID_ALL || challenge.getCategoryId() == categoryId) {
                 Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(),
                         challenge.getId());
                 CompletionDataSource.create(completed);

@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
@@ -30,27 +33,42 @@ public class ImportChallengeActivity extends Activity {
 
     public void onButtonYesClicked(View v) {
         Intent intent = getIntent();
-        File file;
+        InputStream is = null;
 
-        //Get the opened file from the Intent
-        //Todo: fix content scheme
-        if (intent.getScheme().equals("file")) {
-            file = new File(intent.getData().getPath());
+        String scheme = intent.getScheme();
+
+        //Get the input stream from opened file or content
+        if (scheme.equals("file")) {
+            File file = new File(intent.getData().getPath());
+
+            try {
+                is = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                Log.d("File scheme error", e.getMessage());
+            }
         }
-        else
-        {
-            file = null;
+        else if (scheme.equals("content")) {
+            try {
+                is = getContentResolver().openInputStream(intent.getData());
+            } catch (FileNotFoundException e) {
+                Log.d("Content scheme error", e.getMessage());
+            }
         }
 
         //The file is being imported. String message is filled with a message for the user which
         //informs about a successful import or occurred errors.
         String message = "";
         try {
-            FileImport.importBPC(file);
-            message = "Datei erfolgreich importiert!";
+            if (is!=null) {
+                FileImport.importBPC(is);
+                message = "Datei erfolgreich importiert!";
+            }
+            else {
+                message = "Dateiimport fehlgeschlagen!";
+            }
         } catch (FileFormatException e) {
             Log.d("Wrong File Format", e.toString());
-            message = "Fehler: Die Datei ist keine XML Datei!";
+            message = "Fehler: Die Datei ist nicht im XML-Format!";
         } catch (UnexpectedElementException e) {
             Log.d("Unexpected Element", e.toString());
             message = "Fehler: Die Datei enthält ungültige Elemente!";

@@ -8,6 +8,8 @@ import java.util.List;
  * Created by funkv on 20.02.2016.
  */
 public class CategoryDataSource {
+    public static final long CATEGORY_ID_ALL = -1l;
+
     public static List<Category> getAll() {
         return DaoManager.getSession().getCategoryDao().loadAll();
     }

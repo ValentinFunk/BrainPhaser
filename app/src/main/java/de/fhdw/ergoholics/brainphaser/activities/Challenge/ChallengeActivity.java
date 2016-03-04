@@ -15,6 +15,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
@@ -54,7 +55,7 @@ public class ChallengeActivity extends AppCompatActivity{
         mFManager=getSupportFragmentManager();
 
         Intent i = getIntent();
-        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
+        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
 
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();

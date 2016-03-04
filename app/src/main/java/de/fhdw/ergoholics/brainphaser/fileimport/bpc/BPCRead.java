@@ -8,6 +8,7 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,14 +20,13 @@ import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementExc
  * Created by Daniel Hoogen on 25/02/2016.
  */
 public class BPCRead {
-    public static Node getCategoriesNode(File bpcFile)
+    public static Node getCategoriesNode(InputStream is)
             throws FileFormatException, UnexpectedElementException {
         //Read document
         Document document = null;
 
         try {
-            document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
-                    .parse(bpcFile);
+            document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
         } catch (ParserConfigurationException | SAXException | IOException e) {
             Log.d("FileImport Exception", e.getMessage());
             throw new FileFormatException("BPC");
