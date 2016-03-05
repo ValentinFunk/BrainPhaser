@@ -10,6 +10,11 @@ import java.util.List;
  * Created by funkv on 20.02.2016.
  */
 public class UserDataSource {
+    private static final SettingsDataSource instance = new SettingsDataSource();
+    public static SettingsDataSource getInstance() {
+        return instance;
+    }
+
     public static List<User> getAll() {
         return DaoManager.getSession().getUserDao().loadAll();
     }
@@ -21,7 +26,7 @@ public class UserDataSource {
      */
     public static long create(User user) {
         if (user.getSettingsId() == 0) {
-            user.setSettings(SettingsDataSource.getNewDefaultSettings());
+            user.setSettings(SettingsDataSource.getInstance().getNewDefaultSettings());
         }
 
         return DaoManager.getSession().getUserDao().insert(user);

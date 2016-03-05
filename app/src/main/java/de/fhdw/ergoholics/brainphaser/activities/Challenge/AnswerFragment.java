@@ -25,7 +25,7 @@ public abstract class AnswerFragment extends Fragment {
 
             Bundle bundle = getArguments();
             long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
-            mChallenge = ChallengeDataSource.getById(id);
+            mChallenge = ChallengeDataSource.getInstance().getById(id);
 
             //Check if challenge is okay
             if (mChallenge == null) {

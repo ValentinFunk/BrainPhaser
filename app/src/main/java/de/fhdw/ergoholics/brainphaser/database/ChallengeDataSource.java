@@ -12,11 +12,16 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Data Source class for custom access to challenge table entries in the database
  */
 public class ChallengeDataSource {
+    private static final ChallengeDataSource instance = new ChallengeDataSource();
+    public static ChallengeDataSource getInstance() {
+        return instance;
+    }
+
     /**
      * Returns the Settings object with the given id
      * @return Settings object with the given id
      */
-    public static List<Challenge> getAll() {
+    public List<Challenge> getAll() {
         return DaoManager.getSession().getChallengeDao().loadAll();
     }
 
@@ -33,7 +38,7 @@ public class ChallengeDataSource {
      * @param id challenge id in the database
      * @return Challenge object with the given id
      */
-    public static Challenge getById(long id) {
+    public Challenge getById(long id) {
         return DaoManager.getSession().getChallengeDao().load(id);
     }
 
@@ -42,7 +47,7 @@ public class ChallengeDataSource {
      * @param challenge challege to be created in the challenge table
      * @return id of the created object
      */
-    public static long create(Challenge challenge) {
+    public long create(Challenge challenge) {
         return DaoManager.getSession().getChallengeDao().insert(challenge);
     }
 
@@ -51,14 +56,14 @@ public class ChallengeDataSource {
      * @param user the user whose not completed challenges will be returned
      * @return list of uncompleted challenges
      */
-    public static List<Challenge> getUncompletedChallenges(User user) {
+    public List<Challenge> getUncompletedChallenges(User user) {
         List<Challenge> notCompleted = new ArrayList<>();
         long userId = user.getId();
 
         List<Challenge> challenges = DaoManager.getSession().getChallengeDao().queryBuilder().list();
 
         for (Challenge challenge : challenges) {
-            if (CompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
+            if (CompletionDataSource.getInstance().getByChallengeAndUser(challenge.getId(), userId)==null) {
                 notCompleted.add(challenge);
             }
         }

@@ -22,7 +22,7 @@ public class BPCWrite {
     private static void writeCategory(Category category, List<Challenge> challengeList, List<Answer> answerList) {
         long oldCategoryId = category.getId();
         category.setId(null);
-        long categoryId = CategoryDataSource.create(category);
+        long categoryId = CategoryDataSource.getInstance().create(category);
 
         for (Challenge challenge : challengeList) {
             if (challenge.getCategoryId() == oldCategoryId) {
@@ -36,7 +36,7 @@ public class BPCWrite {
     private static void writeChallenge(Challenge challenge, List<Answer> answerList) {
         long oldChallengeId = challenge.getId();
         challenge.setId(null);
-        long challengeId = ChallengeDataSource.create(challenge);
+        long challengeId = ChallengeDataSource.getInstance().create(challenge);
 
         for (Answer answer : answerList) {
             if (answer.getChallengeId() == oldChallengeId) {
@@ -49,6 +49,6 @@ public class BPCWrite {
 
     private static void writeAnswer(Answer answer) {
         answer.setId(null);
-        AnswerDataSource.create(answer);
+        AnswerDataSource.getInstance().create(answer);
     }
 }

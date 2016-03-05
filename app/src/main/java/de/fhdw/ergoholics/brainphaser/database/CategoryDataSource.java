@@ -8,15 +8,20 @@ import java.util.List;
  * Created by funkv on 20.02.2016.
  */
 public class CategoryDataSource {
-    public static List<Category> getAll() {
+    private static final CategoryDataSource instance = new CategoryDataSource();
+    public static CategoryDataSource getInstance() {
+        return instance;
+    }
+
+    public List<Category> getAll() {
         return DaoManager.getSession().getCategoryDao().loadAll();
     }
 
-    public static long create(Category category) {
+    public long create(Category category) {
         return DaoManager.getSession().getCategoryDao().insert(category);
     }
 
-    public static Category getById(long id) {
+    public Category getById(long id) {
         return DaoManager.getSession().getCategoryDao().load(id);
     }
 

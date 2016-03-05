@@ -21,6 +21,7 @@ import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,13 +35,12 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
     RecyclerView mRecyclerView;
     List<Category> mCategories;
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
+    private DueChallengeLogic mDueChallengeLogic;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.activity_select_category, container, false);
-
-        // Set orientation to horizontal
         mRecyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
 
         // get 300dpi in px
@@ -55,8 +55,10 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mCategories = CategoryDataSource.getAll();
-        refreshChallengeCounts();
+        BrainPhaserApplication app = (BrainPhaserApplication) getActivity().getApplication();
+        mDueChallengeLogic = new DueChallengeLogic(app.getCurrentUser());
+
+        mCategories = CategoryDataSource.getInstance().getAll();
         sortCategories();
 
         mRecyclerView.setAdapter(new CategoryAdapter(mCategories, mDueChallengeCounts, this));
@@ -68,17 +70,15 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
      * Reloads the due challenge counts from the database.
      */
     private void refreshChallengeCounts( ) {
-        for (Category category : mCategories) {
-            BrainPhaserApplication app = (BrainPhaserApplication) getActivity().getApplication();
-            int challengesDueCount = DueChallengeLogic.getDueChallenges(app.getCurrentUser(), category.getId()).size();
-            mDueChallengeCounts.put(category.getId(), challengesDueCount);
-        }
+        mDueChallengeCounts = mDueChallengeLogic.getDueChallengeCounts(mCategories);
     }
 
     /**
-     * Sorts categories so that the ones with more due challenges appear earlier in the list.
+     * Reloads due counts and sorts categories so that those with more due challenges appear
+     * further up in the list.
      */
     private void sortCategories( ) {
+        refreshChallengeCounts();
         Collections.sort(mCategories, new Comparator<Category>() {
             @Override
             public int compare(Category lhs, Category rhs) {
@@ -92,7 +92,7 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
     @Override
     public void onStart() {
         super.onStart();
-        refreshChallengeCounts();
+
         sortCategories();
         mRecyclerView.getAdapter().notifyDataSetChanged();
     }

@@ -34,6 +34,7 @@ public class ChallengeActivity extends AppCompatActivity{
     private boolean mAnswerChecked;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
+    private DueChallengeLogic mDueChallengeLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class ChallengeActivity extends AppCompatActivity{
 
         BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
         final User currentUser = app.getCurrentUser();
-        final List<Long> allChallenges = DueChallengeLogic.getDueChallenges(currentUser, categoryId);
+        mDueChallengeLogic = new DueChallengeLogic(currentUser);
+        final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
         if (allChallenges==null || allChallenges.size()<1){
             loadFinishScreen();
             return;
@@ -80,9 +82,9 @@ public class ChallengeActivity extends AppCompatActivity{
 
                     //Check if the answer is right
                     if (currentFragment.checkAnswers()) {
-                        CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
+                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
                     } else {
-                        CompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
+                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
                     }
 
                     //Activate next challenge
@@ -143,7 +145,7 @@ public class ChallengeActivity extends AppCompatActivity{
         //Inflate the QuestionFragment in the question_fragment
         mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        Challenge currentChallenge = ChallengeDataSource.getById(challengeId);
+        Challenge currentChallenge = ChallengeDataSource.getInstance().getById(challengeId);
 
         switch (currentChallenge.getChallengeType()){
             case ChallengeType.MULTIPLE_CHOICE:

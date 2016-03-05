@@ -10,12 +10,17 @@ import de.fhdw.ergoholics.brainphaser.model.Settings;
  * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
+    private static final SettingsDataSource instance = new SettingsDataSource();
+    public static SettingsDataSource getInstance() {
+        return instance;
+    }
+
     /**
      * Returns the Settings object with the given id
      * @param id settings id in the database
      * @return Settings object with the given id
      */
-    public static Settings getById(long id) {
+    public Settings getById(long id) {
         return DaoManager.getSession().getSettingsDao().load(id);
     }
 
@@ -23,7 +28,7 @@ public class SettingsDataSource {
      * Creates a new Settings object with default values in the database.
      * @return Setttings Object containing default values
      */
-    public static Settings getNewDefaultSettings() {
+    public Settings getNewDefaultSettings() {
         Settings settings = new Settings();
 
         settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes

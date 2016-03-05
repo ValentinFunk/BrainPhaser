@@ -10,11 +10,16 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Data Source class for custom access to answer table entries in the database
  */
 public class AnswerDataSource {
+    private static final AnswerDataSource instance = new AnswerDataSource();
+    public static AnswerDataSource getInstance() {
+        return instance;
+    }
+
     /**
      * Return all Answer objects in the answer table
      * @return List object containing all Answer objects
      */
-    public static List<Answer> getAll() {
+    public List<Answer> getAll() {
         return DaoManager.getSession().getAnswerDao().loadAll();
     }
 
@@ -23,7 +28,7 @@ public class AnswerDataSource {
      * @param id answer id in the database
      * @return Answer object with the given id
      */
-    public static Answer getById(long id) {
+    public Answer getById(long id) {
         return DaoManager.getSession().getAnswerDao().load(id);
     }
 
@@ -32,7 +37,7 @@ public class AnswerDataSource {
      * @param answer answer to be created in the challenge table
      * @return id of the created object
      */
-    public static long create(Answer answer) {
+    public long create(Answer answer) {
         return DaoManager.getSession().getAnswerDao().insert(answer);
     }
 }
