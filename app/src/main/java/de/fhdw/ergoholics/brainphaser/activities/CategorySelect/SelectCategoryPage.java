@@ -35,6 +35,7 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
     RecyclerView mRecyclerView;
     List<Category> mCategories;
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
+
     private DueChallengeLogic mDueChallengeLogic;
 
     @Nullable

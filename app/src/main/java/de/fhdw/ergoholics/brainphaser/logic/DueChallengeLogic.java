@@ -29,6 +29,7 @@ public class DueChallengeLogic {
     public DueChallengeLogic(User user) {
         mUser = user;
     }
+
     /**
      * Returns the amount of due challenges for each category id.
      * @return array that maps category counts to categories

@@ -28,6 +28,43 @@ import java.util.List;
  * Created by funkv on 17.02.2016.
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private TextView mTitle;
+        private TextView mDescription;
+        private ImageView mImage;
+
+        private TextView mDueCountText;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            mTitle = (TextView) itemView.findViewById(R.id.categoryTitle);
+            mDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
+            mImage = (ImageView) itemView.findViewById(R.id.categoryImage);
+            mDueCountText = (TextView) itemView.findViewById(R.id.challenges_due);
+        }
+
+        public TextView getTitle() {
+            return mTitle;
+        }
+
+        public TextView getDescription() {
+            return mDescription;
+        }
+
+        public ImageView getImage() {
+            return mImage;
+        }
+
+        public Context getContext() {
+            return itemView.getContext();
+        }
+
+        public TextView getDueCountText() {
+            return mDueCountText;
+        }
+    }
+
     List<Category> mCategories;
     SelectionListener mListener;
     LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
@@ -138,42 +175,5 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         void onCategorySelected(Category category);
 
         void onAllCategoriesSelected();
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mTitle;
-        private TextView mDescription;
-        private ImageView mImage;
-
-        private TextView mDueCountText;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-            mTitle = (TextView) itemView.findViewById(R.id.categoryTitle);
-            mDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
-            mImage = (ImageView) itemView.findViewById(R.id.categoryImage);
-            mDueCountText = (TextView) itemView.findViewById(R.id.challenges_due);
-        }
-
-        public TextView getTitle() {
-            return mTitle;
-        }
-
-        public TextView getDescription() {
-            return mDescription;
-        }
-
-        public ImageView getImage() {
-            return mImage;
-        }
-
-        public Context getContext() {
-            return itemView.getContext();
-        }
-
-        public TextView getDueCountText() {
-            return mDueCountText;
-        }
     }
 }
