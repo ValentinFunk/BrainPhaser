@@ -73,14 +73,20 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="false"
-            android:layout_alignBottom="@+id/linearLayout" />
+            android:layout_alignBottom="@+id/linearLayout"
+            android:layout_marginBottom="-8dp" />
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:id="@+id/statisticsView"
-            android:layout_below="@+id/expandButton" />
+            android:layout_below="@+id/expandButton">
+
+            <include layout="@layout/fragment_category_statistics"/>
+
+        </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -15,7 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Category;
@@ -99,7 +103,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         private ImageView mExpandButton;
         private boolean mExpanded;
         private CardView mStatisticsView;
-        private StatisticsFragment mStatisticsFragment;
+        BarChart mBarChart;
+        PieChart mPieChart;
 
         private static Drawable BTN_LESS;
         private static Drawable BTN_MORE;
@@ -107,31 +112,32 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         public ViewHolder(final View itemView) {
             super(itemView);
 
+            //Set static variables
             BTN_LESS = getContext().getResources().getDrawable(R.drawable.ic_expand_less_black_48dp);
             BTN_MORE = getContext().getResources().getDrawable(R.drawable.ic_expand_more_black_48dp);
 
+            //Write category information
             mTitle = (TextView) itemView.findViewById(R.id.categoryTitle);
             mDescription = (TextView) itemView.findViewById(R.id.categoryDescription);
             mImage = (ImageView) itemView.findViewById(R.id.categoryImage);
 
+            //Add expand button and listener
             mExpandButton = (ImageView) itemView.findViewById(R.id.expandButton);
             mExpandButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onToggle(itemView);
+                    toggleStatistics();
                 }
             });
-            mExpanded = false;
+            mExpanded = true;
 
+            //Add statistics
             mStatisticsView = (CardView) itemView.findViewById(R.id.statisticsView);
+            mStatisticsView.setVisibility(View.GONE);
+            toggleStatistics();
 
-            mStatisticsFragment = new StatisticsFragment();
-
-            //Show StatisticsFragment in CardView
-            FragmentManager fragmentManager = ((Activity) getContext()).getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.statisticsView, mStatisticsFragment);
-            fragmentTransaction.commit();
+            mBarChart = (BarChart) mStatisticsView.findViewById(R.id.barChart);
+            mPieChart = (PieChart) mStatisticsView.findViewById(R.id.pieChart);
         }
 
         public TextView getTitle() {
@@ -150,17 +156,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             return itemView.getContext();
         }
 
-        public void onToggle(View itemView) {
+        public void toggleStatistics() {
             if (mExpanded) {
                 mExpandButton.setImageDrawable(BTN_MORE);
-
-                mStatisticsFragment.setVisible(false);
+                mStatisticsView.setVisibility(View.GONE);
             }
             else {
                 mExpandButton.setImageDrawable(BTN_LESS);
-
-                mStatisticsFragment.setVisible(true);
-
+                mStatisticsView.setVisibility(View.VISIBLE);
             }
             mExpanded = !mExpanded;
         }
