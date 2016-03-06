@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,25 @@ public class CompletionDataSource {
     }
 
     public static List<Completion> getByUserAndStage(User user, int stage) {
-        QueryBuilder completed = DaoManager.getSession().getCompletionDao().queryBuilder()
+        QueryBuilder completions = DaoManager.getSession().getCompletionDao().queryBuilder()
                 .where(CompletionDao.Properties.UserId.eq(user.getId()),
                         CompletionDao.Properties.Stage.eq(stage));
-        return completed.list();
+        return completions.list();
+    }
+
+    public static List<Completion> getByUserAndStageAndCategory(User user, int stage, long categoryId) {
+        List<Completion> userStageCompletions = getByUserAndStage(user, stage);
+        if (categoryId == CategoryDataSource.CATEGORY_ID_ALL)
+            return userStageCompletions;
+        else {
+            List<Completion> completions = new ArrayList<>();
+            for (Completion completion : userStageCompletions) {
+                if (completion.getChallengeCompletions().getCategoryId()==categoryId) {
+                    completions.add(completion);
+                }
+            }
+            return completions;
+        }
     }
 
     /**

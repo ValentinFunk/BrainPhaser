@@ -3,8 +3,11 @@ package de.fhdw.ergoholics.brainphaser.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.model.ChallengeDao;
 import de.fhdw.ergoholics.brainphaser.model.User;
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -19,14 +22,6 @@ public class ChallengeDataSource {
     public static List<Challenge> getAll() {
         return DaoManager.getSession().getChallengeDao().loadAll();
     }
-
-    /**
-     * enum containing the different challenge types
-     * MULTIPLE_CHOICE: type for multiple choice questions
-     * TEXT: type for text entry challenges
-     * DECIDE: type for challenges, where the user makes the decision if his answer was correct
-     */
-
 
     /**
      * Returns the Challenge object with the given id
@@ -64,5 +59,20 @@ public class ChallengeDataSource {
         }
 
         return notCompleted;
+    }
+
+    /**
+     * Returns all challenges that have the given category id
+     * @param categoryId the id of the category whose challenges will be returned
+     * @return list of challenges
+     */
+    public static List<Challenge> getByCategoryId(long categoryId) {
+        if (categoryId==CategoryDataSource.CATEGORY_ID_ALL)
+            return getAll();
+        else {
+            QueryBuilder challenges = DaoManager.getSession().getChallengeDao().queryBuilder()
+                    .where(ChallengeDao.Properties.CategoryId.eq(categoryId));
+            return challenges.list();
+        }
     }
 }

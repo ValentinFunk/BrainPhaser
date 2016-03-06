@@ -1,28 +1,24 @@
 package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.ImageProxy;
 
 import java.util.List;
@@ -33,10 +29,12 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     List<Category> mCategories;
     SelectionListener mListener;
+    User mCurrentUser;
 
-    public CategoryAdapter(List<Category> categories, SelectionListener listener) {
-        mListener = listener;
+    public CategoryAdapter(User currentUser, List<Category> categories, SelectionListener listener) {
+        mCurrentUser = currentUser;
         mCategories = categories;
+        mListener = listener;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             parent.getContext().getResources().getDisplayMetrics());
         v.setLayoutParams(new LinearLayoutCompat.LayoutParams(sizeDip, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 
-        return new ViewHolder(v);
+        return new ViewHolder(v, mCurrentUser);
     }
 
     @Override
@@ -57,6 +55,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         if (position == 0) {
             holder.getTitle().setText(holder.itemView.getResources().getString(R.string.all_categories));
             holder.getDescription().setText(holder.itemView.getResources().getString(R.string.all_categories_desc));
+            holder.setCategoryId(CategoryDataSource.CATEGORY_ID_ALL);
+            holder.fillCharts();
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,6 +67,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             final Category category = mCategories.get(position - 1);
             holder.getTitle().setText(category.getTitle());
             holder.getDescription().setText(category.getDescription());
+            holder.setCategoryId(category.getId());
+            holder.fillCharts();
             if (ImageProxy.isDrawableImage(category.getImage())) {
                 holder.getImage().setImageResource(ImageProxy.getResourceId(category.getImage(), holder.getContext()));
             } else {
@@ -97,20 +99,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private static Drawable BTN_LESS;
+        private static Drawable BTN_MORE;
+
+        private User mCurrentUser;
+        private long mCategoryId;
+        private boolean mExpanded;
+
         private TextView mTitle;
         private TextView mDescription;
         private ImageView mImage;
         private ImageView mExpandButton;
-        private boolean mExpanded;
+
         private CardView mStatisticsView;
-        BarChart mBarChart;
-        PieChart mPieChart;
 
-        private static Drawable BTN_LESS;
-        private static Drawable BTN_MORE;
 
-        public ViewHolder(final View itemView) {
+
+        public ViewHolder(final View itemView, User currentUser) {
             super(itemView);
+
+            //Save parameters in attributes
+            mCurrentUser = currentUser;
+            mExpanded = true;                       //Will be set to false by toggleStatistics()!
 
             //Set static variables
             BTN_LESS = getContext().getResources().getDrawable(R.drawable.ic_expand_less_black_48dp);
@@ -129,15 +139,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     toggleStatistics();
                 }
             });
-            mExpanded = true;
 
             //Add statistics
             mStatisticsView = (CardView) itemView.findViewById(R.id.statisticsView);
             mStatisticsView.setVisibility(View.GONE);
             toggleStatistics();
-
-            mBarChart = (BarChart) mStatisticsView.findViewById(R.id.barChart);
-            mPieChart = (PieChart) mStatisticsView.findViewById(R.id.pieChart);
         }
 
         public TextView getTitle() {
@@ -152,8 +158,16 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             return mImage;
         }
 
+        public boolean getExpanded() {
+            return mExpanded;
+        }
+
         public Context getContext() {
             return itemView.getContext();
+        }
+
+        public void setCategoryId(long categoryId) {
+            mCategoryId = categoryId;
         }
 
         public void toggleStatistics() {
@@ -163,9 +177,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             }
             else {
                 mExpandButton.setImageDrawable(BTN_LESS);
+                fillCharts();
                 mStatisticsView.setVisibility(View.VISIBLE);
             }
             mExpanded = !mExpanded;
+        }
+
+        public void fillCharts() {
+            StatisticsLogic statisticsLogic = new StatisticsLogic();
+
+            PieChart dueChart = (PieChart) mStatisticsView.findViewById(R.id.dueChart);
+            statisticsLogic.fillDueChart(dueChart, mCurrentUser, mCategoryId);
+
+            PieChart stageChart = (PieChart) mStatisticsView.findViewById(R.id.stageChart);
+            statisticsLogic.fillStageChart(stageChart, mCurrentUser, mCategoryId);
         }
     }
 }

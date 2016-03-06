@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  * Created by funkv on 17.02.2016.
  */
 public class SelectCategoryPage extends Fragment implements CategoryAdapter.SelectionListener {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,8 +48,9 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         recyclerView.setLayoutManager(layoutManager);
 
+        User currentUser = ((BrainPhaserApplication) getActivity().getApplication()).getCurrentUser();
         List<Category> categories = CategoryDataSource.getAll();
-        recyclerView.setAdapter(new CategoryAdapter(categories, this));
+        recyclerView.setAdapter(new CategoryAdapter(currentUser,  categories, this));
 
         return rootView;
     }
@@ -60,6 +64,8 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
 
     @Override
     public void onAllCategoriesSelected() {
-        // TODO
+        Intent intent = new Intent(getContext(), ChallengeActivity.class);
+        intent.putExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
+        startActivity(intent);
     }
 }
