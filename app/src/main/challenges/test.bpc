@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<categories>
+    <category title="C1" description="T1" image="@drawable/englisch">
+        <challenge type="1" question="Q1">
+            <answer text="R1" correct="true"/>
+            <answer text="F1" correct="false"/>
+            <answer text="F2" correct="false"/>
+            <answer text="F3" correct="false"/>
+        </challenge>
+        <challenge type="1" question="Q2">
+            <answer text="R2" correct="true"/>
+            <answer text="R3" correct="true"/>
+            <answer text="F4" correct="false"/>
+            <answer text="F5" correct="false"/>
+        </challenge>
+    </category>
+    <category title="C2" description="T2" image="@drawable/englisch">
+        <challenge type="1" question="Q3">
+            <answer text="R4" correct="true"/>
+            <answer text="R5" correct="true"/>
+            <answer text="R6" correct="true"/>
+            <answer text="F6" correct="false"/>
+        </challenge>
+        <challenge type="1" question="Q4">
+            <answer text="R7" correct="true"/>
+            <answer text="R8" correct="true"/>
+            <answer text="R9" correct="true"/>
+            <answer text="R10" correct="true"/>
+        </challenge>
+    </category>
+</categories>
