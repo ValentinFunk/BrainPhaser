@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.logic;
+package de.fhdw.ergoholics.brainphaser.logic.due;
 
 import java.util.ArrayList;
 import java.util.Date;

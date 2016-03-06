@@ -16,7 +16,7 @@ import com.github.mikephil.charting.charts.PieChart;
 
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
-import de.fhdw.ergoholics.brainphaser.logic.StatisticsLogic;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.ImageProxy;

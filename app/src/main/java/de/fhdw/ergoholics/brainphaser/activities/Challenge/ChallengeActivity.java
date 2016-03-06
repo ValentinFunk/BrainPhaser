@@ -19,7 +19,7 @@ import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
-import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.logic.due.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
