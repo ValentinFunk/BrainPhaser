@@ -33,7 +33,7 @@ public class StatisticsLogic {
     private static final float SELECTION_SHIFT = 0f;
 
     private static final float CENTER_TEXT_SIZE = 8f;
-    private static final float NO_DATA_TEXT_SIZE = 30f;
+    private static final float NO_DATA_TEXT_SIZE = 18f;
 
     private static final String DUE_CHART_CENTER_TEXT = "Fälligkeit";
     private static final String STAGE_CHART_CENTER_TEXT = "Klassen";

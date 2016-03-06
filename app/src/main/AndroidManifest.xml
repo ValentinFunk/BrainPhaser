@@ -42,6 +42,7 @@
                 <data android:host="*"/>
                 <data android:pathPattern=".*"/>
                 <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/octet-stream"/>
             </intent-filter>
         </activity>
         <activity android:name=".activities.UserCreation.CreateUserActivity"/>
