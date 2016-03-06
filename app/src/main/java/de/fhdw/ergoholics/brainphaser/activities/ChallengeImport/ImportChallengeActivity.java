@@ -39,6 +39,7 @@ public class ImportChallengeActivity extends Activity {
 
         //Get the input stream from opened file or content
         if (scheme.equals("file")) {
+            Log.d("File Intent", intent.toString());
             File file = new File(intent.getData().getPath());
 
             try {
@@ -48,6 +49,7 @@ public class ImportChallengeActivity extends Activity {
             }
         }
         else if (scheme.equals("content")) {
+            Log.d("Content Intent", intent.toString());
             try {
                 is = getContentResolver().openInputStream(intent.getData());
             } catch (FileNotFoundException e) {

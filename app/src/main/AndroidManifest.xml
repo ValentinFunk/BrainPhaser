@@ -24,11 +24,7 @@
         <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.EDIT"/>
-                <action android:name="android.intent.action.PICK"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
-
                 <data android:scheme="file"/>
                 <data android:host="*"/>
                 <data android:pathPattern=".*\\.bpc"/>
@@ -38,6 +34,14 @@
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.bpc"/>
                 <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
                 <data android:mimeType="*/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="content"/>
+                <data android:host="*"/>
+                <data android:pathPattern=".*"/>
+                <data android:mimeType="text/xml"/>
             </intent-filter>
         </activity>
         <activity android:name=".activities.UserCreation.CreateUserActivity"/>
