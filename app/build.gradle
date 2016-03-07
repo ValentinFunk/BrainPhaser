@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -11,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "de.fhdw.ergoholics.brainphaser.MockTestRunner"
     }
 
     buildTypes {
@@ -31,6 +32,9 @@ android {
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
 }
 
 dependencies {
@@ -45,12 +49,13 @@ dependencies {
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.nononsenseapps:filepicker:2.5.2'
 
+    compile 'com.google.dagger:dagger:2.1-SNAPSHOT'
+    apt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
+
     testCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.android.support.test:runner:0.4'
-    // Set this dependency to use JUnit 4 rules
     androidTestCompile 'com.android.support.test:rules:0.4'
-    // Set this dependency to build and run Espresso tests
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     // Set this dependency to build and run UI Automator tests
     // androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
@@ -71,5 +76,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-v4'
         exclude module: 'recyclerview-v7'
     }
+
+    androidTestApt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
 }
 

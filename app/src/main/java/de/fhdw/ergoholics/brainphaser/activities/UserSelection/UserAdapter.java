@@ -18,7 +18,10 @@ import java.util.List;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Created by Christian on 16.02.2016. Adapter and ViewHolder for the UserLists
@@ -38,7 +41,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private TextView mUserText;
         private ImageView mUserImage;
         private UserAdapter mAdapter;
-        private BrainPhaserApplication mApplication;
 
         //Constructor
         public UserViewHolder(View itemView, UserAdapter adapter) {
@@ -62,7 +64,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             mUserImage.setImageResource(avatarId);
 
             // Highlight currently logged in user
-            if (user.getId().equals(mAdapter.getApplication().getCurrentUser().getId())) {
+            if (user.getId().equals(mAdapter.getUserManager().getCurrentUser().getId())) {
                 mUserText.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
             } else {
                 int[] attrs = {android.R.attr.textColor};
@@ -86,15 +88,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private ResultListener mResultListener;
     private List<User> mUsers;
 
-    private BrainPhaserApplication mApplication;
-    public BrainPhaserApplication getApplication() {
-        return mApplication;
+    @Inject UserManager mUserManager;
+
+    public UserManager getUserManager( ) {
+        return mUserManager;
     }
 
     public UserAdapter(List<User> allUsers, ResultListener resultListener, BrainPhaserApplication application) {
         mUsers = allUsers;
         mResultListener = resultListener;
-        mApplication = application;
+
+        application.getComponent().inject(this);
     }
 
     // Creates the list item's view

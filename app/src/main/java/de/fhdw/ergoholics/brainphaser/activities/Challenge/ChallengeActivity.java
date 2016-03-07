@@ -12,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
@@ -20,12 +22,16 @@ import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.List;
 
-public class ChallengeActivity extends AppCompatActivity{
+import javax.inject.Inject;
+
+public class ChallengeActivity extends BrainPhaserActivity {
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
@@ -36,8 +42,18 @@ public class ChallengeActivity extends AppCompatActivity{
     private FragmentTransaction mFTransaction;
     private DueChallengeLogic mDueChallengeLogic;
 
+    @Inject UserManager mUserManager;
+    @Inject CompletionDataSource mCompletionDataSource;
+    @Inject ChallengeDataSource mChallengeDataSource;
+    @Inject UserLogicFactory mUserLogicFactory;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
@@ -59,9 +75,8 @@ public class ChallengeActivity extends AppCompatActivity{
         Intent i = getIntent();
         long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
 
-        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-        final User currentUser = app.getCurrentUser();
-        mDueChallengeLogic = new DueChallengeLogic(currentUser);
+        final User currentUser = mUserManager.getCurrentUser();
+        mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
         if (allChallenges==null || allChallenges.size()<1){
             loadFinishScreen();
@@ -78,13 +93,13 @@ public class ChallengeActivity extends AppCompatActivity{
                     //Find the current fragment and user
                     AnswerFragment currentFragment =(AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
                     BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-                    User currentUser = app.getCurrentUser();
+                    User currentUser = mUserManager.getCurrentUser();
 
                     //Check if the answer is right
                     if (currentFragment.checkAnswers()) {
-                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
                     } else {
-                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
                     }
 
                     //Activate next challenge
@@ -145,7 +160,7 @@ public class ChallengeActivity extends AppCompatActivity{
         //Inflate the QuestionFragment in the question_fragment
         mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        Challenge currentChallenge = ChallengeDataSource.getInstance().getById(challengeId);
+        Challenge currentChallenge = mChallengeDataSource.getById(challengeId);
 
         switch (currentChallenge.getChallengeType()){
             case ChallengeType.MULTIPLE_CHOICE:
