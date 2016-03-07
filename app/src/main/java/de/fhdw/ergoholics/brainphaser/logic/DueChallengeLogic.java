@@ -39,7 +39,7 @@ public class DueChallengeLogic {
 
     /**
      * Returns the amount of due challenges for each category id.
-     * @return array that maps category counts to categories
+     * @return array that maps category counts to category ids. (Key = CategoryId, Value = Count)
      */
     public LongSparseArray<Integer> getDueChallengeCounts(List<Category> categories) {
         LongSparseArray<Integer> dueChallengeCounts = new LongSparseArray<>();
@@ -66,7 +66,7 @@ public class DueChallengeLogic {
         addDueChallengesByCategory(dueChallenges, categoryId);
 
         //Create missing entries
-        createMissingCompletedEntriesByCategory(dueChallenges, mUser, categoryId);
+        createMissingCompletedEntriesByCategory(dueChallenges, categoryId);
 
         //Return list
         return dueChallenges;
@@ -112,20 +112,19 @@ public class DueChallengeLogic {
      * Adds the ids of all due challenges without entries in the completed table to the given list.
      * The missing entries will also be created in the completed table.
      * @param dueChallenges the list object the due challenges will be added to
-     * @param user the user whose due challenges will be added
      * @param categoryId the id of the category whose due challenges will be added
      */
     private void createMissingCompletedEntriesByCategory(List<Long> dueChallenges,
-                                                                User user, long categoryId) {
+                                                                long categoryId) {
         //Create objects
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(user);
+        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(mUser);
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
-                getTimeboxByStage(user.getSettings(), 1).getTime());
+                getTimeboxByStage(mUser.getSettings(), 1).getTime());
 
         /*
         If categoryId is -1 or matches the challenge's id, the challenge will be added to the
@@ -133,7 +132,7 @@ public class DueChallengeLogic {
         */
         for (Challenge challenge : notCompletedYet) {
             if (categoryId == -1 || challenge.getCategoryId() == categoryId) {
-                Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(),
+                Completion completed = new Completion(null, 1, dateChallengesDue, mUser.getId(),
                         challenge.getId());
                 mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
