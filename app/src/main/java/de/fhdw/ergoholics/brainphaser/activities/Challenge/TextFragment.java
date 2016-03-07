@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
@@ -15,6 +17,10 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Created by Chris on 2/25/2016.
  */
 public class TextFragment extends AnswerFragment {
+    @Override
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
 
     View mView;
     //Textfield of the answer

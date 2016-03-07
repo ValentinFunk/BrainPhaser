@@ -13,11 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Activity used to create an user. Queries Username and avatar.
@@ -26,14 +31,22 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Parameters: none
  * Return: EXTRA_USERNAME and EXTRA_AVATAR_RESOURCE_NAME
  */
-public class CreateUserActivity extends FragmentActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
+public class CreateUserActivity extends BrainPhaserActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
     public final static int MAX_USERNAME_LENGTH = 30;
 
     private TextView mUsernameInput;
     private TextInputLayout mUsernameInputLayout;
 
+    @Inject UserManager mUserManager;
+    @Inject UserDataSource mUserDataSource;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -61,7 +74,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         if (getIntent().getAction() == Intent.ACTION_EDIT) {
             // Read user to edit
             long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
-            User user = UserDataSource.getById(userId);
+            User user = mUserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
@@ -101,7 +114,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         boolean isValid;
 
         String username = mUsernameInput.getText().toString();
-        if (UserDataSource.findOneByName(username) != null) {
+        if (mUserDataSource.findOneByName(username) != null) {
             mUsernameInput.setError(getString(R.string.taken_username));
             mUsernameInputLayout.setErrorEnabled(true);
             isValid = false;
@@ -167,23 +180,23 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             User user = new User();
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDataSource.create(user);
+            mUserDataSource.create(user);
 
             // Login user and change to category selection
             BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-            app.switchUser(user);
+            mUserManager.switchUser(user);
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
-            User user = UserDataSource.getById(userId);
+            User user = mUserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
 
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDataSource.update(user);
+            mUserDataSource.update(user);
         }
 
         setResult(RESULT_OK);

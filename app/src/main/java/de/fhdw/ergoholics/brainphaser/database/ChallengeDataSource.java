@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -12,9 +15,13 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Data Source class for custom access to challenge table entries in the database
  */
 public class ChallengeDataSource {
-    private static final ChallengeDataSource instance = new ChallengeDataSource();
-    public static ChallengeDataSource getInstance() {
-        return instance;
+    private DaoSession mDaoSession;
+    private CompletionDataSource mCompletionDataSource;
+
+    @Inject
+    ChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
+        mDaoSession = session;
+        mCompletionDataSource = completionDataSource;
     }
 
     /**
@@ -22,7 +29,7 @@ public class ChallengeDataSource {
      * @return Settings object with the given id
      */
     public List<Challenge> getAll() {
-        return DaoManager.getSession().getChallengeDao().loadAll();
+        return mDaoSession.getChallengeDao().loadAll();
     }
 
     /**
@@ -39,7 +46,7 @@ public class ChallengeDataSource {
      * @return Challenge object with the given id
      */
     public Challenge getById(long id) {
-        return DaoManager.getSession().getChallengeDao().load(id);
+        return mDaoSession.getChallengeDao().load(id);
     }
 
     /**
@@ -48,7 +55,7 @@ public class ChallengeDataSource {
      * @return id of the created object
      */
     public long create(Challenge challenge) {
-        return DaoManager.getSession().getChallengeDao().insert(challenge);
+        return mDaoSession.getChallengeDao().insert(challenge);
     }
 
     /**
@@ -60,10 +67,10 @@ public class ChallengeDataSource {
         List<Challenge> notCompleted = new ArrayList<>();
         long userId = user.getId();
 
-        List<Challenge> challenges = DaoManager.getSession().getChallengeDao().queryBuilder().list();
+        List<Challenge> challenges = mDaoSession.getChallengeDao().queryBuilder().list();
 
         for (Challenge challenge : challenges) {
-            if (CompletionDataSource.getInstance().getByChallengeAndUser(challenge.getId(), userId)==null) {
+            if (mCompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
                 notCompleted.add(challenge);
             }
         }

@@ -3,6 +3,9 @@ package de.fhdw.ergoholics.brainphaser.database;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Answer;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -10,9 +13,11 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Data Source class for custom access to answer table entries in the database
  */
 public class AnswerDataSource {
-    private static final AnswerDataSource instance = new AnswerDataSource();
-    public static AnswerDataSource getInstance() {
-        return instance;
+    private DaoSession mDaoSession;
+
+    @Inject
+    AnswerDataSource(DaoSession session) {
+        mDaoSession = session;
     }
 
     /**
@@ -20,7 +25,7 @@ public class AnswerDataSource {
      * @return List object containing all Answer objects
      */
     public List<Answer> getAll() {
-        return DaoManager.getSession().getAnswerDao().loadAll();
+        return mDaoSession.getAnswerDao().loadAll();
     }
 
     /**
@@ -29,7 +34,7 @@ public class AnswerDataSource {
      * @return Answer object with the given id
      */
     public Answer getById(long id) {
-        return DaoManager.getSession().getAnswerDao().load(id);
+        return mDaoSession.getAnswerDao().load(id);
     }
 
     /**
@@ -38,6 +43,6 @@ public class AnswerDataSource {
      * @return id of the created object
      */
     public long create(Answer answer) {
-        return DaoManager.getSession().getAnswerDao().insert(answer);
+        return mDaoSession.getAnswerDao().insert(answer);
     }
 }

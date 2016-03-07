@@ -17,11 +17,16 @@ import android.view.View;
 import com.nononsenseapps.filepicker.FilePickerActivity;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.ChallengeImport.ImportChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+
+import javax.inject.Inject;
 
 /**
  * Created by funkv on 20.02.2016.
@@ -29,13 +34,40 @@ import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActi
  * The activity redirects to user creation on first launch, or loads last selected user if it has
  * been launched before.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BrainPhaserActivity {
     public static String EXTRA_NAVIGATE_TO = "NAVIGATE_TO";
     public static String EXTRA_SHOW_LOGGEDIN_SNACKBAR = "SHOW_SNACKBAR";
-
     private final static int CODE_FILEPICKER = 0;
 
+    @Inject UserManager mUserManager;
     private ViewPager mViewPager;
+
+    @Override
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.mainactivity);
+
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+
+        // Set as Actionbar
+        setSupportActionBar(toolbar);
+
+        TabLayout layout = (TabLayout)findViewById(R.id.tabs);
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
+        mViewPager = viewPager;
+
+        layout.setupWithViewPager(viewPager);
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,30 +113,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainactivity);
 
-        BrainPhaserApplication application = (BrainPhaserApplication)getApplication();
-        if (!application.logInLastUser()) {
-            startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
-            finish();
-        }
-
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-
-        // Set as Actionbar
-        setSupportActionBar(toolbar);
-
-        TabLayout layout = (TabLayout)findViewById(R.id.tabs);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
-        mViewPager = viewPager;
-
-        layout.setupWithViewPager(viewPager);
-    }
 
     @Override
     protected void onStart() {
@@ -125,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent.getBooleanExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false)) {
             BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
             View rootView = findViewById(R.id.main_content);
-            String text = String.format(getResources().getString(R.string.logged_in_as), app.getCurrentUser().getName());
+            String text = String.format(getResources().getString(R.string.logged_in_as), mUserManager.getCurrentUser().getName());
             final Snackbar snackbar = Snackbar
                 .make(rootView, text, Snackbar.LENGTH_LONG)
                 .setAction(R.string.switch_user_short, new View.OnClickListener() {

@@ -18,6 +18,8 @@ import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
+import javax.inject.Inject;
+
 /**
  * Created by Daniel Hoogen on 25/02/2016.
  *
@@ -26,9 +28,15 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class DueChallengeLogic {
     private User mUser;
 
-    public DueChallengeLogic(User user) {
+    private CompletionDataSource mCompletionDataSource;
+    private ChallengeDataSource mChallengeDataSource;
+
+    public DueChallengeLogic(User user, CompletionDataSource completionDataSource, ChallengeDataSource challengeDataSource) {
+        mCompletionDataSource = completionDataSource;
+        mChallengeDataSource = challengeDataSource;
         mUser = user;
     }
+
     /**
      * Returns the amount of due challenges for each category id.
      * @return array that maps category counts to categories
@@ -81,7 +89,7 @@ public class DueChallengeLogic {
         for (int stage = 1; stage<=6; stage++) {
             //Get the users completions in the stage
             List<Completion> completedInStage =
-                    CompletionDataSource.getInstance().getByUserAndStage(mUser, stage);
+                mCompletionDataSource.getByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
             timebox = getTimeboxByStage(mUser.getSettings(), stage);
@@ -113,7 +121,7 @@ public class DueChallengeLogic {
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = ChallengeDataSource.getInstance().getUncompletedChallenges(user);
+        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(user);
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
@@ -127,7 +135,7 @@ public class DueChallengeLogic {
             if (categoryId == -1 || challenge.getCategoryId() == categoryId) {
                 Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(),
                         challenge.getId());
-                CompletionDataSource.getInstance().create(completed);
+                mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }
         }

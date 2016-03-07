@@ -5,17 +5,22 @@ import android.app.AlertDialog;
 import android.nfc.FormatException;
 import android.os.Bundle;
 import java.util.List;
+
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
+import javax.inject.Inject;
+
 /**
  * Created by Christian on 03.03.2016.
  */
-public abstract class AnswerFragment extends Fragment {
-
+public abstract class AnswerFragment extends BrainPhaserFragment {
     protected List<Answer> mAnswerList;
     protected Challenge mChallenge;
+
+    @Inject ChallengeDataSource mChallengeDataSource;
 
     public abstract boolean checkAnswers();
 
@@ -25,7 +30,7 @@ public abstract class AnswerFragment extends Fragment {
 
             Bundle bundle = getArguments();
             long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
-            mChallenge = ChallengeDataSource.getInstance().getById(id);
+            mChallenge = mChallengeDataSource.getById(id);
 
             //Check if challenge is okay
             if (mChallenge == null) {

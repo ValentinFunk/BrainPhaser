@@ -16,10 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -28,14 +32,34 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by funkv on 17.02.2016.
  */
-public class SelectCategoryPage extends Fragment implements CategoryAdapter.SelectionListener {
+public class SelectCategoryPage extends BrainPhaserFragment implements CategoryAdapter.SelectionListener {
     RecyclerView mRecyclerView;
     List<Category> mCategories;
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
+
     private DueChallengeLogic mDueChallengeLogic;
+    @Inject UserManager mUserManager;
+    @Inject CategoryDataSource mCategoryDataSource;
+    @Inject UserLogicFactory mUserLogicFactory;
+
+    @Override
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(mUserManager.getCurrentUser());
+        mCategories = mCategoryDataSource.getAll();
+        sortCategories();
+    }
 
     @Nullable
     @Override
@@ -47,19 +71,11 @@ public class SelectCategoryPage extends Fragment implements CategoryAdapter.Sele
         float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        float cardHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 270.f, getResources().getDisplayMetrics());
-
-        int spans = isLandscape ? (int)Math.floor(getResources().getDisplayMetrics().heightPixels / cardHeight) : (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
-        int orientation = isLandscape ? StaggeredGridLayoutManager.HORIZONTAL : StaggeredGridLayoutManager.VERTICAL;
+        int spans = (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
+        int orientation = isLandscape ? StaggeredGridLayoutManager.VERTICAL : StaggeredGridLayoutManager.VERTICAL;
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
-
-        BrainPhaserApplication app = (BrainPhaserApplication) getActivity().getApplication();
-        mDueChallengeLogic = new DueChallengeLogic(app.getCurrentUser());
-
-        mCategories = CategoryDataSource.getInstance().getAll();
-        sortCategories();
 
         mRecyclerView.setAdapter(new CategoryAdapter(mCategories, mDueChallengeCounts, this));
 

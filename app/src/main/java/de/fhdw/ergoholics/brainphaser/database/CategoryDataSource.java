@@ -1,28 +1,35 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
 import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created by funkv on 20.02.2016.
  */
+@Singleton
 public class CategoryDataSource {
-    private static final CategoryDataSource instance = new CategoryDataSource();
-    public static CategoryDataSource getInstance() {
-        return instance;
+    private DaoSession mDaoSession;
+
+    @Inject
+    public CategoryDataSource(DaoSession session) {
+        mDaoSession = session;
     }
 
     public List<Category> getAll() {
-        return DaoManager.getSession().getCategoryDao().loadAll();
+        return mDaoSession.getCategoryDao().loadAll();
     }
 
     public long create(Category category) {
-        return DaoManager.getSession().getCategoryDao().insert(category);
+        return mDaoSession.getCategoryDao().insert(category);
     }
 
     public Category getById(long id) {
-        return DaoManager.getSession().getCategoryDao().load(id);
+        return mDaoSession.getCategoryDao().load(id);
     }
 
 }
