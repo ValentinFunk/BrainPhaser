@@ -10,7 +10,6 @@ import android.view.View;
 
 import java.io.File;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
@@ -47,7 +46,7 @@ public class ImportChallengeActivity extends Activity {
         //informs about a successful import or occurred errors.
         String message = "";
         try {
-            FileImport.importBPC(file, (BrainPhaserApplication)getApplication());
+            FileImport.importBPC(file);
             message = "Datei erfolgreich importiert!";
         } catch (FileFormatException e) {
             Log.d("Wrong File Format", e.toString());

@@ -6,8 +6,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCObjects;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCRead;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCWrite;
@@ -21,9 +19,8 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
  * Created by Daniel Hoogen on 19/02/2016.
  */
 public class FileImport {
-    public static void importBPC(File bpcFile, BrainPhaserApplication application)
+    public static void importBPC(File bpcFile)
             throws FileFormatException, UnexpectedElementException {
-
         //Get root element
         Node categoriesNode = BPCRead.getCategoriesNode(bpcFile);
 
@@ -50,7 +47,6 @@ public class FileImport {
         }
 
         //No syntax errors were found, so the read information is being written
-        BPCWrite writer = new BPCWrite(application);
-        writer.writeAll(categoryList, challengeList, answerList);
+        BPCWrite.writeAll(categoryList, challengeList, answerList);
     }
 }

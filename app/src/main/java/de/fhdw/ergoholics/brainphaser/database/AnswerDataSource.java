@@ -3,9 +3,6 @@ package de.fhdw.ergoholics.brainphaser.database;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Answer;
-import de.fhdw.ergoholics.brainphaser.model.DaoSession;
-
-import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -13,19 +10,12 @@ import javax.inject.Inject;
  * Data Source class for custom access to answer table entries in the database
  */
 public class AnswerDataSource {
-    private DaoSession mDaoSession;
-
-    @Inject
-    AnswerDataSource(DaoSession session) {
-        mDaoSession = session;
-    }
-
     /**
      * Return all Answer objects in the answer table
      * @return List object containing all Answer objects
      */
-    public List<Answer> getAll() {
-        return mDaoSession.getAnswerDao().loadAll();
+    public static List<Answer> getAll() {
+        return DaoManager.getSession().getAnswerDao().loadAll();
     }
 
     /**
@@ -33,8 +23,8 @@ public class AnswerDataSource {
      * @param id answer id in the database
      * @return Answer object with the given id
      */
-    public Answer getById(long id) {
-        return mDaoSession.getAnswerDao().load(id);
+    public static Answer getById(long id) {
+        return DaoManager.getSession().getAnswerDao().load(id);
     }
 
     /**
@@ -42,7 +32,7 @@ public class AnswerDataSource {
      * @param answer answer to be created in the challenge table
      * @return id of the created object
      */
-    public long create(Answer answer) {
-        return mDaoSession.getAnswerDao().insert(answer);
+    public static long create(Answer answer) {
+        return DaoManager.getSession().getAnswerDao().insert(answer);
     }
 }

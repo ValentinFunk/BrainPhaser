@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.NetworkOnMainThreadException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,17 +12,12 @@ import android.view.View;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
-import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
-
-import javax.inject.Inject;
 
 /**
  * Created by Christian on 16.02.2016.
@@ -33,34 +27,30 @@ import javax.inject.Inject;
  * Parameters: none
  */
 
-public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
-    @Inject UserManager mUserManager;
-    @Inject UserDataSource mUserDataSource;
+public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
+    public static final String KEY_USER_ID = "user_id";
 
     @Override
-    protected void injectComponent(BrainPhaserComponent component) {
-        component.inject(this);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
         //loading of the components
         RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
-        userList.setHasFixedSize(true);
+        registerForContextMenu(userList);
 
         //load the users from the database
-        List<User> allUsers = mUserDataSource.getAll();
+        List<User> allUsers = UserDataSource.getAll();
+
+        //Adapter which sets all users into the list
+        userList.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         userList.setLayoutManager(layoutManager);
 
         //Create the View
-        //Adapter which sets all users into the list
-        UserAdapter listAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
+        UserAdapter listAdapter = new UserAdapter(allUsers, this);
         userList.setAdapter(listAdapter);
 
         /**
@@ -73,7 +63,6 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
             startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
-
     }
 
     /*
@@ -94,7 +83,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
      */
     @Override
     public void onUserSelected(User user) {
-        mUserManager.switchUser(user);
+        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+        app.switchUser(user);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
@@ -102,5 +92,17 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
 
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void onEditUser(User user) {
+        Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
+        intent.putExtra(KEY_USER_ID, user.getId());
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onDeleteUser(User user) {
+        //Todo
     }
 }

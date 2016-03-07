@@ -7,28 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-
-import javax.inject.Inject;
 
 /**
  * Created by Chris on 2/25/2016.
  */
-public class QuestionFragment extends BrainPhaserFragment {
+public class QuestionFragment extends Fragment {
     private TextView mQuestionText;
     private Challenge mChallenge;
 
-    @Inject ChallengeDataSource mChallengeDataSource;
-
-    @Override
-    protected void injectComponent(BrainPhaserComponent component) {
-        component.inject(this);
-    }
 
     @Nullable
     @Override
@@ -38,7 +27,7 @@ public class QuestionFragment extends BrainPhaserFragment {
 
         Bundle bundle=getArguments();
         long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
-        mChallenge = mChallengeDataSource.getById(id);
+        mChallenge= ChallengeDataSource.getById(id);
         changeQuestion(mChallenge);
         return view;
     }
