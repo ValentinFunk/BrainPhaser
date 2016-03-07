@@ -34,8 +34,6 @@ import javax.inject.Inject;
  */
 
 public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
-    public static final String KEY_USER_ID = "user_id";
-    
     @Inject UserManager mUserManager;
     @Inject UserDataSource mUserDataSource;
 
@@ -109,7 +107,7 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     @Override
     public void onEditUser(User user) {
         Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
-        intent.putExtra(KEY_USER_ID, user.getId());
+        intent.putExtra(CreateUserActivity.KEY_USER_ID, user.getId());
         startActivityForResult(intent, 0);
     }
 
