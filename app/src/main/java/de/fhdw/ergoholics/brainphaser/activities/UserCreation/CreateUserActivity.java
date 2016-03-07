@@ -33,6 +33,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
 
     private TextView mUsernameInput;
     private TextInputLayout mUsernameInputLayout;
+    private User mEditingUser = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +68,11 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
-
+            mEditingUser = user;
+            
             // Pre-fill view
             avatar.setImageResource(Avatars.getAvatarResourceId(getApplicationContext(), user.getAvatar()));
             mUsernameInput.setText(user.getName());
-
         } else {
             avatar.setImageResource(Avatars.getDefaultAvatarResourceId());
         }
@@ -103,10 +104,16 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         boolean isValid;
 
         String username = mUsernameInput.getText().toString();
-        if (UserDataSource.findOneByName(username) != null) {
-            mUsernameInput.setError(getString(R.string.taken_username));
-            mUsernameInputLayout.setErrorEnabled(true);
-            isValid = false;
+        User foundUser = UserDataSource.findOneByName(username);
+        if (foundUser != null) {
+            if (getIntent().getAction().equals(Intent.ACTION_EDIT)
+                    && foundUser.getId() == mEditingUser.getId()) {
+                isValid = true;
+            } else {
+                mUsernameInput.setError(getString(R.string.taken_username));
+                mUsernameInputLayout.setErrorEnabled(true);
+                isValid = false;
+            }
         } else {
             mUsernameInputLayout.setErrorEnabled(false);
             isValid = true;
@@ -156,7 +163,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
      * Called when the profile creation has been finished. Depending on the intent the activity was
      * called with, the user is created or updated.
      *
-     * @param username Username that was entered
+     * @param username           Username that was entered
      * @param avatarResourceName Resource name of the user's selected avatar
      */
     private void profileCreationFinished(String username, String avatarResourceName) {
@@ -172,11 +179,11 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             UserDataSource.create(user);
 
             // Login user and change to category selection
-            BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+            BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
             app.switchUser(user);
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
+        } else if (getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             long userId = getIntent().getLongExtra(UserSelectionActivity.KEY_USER_ID, -1l);
             User user = UserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
