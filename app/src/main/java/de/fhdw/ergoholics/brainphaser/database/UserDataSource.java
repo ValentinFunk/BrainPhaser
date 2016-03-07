@@ -1,17 +1,29 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.model.UserDao;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by funkv on 20.02.2016.
  */
 public class UserDataSource {
-    public static List<User> getAll() {
-        return DaoManager.getSession().getUserDao().loadAll();
+    private SettingsDataSource mSettingsDataSource;
+    private DaoSession mDaoSession;
+
+    @Inject
+    UserDataSource(DaoSession session, SettingsDataSource settingsDataSource) {
+        mDaoSession = session;
+        mSettingsDataSource = settingsDataSource;
+    }
+
+    public List<User> getAll() {
+        return mDaoSession.getUserDao().loadAll();
     }
 
     /**
@@ -19,27 +31,27 @@ public class UserDataSource {
      * @param user user to create
      * @return id of the created user
      */
-    public static long create(User user) {
+    public long create(User user) {
         if (user.getSettingsId() == 0) {
-            user.setSettings(SettingsDataSource.getNewDefaultSettings());
+            user.setSettings(mSettingsDataSource.getNewDefaultSettings());
         }
 
-        return DaoManager.getSession().getUserDao().insert(user);
+        return mDaoSession.getUserDao().insert(user);
     }
 
-    public static User findOneByName(String name) {
-        return DaoManager.getSession().getUserDao().queryBuilder().where(UserDao.Properties.Name.eq(name)).unique();
+    public User findOneByName(String name) {
+        return mDaoSession.getUserDao().queryBuilder().where(UserDao.Properties.Name.eq(name)).unique();
     }
 
-    public static User getById(long id) {
-        return DaoManager.getSession().getUserDao().load(id);
+    public User getById(long id) {
+        return mDaoSession.getUserDao().load(id);
     }
 
-    public static void update(User user) {
-        DaoManager.getSession().update(user);
+    public void update(User user) {
+        mDaoSession.update(user);
     }
 
-    public static void delete(User user) {
-        DaoManager.getSession().delete(user);
+    public void delete(User user) {
+        mDaoSession.delete(user);
     }
 }

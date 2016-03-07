@@ -1,16 +1,24 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
+import android.support.annotation.NonNull;
+import android.support.v4.util.LongSparseArray;
+import android.util.SparseArray;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -18,24 +26,47 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * This class contains the logic for reading due challenges from the databases
  */
 public class DueChallengeLogic {
+    private User mUser;
+
+    private CompletionDataSource mCompletionDataSource;
+    private ChallengeDataSource mChallengeDataSource;
+
+    public DueChallengeLogic(User user, CompletionDataSource completionDataSource, ChallengeDataSource challengeDataSource) {
+        mCompletionDataSource = completionDataSource;
+        mChallengeDataSource = challengeDataSource;
+        mUser = user;
+    }
+
+    /**
+     * Returns the amount of due challenges for each category id.
+     * @return array that maps category counts to categories
+     */
+    public LongSparseArray<Integer> getDueChallengeCounts(List<Category> categories) {
+        LongSparseArray<Integer> dueChallengeCounts = new LongSparseArray<>();
+        for (Category category : categories) {
+            int challengesDueCount = getDueChallenges(category.getId()).size();
+            dueChallengeCounts.put(category.getId(), challengesDueCount);
+        }
+        return dueChallengeCounts;
+    }
+
     /**
      * Returns a list with the ids of all due challenges of the given user in the category with the
      * given id. If the given category id is -1, the due challenges of all categories will be
      * returned. Challenges without entries in the completed table will be returned and the missing
      * entries will be created.
-     * @param user the user whose due challenges will be returned
      * @param categoryId the id of the category whose due challenges will be returned
      * @return List object containing the ids of all due challenges
      */
-    public static List<Long> getDueChallenges(User user, long categoryId) {
+    public List<Long> getDueChallenges(long categoryId) {
         //Create list that will be returned in the end
         List<Long> dueChallenges = new ArrayList<>();
 
         //Get due challenges that have entries in the database
-        addDueChallengesByCategory(dueChallenges, user, categoryId);
+        addDueChallengesByCategory(dueChallenges, categoryId);
 
         //Create missing entries
-        createMissingCompletedEntriesByCategory(dueChallenges, user, categoryId);
+        createMissingCompletedEntriesByCategory(dueChallenges, mUser, categoryId);
 
         //Return list
         return dueChallenges;
@@ -46,10 +77,9 @@ public class DueChallengeLogic {
      * the given list. If the given category id is -1, the due challenges of all categories will be
      * added.
      * @param dueChallenges the list object the due challenges will be added to
-     * @param user the user whose due challenges will be added
      * @param categoryId the id of the category whose due challenges will be returned
      */
-    private static void addDueChallengesByCategory(List<Long> dueChallenges, User user,
+    private void addDueChallengesByCategory(List<Long> dueChallenges,
                                                    long categoryId) {
         //Create objects
         Date now = new Date();
@@ -59,10 +89,10 @@ public class DueChallengeLogic {
         for (int stage = 1; stage<=6; stage++) {
             //Get the users completions in the stage
             List<Completion> completedInStage =
-                    CompletionDataSource.getByUserAndStage(user, stage);
+                mCompletionDataSource.getByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
-            timebox = getTimeboxByStage(user.getSettings(), stage);
+            timebox = getTimeboxByStage(mUser.getSettings(), stage);
 
             //Check for all challenges if they are due and in the correct category
             for (Completion completed : completedInStage) {
@@ -85,13 +115,13 @@ public class DueChallengeLogic {
      * @param user the user whose due challenges will be added
      * @param categoryId the id of the category whose due challenges will be added
      */
-    private static void createMissingCompletedEntriesByCategory(List<Long> dueChallenges,
+    private void createMissingCompletedEntriesByCategory(List<Long> dueChallenges,
                                                                 User user, long categoryId) {
         //Create objects
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = ChallengeDataSource.getUncompletedChallenges(user);
+        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(user);
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
@@ -105,7 +135,7 @@ public class DueChallengeLogic {
             if (categoryId == -1 || challenge.getCategoryId() == categoryId) {
                 Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(),
                         challenge.getId());
-                CompletionDataSource.create(completed);
+                mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }
         }
@@ -117,7 +147,8 @@ public class DueChallengeLogic {
      * @param stage number of the stage whose timebox will be returned
      * @return the Date object containing the timebox of the given settings object
      */
-    private static Date getTimeboxByStage(Settings settings, int stage) {
+    @NonNull
+    private Date getTimeboxByStage(Settings settings, int stage) {
         switch (stage) {
             case 1:
                 return settings.getTimeBoxStage1();
@@ -132,10 +163,7 @@ public class DueChallengeLogic {
             case 6:
                 return settings.getTimeBoxStage6();
             default:
-                if (BuildConfig.DEBUG) {
-                    throw new RuntimeException("Attempting to get invalid timebox " + stage);
-                }
-                return null;
+                throw new IllegalArgumentException("Attempting to get invalid timebox " + stage);
         }
     }
 }

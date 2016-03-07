@@ -13,13 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Activity used to create an user. Queries Username and avatar.
@@ -28,15 +32,23 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Parameters: none
  * Return: EXTRA_USERNAME and EXTRA_AVATAR_RESOURCE_NAME
  */
-public class CreateUserActivity extends FragmentActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
+public class CreateUserActivity extends BrainPhaserActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
     public final static int MAX_USERNAME_LENGTH = 30;
 
     private TextView mUsernameInput;
     private TextInputLayout mUsernameInputLayout;
     private User mEditingUser = null;
 
+    @Inject UserManager mUserManager;
+    @Inject UserDataSource mUserDataSource;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -64,7 +76,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         if (getIntent().getAction() == Intent.ACTION_EDIT) {
             // Read user to edit
             long userId = getIntent().getLongExtra(UserSelectionActivity.KEY_USER_ID, -1l);
-            User user = UserDataSource.getById(userId);
+            User user = mUserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
@@ -104,7 +116,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         boolean isValid;
 
         String username = mUsernameInput.getText().toString();
-        User foundUser = UserDataSource.findOneByName(username);
+        User foundUser = mUserDataSource.findOneByName(username);
         if (foundUser != null) {
             if (getIntent().getAction().equals(Intent.ACTION_EDIT)
                     && foundUser.getId() == mEditingUser.getId()) {
@@ -163,7 +175,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
      * Called when the profile creation has been finished. Depending on the intent the activity was
      * called with, the user is created or updated.
      *
-     * @param username           Username that was entered
+     * @param username Username that was entered
      * @param avatarResourceName Resource name of the user's selected avatar
      */
     private void profileCreationFinished(String username, String avatarResourceName) {
@@ -176,23 +188,23 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
             User user = new User();
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDataSource.create(user);
+            mUserDataSource.create(user);
 
             // Login user and change to category selection
-            BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
-            app.switchUser(user);
+            BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+            mUserManager.switchUser(user);
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        } else if (getIntent().getAction().equals(Intent.ACTION_EDIT)) {
-            long userId = getIntent().getLongExtra(UserSelectionActivity.KEY_USER_ID, -1l);
-            User user = UserDataSource.getById(userId);
+        } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
+            long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
+            User user = mUserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
             }
 
             user.setAvatar(avatarResourceName);
             user.setName(username);
-            UserDataSource.update(user);
+            mUserDataSource.update(user);
         }
 
         setResult(RESULT_OK);

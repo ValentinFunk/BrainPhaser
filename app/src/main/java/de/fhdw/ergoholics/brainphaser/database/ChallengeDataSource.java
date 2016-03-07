@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-import de.fhdw.ergoholics.brainphaser.model.Completion;
-import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
-import de.greenrobot.dao.query.QueryBuilder;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -15,12 +15,21 @@ import de.greenrobot.dao.query.QueryBuilder;
  * Data Source class for custom access to challenge table entries in the database
  */
 public class ChallengeDataSource {
+    private DaoSession mDaoSession;
+    private CompletionDataSource mCompletionDataSource;
+
+    @Inject
+    ChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
+        mDaoSession = session;
+        mCompletionDataSource = completionDataSource;
+    }
+
     /**
      * Returns the Settings object with the given id
      * @return Settings object with the given id
      */
-    public static List<Challenge> getAll() {
-        return DaoManager.getSession().getChallengeDao().loadAll();
+    public List<Challenge> getAll() {
+        return mDaoSession.getChallengeDao().loadAll();
     }
 
     /**
@@ -29,17 +38,15 @@ public class ChallengeDataSource {
      * TEXT: type for text entry challenges
      * DECIDE: type for challenges, where the user makes the decision if his answer was correct
      */
-    public enum ChallengeType{
-        MULTIPLE_CHOICE, TEXT,
-    }
+
 
     /**
      * Returns the Challenge object with the given id
      * @param id challenge id in the database
      * @return Challenge object with the given id
      */
-    public static Challenge getById(long id) {
-        return DaoManager.getSession().getChallengeDao().load(id);
+    public Challenge getById(long id) {
+        return mDaoSession.getChallengeDao().load(id);
     }
 
     /**
@@ -47,8 +54,8 @@ public class ChallengeDataSource {
      * @param challenge challege to be created in the challenge table
      * @return id of the created object
      */
-    public static long create(Challenge challenge) {
-        return DaoManager.getSession().getChallengeDao().insert(challenge);
+    public long create(Challenge challenge) {
+        return mDaoSession.getChallengeDao().insert(challenge);
     }
 
     /**
@@ -56,14 +63,14 @@ public class ChallengeDataSource {
      * @param user the user whose not completed challenges will be returned
      * @return list of uncompleted challenges
      */
-    public static List<Challenge> getUncompletedChallenges(User user) {
+    public List<Challenge> getUncompletedChallenges(User user) {
         List<Challenge> notCompleted = new ArrayList<>();
         long userId = user.getId();
 
-        List<Challenge> challenges = DaoManager.getSession().getChallengeDao().queryBuilder().list();
+        List<Challenge> challenges = mDaoSession.getChallengeDao().queryBuilder().list();
 
         for (Challenge challenge : challenges) {
-            if (CompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
+            if (mCompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
                 notCompleted.add(challenge);
             }
         }

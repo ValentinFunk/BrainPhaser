@@ -1,7 +1,13 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,15 +17,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Created by Christian on 16.02.2016. Adapter and ViewHolder for the UserLists
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
-
     /**
      * Interface for ClickListener
      */
@@ -42,7 +51,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private TextView mUserText;
         private ImageView mUserImage;
         private UserAdapter mAdapter;
-        private User mUser;
 
         //Constructor
         public UserViewHolder(View itemView, UserAdapter adapter) {
@@ -82,20 +90,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
         /**
-         * Create the item in the View Holder and add an OnClickListener
+         * Bind the item to the View Holder and add an OnClickListener
          *
-         * @param username Username
-         * @param avatarId AvatarID
-         * @param position Position of the item
+         * @param user User to bind to the view
          */
-        public void bindUser(String username, int avatarId, final int position) {
+        public void bindUser(final User user) {
+            String username = user.getName();
+            int avatarId = Avatars.getAvatarResourceId(itemView.getContext(), user.getAvatar());
+
             mUserText.setText(username);
             mUserImage.setImageResource(avatarId);
+
+            // Highlight currently logged in user
+            if (user.getId().equals(mAdapter.getUserManager().getCurrentUser().getId())) {
+                mUserText.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorAccent));
+            } else {
+                int[] attrs = {android.R.attr.textColor};
+                TypedArray ta = itemView.getContext().obtainStyledAttributes(android.R.style.TextAppearance_Large, attrs);
+                mUserText.setTextColor(ta.getColor(0, Color.BLACK));
+
+                ta.recycle();
+            }
+
             //set click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                mAdapter.onElementSelected(position);
+                    mAdapter.onUserSelected(user);
                 }
             });
         }
@@ -105,14 +126,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private ResultListener mResultListener;
     private List<User> mUsers;
 
-    public UserAdapter(List<User> allUsers, ResultListener resultListener) {
-        mUsers = allUsers;
-        mResultListener = resultListener;
+    @Inject UserManager mUserManager;
+
+    public UserManager getUserManager( ) {
+        return mUserManager;
     }
 
-    //User or Add Button TYPE
+    public UserAdapter(List<User> allUsers, ResultListener resultListener, BrainPhaserApplication application) {
+        mUsers = allUsers;
+        mResultListener = resultListener;
 
+        application.getComponent().inject(this);
+    }
 
+    // Creates the list item's view
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
@@ -122,25 +149,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     /**
-     * Starts the interface. If the clicked item is an user, start onUserSelection otherwise start
-     * onAddUser.
+     * Pass selection on to the listener
      *
-     * @param position item's position
+     * @param user selected user
      */
-    public void onElementSelected(int position) {
-        mResultListener.onUserSelected(mUsers.get(position));
+    public void onUserSelected(User user) {
+        mResultListener.onUserSelected(user);
     }
 
 
-    //Create a list item
+    // Binds list element of given position to the view
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         //bind the user
         User user = mUsers.get(position);
-        holder.bindUser(user.getName(), Avatars.getAvatarResourceId(holder.itemView.getContext(), user.getAvatar()), position);
+        holder.bindUser(user);
     }
 
-    //Length of View is all users
+    // Amount of items = amount of users
     @Override
     public int getItemCount() {
         return mUsers.size();
