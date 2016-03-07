@@ -15,6 +15,8 @@ import android.widget.TextView;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
+import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -60,7 +62,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
 
         if (getIntent().getAction() == Intent.ACTION_EDIT) {
             // Read user to edit
-            long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
+            long userId = getIntent().getLongExtra(UserSelectionActivity.KEY_USER_ID, -1l);
             User user = UserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
@@ -175,7 +177,7 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         } else if(getIntent().getAction().equals(Intent.ACTION_EDIT)) {
-            long userId = Long.parseLong(getIntent().getData().getLastPathSegment());
+            long userId = getIntent().getLongExtra(UserSelectionActivity.KEY_USER_ID, -1l);
             User user = UserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();

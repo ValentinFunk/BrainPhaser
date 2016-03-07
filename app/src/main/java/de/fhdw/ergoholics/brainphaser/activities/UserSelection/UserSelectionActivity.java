@@ -28,6 +28,8 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  */
 
 public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
+    public static final String KEY_USER_ID = "user_id";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         //loading of the components
         RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
+        registerForContextMenu(userList);
 
         //load the users from the database
         List<User> allUsers = UserDataSource.getAll();
@@ -60,7 +63,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
             startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
-
     }
 
     /*
@@ -90,5 +92,17 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void onEditUser(User user) {
+        Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
+        intent.putExtra(KEY_USER_ID, user.getId());
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onDeleteUser(User user) {
+        //Todo
     }
 }

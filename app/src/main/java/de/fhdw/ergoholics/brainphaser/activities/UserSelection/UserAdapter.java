@@ -1,7 +1,9 @@
 package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,23 +25,60 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      */
     public interface ResultListener {
         void onUserSelected(User user);
+        void onEditUser(User user);
+        void onDeleteUser(User user);
     }
 
     /**
      * User View Holder holds the items in the UserList
      */
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener,
+            MenuItem.OnMenuItemClickListener{
+        //Constants
+        private static final String CONTEXT_MENU_BUTTON_EDIT = "Bearbeiten";
+        private static final String CONTEXT_MENU_BUTTON_DELETE = "Löschen";
+
+        //Attributes
         private TextView mUserText;
         private ImageView mUserImage;
         private UserAdapter mAdapter;
+        private User mUser;
 
         //Constructor
         public UserViewHolder(View itemView, UserAdapter adapter) {
             super(itemView);
+            itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
 
             mUserText = (TextView) itemView.findViewById(R.id.userItemText);
             mUserImage = (ImageView) itemView.findViewById(R.id.userItemImage);
             mAdapter = adapter;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                                        ContextMenu.ContextMenuInfo menuInfo) {
+            MenuItem editItem = menu.add(CONTEXT_MENU_BUTTON_EDIT);
+            MenuItem deleteItem = menu.add(CONTEXT_MENU_BUTTON_DELETE);
+            editItem.setOnMenuItemClickListener(this);
+            deleteItem.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (item.getTitle().equals(CONTEXT_MENU_BUTTON_EDIT)) {
+                mResultListener.onEditUser(mUsers.get(getPosition()));
+            }
+            else if (item.getTitle().equals(CONTEXT_MENU_BUTTON_DELETE)) {
+                mResultListener.onDeleteUser(mUsers.get(getPosition()));
+            }
+
+            return true;
+        }
+
+        @Override
+        public void onClick(View view) {
+
         }
 
         /**
