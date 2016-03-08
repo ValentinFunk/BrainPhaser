@@ -1,23 +1,19 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
-import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
@@ -35,17 +31,20 @@ public class ChallengeActivity extends BrainPhaserActivity {
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
     private int mChallengeNo = 0;
     private Button mBtnNextChallenge;
     private boolean mAnswerChecked;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
     private DueChallengeLogic mDueChallengeLogic;
-
-    @Inject UserManager mUserManager;
-    @Inject CompletionDataSource mCompletionDataSource;
-    @Inject ChallengeDataSource mChallengeDataSource;
-    @Inject UserLogicFactory mUserLogicFactory;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
