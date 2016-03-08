@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
@@ -25,9 +21,7 @@ import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Category;
-import de.fhdw.ergoholics.brainphaser.model.User;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -40,12 +34,14 @@ import javax.inject.Inject;
 public class SelectCategoryPage extends BrainPhaserFragment implements CategoryAdapter.SelectionListener {
     RecyclerView mRecyclerView;
     List<Category> mCategories;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    CategoryDataSource mCategoryDataSource;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
-
     private DueChallengeLogic mDueChallengeLogic;
-    @Inject UserManager mUserManager;
-    @Inject CategoryDataSource mCategoryDataSource;
-    @Inject UserLogicFactory mUserLogicFactory;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -123,5 +119,15 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
     @Override
     public void onAllCategoriesSelected() {
         // TODO
+    }
+
+    @Override
+    public void onCategoryStatisticsSelected(Category category) {
+
+    }
+
+    @Override
+    public void onAllCategoriesStatisticsSelected() {
+
     }
 }
