@@ -1,7 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -10,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 
-import java.util.Collections;
-import java.util.List;
-
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Chris on 2/25/2016.
@@ -37,8 +35,6 @@ public class MultipleChoiceFragment extends AnswerFragment {
         CheckBox checkBox3 = (CheckBox) view.findViewById(R.id.checkbox3);
         CheckBox checkBox4 = (CheckBox) view.findViewById(R.id.checkbox4);
 
-        loadChallengeAndAnswers();
-
         //Fill Checkboxes
         mCheckBoxArray = new CheckBox[mAnswerList.size()];
         mCheckBoxArray[0] = checkBox1;
@@ -47,7 +43,6 @@ public class MultipleChoiceFragment extends AnswerFragment {
         mCheckBoxArray[3] = checkBox4;
         shuffleAnswers(mAnswerList);
         return view;
-
     }
 
     /**

@@ -99,14 +99,16 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         });
     }
 
-    // Sort categories when activity is started, to make sure the set is sorted when returning
+    // Sort categories when activity is started/resumed, to make sure the set is sorted when returning
     // from challenge solving
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         sortCategories();
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+
+        // Sort reloads the due challenges so we need to notify the adapter that they changed.
+        ((CategoryAdapter) mRecyclerView.getAdapter()).notifyDueChallengeCountsChanged(mDueChallengeCounts);
     }
 
     @Override

@@ -20,6 +20,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     private List<Category> mCategories;
     private SelectionListener mListener;
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
+
     /**
      * Adapter for Listing Categories in a recycler view
      * @param categories list of categories to show
@@ -32,6 +33,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         mDueChallengeCounts = dueChallengeCounts;
 
         setHasStableIds(true);
+    }
+
+    public void notifyDueChallengeCountsChanged(LongSparseArray<Integer> dueChallengeCounts) {
+        mDueChallengeCounts = dueChallengeCounts;
+        notifyDataSetChanged();
     }
 
     /**
