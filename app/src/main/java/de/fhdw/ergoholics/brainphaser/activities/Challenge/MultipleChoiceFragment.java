@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -59,6 +60,8 @@ public class MultipleChoiceFragment extends AnswerFragment {
     public void shuffleAnswers(List<Answer> answers) {
         Collections.shuffle(answers);
         for (int i = 0; i < mAnswerList.size(); i++) {
+            mCheckBoxArray[i].setTextOff(answers.get(i).getText());
+            mCheckBoxArray[i].setTextOn(answers.get(i).getText());
             mCheckBoxArray[i].setText(answers.get(i).getText());
         }
     }
@@ -70,18 +73,20 @@ public class MultipleChoiceFragment extends AnswerFragment {
 
         for (int i = 0; i < mAnswerList.size(); i++) {
             answer = mAnswerList.get(i);
-            int backgroundColor = ContextCompat.getColor(getContext(), R.color.colorRight);
-            if (mCheckBoxArray[i].isChecked() == false && answer.getAnswerCorrect() == false) {
+            Drawable bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_unchecked);
+            if (!mCheckBoxArray[i].isChecked() && !answer.getAnswerCorrect()) {
                 booleanArray[i] = true;
             } else if (mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect()) {
                 booleanArray[i] = true;
-            } else if (mCheckBoxArray[i].isChecked() != answer.getAnswerCorrect() && answer.getAnswerCorrect()) {
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_checked_right);
+            } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
                 booleanArray[i] = false;
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_unchecked_wrong);
             } else {
-                backgroundColor = ContextCompat.getColor(getContext(), R.color.colorWrong);
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multiple_choice_checked_wrong);
                 booleanArray[i] = false;
             }
-            mCheckBoxArray[i].setBackgroundColor(backgroundColor);
+            mCheckBoxArray[i].setBackgroundDrawable(bg);
         }
         return booleanArray[0] && booleanArray[1] && booleanArray[2] && booleanArray[3];
     }
