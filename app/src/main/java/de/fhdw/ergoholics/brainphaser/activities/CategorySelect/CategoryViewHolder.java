@@ -109,4 +109,8 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
             mDueCountText.setText(R.string.no_challenges_due);
         }
     }
+
+    public TextView getTitle() {
+        return mTitle;
+    }
 }
