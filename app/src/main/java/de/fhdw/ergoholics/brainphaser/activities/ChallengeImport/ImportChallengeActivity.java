@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.io.File;
-
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
 import de.fhdw.ergoholics.brainphaser.fileimport.FileImport;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
+
+import java.io.File;
 
 /**
  * Created by Daniel Hoogen on 16/02/2016.
@@ -71,6 +71,9 @@ public class ImportChallengeActivity extends Activity {
 
                         //Switch to the main activity when the button is clicked
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                        setResult(RESULT_OK);
+                        finish();
                     }
                 });
         messageBox.show();
