@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.model.ChallengeDao;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
+import de.greenrobot.dao.query.QueryBuilder;
 
 import javax.inject.Inject;
 
@@ -31,14 +33,6 @@ public class ChallengeDataSource {
     public List<Challenge> getAll() {
         return mDaoSession.getChallengeDao().loadAll();
     }
-
-    /**
-     * enum containing the different challenge types
-     * MULTIPLE_CHOICE: type for multiple choice questions
-     * TEXT: type for text entry challenges
-     * DECIDE: type for challenges, where the user makes the decision if his answer was correct
-     */
-
 
     /**
      * Returns the Challenge object with the given id
@@ -76,5 +70,12 @@ public class ChallengeDataSource {
         }
 
         return notCompleted;
+    }
+
+    public List<Challenge> getByCategoryId(long categoryId) {
+        QueryBuilder challenges = mDaoSession.getChallengeDao().queryBuilder()
+                .where(ChallengeDao.Properties.CategoryId.eq(categoryId));
+
+        return challenges.list();
     }
 }

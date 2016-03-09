@@ -3,6 +3,7 @@ package de.fhdw.ergoholics.brainphaser.fileimport;
 import org.w3c.dom.Node;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +22,11 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
  * Created by Daniel Hoogen on 19/02/2016.
  */
 public class FileImport {
-    public static void importBPC(File bpcFile, BrainPhaserApplication application)
+    public static void importBPC(InputStream is, BrainPhaserApplication application)
             throws FileFormatException, UnexpectedElementException {
 
         //Get root element
-        Node categoriesNode = BPCRead.getCategoriesNode(bpcFile);
+        Node categoriesNode = BPCRead.getCategoriesNode(is);
 
         //Get the root's child nodes
         Node childCategories = categoriesNode.getFirstChild();
