@@ -81,7 +81,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
         final User currentUser = mUserManager.getCurrentUser();
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
-        if (true || allChallenges == null || allChallenges.size() < 1) {
+        if (allChallenges == null || allChallenges.size() < 1) {
             loadFinishScreen();
             return;
         }
