@@ -29,7 +29,7 @@ public class TextFragment extends AnswerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container, false);
+        mView = inflater.inflate(R.layout.fragment_challenge_text, container, false);
         mAnswerText = (EditText) mView.findViewById(R.id.answerText);
         return mView;
     }

@@ -2,6 +2,8 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
@@ -40,7 +43,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
     @Inject
     UserLogicFactory mUserLogicFactory;
     private int mChallengeNo = 0;
-    private Button mBtnNextChallenge;
+    private FloatingActionButton mBtnNextChallenge;
     private boolean mAnswerChecked;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
@@ -69,7 +72,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         //get the button
-        mBtnNextChallenge = (Button) findViewById(R.id.btnNextChallenge);
+        mBtnNextChallenge = (FloatingActionButton)findViewById(R.id.btnNextChallenge);
         mQuestionText = (TextView) findViewById(R.id.challengeQuestion);
 
         //FragementManager manages the fragments in the activity
@@ -100,25 +103,22 @@ public class ChallengeActivity extends BrainPhaserActivity {
 
                     //Check if the answer is right
                     if (currentFragment.checkAnswers()) {
-                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
                     } else {
-                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
                     }
 
-                    //Activate next challenge
-                    mBtnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
                     mAnswerChecked =true;
+                }else{//Load the next challenge
                     //If the challenge is completed load the finish screen
                     if(mChallengeNo==allChallenges.size()-1){
                         loadFinishScreen();
+                        return;
                     }
-                }else{//Load the next challenge
                     //increment counter
                     mChallengeNo += 1;
                     //load the next challenge
                     loadChallenge(allChallenges.get(mChallengeNo));
-                    //reset values
-                    mBtnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
                     mAnswerChecked = false;
                 }
             }
