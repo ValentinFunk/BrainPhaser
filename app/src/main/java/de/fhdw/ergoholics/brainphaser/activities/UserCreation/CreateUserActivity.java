@@ -3,7 +3,6 @@ package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +16,6 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
@@ -31,15 +29,13 @@ import javax.inject.Inject;
  */
 public class CreateUserActivity extends BrainPhaserActivity implements TextView.OnEditorActionListener, AvatarPickerDialogFragment.AvatarPickerDialogListener {
     public static final String KEY_USER_ID = "user_id";
-
-    private TextView mUsernameInput;
-    private TextInputLayout mUsernameInputLayout;
-    private User mEditingUser = null;
-
     @Inject
     UserManager mUserManager;
     @Inject
     UserDataSource mUserDataSource;
+    private TextView mUsernameInput;
+    private TextInputLayout mUsernameInputLayout;
+    private User mEditingUser = null;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -49,7 +45,7 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_create_user);
 
         mUsernameInput = (TextView) findViewById(R.id.input_username);
         mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_username_layout);
