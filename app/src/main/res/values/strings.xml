@@ -37,4 +37,5 @@
     <string name="logged_in_as">%1$s eingeloggt.</string>
 
     <string name="nav_learn">Lernen</string>
+    <string name="statistics">Statistiken</string>
 </resources>
