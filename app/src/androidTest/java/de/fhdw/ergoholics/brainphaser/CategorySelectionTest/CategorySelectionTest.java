@@ -179,6 +179,9 @@ public class CategorySelectionTest {
         }
     }
 
+    /**
+     * Component that uses the mock modules to fake data from the database
+     */
     @Singleton
     @Component(modules = {TestAppModule.class, MockDatabaseModule.class})
     interface TestAppComponent extends BrainPhaserComponent {

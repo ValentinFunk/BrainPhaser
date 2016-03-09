@@ -9,9 +9,6 @@ import android.util.Log;
 import android.view.View;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
@@ -96,6 +93,9 @@ public class ImportChallengeActivity extends Activity {
 
                         //Switch to the main activity when the button is clicked
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+                        setResult(RESULT_OK);
+                        finish();
                     }
                 });
         messageBox.show();
