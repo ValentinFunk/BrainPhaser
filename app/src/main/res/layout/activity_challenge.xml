@@ -62,11 +62,11 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/challenge_fragment"/>
 
-                <Button
+                <android.support.design.widget.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/check_Challenge"
                     android:id="@+id/btnNextChallenge"
+                    android:src="@android:drawable/ic_media_next"
                     android:layout_gravity="right"
                     android:layout_marginTop="16dp"
                     />
