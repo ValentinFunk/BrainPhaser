@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
@@ -46,6 +48,8 @@ public class ChallengeActivity extends BrainPhaserActivity {
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
     private DueChallengeLogic mDueChallengeLogic;
+    private TextView mQuestionText;
+    private Challenge mCurrentChallenge;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -66,8 +70,10 @@ public class ChallengeActivity extends BrainPhaserActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+
         //get the button
         mBtnNextChallenge = (FloatingActionButton)findViewById(R.id.btnNextChallenge);
+        mQuestionText = (TextView) findViewById(R.id.challengeQuestion);
 
         //FragementManager manages the fragments in the activity
         mFManager=getSupportFragmentManager();
@@ -78,7 +84,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
         final User currentUser = mUserManager.getCurrentUser();
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
-        if (allChallenges==null || allChallenges.size()<1){
+        if (true || allChallenges == null || allChallenges.size() < 1) {
             loadFinishScreen();
             return;
         }
@@ -91,8 +97,8 @@ public class ChallengeActivity extends BrainPhaserActivity {
             public void onClick(View view) {
                 if(!mAnswerChecked) {//Check the current answer and load the finish screen
                     //Find the current fragment and user
-                    AnswerFragment currentFragment =(AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
-                    BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
+                    AnswerFragment currentFragment = (AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
+
                     User currentUser = mUserManager.getCurrentUser();
 
                     //Check if the answer is right
@@ -124,15 +130,15 @@ public class ChallengeActivity extends BrainPhaserActivity {
         //Load End Screen
         mFTransaction=mFManager.beginTransaction();
         mFTransaction.disallowAddToBackStack();
+
+        ((LinearLayout) findViewById(R.id.challenge_layout)).removeAllViews();
+
         //Create the finish-challenge
-        FinishChallengeFragment finishChallengeFragment =new FinishChallengeFragment();
+        FinishChallengeFragment finishChallengeFragment = new FinishChallengeFragment();
+
         //Inflate the finish-challenge in the question_fragment
-        mFTransaction.replace(R.id.challenge_fragment_question, finishChallengeFragment);
-        //Remove the challenge-fragment
-        Fragment fragment = mFManager.findFragmentById(R.id.challenge_fragment);
-        if(fragment!=null) {
-            mFTransaction.remove(fragment);
-        }
+        mFTransaction.replace(R.id.challenge_layout, finishChallengeFragment);
+
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();
@@ -150,16 +156,11 @@ public class ChallengeActivity extends BrainPhaserActivity {
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
         mFTransaction.disallowAddToBackStack();
-        //Create the QuestionFragment
-        QuestionFragment questionFragment =new QuestionFragment();
-        //Commit the bundle
-        questionFragment.setArguments(bundle);
-        //Inflate the QuestionFragment in the question_fragment
-        mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        Challenge currentChallenge = mChallengeDataSource.getById(challengeId);
+        mCurrentChallenge = mChallengeDataSource.getById(challengeId);
+        changeQuestion();
 
-        switch (currentChallenge.getChallengeType()){
+        switch (mCurrentChallenge.getChallengeType()) {
             case ChallengeType.MULTIPLE_CHOICE:
                 //Create a MultipleChoiceFragment
                 MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
@@ -183,5 +184,13 @@ public class ChallengeActivity extends BrainPhaserActivity {
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();
+    }
+
+    /**
+     * Loads the question of the challenge into the text
+     */
+    public void changeQuestion() {
+        //Set question text
+        mQuestionText.setText(mCurrentChallenge.getQuestion());
     }
 }

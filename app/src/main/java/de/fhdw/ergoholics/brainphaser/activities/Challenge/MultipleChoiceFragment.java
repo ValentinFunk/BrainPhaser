@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ToggleButton;
 
-import java.util.Collections;
-import java.util.List;
-
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Chris on 2/25/2016.
@@ -39,8 +39,6 @@ public class MultipleChoiceFragment extends AnswerFragment {
         ToggleButton checkBox3 = (ToggleButton) view.findViewById(R.id.checkbox3);
         ToggleButton checkBox4 = (ToggleButton) view.findViewById(R.id.checkbox4);
 
-        loadChallengeAndAnswers();
-
         //Fill Checkboxes
         mCheckBoxArray = new ToggleButton[mAnswerList.size()];
         mCheckBoxArray[0] = checkBox1;
@@ -49,7 +47,6 @@ public class MultipleChoiceFragment extends AnswerFragment {
         mCheckBoxArray[3] = checkBox4;
         shuffleAnswers(mAnswerList);
         return view;
-
     }
 
     /**

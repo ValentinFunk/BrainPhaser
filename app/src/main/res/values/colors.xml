@@ -6,4 +6,5 @@
     <color name="colorRight">#00FF00</color>
     <color name="colorWrong">#FF0000</color>
     <color name="colorStandard">#FFFFFF</color>
+    <color name="backgroundEmptyState">#CECECE</color>
 </resources>

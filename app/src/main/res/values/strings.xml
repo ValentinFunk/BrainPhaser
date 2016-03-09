@@ -36,6 +36,9 @@
     <string name="about">Über</string>
     <string name="logged_in_as">%1$s eingeloggt.</string>
 
+    <string name="well_done">Gut gemacht!</string>
+    <string name="enjoy_day">Keine Challenges fällig. Genieße deinen Tag.</string>
+
     <string name="nav_learn">Lernen</string>
     <string name="statistics">Statistiken</string>
 </resources>

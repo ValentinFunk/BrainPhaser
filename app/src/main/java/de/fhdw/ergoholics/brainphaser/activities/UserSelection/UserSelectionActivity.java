@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
@@ -18,6 +20,7 @@ import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
+import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
 import java.util.List;
 
@@ -45,9 +48,20 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
+        Toolbar myChildToolbar =
+            (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
         //loading of the components
         RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
         userList.setHasFixedSize(true);
+        userList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         registerForContextMenu(userList);
 
         //load the users from the database
