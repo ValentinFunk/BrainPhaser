@@ -120,7 +120,9 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
 
     @Override
     public void onAllCategoriesSelected() {
-        // TODO
+        Intent intent = new Intent(getContext(), ChallengeActivity.class);
+        intent.putExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
+        startActivity(intent);
     }
 
     @Override

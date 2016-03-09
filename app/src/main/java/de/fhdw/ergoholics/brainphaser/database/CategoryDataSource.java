@@ -13,6 +13,10 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class CategoryDataSource {
+    //Constants
+    public static final long CATEGORY_ID_ALL = -1l;
+
+    //Attributes
     private DaoSession mDaoSession;
 
     @Inject
