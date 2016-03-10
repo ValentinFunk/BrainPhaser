@@ -12,14 +12,12 @@ import com.github.mikephil.charting.data.PieDataSet;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -40,23 +38,22 @@ public class StatisticsLogic {
     private static final float CENTER_TEXT_SIZE = 8f;
     private static final float NO_DATA_TEXT_SIZE = 18f;
 
-    private static final String DUE_CHART_CENTER_TEXT = "Fälligkeit";
-    private static final String STAGE_CHART_CENTER_TEXT = "Klassen";
-    private static final String NO_DATA_TEXT = "Keine Challenges vorhanden!";
-
-    private static final String CHALLENGE_DUE_TEXT = "Ja";
-    private static final String CHALLENGE_NOT_DUE_TEXT = "Nein";
-    private static final String STAGE_OTHERS_TEXT = "Andere";
-
     //Attributes
-    @Inject
-    UserManager mUserManager;
-    @Inject
     UserLogicFactory mUserLogicFactory;
-    @Inject
+    User mUser;
+    BrainPhaserApplication mApplication ;
     ChallengeDataSource mChallengeDataSource;
-    @Inject
     CompletionDataSource mCompletionDataSource;
+
+    //Constructor
+    public StatisticsLogic(User user, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource) {
+        mUserLogicFactory = new UserLogicFactory();
+        mApplication = application;
+        mUser = user;
+        mChallengeDataSource = challengeDataSource;
+        mCompletionDataSource = completionDataSource;
+    }
+
     /**
      * Fills the given pie chart with data for visualizing the shares of due and not due challenges.
      * The data for the current user and the given category is shown.
@@ -69,7 +66,7 @@ public class StatisticsLogic {
         chart.clear();
 
         //Calculate numbers for the data to be visualized
-        DueChallengeLogic dueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(mUserManager.getCurrentUser());
+        DueChallengeLogic dueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(mUser);
 
         int dueNumber = dueChallengeLogic.getDueChallenges(categoryId).size();
         int notDueNumber = mChallengeDataSource.getByCategoryId(categoryId).size() - dueNumber;
@@ -79,10 +76,10 @@ public class StatisticsLogic {
             ArrayList <Entry> entries = new ArrayList<>();
             ArrayList<String> labels = new ArrayList<>();
 
-            labels.add(CHALLENGE_DUE_TEXT);
+            labels.add(mApplication.getString(R.string.challenge_due_text));
             entries.add(new Entry(dueNumber > 0 ? dueNumber : nullValue(notDueNumber), 0));
 
-            labels.add(CHALLENGE_NOT_DUE_TEXT);
+            labels.add(mApplication.getString(R.string.challeng_not_due_text));
             entries.add(new Entry(notDueNumber > 0 ? notDueNumber : nullValue(dueNumber), 1));
 
             PieDataSet dataset = new PieDataSet(entries, "");
@@ -96,7 +93,7 @@ public class StatisticsLogic {
             chart.setData(data);
 
             //Format the chart
-            chart.setCenterText(DUE_CHART_CENTER_TEXT);
+            chart.setCenterText(mApplication.getString(R.string.due_chart_center_text));
             applyChartSettings(chart);
         }
         else
@@ -105,12 +102,11 @@ public class StatisticsLogic {
 
     /**
      * Fills the given pie chart with data for visualizing the shares of the different stages. The
-     * data for the given user and the given category is shown.
+     * data for user given in the constructor and the given category is shown.
      * @param chart the chart component to be filled with data and to be formatted
-     * @param currentUser the user whose stage shares will be visualized
      * @param categoryId the id of the category whose stage shares will be visualized
      */
-    public void fillStageChart(PieChart chart, User currentUser, long categoryId) {
+    public void fillStageChart(PieChart chart, long categoryId) {
         //Clear the chart for reloading
         chart.clear();
 
@@ -120,7 +116,7 @@ public class StatisticsLogic {
         int zeroValueCount = 0;
 
         for (int i = 0; i <=5; i++) {
-            numbers[i] = mCompletionDataSource.getByUserAndStageAndCategory(currentUser, i + 1, categoryId).size();
+            numbers[i] = mCompletionDataSource.getByUserAndStageAndCategory(mUser, i + 1, categoryId).size();
             if (numbers[i]==0)
                 zeroValueCount++;
             totalNumber += numbers[i];
@@ -139,7 +135,7 @@ public class StatisticsLogic {
             }
             if (zeroValueCount==5) {
                 entries.add(new Entry(nullValue(totalNumber), 6));
-                labels.add(STAGE_OTHERS_TEXT);
+                labels.add(mApplication.getString(R.string.chart_stage_others_text));
             }
 
             PieDataSet dataset = new PieDataSet(entries, "");
@@ -153,7 +149,7 @@ public class StatisticsLogic {
             chart.setData(data);
 
             //Format the chart
-            chart.setCenterText(STAGE_CHART_CENTER_TEXT);
+            chart.setCenterText(mApplication.getString(R.string.stage_chart_center_text));
             applyChartSettings(chart);
         }
         else
@@ -199,7 +195,7 @@ public class StatisticsLogic {
      * @param chart the chart whose no data text will be formatted
      */
     private void applyNoDataText(Chart chart) {
-        chart.setNoDataText(NO_DATA_TEXT);
+        chart.setNoDataText(mApplication.getString(R.string.chart_no_data_text));
         Paint p = chart.getPaint(Chart.PAINT_INFO);
         p.setTextSize(NO_DATA_TEXT_SIZE);
         p.setColor(NO_DATA_TEXT_COLOR);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 
 import java.util.List;
@@ -89,7 +90,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @Override
     public long getItemId(int position) {
         if (position == 0) {
-            return -1; // All Categories
+            return CategoryDataSource.CATEGORY_ID_ALL;
         }
 
         Category category = mCategories.get(position - 1);

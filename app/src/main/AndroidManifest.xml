@@ -79,5 +79,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity"/>
         </activity>
+        <activity android:name=".activities.statistics.StatisticsActivity"/>
     </application>
 </manifest>

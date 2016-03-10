@@ -16,6 +16,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
+import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
@@ -127,11 +128,15 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
 
     @Override
     public void onCategoryStatisticsSelected(Category category) {
-
+        Intent intent = new Intent(getActivity().getApplicationContext(), StatisticsActivity.class);
+        intent.putExtra(ChallengeActivity.EXTRA_CATEGORY_ID, category.getId());
+        startActivity(intent);
     }
 
     @Override
     public void onAllCategoriesStatisticsSelected() {
-
+        Intent intent = new Intent(getActivity().getApplicationContext(), StatisticsActivity.class);
+        intent.putExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
+        startActivity(intent);
     }
 }
