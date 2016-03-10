@@ -2,7 +2,10 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 import java.util.Date;
 
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -10,9 +13,11 @@ import de.fhdw.ergoholics.brainphaser.model.Settings;
  * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
-    private static final SettingsDataSource instance = new SettingsDataSource();
-    public static SettingsDataSource getInstance() {
-        return instance;
+    private DaoSession mDaoSession;
+
+    @Inject
+    SettingsDataSource(DaoSession session) {
+        mDaoSession = session;
     }
 
     /**
@@ -21,7 +26,7 @@ public class SettingsDataSource {
      * @return Settings object with the given id
      */
     public Settings getById(long id) {
-        return DaoManager.getSession().getSettingsDao().load(id);
+        return mDaoSession.getSettingsDao().load(id);
     }
 
     /**
@@ -38,7 +43,7 @@ public class SettingsDataSource {
         settings.setTimeBoxStage5(new Date(1000l * 60 * 60 * 24 * 30));  //30 days
         settings.setTimeBoxStage6(new Date(1000l * 60 * 60 * 24 * 180)); //180 days
 
-        DaoManager.getSession().getSettingsDao().insert(settings);
+        mDaoSession.getSettingsDao().insert(settings);
         return settings;
     }
 }

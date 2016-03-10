@@ -10,6 +10,7 @@ import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
@@ -17,6 +18,8 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
+
+import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -26,12 +29,18 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class DueChallengeLogic {
     private User mUser;
 
-    public DueChallengeLogic(User user) {
+    private CompletionDataSource mCompletionDataSource;
+    private ChallengeDataSource mChallengeDataSource;
+
+    public DueChallengeLogic(User user, CompletionDataSource completionDataSource, ChallengeDataSource challengeDataSource) {
+        mCompletionDataSource = completionDataSource;
+        mChallengeDataSource = challengeDataSource;
         mUser = user;
     }
+
     /**
      * Returns the amount of due challenges for each category id.
-     * @return array that maps category counts to categories
+     * @return array that maps category counts to category ids. (Key = CategoryId, Value = Count)
      */
     public LongSparseArray<Integer> getDueChallengeCounts(List<Category> categories) {
         LongSparseArray<Integer> dueChallengeCounts = new LongSparseArray<>();
@@ -44,9 +53,9 @@ public class DueChallengeLogic {
 
     /**
      * Returns a list with the ids of all due challenges of the given user in the category with the
-     * given id. If the given category id is -1, the due challenges of all categories will be
-     * returned. Challenges without entries in the completed table will be returned and the missing
-     * entries will be created.
+     * given id. If the given category id is CategoryDataSource.CATEGORY_ID_ALL, the due challenges
+     * of all categories will be returned. Challenges without entries in the completed table will be
+     * returned and the missing entries will be created.
      * @param categoryId the id of the category whose due challenges will be returned
      * @return List object containing the ids of all due challenges
      */
@@ -58,7 +67,7 @@ public class DueChallengeLogic {
         addDueChallengesByCategory(dueChallenges, categoryId);
 
         //Create missing entries
-        createMissingCompletedEntriesByCategory(dueChallenges, mUser, categoryId);
+        createMissingCompletedEntriesByCategory(dueChallenges, categoryId);
 
         //Return list
         return dueChallenges;
@@ -66,8 +75,8 @@ public class DueChallengeLogic {
 
     /**
      * Adds the ids of all due challenges of the given user in the category with the given id to
-     * the given list. If the given category id is -1, the due challenges of all categories will be
-     * added.
+     * the given list. If the given category id is CategoryDataSource.CATEGORY_ID_ALL, the due
+     * challenges of all categories will be added.
      * @param dueChallenges the list object the due challenges will be added to
      * @param categoryId the id of the category whose due challenges will be returned
      */
@@ -81,7 +90,7 @@ public class DueChallengeLogic {
         for (int stage = 1; stage<=6; stage++) {
             //Get the users completions in the stage
             List<Completion> completedInStage =
-                    CompletionDataSource.getInstance().getByUserAndStage(mUser, stage);
+                mCompletionDataSource.getByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
             timebox = getTimeboxByStage(mUser.getSettings(), stage);
@@ -91,7 +100,7 @@ public class DueChallengeLogic {
                 Date lastCompleted = completed.getLastCompleted();
 
                 if (now.getTime() - lastCompleted.getTime() >= timebox.getTime()) {
-                    if (categoryId==-1 || categoryId ==
+                    if (categoryId == CategoryDataSource.CATEGORY_ID_ALL || categoryId ==
                             completed.getChallengeCompletions().getCategoryId()) {
                         dueChallenges.add(completed.getChallengeId());
                     }
@@ -104,30 +113,29 @@ public class DueChallengeLogic {
      * Adds the ids of all due challenges without entries in the completed table to the given list.
      * The missing entries will also be created in the completed table.
      * @param dueChallenges the list object the due challenges will be added to
-     * @param user the user whose due challenges will be added
      * @param categoryId the id of the category whose due challenges will be added
      */
     private void createMissingCompletedEntriesByCategory(List<Long> dueChallenges,
-                                                                User user, long categoryId) {
+                                                                long categoryId) {
         //Create objects
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = ChallengeDataSource.getInstance().getUncompletedChallenges(user);
+        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(mUser);
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
-                getTimeboxByStage(user.getSettings(), 1).getTime());
+                getTimeboxByStage(mUser.getSettings(), 1).getTime());
 
         /*
-        If categoryId is -1 or matches the challenge's id, the challenge will be added to the
-        list and an entry will be created
-        */
+         * If categoryId is CategoryDataSource.CATEGORY_ID_ALL or matches the challenge's id, the
+         * challenge will be added to the list and an entry will be created.
+         */
         for (Challenge challenge : notCompletedYet) {
-            if (categoryId == -1 || challenge.getCategoryId() == categoryId) {
-                Completion completed = new Completion(null, 1, dateChallengesDue, user.getId(),
+            if (categoryId == CategoryDataSource.CATEGORY_ID_ALL || challenge.getCategoryId() == categoryId) {
+                Completion completed = new Completion(null, 1, dateChallengesDue, mUser.getId(),
                         challenge.getId());
-                CompletionDataSource.getInstance().create(completed);
+                mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }
         }

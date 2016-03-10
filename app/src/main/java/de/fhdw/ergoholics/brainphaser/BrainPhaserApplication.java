@@ -44,7 +44,7 @@ public class BrainPhaserApplication extends Application {
     }
 
     /**
-     * Create the component used for Dependency Injection when the App is initialized
+     * initializes the DaoManager with a writeable database
      */
     @Override
     public void onCreate() {

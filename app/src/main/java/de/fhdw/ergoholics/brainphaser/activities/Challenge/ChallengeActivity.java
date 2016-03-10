@@ -1,43 +1,64 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
-import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.List;
 
-public class ChallengeActivity extends AppCompatActivity{
+import javax.inject.Inject;
+
+public class ChallengeActivity extends BrainPhaserActivity {
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
+
     private int mChallengeNo = 0;
-    private Button mBtnNextChallenge;
+    private FloatingActionButton mBtnNextChallenge;
     private boolean mAnswerChecked;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
     private DueChallengeLogic mDueChallengeLogic;
+    private TextView mQuestionText;
+    private Challenge mCurrentChallenge;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge);
 
@@ -50,8 +71,10 @@ public class ChallengeActivity extends AppCompatActivity{
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+
         //get the button
-        mBtnNextChallenge = (Button)findViewById(R.id.btnNextChallenge);
+        mBtnNextChallenge = (FloatingActionButton)findViewById(R.id.btnNextChallenge);
+        mQuestionText = (TextView) findViewById(R.id.challengeQuestion);
 
         //FragementManager manages the fragments in the activity
         mFManager=getSupportFragmentManager();
@@ -59,11 +82,10 @@ public class ChallengeActivity extends AppCompatActivity{
         Intent i = getIntent();
         long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
 
-        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-        final User currentUser = app.getCurrentUser();
-        mDueChallengeLogic = new DueChallengeLogic(currentUser);
+        final User currentUser = mUserManager.getCurrentUser();
+        mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
-        if (allChallenges==null || allChallenges.size()<1){
+        if (allChallenges == null || allChallenges.size() < 1) {
             loadFinishScreen();
             return;
         }
@@ -76,31 +98,28 @@ public class ChallengeActivity extends AppCompatActivity{
             public void onClick(View view) {
                 if(!mAnswerChecked) {//Check the current answer and load the finish screen
                     //Find the current fragment and user
-                    AnswerFragment currentFragment =(AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
-                    BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-                    User currentUser = app.getCurrentUser();
+                    AnswerFragment currentFragment = (AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
+
+                    User currentUser = mUserManager.getCurrentUser();
 
                     //Check if the answer is right
                     if (currentFragment.checkAnswers()) {
-                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), 1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
                     } else {
-                        CompletionDataSource.getInstance().updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), -1);
+                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
                     }
 
-                    //Activate next challenge
-                    mBtnNextChallenge.setText(getResources().getString(R.string.next_Challenge));
                     mAnswerChecked =true;
+                }else{//Load the next challenge
                     //If the challenge is completed load the finish screen
                     if(mChallengeNo==allChallenges.size()-1){
                         loadFinishScreen();
+                        return;
                     }
-                }else{//Load the next challenge
                     //increment counter
                     mChallengeNo += 1;
                     //load the next challenge
                     loadChallenge(allChallenges.get(mChallengeNo));
-                    //reset values
-                    mBtnNextChallenge.setText(getResources().getString(R.string.check_Challenge));
                     mAnswerChecked = false;
                 }
             }
@@ -112,15 +131,15 @@ public class ChallengeActivity extends AppCompatActivity{
         //Load End Screen
         mFTransaction=mFManager.beginTransaction();
         mFTransaction.disallowAddToBackStack();
+
+        ((LinearLayout) findViewById(R.id.challenge_layout)).removeAllViews();
+
         //Create the finish-challenge
-        FinishChallengeFragment finishChallengeFragment =new FinishChallengeFragment();
+        FinishChallengeFragment finishChallengeFragment = new FinishChallengeFragment();
+
         //Inflate the finish-challenge in the question_fragment
-        mFTransaction.replace(R.id.challenge_fragment_question, finishChallengeFragment);
-        //Remove the challenge-fragment
-        Fragment fragment = mFManager.findFragmentById(R.id.challenge_fragment);
-        if(fragment!=null) {
-            mFTransaction.remove(fragment);
-        }
+        mFTransaction.replace(R.id.challenge_layout, finishChallengeFragment);
+
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();
@@ -138,16 +157,11 @@ public class ChallengeActivity extends AppCompatActivity{
         //Start a transaction on the fragments
         mFTransaction=mFManager.beginTransaction();
         mFTransaction.disallowAddToBackStack();
-        //Create the QuestionFragment
-        QuestionFragment questionFragment =new QuestionFragment();
-        //Commit the bundle
-        questionFragment.setArguments(bundle);
-        //Inflate the QuestionFragment in the question_fragment
-        mFTransaction.replace(R.id.challenge_fragment_question, questionFragment);
 
-        Challenge currentChallenge = ChallengeDataSource.getInstance().getById(challengeId);
+        mCurrentChallenge = mChallengeDataSource.getById(challengeId);
+        changeQuestion();
 
-        switch (currentChallenge.getChallengeType()){
+        switch (mCurrentChallenge.getChallengeType()) {
             case ChallengeType.MULTIPLE_CHOICE:
                 //Create a MultipleChoiceFragment
                 MultipleChoiceFragment multipleChoiceFragment = new MultipleChoiceFragment();
@@ -166,10 +180,21 @@ public class ChallengeActivity extends AppCompatActivity{
                 break;
             case ChallengeType.SELF_TEST:
                 //Create a SelfCheckFragment
+                SelfTestFragment selfTestFragment = new SelfTestFragment();
+                selfTestFragment.setArguments(bundle);
+                mFTransaction.replace(R.id.challenge_fragment, selfTestFragment);
                 break;
         }
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();
+    }
+
+    /**
+     * Loads the question of the challenge into the text
+     */
+    public void changeQuestion() {
+        //Set question text
+        mQuestionText.setText(mCurrentChallenge.getQuestion());
     }
 }

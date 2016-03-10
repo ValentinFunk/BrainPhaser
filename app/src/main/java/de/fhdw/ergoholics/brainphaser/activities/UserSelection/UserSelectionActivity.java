@@ -4,21 +4,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.NetworkOnMainThreadException;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
+import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.model.User;
+import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.activities.main.Navigation;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
-import de.fhdw.ergoholics.brainphaser.model.User;
+import javax.inject.Inject;
 
 /**
  * Created by Christian on 16.02.2016.
@@ -28,18 +34,38 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Parameters: none
  */
 
-public class UserSelectionActivity extends Activity implements UserAdapter.ResultListener {
+public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
+    @Inject UserManager mUserManager;
+    @Inject UserDataSource mUserDataSource;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void injectComponent(BrainPhaserComponent component) {
+        component.inject(this);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
+
+        Toolbar myChildToolbar =
+            (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
 
         //loading of the components
         RecyclerView userList = (RecyclerView) findViewById(R.id.userList);
         userList.setHasFixedSize(true);
+        userList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        registerForContextMenu(userList);
 
         //load the users from the database
-        List<User> allUsers = UserDataSource.getAll();
+        List<User> allUsers = mUserDataSource.getAll();
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -60,7 +86,6 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
             startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
-
     }
 
     /*
@@ -81,14 +106,24 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
      */
     @Override
     public void onUserSelected(User user) {
-        BrainPhaserApplication app = (BrainPhaserApplication)getApplication();
-        app.switchUser(user);
+        mUserManager.switchUser(user);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra(MainActivity.EXTRA_NAVIGATE_TO, Navigation.NavigationState.NAV_LEARN);
         startActivity(intent);
 
         setResult(Activity.RESULT_OK);
         finish();
+    }
+
+    @Override
+    public void onEditUser(User user) {
+        Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
+        intent.putExtra(CreateUserActivity.KEY_USER_ID, user.getId());
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onDeleteUser(User user) {
+        //Todo
     }
 }

@@ -2,24 +2,13 @@ package de.fhdw.ergoholics.brainphaser.CategorySelectionTest;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.Espresso.onView;
-
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
-
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
-import static android.support.test.espresso.matcher.ViewMatchers.*;
-import static android.support.test.espresso.assertion.ViewAssertions.*;
-import static org.hamcrest.Matchers.*;
-
 import android.test.suitebuilder.annotation.LargeTest;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -30,7 +19,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.TestAppModule;
 import de.fhdw.ergoholics.brainphaser.TestBrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.TestUtils;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.CategoryAdapter;
+import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.CategoryViewHolder;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.MockDatabaseModule;
@@ -39,12 +28,8 @@ import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
-import android.support.test.espresso.contrib.RecyclerViewActions;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,20 +43,33 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.Visibility;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
+import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.notNullValue;
+
 
 /**
  * Created by funkv on 05.03.2016.
+ *
+ * Tests the category selection page
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class CategorySelectionTest {
-    @Singleton
-    @Component(modules = {TestAppModule.class, MockDatabaseModule.class})
-    interface TestAppComponent extends BrainPhaserComponent {
-        void inject(CategorySelectionTest test);
-    }
-
+    @Inject
+    UserLogicFactory mockLogicFactory;
+    @Inject
+    CategoryDataSource mockCategoryDataSource;
+    DueChallengeLogic mockDueChallengeLogic;
     private TestAppComponent mTestAppComponent;
+    private SparseArray<Category> mPositions = new SparseArray<>();
+    private List<Category> mFakeCategories;
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule =
         new DaggerActivityTestRule<>(MainActivity.class, new DaggerActivityTestRule.OnBeforeActivityLaunchedListener<MainActivity>() {
@@ -87,18 +85,33 @@ public class CategorySelectionTest {
             }
         });
 
-    private LongSparseArray<Integer> mFakeCounts;
-    private List<Category> mFakeCategories;
+    /**
+     * Matches a view Holder whose title is catName
+     *
+     * @param catName category name that should be the viewHolders title.
+     * @return created matcher
+     */
+    public static Matcher<RecyclerView.ViewHolder> categoryVH(final String catName) {
+        return new BoundedMatcher<RecyclerView.ViewHolder, CategoryViewHolder>(CategoryViewHolder.class) {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("category title is " + catName);
+            }
 
-    @Inject UserLogicFactory mockLogicFactory;
-    @Inject CategoryDataSource mockCategoryDataSource;
-    DueChallengeLogic mockDueChallengeLogic;
+            @Override
+            protected boolean matchesSafely(CategoryViewHolder item) {
+                return item.getTitle().getText().equals(catName);
+            }
+        };
+    }
 
-    private SparseArray<Category> mPositions = new SparseArray<>();
-
+    /**
+     * Sets up fake returns for the data sources
+     */
     public void setUp() {
         mTestAppComponent.inject(this);
 
+        // Fake categories
         mFakeCategories = Arrays.asList(
             new Category(1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
             new Category(2l, "Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/architektur"),
@@ -109,14 +122,15 @@ public class CategorySelectionTest {
             mFakeCategories
         );
 
-        mFakeCounts = new LongSparseArray<>();
-        mFakeCounts.put(1, 10);
-        mFakeCounts.put(2, 0);
-        mFakeCounts.put(3, 11);
-        mFakeCounts.put(4, 3);
+        // How many due challenges in above categories
+        LongSparseArray<Integer> fakeCounts = new LongSparseArray<>();
+        fakeCounts.put(1, 10);
+        fakeCounts.put(2, 0);
+        fakeCounts.put(3, 11);
+        fakeCounts.put(4, 3);
         mockDueChallengeLogic = Mockito.mock(DueChallengeLogic.class);
         Mockito.when(mockDueChallengeLogic.getDueChallengeCounts(Mockito.anyListOf(Category.class))).thenReturn(
-            mFakeCounts
+            fakeCounts
         );
 
         Mockito.when(mockLogicFactory.createDueChallengeLogic(org.mockito.Matchers.any(User.class)))
@@ -129,46 +143,48 @@ public class CategorySelectionTest {
         mPositions.put(1, mFakeCategories.get(2));
     }
 
+    /**
+     * Tests that the first element in the selection is the "All Categories" button
+     */
     @Test
     public void checkFirstElementAllCategories() {
-        onView(withId(R.id.recyclerView))
+        onView(allOf(withId(R.id.select_category_fragment), withEffectiveVisibility(Visibility.VISIBLE)))
             .check(matches(TestUtils.atPosition(0, notNullValue(View.class))))
             .check(matches(TestUtils.atPosition(0, hasDescendant(withText(R.string.all_categories)))));
     }
 
-    public static Matcher<RecyclerView.ViewHolder> categoryVH(final String catName) {
-        return new BoundedMatcher<RecyclerView.ViewHolder, CategoryAdapter.ViewHolder>(CategoryAdapter.ViewHolder.class) {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("category title is " + catName);
-            }
-
-            @Override
-            protected boolean matchesSafely(CategoryAdapter.ViewHolder item) {
-                return item.getTitle().getText().equals(catName);
-            }
-        };
-    }
-
+    /**
+     * Tests that all categories are displayed in the list.
+     */
     @Test
-    public void checkAllCategoriesShown( ) {
-        int i = 0;
+    public void checkAllCategoriesShown() {
         for (Category c : mFakeCategories) {
             Matcher<View> hasDescendantTitle = hasDescendant(withText(c.getTitle()));
-            onView(withId(R.id.recyclerView))
+            onView(allOf(withId(R.id.select_category_fragment), withEffectiveVisibility(Visibility.VISIBLE)))
                 .perform(RecyclerViewActions.scrollToHolder(categoryVH(c.getTitle())))
                 .check(matches(hasDescendantTitle));
         }
     }
 
+    /**
+     * Tests that the list ordering is correct (cards with more due challenges are further up in the list)
+     */
     @Test
     public void checkListOrdering() {
         for (int i = 0; i < mPositions.size(); i++) {
             int position = mPositions.keyAt(i);
             String categoryName = mPositions.get(position).getTitle();
-            onView(withId(R.id.recyclerView))
-                .perform(RecyclerViewActions.scrollToHolder(categoryVH(categoryName)))
+            onView(allOf(withId(R.id.select_category_fragment), withEffectiveVisibility(Visibility.VISIBLE)))
                 .check(matches(TestUtils.atPosition(position, hasDescendant(withText(categoryName)))));
         }
+    }
+
+    /**
+     * Component that uses the mock modules to fake data from the database
+     */
+    @Singleton
+    @Component(modules = {TestAppModule.class, MockDatabaseModule.class})
+    interface TestAppComponent extends BrainPhaserComponent {
+        void inject(CategorySelectionTest test);
     }
 }
