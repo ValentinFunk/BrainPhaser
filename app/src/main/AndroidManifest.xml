@@ -17,8 +17,8 @@
             android:label="@string/app_name"
             android:theme="@style/FilePickerTheme">
             <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.GET_CONTENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
@@ -34,11 +34,7 @@
         <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.EDIT"/>
-                <action android:name="android.intent.action.PICK"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
-
                 <data android:scheme="file"/>
                 <data android:host="*"/>
                 <data android:pathPattern=".*\\.bpc"/>
@@ -51,27 +47,24 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
-                <action android:name="android.intent.action.EDIT"/>
-                <action android:name="android.intent.action.PICK"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
-
                 <data android:scheme="content"/>
                 <data android:host="*"/>
-                <data android:pathPattern=".*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\..*\\.bpc"/>
-                <data android:mimeType="*/*"/>
+                <data android:pathPattern=".*"/>
+                <data android:mimeType="text/xml"/>
+                <data android:mimeType="application/octet-stream"/>
             </intent-filter>
         </activity>
         <activity android:name=".activities.UserCreation.CreateUserActivity"/>
-        <activity android:name=".activities.UserSelection.UserSelectionActivity"/>
+        <activity
+            android:name=".activities.UserSelection.UserSelectionActivity"
+            android:label="@string/select_user"
+            android:parentActivityName=".activities.main.MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.main.MainActivity"/>
+        </activity>
         <activity
             android:name=".activities.About.AboutActivity"
             android:parentActivityName=".activities.main.MainActivity"
@@ -81,16 +74,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity" />
         </activity>
-        <activity android:name=".activities.main.MainActivity">
+        <activity
+            android:name=".activities.main.MainActivity"
+            android:launchMode="singleTask">
         </activity>
-        <activity android:name=".activities.Challenge.ChallengeActivity"
-                  android:label="@string/nav_learn"
-                  android:parentActivityName=".activities.main.MainActivity"
+        <activity
+            android:name=".activities.Challenge.ChallengeActivity"
+            android:label="@string/nav_learn"
+            android:parentActivityName=".activities.main.MainActivity"
             >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.main.MainActivity" />
+                android:value=".activities.main.MainActivity"/>
         </activity>
     </application>
 </manifest>

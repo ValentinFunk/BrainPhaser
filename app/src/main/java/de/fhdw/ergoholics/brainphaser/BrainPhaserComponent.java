@@ -5,7 +5,6 @@ import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPa
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.MultipleChoiceFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.QuestionFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.TextFragment;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
@@ -24,7 +23,6 @@ public interface BrainPhaserComponent {
     void inject(MainActivity mainActivity);
     void inject(ProxyActivity activity);
     void inject(ChallengeActivity challengeActivity);
-    void inject(QuestionFragment questionFragment);
     void inject(MultipleChoiceFragment questionFragment);
     void inject(TextFragment textFragment);
     void inject(CreateUserActivity createUserActivity);

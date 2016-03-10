@@ -3,16 +3,12 @@ package de.fhdw.ergoholics.brainphaser.activities.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.nononsenseapps.filepicker.FilePickerActivity;
-
-import javax.inject.Inject;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
@@ -23,6 +19,8 @@ import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.ChallengeImport.ImportChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+
+import javax.inject.Inject;
 
 /**
  * Created by funkv on 20.02.2016.
@@ -36,7 +34,6 @@ public class MainActivity extends BrainPhaserActivity {
     private final static int CODE_FILEPICKER = 0;
 
     @Inject UserManager mUserManager;
-    private ViewPager mViewPager;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -54,13 +51,6 @@ public class MainActivity extends BrainPhaserActivity {
         // Set as Actionbar
         setSupportActionBar(toolbar);
 
-        TabLayout layout = (TabLayout)findViewById(R.id.tabs);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new NavigationTabsPagerAdapter(getSupportFragmentManager(), getApplicationContext()));
-        mViewPager = viewPager;
-
-        layout.setupWithViewPager(viewPager);
     }
 
 
@@ -121,11 +111,6 @@ public class MainActivity extends BrainPhaserActivity {
             return;
         }
 
-        Navigation.NavigationState state = (Navigation.NavigationState) intent.getSerializableExtra(EXTRA_NAVIGATE_TO);
-        if (state != null) {
-            navigateToState(state);
-        }
-
         // If EXTRA_SHOW_LOGGEDIN_SNACKBAR is passed,
         // show a little snackbar that shows the currently logged in user's name
         if (intent.getBooleanExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false)) {
@@ -153,17 +138,5 @@ public class MainActivity extends BrainPhaserActivity {
             // Update the intent so it doesn't show again on back navigation and thus only when explicitly requested
             intent.putExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false);
         }
-    }
-
-    /**
-     * Navigate to a given view state by ID
-     * @param state Id of the state to navigate to.
-     */
-    public void navigateToState(Navigation.NavigationState state) {
-        if (BuildConfig.DEBUG && state == null) {
-            throw new RuntimeException("Attempting to switch to invalid navigation state");
-        }
-
-        mViewPager.setCurrentItem(state.ordinal());
     }
 }

@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
+    applicationVariants.all { variant ->
+        task("generate${variant.name}Javadoc", type: Javadoc) {
+            description "Generates Javadoc for $variant.name."
+            source = variant.javaCompile.source
+            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+        }
+    }
+
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
@@ -32,9 +41,8 @@ android {
 repositories {
     mavenCentral()
     jcenter()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -48,6 +56,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.nononsenseapps:filepicker:2.5.2'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
     compile 'com.google.dagger:dagger:2.1-SNAPSHOT'
     apt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'

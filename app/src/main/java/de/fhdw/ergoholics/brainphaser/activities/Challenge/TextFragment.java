@@ -17,22 +17,21 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Created by Chris on 2/25/2016.
  */
 public class TextFragment extends AnswerFragment {
+    View mView;
+    //Textfield of the answer
+    EditText mAnswerText;
+
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
-    View mView;
-    //Textfield of the answer
-    EditText mAnswerText;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container, false);
+        mView = inflater.inflate(R.layout.fragment_challenge_text, container, false);
         mAnswerText = (EditText) mView.findViewById(R.id.answerText);
-        loadChallengeAndAnswers();
         return mView;
-
     }
 
     /**
@@ -47,7 +46,14 @@ public class TextFragment extends AnswerFragment {
                 answerRight=true;
             }
         }
+        loadAnswers();
+        return answerRight;
+    }
 
+    /**
+     * Loads the answers of the current challenge into a list and displays it
+     */
+    private void loadAnswers(){
         //loading of the components
         RecyclerView answerList = (RecyclerView) mView.findViewById(R.id.answerList);
         answerList.setHasFixedSize(true);
@@ -58,7 +64,5 @@ public class TextFragment extends AnswerFragment {
         //Adapter which sets all answers into the list
         AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
         answerList.setAdapter(listAdapter);
-
-        return answerRight;
     }
 }
