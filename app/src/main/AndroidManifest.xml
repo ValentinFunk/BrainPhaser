@@ -66,6 +66,15 @@
                 android:value=".activities.main.MainActivity"/>
         </activity>
         <activity
+            android:name=".activities.About.AboutActivity"
+            android:parentActivityName=".activities.main.MainActivity"
+            android:label="@string/about">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.main.MainActivity" />
+        </activity>
+        <activity
             android:name=".activities.main.MainActivity"
             android:launchMode="singleTask">
         </activity>
