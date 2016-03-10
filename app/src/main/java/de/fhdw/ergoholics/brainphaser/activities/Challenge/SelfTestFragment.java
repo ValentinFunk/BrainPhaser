@@ -2,17 +2,21 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.UserCreation.AvatarPickerDialogFragment;
 
 /**
  * Created by Chris on 3/10/2016.
  */
-public class SelfTestFragment extends AnswerFragment {
+public class SelfTestFragment extends AnswerFragment implements SelTestDialogFragment.SelfTestDialogListener {
     View mView;
+    boolean mAnswerRight;
+
 
     @Nullable
     @Override
@@ -23,11 +27,28 @@ public class SelfTestFragment extends AnswerFragment {
 
     @Override
     public boolean checkAnswers() {
-        return false;
+        createSelfTestDialog();
+        return mAnswerRight;
     }
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
+    }
+
+    private void createSelfTestDialog() {
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        SelTestDialogFragment selfTestDialog = new SelTestDialogFragment();
+        selfTestDialog.show(fm, "self_test_dialog");
+    }
+
+    @Override
+    public void onAnswerRight() {
+        mAnswerRight=true;
+    }
+
+    @Override
+    public void onAnswerWrong() {
+        mAnswerRight=false;
     }
 }
