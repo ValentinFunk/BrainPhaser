@@ -1,32 +1,28 @@
 package de.fhdw.ergoholics.brainphaser.activities.main;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.nononsenseapps.filepicker.FilePickerActivity;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.ChallengeImport.ImportChallengeActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
-
-import javax.inject.Inject;
 
 /**
  * Created by funkv on 20.02.2016.
@@ -88,7 +84,8 @@ public class MainActivity extends BrainPhaserActivity {
                 startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
                 return true;
             case R.id.action_about:
-                // TODO
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
             case R.id.action_settings:
                 // TODO
             case 0: // Only in debug mode: File Picker
