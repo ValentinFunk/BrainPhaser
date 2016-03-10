@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.AvatarPickerDialogFragment;
 
 /**
  * Created by Chris on 3/10/2016.
@@ -21,7 +20,7 @@ public class SelfTestFragment extends AnswerFragment implements SelTestDialogFra
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_challenge_text, container, false);
+        mView = inflater.inflate(R.layout.fragment_challenge_self_test, container, false);
         return mView;
     }
 

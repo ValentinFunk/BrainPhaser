@@ -9,10 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridView;
-
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.AvatarImageAdapter;
 
 /**
  * Created by Chris on 3/10/2016.
