@@ -65,7 +65,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
 
     /*
      * Used to track when the create user activity has finished. If it was cancelled, do nothing,
-     * else finish this activity (as the user is automatically logged in).
+     * else finish this activity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -76,7 +76,7 @@ public class UserSelectionActivity extends Activity implements UserAdapter.Resul
     }
 
     /**
-     * When a user has been selected, finish this activity and load learning activity
+     * When a user has been selected, finish this activity and load learning activity.
      * @param user
      */
     @Override

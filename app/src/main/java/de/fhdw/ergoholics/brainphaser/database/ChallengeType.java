@@ -2,6 +2,8 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 /**
  * Created by Christian on 03.03.2016.
+ *
+ * Defines valid challenge types.
  */
 public class ChallengeType {
         public final static int MULTIPLE_CHOICE = 1;

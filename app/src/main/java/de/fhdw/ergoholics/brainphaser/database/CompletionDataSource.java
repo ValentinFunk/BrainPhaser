@@ -42,6 +42,7 @@ public class CompletionDataSource {
      * @param userId      The currently loggen in user
      * @param stageUp     1 for StageUp -1 for StageDown (answer right, answer wrong)
      */
+    // TODO: This is logic.
     public void updateAfterAnswer(long challengeId, long userId, int stageUp) {
         if (stageUp != -1 && stageUp != 1) {
             return;

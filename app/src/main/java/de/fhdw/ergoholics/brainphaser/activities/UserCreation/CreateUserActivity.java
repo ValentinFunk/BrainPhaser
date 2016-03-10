@@ -35,12 +35,14 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         mUsernameInput = (TextView) findViewById(R.id.input_username);
         mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_username_layout);
         mUsernameInput.setOnEditorActionListener(this);
         ImageView avatar = (ImageView) findViewById(R.id.avatar);
+
         // Watch for changes and trigger validation
         mUsernameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,6 +99,10 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         return isValid;
     }
 
+    /**
+     * Check user for duplicates and update GUI with errors
+     * @return true if the name has already been taken, else false
+     */
     private boolean validateUsernameDuplicate() {
         boolean isValid;
 
@@ -126,6 +132,9 @@ public class CreateUserActivity extends FragmentActivity implements TextView.OnE
         return false;
     }
 
+    /*
+     * Open up the avatar picker.
+     */
     private void createAvatarSelectDialog() {
         FragmentManager fm = getSupportFragmentManager();
         AvatarPickerDialogFragment avatarPickerDialog = new AvatarPickerDialogFragment();

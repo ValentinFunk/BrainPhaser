@@ -1,13 +1,11 @@
 package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.support.design.widget.Snackbar;
 
-import de.fhdw.ergoholics.brainphaser.database.DaoManager;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
-import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
-import de.fhdw.ergoholics.brainphaser.model.User;
+import de.fhdw.ergoholics.brainphaser.database.DatabaseModule;
+
+import javax.inject.Singleton;
+import dagger.Component;
 
 /**
  * Created by funkv on 17.02.2016.
@@ -15,66 +13,42 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * Custom Application class for hooking into App creation
  */
 public class BrainPhaserApplication extends Application {
-    private static final String PREFS_NAME = "BrainPhaserPrefsFile";
-    private static final String KEY_PERSISTENT_USER_ID = "loggedInUser";
-
-    private User mCurrentUser;
+    /**
+     * Defines the Component to use in the Production Application.
+     * The component is a bridge between Modules and Injects.
+     * It creates instances of all the types defined.
+     */
+    @Singleton
+    @Component(modules = {AppModule.class, DatabaseModule.class})
+    public interface ApplicationComponent extends BrainPhaserComponent {
+    }
 
     /**
-     * initializes the DaoManager with a writeable database
+     * Creates the Production app Component
+     */
+    private BrainPhaserComponent mComponent;
+    protected BrainPhaserComponent createComponent( ) {
+        return DaggerBrainPhaserApplication_ApplicationComponent.builder()
+            .appModule(new AppModule(this))
+            .databaseModule(new DatabaseModule(getApplicationContext(), "prodDb"))
+            .build();
+    }
+
+    /**
+     * Returns the Component for use with Dependency Injection for this
+     * Application.
+     * @return compoenent to use for DI
+     */
+    public BrainPhaserComponent getComponent( ) {
+        return mComponent;
+    }
+
+    /**
+     * Create the component used for Dependency Injection when the App is initialized
      */
     @Override
     public void onCreate() {
         super.onCreate();
-
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this.getApplicationContext(), DaoManager.DATABASE_NAME, null);
-        DaoManager.intialize(helper.getWritableDatabase());
-    }
-
-    /**
-     * Logs in the last logged in user.
-     * @return true, if user was logged in, false if no user has been persisted
-     */
-    public boolean logInLastUser() {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        long lastLoggedInUserId = settings.getLong(KEY_PERSISTENT_USER_ID, -1);
-        if (lastLoggedInUserId != -1) {
-            User user = UserDataSource.getById(lastLoggedInUserId);
-            if (user == null) {
-                return false;
-            }
-
-            mCurrentUser = user;
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Get the currently logged in user
-     * @return Currently logged in user
-     */
-    public User getCurrentUser( ) {
-        return mCurrentUser;
-    }
-
-    /**
-     * Switches the current user.
-     * @param user the user to log in
-     */
-    public void switchUser(User user) {
-        mCurrentUser = user;
-        persistCurrentUser();
-    }
-
-    /**
-     * Save the selected user to persistent storage
-     */
-    public void persistCurrentUser() {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putLong(KEY_PERSISTENT_USER_ID, mCurrentUser.getId());
-        editor.apply();
+        mComponent = createComponent();
     }
 }
