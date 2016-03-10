@@ -46,7 +46,14 @@ public class TextFragment extends AnswerFragment {
                 answerRight=true;
             }
         }
+        loadAnswers();
+        return answerRight;
+    }
 
+    /**
+     * Loads the answers of the current challenge into a list and displays it
+     */
+    private void loadAnswers(){
         //loading of the components
         RecyclerView answerList = (RecyclerView) mView.findViewById(R.id.answerList);
         answerList.setHasFixedSize(true);
@@ -57,7 +64,5 @@ public class TextFragment extends AnswerFragment {
         //Adapter which sets all answers into the list
         AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
         answerList.setAdapter(listAdapter);
-
-        return answerRight;
     }
 }

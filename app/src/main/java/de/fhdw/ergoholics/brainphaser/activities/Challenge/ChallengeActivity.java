@@ -42,6 +42,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
     ChallengeDataSource mChallengeDataSource;
     @Inject
     UserLogicFactory mUserLogicFactory;
+
     private int mChallengeNo = 0;
     private FloatingActionButton mBtnNextChallenge;
     private boolean mAnswerChecked;
@@ -179,6 +180,9 @@ public class ChallengeActivity extends BrainPhaserActivity {
                 break;
             case ChallengeType.SELF_TEST:
                 //Create a SelfCheckFragment
+                SelfTestFragment selfTestFragment = new SelfTestFragment();
+                selfTestFragment.setArguments(bundle);
+                mFTransaction.replace(R.id.challenge_fragment, selfTestFragment);
                 break;
         }
         //Commit the changes
