@@ -1,7 +1,9 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.os.Bundle;
-
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
@@ -16,16 +18,36 @@ import javax.inject.Inject;
  * Created by Christian on 03.03.2016.
  */
 public abstract class AnswerFragment extends BrainPhaserFragment {
+    public interface AnswerListener{
+        void onAnswerChecked(boolean answer);
+    }
+
+    // Use this interface to deliver action events
+    AnswerListener mListener;
+
     protected List<Answer> mAnswerList;
     protected Challenge mChallenge;
+    protected View mView;
 
     @Inject ChallengeDataSource mChallengeDataSource;
 
-    public abstract boolean checkAnswers();
+    public abstract void checkAnswers();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // The activity that opens these fragments must implement AnswerListener.
+        // This method stores the listener when the activity is attached.
+        // Verify that the host activity implements the callback interface
+        try {
+            // Cast to SelfTestDialogListener so we can send events to the host
+            mListener = (AnswerListener) getActivity();
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement NoticeDialogListener");
+        }
 
         //Load the current challenge
         Bundle bundle = getArguments();
@@ -39,5 +61,23 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         if (BuildConfig.DEBUG && mAnswerList == null) {
             throw new RuntimeException("Invalid Answers for challenge " + mChallenge.getId() + "(" + mChallenge.getQuestion() + ")");
         }
+    }
+
+
+    /**
+     * Loads all answers of the current challenge into a simple list
+     * @param listViewId RecyclerView, which will contain the answers
+     */
+    protected void loadAnswers(int listViewId){
+        //loading of the components
+        RecyclerView answerList = (RecyclerView) mView.findViewById(listViewId);
+        answerList.setHasFixedSize(true);
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        answerList.setLayoutManager(layoutManager);
+        //Create the View
+        //Adapter which sets all answers into the list
+        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
+        answerList.setAdapter(listAdapter);
     }
 }

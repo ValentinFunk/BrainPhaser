@@ -17,7 +17,6 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Created by Chris on 2/25/2016.
  */
 public class TextFragment extends AnswerFragment {
-    View mView;
     //Textfield of the answer
     EditText mAnswerText;
 
@@ -39,30 +38,14 @@ public class TextFragment extends AnswerFragment {
      * @return Is the answer right or nah
      */
     @Override
-    public boolean checkAnswers() {
+    public void checkAnswers() {
         boolean answerRight=false;
         for (Answer item:mAnswerList) {
             if(item.getText().equals(mAnswerText.getText().toString())){
                 answerRight=true;
             }
         }
-        loadAnswers();
-        return answerRight;
-    }
-
-    /**
-     * Loads the answers of the current challenge into a list and displays it
-     */
-    private void loadAnswers(){
-        //loading of the components
-        RecyclerView answerList = (RecyclerView) mView.findViewById(R.id.answerList);
-        answerList.setHasFixedSize(true);
-        // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        answerList.setLayoutManager(layoutManager);
-        //Create the View
-        //Adapter which sets all answers into the list
-        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
-        answerList.setAdapter(listAdapter);
+        loadAnswers(R.id.answerListText);
+        mListener.onAnswerChecked(answerRight);
     }
 }

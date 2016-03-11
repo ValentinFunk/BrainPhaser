@@ -33,11 +33,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container, false);
-        ToggleButton checkBox1 = (ToggleButton) view.findViewById(R.id.checkbox1);
-        ToggleButton checkBox2 = (ToggleButton) view.findViewById(R.id.checkbox2);
-        ToggleButton checkBox3 = (ToggleButton) view.findViewById(R.id.checkbox3);
-        ToggleButton checkBox4 = (ToggleButton) view.findViewById(R.id.checkbox4);
+        mView = inflater.inflate(R.layout.fragment_challenge_multiple_choice, container, false);
+        ToggleButton checkBox1 = (ToggleButton) mView.findViewById(R.id.checkbox1);
+        ToggleButton checkBox2 = (ToggleButton) mView.findViewById(R.id.checkbox2);
+        ToggleButton checkBox3 = (ToggleButton) mView.findViewById(R.id.checkbox3);
+        ToggleButton checkBox4 = (ToggleButton) mView.findViewById(R.id.checkbox4);
 
         //Fill Checkboxes
         mCheckBoxArray = new ToggleButton[mAnswerList.size()];
@@ -46,7 +46,7 @@ public class MultipleChoiceFragment extends AnswerFragment {
         mCheckBoxArray[2] = checkBox3;
         mCheckBoxArray[3] = checkBox4;
         shuffleAnswers(mAnswerList);
-        return view;
+        return mView;
     }
 
     /**
@@ -64,7 +64,7 @@ public class MultipleChoiceFragment extends AnswerFragment {
     }
 
     @Override
-    public boolean checkAnswers() {
+    public void checkAnswers() {
         Boolean[] booleanArray = new Boolean[mAnswerList.size()];
         Answer answer;
 
@@ -85,6 +85,6 @@ public class MultipleChoiceFragment extends AnswerFragment {
             }
             mCheckBoxArray[i].setBackgroundDrawable(bg);
         }
-        return booleanArray[0] && booleanArray[1] && booleanArray[2] && booleanArray[3];
+        mListener.onAnswerChecked(booleanArray[0] && booleanArray[1] && booleanArray[2] && booleanArray[3]);
     }
 }

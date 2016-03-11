@@ -3,17 +3,13 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
@@ -30,7 +26,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ChallengeActivity extends BrainPhaserActivity {
+public class ChallengeActivity extends BrainPhaserActivity implements AnswerFragment.AnswerListener {
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
@@ -42,7 +38,7 @@ public class ChallengeActivity extends BrainPhaserActivity {
     ChallengeDataSource mChallengeDataSource;
     @Inject
     UserLogicFactory mUserLogicFactory;
-
+    private List<Long> mAllChallenges;
     private int mChallengeNo = 0;
     private FloatingActionButton mBtnNextChallenge;
     private boolean mAnswerChecked;
@@ -80,46 +76,37 @@ public class ChallengeActivity extends BrainPhaserActivity {
         mFManager=getSupportFragmentManager();
 
         Intent i = getIntent();
-        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID,-1);
+        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID, -1);
 
         final User currentUser = mUserManager.getCurrentUser();
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
-        final List<Long> allChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
-        if (allChallenges == null || allChallenges.size() < 1) {
+        mAllChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
+        if (mAllChallenges == null || mAllChallenges.size() < 1) {
             loadFinishScreen();
             return;
         }
 
-        loadChallenge(allChallenges.get(mChallengeNo));
+        loadChallenge(mAllChallenges.get(mChallengeNo));
         mAnswerChecked =false;
 
         mBtnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mAnswerChecked) {//Check the current answer and load the finish screen
+                if (!mAnswerChecked) {//Check the current answer and load the finish screen
                     //Find the current fragment and user
                     AnswerFragment currentFragment = (AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
-
-                    User currentUser = mUserManager.getCurrentUser();
-
-                    //Check if the answer is right
-                    if (currentFragment.checkAnswers()) {
-                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
-                    } else {
-                        mCompletionDataSource.updateAfterAnswer(allChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
-                    }
-
-                    mAnswerChecked =true;
-                }else{//Load the next challenge
+                    currentFragment.checkAnswers();
+                    mAnswerChecked = true;
+                } else {//Load the next challenge
                     //If the challenge is completed load the finish screen
-                    if(mChallengeNo==allChallenges.size()-1){
+                    if (mChallengeNo == mAllChallenges.size() - 1) {
                         loadFinishScreen();
                         return;
                     }
                     //increment counter
                     mChallengeNo += 1;
                     //load the next challenge
-                    loadChallenge(allChallenges.get(mChallengeNo));
+                    loadChallenge(mAllChallenges.get(mChallengeNo));
                     mAnswerChecked = false;
                 }
             }
@@ -196,5 +183,15 @@ public class ChallengeActivity extends BrainPhaserActivity {
     public void changeQuestion() {
         //Set question text
         mQuestionText.setText(mCurrentChallenge.getQuestion());
+    }
+
+    @Override
+    public void onAnswerChecked(boolean answer) {
+        User currentUser = mUserManager.getCurrentUser();
+        if(answer) {
+            mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
+        }else{
+            mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
+        }
     }
 }
