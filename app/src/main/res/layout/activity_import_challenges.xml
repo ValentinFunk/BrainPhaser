@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="3" />
+        android:layout_weight="2" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,7 +21,7 @@
             android:text="@string/import_challenge_text"
             android:id="@+id/importTextView"
             android:layout_gravity="center_vertical"
-            android:layout_weight="2"
+            android:layout_weight="4"
             android:allowUndo="true"
             android:gravity="center"/>
 
@@ -31,23 +31,42 @@
             android:layout_height="fill_parent"
             android:layout_weight="1">
 
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_weight="2" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ja"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/buttonYes"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:onClick="onButtonYesClicked" />
+                android:onClick="onButtonYesClicked"
+                style="?attr/borderlessButtonStyle"/>
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_weight="2" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nein"
+                android:textColor="@color/colorAccent"
                 android:id="@+id/buttonNo"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:onClick="onButtonNoClicked" />
+                android:onClick="onButtonNoClicked"
+                style="?attr/borderlessButtonStyle"/>
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_weight="2" />
         </LinearLayout>
 
     </LinearLayout>
