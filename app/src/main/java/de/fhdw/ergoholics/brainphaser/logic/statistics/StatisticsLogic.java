@@ -31,10 +31,12 @@ public class StatisticsLogic {
     private  int[] mColorset = new int[6];
 
     private static final float SLICE_SPACE = 1f;
-    private static final float SELECTION_SHIFT = 0f;
+    private static final float SELECTION_SHIFT = 5f;
 
-    private static final float CENTER_TEXT_SIZE = 8f;
+    private static final float CENTER_TEXT_SIZE = 12f;
     private static final float NO_DATA_TEXT_SIZE = 18f;
+    private static final float VALUE_TEXT_SIZE = 18f;
+    private static final float SCALE_FACTOR = 1.f;
 
     //Attributes
     UserLogicFactory mUserLogicFactory;
@@ -157,6 +159,9 @@ public class StatisticsLogic {
      * @param chart the chart which will be formatted
      */
     private void applyChartSettings(PieChart chart) {
+        chart.setScaleX(SCALE_FACTOR);
+        chart.setScaleY(SCALE_FACTOR);
+
         chart.setCenterTextSize(CENTER_TEXT_SIZE);
 
         chart.setUsePercentValues(false);
@@ -173,6 +178,7 @@ public class StatisticsLogic {
      */
     private void applyDataSetSettings(PieDataSet dataset) {
         dataset.setSliceSpace(SLICE_SPACE);
+        dataset.setValueTextSize(VALUE_TEXT_SIZE);
         dataset.setSelectionShift(SELECTION_SHIFT);
         dataset.setColors(mColorset);
         dataset.setValueFormatter(new CustomizedFormatter());

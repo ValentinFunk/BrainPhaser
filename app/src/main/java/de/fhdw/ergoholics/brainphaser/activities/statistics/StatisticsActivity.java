@@ -40,11 +40,12 @@ public class StatisticsActivity extends BrainPhaserActivity {
         mRecyclerView.setHasFixedSize(true);
 
         // get 300dpi in px
-        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 150.f, getResources().getDisplayMetrics());
+        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        int spans = (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
-        int orientation = isLandscape ? StaggeredGridLayoutManager.VERTICAL : StaggeredGridLayoutManager.VERTICAL;
+        int spans = (getResources().getDisplayMetrics().heightPixels > 2 * cardWidth) ? 2 : 1;
+
+        int orientation = isLandscape ? StaggeredGridLayoutManager.HORIZONTAL : StaggeredGridLayoutManager.VERTICAL;
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
