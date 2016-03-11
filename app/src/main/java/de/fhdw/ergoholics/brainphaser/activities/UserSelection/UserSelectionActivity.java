@@ -150,12 +150,5 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         user.delete();
 
         mListAdapter.removeAt(position);
-
-        //Restart main activity
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-
-        setResult(Activity.RESULT_OK);
-        finish();
     }
 }

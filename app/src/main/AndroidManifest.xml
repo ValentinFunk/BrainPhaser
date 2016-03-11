@@ -88,6 +88,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity"/>
         </activity>
-        <activity android:name=".activities.statistics.StatisticsActivity"/>
+        <activity android:name=".activities.statistics.StatisticsActivity"
+            android:label="@string/statistics_label"
+            android:parentActivityName=".activities.main.MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.main.MainActivity"/>
+        </activity>
     </application>
 </manifest>

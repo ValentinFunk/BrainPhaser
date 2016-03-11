@@ -2,8 +2,10 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 
 import javax.inject.Inject;
@@ -33,19 +35,28 @@ public class StatisticsActivity extends BrainPhaserActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        //Add toolbar
+        Toolbar myChildToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
         User user = mUserManager.getCurrentUser();
         long categoryId = getIntent().getLongExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.statisticsRecycler);
         mRecyclerView.setHasFixedSize(true);
 
-        // get 300dpi in px
-        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
+        // get 175dpi in px
+        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 175.f, getResources().getDisplayMetrics());
         boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
 
-        int spans = (getResources().getDisplayMetrics().heightPixels > 2 * cardWidth) ? 2 : 1;
-
-        int orientation = isLandscape ? StaggeredGridLayoutManager.HORIZONTAL : StaggeredGridLayoutManager.VERTICAL;
+        int spans = (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
+        int orientation = isLandscape ? StaggeredGridLayoutManager.VERTICAL : StaggeredGridLayoutManager.VERTICAL;
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);

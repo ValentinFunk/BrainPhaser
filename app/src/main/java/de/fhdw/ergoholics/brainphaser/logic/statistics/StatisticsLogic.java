@@ -35,8 +35,9 @@ public class StatisticsLogic {
 
     private static final float CENTER_TEXT_SIZE = 12f;
     private static final float NO_DATA_TEXT_SIZE = 18f;
-    private static final float VALUE_TEXT_SIZE = 18f;
-    private static final float SCALE_FACTOR = 1.f;
+    private static final float VALUE_TEXT_SIZE = 14f;
+    private static final float LEGEND_TEXT_SIZE = 12.f;
+    private static final float SCALE_FACTOR = 0.95f;
 
     //Attributes
     UserLogicFactory mUserLogicFactory;
@@ -170,6 +171,7 @@ public class StatisticsLogic {
         chart.setDescription("");
 
         chart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        chart.getLegend().setTextSize(LEGEND_TEXT_SIZE);
     }
 
     /**

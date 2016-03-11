@@ -43,9 +43,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      */
     public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener,
             MenuItem.OnMenuItemClickListener{
-        //Constants
-        private static final String CONTEXT_MENU_BUTTON_EDIT = "Bearbeiten";
-        private static final String CONTEXT_MENU_BUTTON_DELETE = "Löschen";
 
         //Attributes
         private TextView mUserText;
@@ -66,18 +63,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem editItem = menu.add(CONTEXT_MENU_BUTTON_EDIT);
-            MenuItem deleteItem = menu.add(CONTEXT_MENU_BUTTON_DELETE);
+            MenuItem editItem = menu.add(mApplication.getString(R.string.user_context_menu_button_edit));
             editItem.setOnMenuItemClickListener(this);
-            deleteItem.setOnMenuItemClickListener(this);
+
+            if (!mUsers.get(getPosition()).getId().equals(mUserManager.getCurrentUser().getId())) {
+                MenuItem deleteItem = menu.add(mApplication.getString(R.string.user_context_menu_button_delete));
+                deleteItem.setOnMenuItemClickListener(this);
+            }
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            if (item.getTitle().equals(CONTEXT_MENU_BUTTON_EDIT)) {
+            if (item.getTitle().equals(mApplication.getString(R.string.user_context_menu_button_edit))) {
                 mResultListener.onEditUser(mUsers.get(getPosition()));
             }
-            else if (item.getTitle().equals(CONTEXT_MENU_BUTTON_DELETE)) {
+            else if (item.getTitle().equals(mApplication.getString(R.string.user_context_menu_button_delete))) {
                 mResultListener.onDeleteUser(mUsers.get(getPosition()), getPosition());
             }
 
@@ -130,6 +130,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     private ResultListener mResultListener;
     private List<User> mUsers;
+    private BrainPhaserApplication mApplication;
 
     @Inject UserManager mUserManager;
 
@@ -140,6 +141,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public UserAdapter(List<User> allUsers, ResultListener resultListener, BrainPhaserApplication application) {
         mUsers = allUsers;
         mResultListener = resultListener;
+        mApplication = application;
 
         application.getComponent().inject(this);
     }
