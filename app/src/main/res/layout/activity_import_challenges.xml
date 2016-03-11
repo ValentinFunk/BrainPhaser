@@ -22,7 +22,6 @@
             android:id="@+id/importTextView"
             android:layout_gravity="center_vertical"
             android:layout_weight="4"
-            android:allowUndo="true"
             android:gravity="center"/>
 
         <LinearLayout
@@ -32,14 +31,14 @@
             android:layout_weight="1">
 
             <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="2" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ja"
+                android:text="@string/import_activity_button_yes"
                 android:textColor="@color/colorAccent"
                 android:id="@+id/buttonYes"
                 android:layout_gravity="center_horizontal"
@@ -48,14 +47,14 @@
                 style="?attr/borderlessButtonStyle"/>
 
             <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="2" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nein"
+                android:text="@string/import_activity_button_no"
                 android:textColor="@color/colorAccent"
                 android:id="@+id/buttonNo"
                 android:layout_gravity="center_horizontal"
@@ -64,8 +63,8 @@
                 style="?attr/borderlessButtonStyle"/>
 
             <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_weight="2" />
         </LinearLayout>
 
