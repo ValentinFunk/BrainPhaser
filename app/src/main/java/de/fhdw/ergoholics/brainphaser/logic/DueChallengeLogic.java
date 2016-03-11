@@ -100,7 +100,7 @@ public class DueChallengeLogic {
 
                 if (now.getTime() - lastCompleted.getTime() >= timebox.getTime()) {
                     if (categoryId == CategoryDataSource.CATEGORY_ID_ALL || categoryId ==
-                            completed.getChallengeCompletions().getCategoryId()) {
+                            completed.getChallenge().getCategoryId()) {
                         dueChallenges.add(completed.getChallengeId());
                     }
                 }

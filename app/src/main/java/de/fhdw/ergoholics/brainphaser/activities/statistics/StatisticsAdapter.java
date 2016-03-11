@@ -17,11 +17,13 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     private UserLogicFactory mUserLogicFactory;
     private User mUser;
     private long mCategoryId;
+    private boolean mIsLandscape;
 
-    public StatisticsAdapter(UserLogicFactory userLogicFactory, User user, long categoryId) {
+    public StatisticsAdapter(UserLogicFactory userLogicFactory, User user, long categoryId, boolean isLandscape) {
         mUserLogicFactory = userLogicFactory;
         mUser = user;
         mCategoryId = categoryId;
+        mIsLandscape = isLandscape;
     }
     /**
      * Called to create the ViewHolder at the given position.
@@ -43,16 +45,21 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     // Bind data to the view
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
-        // Categories
-        if (position==0) {
-            holder.applyDueChart();
-        }
-        if (position==1) {
-            holder.applyStageChart();
-        }
-        else {
+        if (mIsLandscape) {
 
         }
+        else {
+            if (position==0) {
+                holder.applyDueChart();
+            }
+            if (position==1) {
+                holder.applyStageChart();
+            }
+            else {
+
+            }
+        }
+
     }
 
     @Override

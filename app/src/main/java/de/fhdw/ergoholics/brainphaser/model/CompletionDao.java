@@ -180,9 +180,9 @@ public class CompletionDao extends AbstractDao<Completion, Long> {
         Completion entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
-        Challenge challengeCompletions = loadCurrentOther(daoSession.getChallengeDao(), cursor, offset);
-         if(challengeCompletions != null) {
-            entity.setChallengeCompletions(challengeCompletions);
+        Challenge challenge = loadCurrentOther(daoSession.getChallengeDao(), cursor, offset);
+         if(challenge != null) {
+            entity.setChallenge(challenge);
         }
 
         return entity;    

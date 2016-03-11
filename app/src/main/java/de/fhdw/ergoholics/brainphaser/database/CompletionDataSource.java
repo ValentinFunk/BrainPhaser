@@ -51,7 +51,7 @@ public class CompletionDataSource {
         else {
             List<Completion> completions = new ArrayList<>();
             for (Completion completion : userStageCompletions) {
-                if (completion.getChallengeCompletions().getCategoryId()==categoryId) {
+                if (completion.getChallenge().getCategoryId()==categoryId) {
                     completions.add(completion);
                 }
             }

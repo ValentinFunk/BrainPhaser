@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import de.fhdw.ergoholics.brainphaser.model.Statistics;
 
 /**
  * Created by funkv on 06.03.2016.
@@ -67,6 +68,12 @@ public class DatabaseModule {
     @Singleton
     SettingsDataSource provideSettingsDataSource(DaoSession session) {
         return new SettingsDataSource(session);
+    }
+
+    @Provides
+    @Singleton
+    StatisticsDataSource provideStatisticsDataSource(DaoSession session) {
+        return new StatisticsDataSource(session);
     }
 
     @Provides

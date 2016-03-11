@@ -3,6 +3,7 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -51,17 +52,19 @@ public class StatisticsActivity extends BrainPhaserActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.statisticsRecycler);
         mRecyclerView.setHasFixedSize(true);
 
-        // get 175dpi in px
-        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 175.f, getResources().getDisplayMetrics());
-        boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        final boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        GridLayoutManager layoutManager = new GridLayoutManager(this, isLandscape ? 3 : 2, GridLayoutManager.VERTICAL, false);
+        layoutManager.setSpanSizeLookup(
+            new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    return position < 3 ? 1 : 2;
+                }
+        });
 
-        int spans = (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
-        int orientation = isLandscape ? StaggeredGridLayoutManager.VERTICAL : StaggeredGridLayoutManager.VERTICAL;
-
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, user, categoryId));
+        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, user, categoryId, isLandscape));
     }
 
     @Override
