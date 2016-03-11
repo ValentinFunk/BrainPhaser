@@ -10,7 +10,7 @@
         android:id="@+id/answerText"/>
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/answerList"
+        android:id="@+id/answerListText"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
