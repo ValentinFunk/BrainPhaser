@@ -16,12 +16,15 @@ import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
+import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -34,6 +37,8 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     UserManager mUserManager;
     @Inject
     CompletionDataSource mCompletionDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
     @Inject
     ChallengeDataSource mChallengeDataSource;
     @Inject
@@ -189,9 +194,19 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         User currentUser = mUserManager.getCurrentUser();
         mAnswerChecked = true;
         if(answer) {
+            //Write completion entry
             mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
+
+            //Create statistics entry
+            Statistics statistics = new Statistics(null, true, new Date(), currentUser.getId(), mAllChallenges.get(mChallengeNo));
+            mStatisticsDataSource.create(statistics);
         }else{
+            //Write completion entry
             mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
+
+            //Create statistics entry
+            Statistics statistics = new Statistics(null, false, new Date(), currentUser.getId(), mAllChallenges.get(mChallengeNo));
+            mStatisticsDataSource.create(statistics);
         }
     }
 }
