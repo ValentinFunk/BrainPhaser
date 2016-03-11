@@ -15,11 +15,19 @@
 - name
 - avatar
  
-## Completed 
+## Completion 
+- id
 - user_id
 - challenge_id
 - class
 - time_last_completed
+
+## Statistics
+- id
+- user_id
+- challenge_id
+- succeeded
+- time
 
 ## Challenge
 - id
