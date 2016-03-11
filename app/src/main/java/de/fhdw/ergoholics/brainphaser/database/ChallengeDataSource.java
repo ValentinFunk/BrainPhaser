@@ -64,7 +64,7 @@ public class ChallengeDataSource {
         List<Challenge> challenges = mDaoSession.getChallengeDao().queryBuilder().list();
 
         for (Challenge challenge : challenges) {
-            if (mCompletionDataSource.getByChallengeAndUser(challenge.getId(), userId)==null) {
+            if (mCompletionDataSource.findByChallengeAndUser(challenge.getId(), userId)==null) {
                 notCompleted.add(challenge);
             }
         }

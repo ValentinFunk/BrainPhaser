@@ -25,7 +25,7 @@ public class CompletionDataSource {
         mDaoSession = session;
     }
 
-    public Completion getByChallengeAndUser(long challengeId, long userId) {
+    public Completion findByChallengeAndUser(long challengeId, long userId) {
         return mDaoSession.getCompletionDao().queryBuilder().where(CompletionDao.Properties.ChallengeId.eq(challengeId), CompletionDao.Properties.UserId.eq(userId)).unique();
     }
 
@@ -68,7 +68,7 @@ public class CompletionDataSource {
         if (stageUp != ANSWER_WRONG && stageUp != ANSWER_RIGHT) {
             return;
         }
-        Completion completed = getByChallengeAndUser(challengeId, userId);
+        Completion completed = findByChallengeAndUser(challengeId, userId);
         if (completed == null) {
             completed = new Completion(null, 2, new Date(), userId, challengeId);
             if (stageUp == ANSWER_WRONG) {

@@ -17,8 +17,12 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.model.Completion;
+import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
@@ -35,8 +39,15 @@ import javax.inject.Inject;
  */
 
 public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
-    @Inject UserManager mUserManager;
-    @Inject UserDataSource mUserDataSource;
+    UserAdapter mListAdapter;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    UserDataSource mUserDataSource;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    SettingsDataSource mSettingsDataSource;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -73,8 +84,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
 
         //Create the View
         //Adapter which sets all users into the list
-        UserAdapter listAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
-        userList.setAdapter(listAdapter);
+        mListAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
+        userList.setAdapter(mListAdapter);
 
         /**
          * Is the add button selected load Create-User-Activity.
@@ -123,7 +134,21 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     }
 
     @Override
-    public void onDeleteUser(User user) {
-        //Todo
+    public void onDeleteUser(User user, int position) {
+        long userId = user.getId();
+
+        //Delete Settings
+        Settings settings = user.getSettings();
+        mSettingsDataSource.delete(settings);
+
+        //Delete Completions
+        List<Completion> completions = user.getCompletions();
+        for (Completion completion : completions)
+                completion.delete();
+
+        //Delete User
+        user.delete();
+
+        mListAdapter.removeAt(position);
     }
 }
