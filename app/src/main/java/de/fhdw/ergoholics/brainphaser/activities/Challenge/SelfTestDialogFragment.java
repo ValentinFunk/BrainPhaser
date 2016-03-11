@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +26,35 @@ public class SelfTestDialogFragment extends AnswerFragment {
             @Override
             public void onClick(View view) {
                 mListener.onAnswerChecked(true);
+                changeFragment();
             }
         });
         btnWrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mListener.onAnswerChecked(false);
+                changeFragment();
             }
         });
 
         loadAnswers(R.id.answerListSelfCheck,null);
         return mView;
+    }
+
+    private void changeFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putLong(ChallengeActivity.KEY_CHALLENGE_ID, mChallenge.getId());
+        //Load End Screen
+        FragmentTransaction fTransaction = getFragmentManager().beginTransaction();
+        fTransaction.disallowAddToBackStack();
+        SelfTestFragment selfTestFragment = new SelfTestFragment();
+        //Commit the bundle
+        selfTestFragment.setArguments(bundle);
+        //Inflate the MultipleChoiceFragment in the challenge_fragment
+        fTransaction.replace(R.id.challenge_fragment, selfTestFragment);
+        //Commit the changes
+        fTransaction.commit();
+        getFragmentManager().executePendingTransactions();
     }
 
     @Override
