@@ -35,7 +35,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public interface ResultListener {
         void onUserSelected(User user);
         void onEditUser(User user);
-        void onDeleteUser(User user);
+        void onDeleteUser(User user, int position);
     }
 
     /**
@@ -78,7 +78,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 mResultListener.onEditUser(mUsers.get(getPosition()));
             }
             else if (item.getTitle().equals(CONTEXT_MENU_BUTTON_DELETE)) {
-                mResultListener.onDeleteUser(mUsers.get(getPosition()));
+                mResultListener.onDeleteUser(mUsers.get(getPosition()), getPosition());
             }
 
             return true;
@@ -122,6 +122,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
     }
 
+    public void removeAt(int position) {
+        mUsers.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mUsers.size());
+    }
 
     private ResultListener mResultListener;
     private List<User> mUsers;

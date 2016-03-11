@@ -5,6 +5,8 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by Daniel on 06/03/2016.
@@ -20,8 +22,9 @@ public class CustomizedFormatter implements ValueFormatter {
 
     //Constructors
     public CustomizedFormatter() {
-        //Creates a decimal format without decimal places
-        mFormat = new DecimalFormat(VALUE_FORMAT);
+        //Create a decimal format
+        mFormat = (DecimalFormat) NumberFormat.getNumberInstance(Locale.GERMANY);
+        mFormat.applyPattern(VALUE_FORMAT);
     }
 
     /**

@@ -46,4 +46,12 @@ public class SettingsDataSource {
         mDaoSession.getSettingsDao().insert(settings);
         return settings;
     }
+
+    /**
+     * Removes a Settings object from the database
+     * @param settings the representation of the Settings object to be removed from the database
+     */
+    public void delete(Settings settings) {
+        mDaoSession.delete(settings);
+    }
 }
