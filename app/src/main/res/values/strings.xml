@@ -29,8 +29,8 @@
     <string name="next_Challenge">Nächste Challenge</string>
     <string name="check_Challenge">Überprüfe Antwort</string>
     <string name="end_Challenge">Ende</string>
-    <string name="self_test_right">Meine Antwort ist richtig</string>
-    <string name="self_test_wrong">Meine Antwort ist falsch</string>
+    <string name="self_test_right">Richtig</string>
+    <string name="self_test_wrong">Falsch</string>
     <string name="answer">Gebe deine Antwort hier ein</string>
 
     <string name="switch_user">Benutzer wechseln</string>

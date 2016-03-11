@@ -37,7 +37,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
              */
             public void bindAnswer(String answer) {
                 mAnswerText.setText(answer);
-                if(mGivenAnswer.equals(answer)){
+                if(mGivenAnswer != null && mGivenAnswer.equals(answer)){
                     mAnswerText.setTextColor(colorRight);
                 }
             }
