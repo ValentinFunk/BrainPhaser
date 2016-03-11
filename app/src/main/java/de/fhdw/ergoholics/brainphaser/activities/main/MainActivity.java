@@ -14,6 +14,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.ChallengeImport.ImportChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
@@ -28,9 +29,10 @@ import javax.inject.Inject;
  * been launched before.
  */
 public class MainActivity extends BrainPhaserActivity {
-    private final static int CODE_FILEPICKER = 0;
     public static String EXTRA_NAVIGATE_TO = "NAVIGATE_TO";
     public static String EXTRA_SHOW_LOGGEDIN_SNACKBAR = "SHOW_SNACKBAR";
+    private final static int CODE_FILEPICKER = 0;
+
     @Inject UserManager mUserManager;
 
     @Override
@@ -72,7 +74,8 @@ public class MainActivity extends BrainPhaserActivity {
                 startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
                 return true;
             case R.id.action_about:
-                // TODO
+                startActivity(new Intent(getApplicationContext(), AboutActivity.class));
+                return true;
             case R.id.action_settings:
                 // TODO
             case 0: // Only in debug mode: File Picker

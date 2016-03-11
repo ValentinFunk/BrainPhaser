@@ -43,4 +43,10 @@
 
     <string name="nav_learn">Lernen</string>
     <string name="statistics">Statistiken</string>
+    <string name="due_chart_center_text">Fälligkeit</string>
+    <string name="stage_chart_center_text">Klassen</string>
+    <string name="chart_no_data_text">Keine Challenges vorhanden!</string>
+    <string name="challenge_due_text">Ja</string>
+    <string name="challeng_not_due_text">Nein</string>
+    <string name="chart_stage_others_text">Andere</string>
 </resources>

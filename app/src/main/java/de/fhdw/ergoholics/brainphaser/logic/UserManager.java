@@ -3,7 +3,6 @@ package de.fhdw.ergoholics.brainphaser.logic;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 

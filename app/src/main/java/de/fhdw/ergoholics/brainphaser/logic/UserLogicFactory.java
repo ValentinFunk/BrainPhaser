@@ -1,7 +1,9 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 import javax.inject.Inject;
@@ -16,8 +18,12 @@ import javax.inject.Singleton;
  * Dependencies are injected automatically.
  */
 public class UserLogicFactory {
-    @Inject CompletionDataSource mCompletionDataSource;
-    @Inject ChallengeDataSource mChallengeDataSource;
+    @Inject
+    BrainPhaserApplication mApplication;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
 
     /**
      * Create a DueChallengeLogic for the specified user.
@@ -26,5 +32,14 @@ public class UserLogicFactory {
      */
     public DueChallengeLogic createDueChallengeLogic(User user) {
         return new DueChallengeLogic(user, mCompletionDataSource, mChallengeDataSource);
+    }
+
+    /**
+     * Create a DueChallengeLogic for the specified user.
+     * @param user user whose challenges are inspected
+     * @return the DueChallengeLogic object
+     */
+    public StatisticsLogic createStatisticsLogic(User user) {
+        return new StatisticsLogic(user, mApplication, mChallengeDataSource, mCompletionDataSource);
     }
 }
