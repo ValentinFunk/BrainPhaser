@@ -34,7 +34,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
             }
         });
 
-        loadAnswers(R.id.answerListSelfCheck);
+        loadAnswers(R.id.answerListSelfCheck,null);
         return mView;
     }
 

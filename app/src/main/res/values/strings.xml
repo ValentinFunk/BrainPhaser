@@ -31,6 +31,7 @@
     <string name="end_Challenge">Ende</string>
     <string name="self_test_right">Meine Antwort ist richtig</string>
     <string name="self_test_wrong">Meine Antwort ist falsch</string>
+    <string name="answer">Gebe deine Antwort hier ein</string>
 
     <string name="switch_user">Benutzer wechseln</string>
     <string name="switch_user_short">Wechseln</string>

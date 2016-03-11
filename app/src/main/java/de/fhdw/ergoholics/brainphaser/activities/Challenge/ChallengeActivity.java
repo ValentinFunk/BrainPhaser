@@ -96,7 +96,6 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                     //Find the current fragment and user
                     AnswerFragment currentFragment = (AnswerFragment) mFManager.findFragmentById(R.id.challenge_fragment);
                     currentFragment.checkAnswers();
-                    mAnswerChecked = true;
                 } else {//Load the next challenge
                     //If the challenge is completed load the finish screen
                     if (mChallengeNo == mAllChallenges.size() - 1) {
@@ -188,6 +187,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     @Override
     public void onAnswerChecked(boolean answer) {
         User currentUser = mUserManager.getCurrentUser();
+        mAnswerChecked = true;
         if(answer) {
             mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
         }else{
