@@ -68,7 +68,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
      * Loads all answers of the current challenge into a simple list
      * @param listViewId RecyclerView, which will contain the answers
      */
-    protected void loadAnswers(int listViewId){
+    protected void loadAnswers(int listViewId, String givenAnswer){
         //loading of the components
         RecyclerView answerList = (RecyclerView) mView.findViewById(listViewId);
         answerList.setHasFixedSize(true);
@@ -77,7 +77,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         answerList.setLayoutManager(layoutManager);
         //Create the View
         //Adapter which sets all answers into the list
-        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
+        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
         answerList.setAdapter(listAdapter);
     }
 }
