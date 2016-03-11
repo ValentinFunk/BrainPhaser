@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.logic.statistics;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -27,10 +28,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  */
 public class StatisticsLogic {
     //Constants
-    private static final int[] COLORSET = {
-        0xFF303F9F, 0xFFC5CAE9, 0xFFEEEEEE, 0xFFFF4081, 0xFF727272, 0xFFB6B6B6
-    };
-    private static int NO_DATA_TEXT_COLOR = Color.BLACK;
+    private  int[] mColorset = new int[6];
 
     private static final float SLICE_SPACE = 1f;
     private static final float SELECTION_SHIFT = 0f;
@@ -46,12 +44,19 @@ public class StatisticsLogic {
     CompletionDataSource mCompletionDataSource;
 
     //Constructor
-    public StatisticsLogic(User user, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource) {
-        mUserLogicFactory = new UserLogicFactory();
+    public StatisticsLogic(User user, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource, UserLogicFactory userLogicFactory) {
         mApplication = application;
         mUser = user;
         mChallengeDataSource = challengeDataSource;
         mCompletionDataSource = completionDataSource;
+        mUserLogicFactory = userLogicFactory;
+
+        mColorset[0] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage1);
+        mColorset[1] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage2);
+        mColorset[2] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage3);
+        mColorset[3] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage4);
+        mColorset[4] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage5);
+        mColorset[5] = ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorStage6);
     }
 
     /**
@@ -77,10 +82,10 @@ public class StatisticsLogic {
             ArrayList<String> labels = new ArrayList<>();
 
             labels.add(mApplication.getString(R.string.challenge_due_text));
-            entries.add(new Entry(dueNumber > 0 ? dueNumber : nullValue(notDueNumber), 0));
+            entries.add(new Entry(dueNumber > 0 ? dueNumber : nullValue(notDueNumber, 2), 0));
 
             labels.add(mApplication.getString(R.string.challeng_not_due_text));
-            entries.add(new Entry(notDueNumber > 0 ? notDueNumber : nullValue(dueNumber), 1));
+            entries.add(new Entry(notDueNumber > 0 ? notDueNumber : nullValue(dueNumber, 2), 1));
 
             PieDataSet dataset = new PieDataSet(entries, "");
             applyDataSetSettings(dataset);
@@ -113,12 +118,9 @@ public class StatisticsLogic {
         //Calculate numbers for the data to be visualized
         int numbers[] = {0,0,0,0,0,0};
         int totalNumber = 0;
-        int zeroValueCount = 0;
 
         for (int i = 0; i <=5; i++) {
             numbers[i] = mCompletionDataSource.getByUserAndStageAndCategory(mUser, i + 1, categoryId).size();
-            if (numbers[i]==0)
-                zeroValueCount++;
             totalNumber += numbers[i];
         }
 
@@ -128,14 +130,8 @@ public class StatisticsLogic {
             ArrayList<String> labels = new ArrayList<>();
 
             for (int i = 0; i <=5; i++) {
-                if (numbers[i] > 0) {
-                    entries.add(new Entry(numbers[i], i));
-                    labels.add("" + (i+1));
-                }
-            }
-            if (zeroValueCount==5) {
-                entries.add(new Entry(nullValue(totalNumber), 6));
-                labels.add(mApplication.getString(R.string.chart_stage_others_text));
+                entries.add(new Entry(numbers[i] != 0 ? numbers[i] : nullValue(totalNumber, 6), i));
+                labels.add("" + (i+1));
             }
 
             PieDataSet dataset = new PieDataSet(entries, "");
@@ -163,7 +159,7 @@ public class StatisticsLogic {
     private void applyChartSettings(PieChart chart) {
         chart.setCenterTextSize(CENTER_TEXT_SIZE);
 
-        chart.setUsePercentValues(true);
+        chart.setUsePercentValues(false);
         chart.setDrawSliceText(false);
 
         chart.setDescription("");
@@ -178,8 +174,8 @@ public class StatisticsLogic {
     private void applyDataSetSettings(PieDataSet dataset) {
         dataset.setSliceSpace(SLICE_SPACE);
         dataset.setSelectionShift(SELECTION_SHIFT);
-        dataset.setColors(COLORSET);
-        dataset.setValueFormatter(new CustomizedPercentFormatter());
+        dataset.setColors(mColorset);
+        dataset.setValueFormatter(new CustomizedFormatter());
     }
 
     /**
@@ -198,7 +194,7 @@ public class StatisticsLogic {
         chart.setNoDataText(mApplication.getString(R.string.chart_no_data_text));
         Paint p = chart.getPaint(Chart.PAINT_INFO);
         p.setTextSize(NO_DATA_TEXT_SIZE);
-        p.setColor(NO_DATA_TEXT_COLOR);
+        p.setColor(ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorNoDataText));
     }
 
     /**
@@ -208,7 +204,7 @@ public class StatisticsLogic {
      * @param totalValue the total value of items in the pie chart
      * @return the value which is bigger than 0% but will be shown as 0%
      */
-    private float nullValue(float totalValue) {
-        return totalValue/200f;
+    private float nullValue(float totalValue, int sliceNumber) {
+        return (float) (totalValue * 0.002 * Math.PI);
     }
 }

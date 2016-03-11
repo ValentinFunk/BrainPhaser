@@ -50,4 +50,6 @@
     <string name="challenge_due_text">Ja</string>
     <string name="challeng_not_due_text">Nein</string>
     <string name="chart_stage_others_text">Andere</string>
+    <string name="import_activity_button_no">Nein</string>
+    <string name="import_activity_button_yes">Ja</string>
 </resources>

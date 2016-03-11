@@ -2,24 +2,24 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.PieChart;
-
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016.
  */
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder> {
+    private UserLogicFactory mUserLogicFactory;
     private User mUser;
     private long mCategoryId;
 
-    public StatisticsAdapter(User user, long categoryId) {
+    public StatisticsAdapter(UserLogicFactory userLogicFactory, User user, long categoryId) {
+        mUserLogicFactory = userLogicFactory;
         mUser = user;
         mCategoryId = categoryId;
     }
@@ -33,11 +33,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;
 
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_statistics, parent, false);
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
         v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 
-        return new StatisticViewHolder(v, mUser, mCategoryId);
+        return new StatisticViewHolder(v, mUserLogicFactory, mUser, mCategoryId);
     }
 
     // Bind data to the view
@@ -48,7 +48,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
             holder.applyDueChart();
         }
         if (position==1) {
-
+            holder.applyStageChart();
         }
         else {
 

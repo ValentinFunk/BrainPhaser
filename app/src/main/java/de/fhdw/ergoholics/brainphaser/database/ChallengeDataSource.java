@@ -73,9 +73,12 @@ public class ChallengeDataSource {
     }
 
     public List<Challenge> getByCategoryId(long categoryId) {
-        QueryBuilder challenges = mDaoSession.getChallengeDao().queryBuilder()
-                .where(ChallengeDao.Properties.CategoryId.eq(categoryId));
+        QueryBuilder challenges;
 
-        return challenges.list();
+        if (categoryId == CategoryDataSource.CATEGORY_ID_ALL)
+            return getAll();
+        else
+            return  mDaoSession.getChallengeDao().queryBuilder()
+                .where(ChallengeDao.Properties.CategoryId.eq(categoryId)).list();
     }
 }

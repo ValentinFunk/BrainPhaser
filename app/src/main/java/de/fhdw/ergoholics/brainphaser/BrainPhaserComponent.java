@@ -11,6 +11,7 @@ import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
+import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCWrite;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 
@@ -28,6 +29,7 @@ public interface BrainPhaserComponent {
     void inject(CreateUserActivity createUserActivity);
     void inject(UserAdapter userAdapter);
     void inject(UserSelectionActivity activity);
+    void inject(StatisticsActivity activity);
 
     void inject(AboutActivity activity);
 
