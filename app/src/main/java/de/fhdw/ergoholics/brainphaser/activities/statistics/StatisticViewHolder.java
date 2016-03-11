@@ -18,27 +18,27 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  */
 public class StatisticViewHolder extends RecyclerView.ViewHolder {
     private View mItemView;
+    private UserLogicFactory mUserLogicFactory;
     private User mUser;
     private long mCategoryId;
 
-    public StatisticViewHolder(View itemView, User user, long categoryId) {
+    public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory, User user, long categoryId) {
         super(itemView);
         mItemView = itemView;
+        mUserLogicFactory = userLogicFactory;
         mUser = user;
         mCategoryId = categoryId;
     }
 
     public void applyDueChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        UserLogicFactory userLogicFactory = new UserLogicFactory();
-        StatisticsLogic statisticsLogic = userLogicFactory.createStatisticsLogic(mUser);
+        StatisticsLogic statisticsLogic = mUserLogicFactory.createStatisticsLogic(mUser);
         statisticsLogic.fillDueChart(chart, mCategoryId);
     }
 
     public void applyStageChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        UserLogicFactory userLogicFactory = new UserLogicFactory();
-        StatisticsLogic statisticsLogic = userLogicFactory.createStatisticsLogic(mUser);
+        StatisticsLogic statisticsLogic = mUserLogicFactory.createStatisticsLogic(mUser);
         statisticsLogic.fillStageChart(chart, mCategoryId);
     }
 }

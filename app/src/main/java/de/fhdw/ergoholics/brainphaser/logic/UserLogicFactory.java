@@ -40,6 +40,6 @@ public class UserLogicFactory {
      * @return the DueChallengeLogic object
      */
     public StatisticsLogic createStatisticsLogic(User user) {
-        return new StatisticsLogic(user, mApplication, mChallengeDataSource, mCompletionDataSource);
+        return new StatisticsLogic(user, mApplication, mChallengeDataSource, mCompletionDataSource, this);
     }
 }

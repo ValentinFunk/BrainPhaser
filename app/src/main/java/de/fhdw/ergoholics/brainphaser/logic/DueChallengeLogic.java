@@ -89,8 +89,7 @@ public class DueChallengeLogic {
         //Check for each stage if their challenges are due
         for (int stage = 1; stage<=6; stage++) {
             //Get the users completions in the stage
-            List<Completion> completedInStage =
-                mCompletionDataSource.getByUserAndStage(mUser, stage);
+            List<Completion> completedInStage = mCompletionDataSource.getByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
             timebox = getTimeboxByStage(mUser.getSettings(), stage);
