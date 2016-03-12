@@ -25,6 +25,7 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,9 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
+    public static final String KEY_ANSWER_CHECKED ="KEY_ANSWER_CHECKED";
+    public static final String KEY_ACTIVE_CHALLENGES="KEY_ACTIVE_CHALLENGES";
+
     @Inject
     UserManager mUserManager;
     @Inject
@@ -67,7 +71,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         setContentView(R.layout.activity_challenge);
 
         Toolbar myChildToolbar =
-            (Toolbar) findViewById(R.id.toolbar);
+                (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myChildToolbar);
 
         // Get a support ActionBar corresponding to this toolbar
@@ -86,12 +90,13 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
 
         //Get the CategoryID as an Intent. If no Category is given the id will be -1 (for all categories)
         Intent i = getIntent();
-        long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID, -1);
+        long categoryId = i.getLongExtra(EXTRA_CATEGORY_ID, -1);
 
         //Load the user's due challenges
         final User currentUser = mUserManager.getCurrentUser();
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         mAllChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
+        mAnswerChecked =false;
 
         //Load the ending screen if no challenges are due
         if (mAllChallenges == null || mAllChallenges.size() < 1) {
@@ -102,7 +107,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         mProgress.setMax(mAllChallenges.size());
         mProgress.setProgress(mChallengeNo);
         loadChallenge(mAllChallenges.get(mChallengeNo));
-        mAnswerChecked =false;
+
 
         mBtnNextChallenge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +132,30 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
             }
         });
 
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        mChallengeNo=savedInstanceState.getInt(KEY_CHALLENGE_ID);
+        mAnswerChecked=savedInstanceState.getBoolean(KEY_ANSWER_CHECKED);
+        mAllChallenges=new ArrayList<>();
+        ArrayList<Integer> activeChallenges = savedInstanceState.getIntegerArrayList(KEY_ACTIVE_CHALLENGES);
+        for (int item:activeChallenges) {
+            mAllChallenges.add((long)item);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean(KEY_ANSWER_CHECKED, mAnswerChecked);
+        savedInstanceState.putInt(KEY_CHALLENGE_ID, mChallengeNo);
+        ArrayList<Integer> activeChallenges = new ArrayList<>();
+        for (long item: mAllChallenges) {
+            activeChallenges.add((int)item);
+        }
+        savedInstanceState.putIntegerArrayList(KEY_ACTIVE_CHALLENGES, activeChallenges);
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     private void loadFinishScreen(){
