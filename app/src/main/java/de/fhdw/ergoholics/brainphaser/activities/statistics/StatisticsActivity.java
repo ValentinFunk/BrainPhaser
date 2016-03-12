@@ -17,6 +17,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
+import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
@@ -30,6 +31,8 @@ public class StatisticsActivity extends BrainPhaserActivity {
     UserManager mUserManager;
     @Inject
     UserLogicFactory mUserLogicFactory;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,13 +61,13 @@ public class StatisticsActivity extends BrainPhaserActivity {
             new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return position < 3 ? 1 : 2;
+                    return position < 2 ? 1 : 2;
                 }
         });
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, user, categoryId, isLandscape));
+        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource, (BrainPhaserApplication) getApplication(), user, categoryId, isLandscape));
     }
 
     @Override

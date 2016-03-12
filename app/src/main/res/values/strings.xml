@@ -46,7 +46,7 @@
     <string name="statistics">Statistiken</string>
     <string name="due_chart_center_text">Fälligkeit</string>
     <string name="stage_chart_center_text">Klassen</string>
-    <string name="chart_no_data_text">Keine Challenges vorhanden!</string>
+    <string name="chart_no_data_text">Keine Statistikdaten vorhanden :(</string>
     <string name="challenge_due_text">Ja</string>
     <string name="challeng_not_due_text">Nein</string>
     <string name="chart_stage_others_text">Andere</string>
@@ -55,4 +55,8 @@
     <string name="statistics_label">Statistiken</string>
     <string name="user_context_menu_button_edit">Bearbeiten</string>
     <string name="user_context_menu_button_delete">Löschen</string>
+    <string name="statistics_most_played">Am häufigsten beantwortet</string>
+    <string name="statistics_most_failed">Am häufigsten falsch</string>
+    <string name="statistics_most_succeeded">Am häufigsten richtig</string>
+    <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
 </resources>

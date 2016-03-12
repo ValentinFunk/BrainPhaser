@@ -2,14 +2,11 @@ package de.fhdw.ergoholics.brainphaser.logic;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.LongSparseArray;
-import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
@@ -18,8 +15,6 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
-
-import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
@@ -89,7 +84,7 @@ public class DueChallengeLogic {
         //Check for each stage if their challenges are due
         for (int stage = 1; stage<=6; stage++) {
             //Get the users completions in the stage
-            List<Completion> completedInStage = mCompletionDataSource.getByUserAndStage(mUser, stage);
+            List<Completion> completedInStage = mCompletionDataSource.findByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
             timebox = getTimeboxByStage(mUser.getSettings(), stage);

@@ -3,6 +3,7 @@ package de.fhdw.ergoholics.brainphaser.logic;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
@@ -24,6 +25,8 @@ public class UserLogicFactory {
     CompletionDataSource mCompletionDataSource;
     @Inject
     ChallengeDataSource mChallengeDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
 
     /**
      * Create a DueChallengeLogic for the specified user.
@@ -39,7 +42,7 @@ public class UserLogicFactory {
      * @param user user whose challenges are inspected
      * @return the DueChallengeLogic object
      */
-    public StatisticsLogic createStatisticsLogic(User user) {
-        return new StatisticsLogic(user, mApplication, mChallengeDataSource, mCompletionDataSource, this);
+    public StatisticsLogic createStatisticsLogic(User user, long categoryId) {
+        return new StatisticsLogic(user, categoryId, mApplication, mChallengeDataSource, mCompletionDataSource, mStatisticsDataSource, this);
     }
 }

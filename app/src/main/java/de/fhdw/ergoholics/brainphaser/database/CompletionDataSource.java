@@ -37,15 +37,15 @@ public class CompletionDataSource {
         return mDaoSession.getCompletionDao().insert(completed);
     }
 
-    public List<Completion> getByUserAndStage(User user, int stage) {
+    public List<Completion> findByUserAndStage(User user, int stage) {
         QueryBuilder<Completion> completed = mDaoSession.getCompletionDao().queryBuilder()
             .where(CompletionDao.Properties.UserId.eq(user.getId()),
                 CompletionDao.Properties.Stage.eq(stage));
         return completed.list();
     }
 
-    public List<Completion> getByUserAndStageAndCategory(User user, int stage, long categoryId) {
-        List<Completion> userStageCompletions = getByUserAndStage(user, stage);
+    public List<Completion> findByUserAndStageAndCategory(User user, int stage, long categoryId) {
+        List<Completion> userStageCompletions = findByUserAndStage(user, stage);
         if (categoryId == CategoryDataSource.CATEGORY_ID_ALL)
             return userStageCompletions;
         else {
