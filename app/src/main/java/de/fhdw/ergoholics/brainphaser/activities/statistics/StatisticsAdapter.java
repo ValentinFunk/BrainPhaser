@@ -48,10 +48,18 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;
 
-        if (mViewNumber < 2)
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
-        else
-            v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
+        if (mIsLandscape) {
+            if (mViewNumber == 0 || mViewNumber == 2)
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
+            else
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
+        }
+        else {
+            if (mViewNumber < 2)
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
+            else
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
+        }
 
         v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT));

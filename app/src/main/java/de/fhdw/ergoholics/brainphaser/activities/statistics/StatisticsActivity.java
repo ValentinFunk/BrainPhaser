@@ -61,7 +61,11 @@ public class StatisticsActivity extends BrainPhaserActivity {
             new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    return position < 2 ? 1 : 2;
+                    if (isLandscape) {
+                        return (position == 0 || position == 2) ? 1 : 2;
+                    }
+                    else
+                        return position < 2 ? 1 : 2;
                 }
         });
 
