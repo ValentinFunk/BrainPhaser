@@ -31,7 +31,11 @@
     <string name="end_Challenge">Ende</string>
     <string name="self_test_right">Richtig</string>
     <string name="self_test_wrong">Falsch</string>
-    <string name="answer">Gebe deine Antwort hier ein</string>
+    <string name="answer">Antwort</string>
+    <string name="empty_answer">Die Antwort darf nicht leer sein.</string>
+
+    <string name="well_done">Gut gemacht!</string>
+    <string name="enjoy_day">Keine Challenges fällig. Genieße deinen Tag.</string>
 
     <string name="switch_user">Benutzer wechseln</string>
     <string name="switch_user_short">Wechseln</string>
@@ -39,8 +43,6 @@
     <string name="about">Über</string>
     <string name="logged_in_as">%1$s eingeloggt.</string>
 
-    <string name="well_done">Gut gemacht!</string>
-    <string name="enjoy_day">Keine Challenges fällig. Genieße deinen Tag.</string>
 
     <string name="nav_learn">Lernen</string>
     <string name="statistics">Statistiken</string>

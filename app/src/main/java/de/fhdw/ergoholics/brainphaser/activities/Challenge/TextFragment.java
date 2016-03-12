@@ -45,7 +45,7 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         boolean isValid = true;
         String answer = mAnswerInput.getText().toString().trim();
         if (answer.length() == 0) {
-            mAnswerInput.setError(getString(R.string.empty_username));
+            mAnswerInput.setError(getString(R.string.empty_answer));
             mAnswerInputLayout.setErrorEnabled(true);
             isValid = false;
         }
@@ -58,9 +58,7 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
-            if (validateAnswerLength()) {
                 checkAnswers();
-            }
         }
         return false;
     }
@@ -71,14 +69,16 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
      */
     @Override
     public void checkAnswers() {
-        boolean answerRight=false;
-        String givenAnswer =mAnswerInput.getText().toString();
-        for (Answer item:mAnswerList) {
-            if(item.getText().equals(givenAnswer)){
-                answerRight=true;
+        if (validateAnswerLength()) {
+            boolean answerRight = false;
+            String givenAnswer = mAnswerInput.getText().toString();
+            for (Answer item : mAnswerList) {
+                if (item.getText().equals(givenAnswer)) {
+                    answerRight = true;
+                }
             }
+            loadAnswers(R.id.answerListText, givenAnswer);
+            mListener.onAnswerChecked(answerRight);
         }
-        loadAnswers(R.id.answerListText, givenAnswer);
-        mListener.onAnswerChecked(answerRight);
     }
 }
