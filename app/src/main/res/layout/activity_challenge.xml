@@ -33,6 +33,14 @@
                   app:layout_behavior="@string/appbar_scrolling_view_behavior"
                   >
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:id="@+id/progress_bar"
+            android:progressDrawable="@drawable/progress"/>
+
+
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/challenge_fragment_question"

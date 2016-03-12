@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
@@ -46,6 +47,8 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     private List<Long> mAllChallenges;
     private int mChallengeNo = 0;
     private FloatingActionButton mBtnNextChallenge;
+    private ProgressBar mProgress;
+
     private boolean mAnswerChecked;
     private FragmentManager mFManager;
     private FragmentTransaction mFTransaction;
@@ -73,24 +76,31 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
-        //get the button
+        //get the views
         mBtnNextChallenge = (FloatingActionButton)findViewById(R.id.btnNextChallenge);
         mQuestionText = (TextView) findViewById(R.id.challengeQuestion);
+        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
 
         //FragementManager manages the fragments in the activity
         mFManager=getSupportFragmentManager();
 
+        //Get the CategoryID as an Intent. If no Category is given the id will be -1 (for all categories)
         Intent i = getIntent();
         long categoryId= i.getLongExtra(EXTRA_CATEGORY_ID, -1);
 
+        //Load the user's due challenges
         final User currentUser = mUserManager.getCurrentUser();
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
         mAllChallenges = mDueChallengeLogic.getDueChallenges(categoryId);
+
+        //Load the ending screen if no challenges are due
         if (mAllChallenges == null || mAllChallenges.size() < 1) {
             loadFinishScreen();
             return;
         }
 
+        mProgress.setMax(mAllChallenges.size());
+        mProgress.setProgress(mChallengeNo);
         loadChallenge(mAllChallenges.get(mChallengeNo));
         mAnswerChecked =false;
 
@@ -109,6 +119,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                     }
                     //increment counter
                     mChallengeNo += 1;
+                    mProgress.setProgress(mChallengeNo);
                     //load the next challenge
                     loadChallenge(mAllChallenges.get(mChallengeNo));
                     mAnswerChecked = false;
