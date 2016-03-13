@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsMode;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -41,7 +40,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     /**
      * Called to create the ViewHolder at the given position.
      *
-     * @param parent   parent to assign the newly created view to
+     * @param parent parent to assign the newly created view to
      * @param viewType ignored
      */
     @Override
@@ -72,38 +71,28 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         if (mIsLandscape) {
-            if (position==0) {
+            if (position==0)
                 holder.applyDueChart();
-            }
-            else if (position==1) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_ALL);
-            }
-            else if (position==2) {
+            else if (position==1)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
+            else if (position==2)
                 holder.applyStageChart();
-            }
-            else if (position==3) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_FAILED);
-            }
-            else if (position==4) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_SUCCEEDED);
-            }
+            else if (position==3)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
+            else if (position==4)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
         }
         else {
-            if (position==0) {
+            if (position==0)
                 holder.applyDueChart();
-            }
-            else if (position==1) {
+            else if (position==1)
                 holder.applyStageChart();
-            }
-            else if (position==2) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_ALL);
-            }
-            else if (position==3) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_FAILED);
-            }
-            else if (position==4) {
-                holder.applyMostPlayedChart(StatisticsMode.MOST_PLAYED_MODE_SUCCEEDED);
-            }
+            else if (position==2)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
+            else if (position==3)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
+            else if (position==4)
+                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
         }
     }
 

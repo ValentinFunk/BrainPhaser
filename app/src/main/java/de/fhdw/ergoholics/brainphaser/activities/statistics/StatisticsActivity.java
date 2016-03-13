@@ -78,13 +78,4 @@ public class StatisticsActivity extends BrainPhaserActivity {
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
-
-    // Sort categories when activity is started, to make sure the set is sorted when returning
-    // from challenge solving
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-    }
 }

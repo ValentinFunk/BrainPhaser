@@ -18,7 +18,7 @@ import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
- * Created by Daniel on 12/03/2016.
+ * Created by Daniel Hoogen on 12/03/2016.
  */
 public class ChartDataLogic {
     //Constants
@@ -110,16 +110,16 @@ public class ChartDataLogic {
             return null;
     }
 
-    public PieData findMostPlayedData(StatisticsMode mode, List<Long> shownChallenges) {
+    public PieData findMostPlayedData(StatisticType type, List<Long> shownChallenges) {
         //Create dataset
         ArrayList <Entry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
         List<Statistics> statistics = mStatisticsDataSource.findByCategoryAndUser(mCategoryId, mUser);
 
-        if (mode == StatisticsMode.MOST_PLAYED_MODE_FAILED)
+        if (type == StatisticType.TYPE_MOST_FAILED)
             statistics = removeSucceeded(statistics);
-        if (mode == StatisticsMode.MOST_PLAYED_MODE_SUCCEEDED)
+        if (type == StatisticType.TYPE_MOST_SUCCEEDED)
             statistics = removeFailed(statistics);
 
         getMost(entries, labels, statistics, shownChallenges, NUMBER_PLAYED_LISTED);

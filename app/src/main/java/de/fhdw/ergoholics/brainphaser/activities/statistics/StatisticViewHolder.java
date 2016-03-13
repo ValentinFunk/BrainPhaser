@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
-import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsMode;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -46,36 +44,21 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
 
     public void applyDueChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mStatisticsLogic.fillDueChart(chart);
+        mStatisticsLogic.fillChart(chart, StatisticType.TYPE_DUE);
     }
 
     public void applyStageChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mStatisticsLogic.fillStageChart(chart);
+        mStatisticsLogic.fillChart(chart, StatisticType.TYPE_STAGE);
     }
 
-    public void applyMostPlayedChart(StatisticsMode mode) {
+    public void applyMostPlayedChart(StatisticType type) {
         //Apply chart
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mShownChallenges = mStatisticsLogic.fillMostPlayedChart(chart, mode);
+        mShownChallenges = mStatisticsLogic.fillChart(chart, type);
 
         //Add chart selection listener
-        chart.setOnChartValueSelectedListener(
-            new OnChartValueSelectedListener() {
-                @Override
-                public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                    long challengeId = mShownChallenges.get(e.getXIndex());
-                    TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-                    text.setText(mChallengeDataSource.getById(challengeId).getQuestion());
-                }
-
-                @Override
-                public void onNothingSelected() {
-                    TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-                    text.setText(mApplication.getString(R.string.statistics_no_challenge_selected));
-                }
-            }
-        );
+        chart.setOnChartValueSelectedListener(new ChartValueSelectedListener(this));
 
         //Select first entry
         if (chart.getData() != null) {
@@ -84,22 +67,30 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
             text.setText(mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion());
         }
 
-        //Set texts
-        String titleText = "";
-
-        switch (mode) {
-            case MOST_PLAYED_MODE_ALL:
-                titleText = mApplication.getString(R.string.statistics_most_played);
-                break;
-            case MOST_PLAYED_MODE_FAILED:
-                titleText = mApplication.getString(R.string.statistics_most_failed);
-                break;
-            case MOST_PLAYED_MODE_SUCCEEDED:
-                titleText = mApplication.getString(R.string.statistics_most_succeeded);
-                break;
-        }
-
         TextView title = (TextView) mItemView.findViewById(R.id.titleView);
-        title.setText(titleText);
+        title.setText(getTitle(type));
+    }
+
+    private String getTitle(StatisticType type) {
+        switch (type) {
+            case TYPE_MOST_PLAYED:
+                return mApplication.getString(R.string.statistics_most_played);
+            case TYPE_MOST_FAILED:
+                return mApplication.getString(R.string.statistics_most_failed);
+            case TYPE_MOST_SUCCEEDED:
+                return mApplication.getString(R.string.statistics_most_succeeded);
+        }
+        return null;
+    }
+
+    public void onValueSelected(Entry e) {
+        long challengeId = mShownChallenges.get(e.getXIndex());
+        TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
+        text.setText(mChallengeDataSource.getById(challengeId).getQuestion());
+    }
+
+    public void onNothingSelected() {
+        TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
+        text.setText(mApplication.getString(R.string.statistics_no_challenge_selected));
     }
 }
