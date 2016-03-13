@@ -264,7 +264,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         //Commit the changes
         mFTransaction.commit();
         mFManager.executePendingTransactions();
-       // initializeMetaData();
+       initializeMetaData();
     }
 
     /**
@@ -305,10 +305,10 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
      * Loads the current challenge's metadata into texts
      */
     private void initializeMetaData(){
-        String category = mCategoryDataSource.getById(mCurrentChallenge.getId()).getTitle();
+        String category = mCategoryDataSource.getById(mCurrentChallenge.getCategoryId()).getTitle();
         mCategoryText.setText(category);
         int stageColor;
-        long stage = mUserManager.getCurrentUser().getId();
+        long stage = mCompletionDataSource.findByChallengeAndUser(mCurrentChallenge.getId(),mUserManager.getCurrentUser().getId()).getStage();
 
         switch((int)stage){
             case 1:
@@ -334,7 +334,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                 stageColor=ContextCompat.getColor(this.getBaseContext(), R.color.colorStage1);
                 break;
         }
-        mClassText.setText("Klasse " + mCompletionDataSource.findByChallengeAndUser(mCurrentChallenge.getId(),stage).getId());
+        mClassText.setText("Klasse " + stage);
         mClassText.setBackgroundColor(stageColor);
 
         String type;
