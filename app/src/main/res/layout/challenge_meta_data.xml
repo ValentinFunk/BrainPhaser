@@ -11,18 +11,42 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:id="@+id/challenge_class"/>
+            android:id="@+id/challenge_class"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:background="@drawable/text_meta_data"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="15"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:id="@+id/challenge_type"/>
+        android:id="@+id/challenge_type"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:background="@drawable/text_meta_data"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15"
+        android:paddingRight="@dimen/activity_horizontal_margin"/>
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:id="@+id/challenge_category"/>
+        android:id="@+id/challenge_category"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:background="@drawable/text_meta_data"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15"/>
 
     </android.support.v7.widget.LinearLayoutCompat>

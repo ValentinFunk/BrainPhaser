@@ -16,7 +16,7 @@
     <color name="colorStage5">#C5CAE9</color>
     <color name="colorStage6">#B6B6B6</color>
 
-    <color name="colorText">#FF0000</color>
-    <color name="colorMultipleChoice">#00FF00</color>
-    <color name="colorSelfCheck">#0000FF</color>
+    <color name="colorText">#E0A7A5</color>
+    <color name="colorMultipleChoice">#A7E0A5</color>
+    <color name="colorSelfCheck">#A7A5E0</color>
 </resources>
