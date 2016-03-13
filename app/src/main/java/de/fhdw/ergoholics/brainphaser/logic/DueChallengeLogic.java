@@ -22,11 +22,13 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * This class contains the logic for reading due challenges from the databases
  */
 public class DueChallengeLogic {
+    //Attributes
     private User mUser;
 
     private CompletionDataSource mCompletionDataSource;
     private ChallengeDataSource mChallengeDataSource;
 
+    //Constructor
     public DueChallengeLogic(User user, CompletionDataSource completionDataSource, ChallengeDataSource challengeDataSource) {
         mCompletionDataSource = completionDataSource;
         mChallengeDataSource = challengeDataSource;
@@ -35,6 +37,7 @@ public class DueChallengeLogic {
 
     /**
      * Returns the amount of due challenges for each category id.
+     * @param categories the list of categories
      * @return array that maps category counts to category ids. (Key = CategoryId, Value = Count)
      */
     public LongSparseArray<Integer> getDueChallengeCounts(List<Category> categories) {
@@ -75,8 +78,7 @@ public class DueChallengeLogic {
      * @param dueChallenges the list object the due challenges will be added to
      * @param categoryId the id of the category whose due challenges will be returned
      */
-    private void addDueChallengesByCategory(List<Long> dueChallenges,
-                                                   long categoryId) {
+    private void addDueChallengesByCategory(List<Long> dueChallenges, long categoryId) {
         //Create objects
         Date now = new Date();
         Date timebox;
@@ -109,8 +111,7 @@ public class DueChallengeLogic {
      * @param dueChallenges the list object the due challenges will be added to
      * @param categoryId the id of the category whose due challenges will be added
      */
-    private void createMissingCompletedEntriesByCategory(List<Long> dueChallenges,
-                                                                long categoryId) {
+    private void createMissingCompletedEntriesByCategory(List<Long> dueChallenges, long categoryId) {
         //Create objects
         Date now = new Date();
 

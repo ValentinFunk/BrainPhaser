@@ -1,7 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
-import de.fhdw.ergoholics.brainphaser.BuildConfig;
-import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.model.UserDao;
@@ -36,7 +34,7 @@ public class UserDataSource {
      */
     public long create(User user) {
         if (user.getSettingsId() == 0) {
-            user.setSettings(mSettingsDataSource.getNewDefaultSettings());
+            user.setSettings(mSettingsDataSource.createNewDefaultSettings());
         }
 
         return mDaoSession.getUserDao().insert(user);
