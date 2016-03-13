@@ -15,4 +15,8 @@
     <color name="colorStage4">#EEEEEE</color>
     <color name="colorStage5">#C5CAE9</color>
     <color name="colorStage6">#B6B6B6</color>
+
+    <color name="colorText">#E0A7A5</color>
+    <color name="colorMultipleChoice">#A7E0A5</color>
+    <color name="colorSelfCheck">#A7A5E0</color>
 </resources>

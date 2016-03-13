@@ -26,7 +26,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 import javax.inject.Inject;
 
 /**
- * Created by Christian on 16.02.2016. Adapter and ViewHolder for the UserLists
+ *  Adapter to load all users into a list
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     /**
@@ -90,8 +90,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
         /**
-         * Bind the item to the View Holder and add an OnClickListener
-         *
+         * Bind the user to the View Holder and add an OnClickListener
          * @param user User to bind to the view
          */
         public void bindUser(final User user) {
@@ -122,12 +121,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
     }
 
-    public void removeAt(int position) {
-        mUsers.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, mUsers.size());
-    }
 
+    //Attributes
     private ResultListener mResultListener;
     private List<User> mUsers;
     private BrainPhaserApplication mApplication;
@@ -138,6 +133,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return mUserManager;
     }
 
+    /**
+     * Constructor
+     * @param allUsers list of all users
+     * @param resultListener Listener of the activity
+     * @param application App
+     */
     public UserAdapter(List<User> allUsers, ResultListener resultListener, BrainPhaserApplication application) {
         mUsers = allUsers;
         mResultListener = resultListener;
@@ -146,7 +147,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         application.getComponent().inject(this);
     }
 
-    // Creates the list item's view
+    /**
+     * Creates the list item's view
+     */
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
@@ -156,16 +159,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     /**
-     * Pass selection on to the listener
-     *
-     * @param user selected user
+     * Binds list element of given position to the view
+     * @param holder UserViewHolder
+     * @param position Positon
      */
-    public void onUserSelected(User user) {
-        mResultListener.onUserSelected(user);
-    }
-
-
-    // Binds list element of given position to the view
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         //bind the user
@@ -173,9 +170,31 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.bindUser(user);
     }
 
-    // Amount of items = amount of users
+    /**
+     * Get the size of the view
+     * @return size of the user list
+     */
     @Override
     public int getItemCount() {
         return mUsers.size();
     }
+
+    /**
+     * Pass selection on to the ResultListener
+     * @param user selected user
+     */
+    public void onUserSelected(User user) {
+        mResultListener.onUserSelected(user);
+    }
+
+    /**
+     * Removes a user from the list
+     * @param position user's position
+     */
+    public void removeAt(int position) {
+        mUsers.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mUsers.size());
+    }
+
 }
