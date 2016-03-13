@@ -22,7 +22,6 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class StatisticsLogic {
     //Attributes
     private BrainPhaserApplication mApplication ;
-
     private ChartSettings mSettings;
     private ChartDataLogic mDataLogic;
 
@@ -34,6 +33,13 @@ public class StatisticsLogic {
         mDataLogic = new ChartDataLogic(user, categoryId, application, userLogicFactory, challengeDataSource, completionDataSource, statisticsDataSource);
     }
 
+    /**
+     * Creates a PieData object containing entries with the numbers of due and not due challenges.
+     * @param chart the PieChart object the calculated data will be applied to
+     * @param type the type of the statistic to be created
+     * @return a list of the ids of the shown challenges, if a most played / failed / succeeded
+     * challenges chart is created. Otherwise null will be returned.
+     */
     public List<Long> fillChart(PieChart chart, StatisticType type) {
         if (chart==null)
             return null;

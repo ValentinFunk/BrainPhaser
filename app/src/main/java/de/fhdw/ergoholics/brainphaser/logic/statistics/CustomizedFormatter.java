@@ -9,7 +9,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
- * Created by Daniel on 06/03/2016.
+ * Created by Daniel Hoogen on 06/03/2016.
  *
  * This class implements a ValueFormatter for formatting values for pie charts used in the app
  */

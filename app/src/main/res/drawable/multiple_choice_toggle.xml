@@ -7,6 +7,6 @@
     android:drawable="@drawable/multiple_choice_checked"
     android:textColor="@color/colorAccent"/>
 <item android:state_checked="false"
-    android:drawable="@drawable/multiple_choice_checked"
+    android:drawable="@drawable/multiple_choice_unchecked"
     android:textColor="@color/colorAccent"/>
 </selector>
