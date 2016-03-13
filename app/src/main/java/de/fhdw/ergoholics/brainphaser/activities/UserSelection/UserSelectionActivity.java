@@ -31,8 +31,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Christian on 16.02.2016.
- *
  * Activity used to chose an existing user. Can load the create user activity
  * Persistent data: none
  * Parameters: none
@@ -49,6 +47,10 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     @Inject
     SettingsDataSource mSettingsDataSource;
 
+    /**
+     * inject components
+     * @param component
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
@@ -126,6 +128,10 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         finish();
     }
 
+    /**
+     * On edit a user, finish this activity and load edit user activity
+     * @param user To edited User
+     */
     @Override
     public void onEditUser(User user) {
         Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
@@ -133,11 +139,14 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         startActivityForResult(intent, 0);
     }
 
+    /**
+     * On delete a user, remove its data and remove the user from the list
+     * @param user to deleted user
+     * @param position position of the user in the list
+     */
     @Override
     public void onDeleteUser(User user, int position) {
-        long userId = user.getId();
-
-        //Delete Settings
+              //Delete Settings
         Settings settings = user.getSettings();
         mSettingsDataSource.delete(settings);
 

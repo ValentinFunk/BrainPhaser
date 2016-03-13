@@ -10,10 +10,13 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
- * Created by Chris on 3/10/2016.
+ * Fragment for a self-check challenge. Loads the SelfTestDialogFragment on checkAnswers.
  */
 public class SelfTestFragment extends AnswerFragment {
 
+    /**
+     * Loads the SelfTestDialogFragment
+     */
     @Override
     public void checkAnswers() {
         Bundle bundle = new Bundle();
@@ -35,9 +38,15 @@ public class SelfTestFragment extends AnswerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //inflate the view
         mView = inflater.inflate(R.layout.fragment_challenge_self_test_null, container, false);
         return mView;
     }
+
+    /**
+     * Inject components
+     * @param component
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);

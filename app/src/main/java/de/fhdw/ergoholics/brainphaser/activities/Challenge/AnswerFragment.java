@@ -15,9 +15,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Christian on 03.03.2016.
+ * The abstract fragment contains all necessary  methods for the different challenge-type fragments
  */
 public abstract class AnswerFragment extends BrainPhaserFragment {
+    /**
+     * Interface
+     */
     public interface AnswerListener{
         void onAnswerChecked(boolean answer);
     }
@@ -31,6 +34,9 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
 
     @Inject ChallengeDataSource mChallengeDataSource;
 
+    /**
+     * Called to check the given answer(s)
+     */
     public abstract void checkAnswers();
 
     @Override

@@ -15,13 +15,17 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
- * Created by Chris on 2/25/2016.
+ * Fragment for a text challenge
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
     //Textfield of the answer
     private TextView mAnswerInput;
     private TextInputLayout mAnswerInputLayout;
 
+    /**
+     * inject components
+     * @param component
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);

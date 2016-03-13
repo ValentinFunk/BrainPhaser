@@ -61,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <include layout="@layout/challenge_meta_data"/>
+
                 <include layout="@layout/fragment_challenge_question"/>
 
                 <FrameLayout
