@@ -24,34 +24,45 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * RecyclerView.
  */
 public class StatisticViewHolder extends RecyclerView.ViewHolder {
+    //Attributes
     private View mItemView;
-    private UserLogicFactory mUserLogicFactory;
     private ChallengeDataSource mChallengeDataSource;
     private BrainPhaserApplication mApplication;
     private StatisticsLogic mStatisticsLogic;
     private List<Long> mShownChallenges;
 
-    public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory, ChallengeDataSource challengeDataSource,
+    //Constructor
+    public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory,
+                               ChallengeDataSource challengeDataSource,
                                BrainPhaserApplication application, User user, long categoryId) {
         super(itemView);
         mItemView = itemView;
-        mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mApplication = application;
 
-        mStatisticsLogic = mUserLogicFactory.createStatisticsLogic(user, categoryId);
+        mStatisticsLogic = userLogicFactory.createStatisticsLogic(user, categoryId);
     }
 
+    /**
+     * Applies a due chart to the chart in the mItemView view
+     */
     public void applyDueChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
         mStatisticsLogic.fillChart(chart, StatisticType.TYPE_DUE);
     }
 
+    /**
+     * Applies a stage chart to the chart in the mItemView view
+     */
     public void applyStageChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
         mStatisticsLogic.fillChart(chart, StatisticType.TYPE_STAGE);
     }
 
+    /**
+     * Applies a most played / failed / succeeded chart to the chart in the mItemView view
+     * @param type the statistic type of the chart to be applied
+     */
     public void applyMostPlayedChart(StatisticType type) {
         //Apply chart
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
@@ -71,6 +82,11 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
         title.setText(getTitle(type));
     }
 
+    /**
+     * Returns a title string depending on the given statistic type
+     * @param type the type of the statistic
+     * @return the title string for the statistic type
+     */
     private String getTitle(StatisticType type) {
         switch (type) {
             case TYPE_MOST_PLAYED:
@@ -83,12 +99,21 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
         return null;
     }
 
+    /**
+     * This method is called when a value in a most played / failed / succeeded chart is selected.
+     * It shows the challenge text in the text view of the mItemView view.
+     * @param e the entry that has been selected
+     */
     public void onValueSelected(Entry e) {
         long challengeId = mShownChallenges.get(e.getXIndex());
         TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
         text.setText(mChallengeDataSource.getById(challengeId).getQuestion());
     }
 
+    /**
+     * This method is called when the selected value in a most played / failed / succeeded chart is
+     * deselected. It applies a standard text to the mTextView view.
+     */
     public void onNothingSelected() {
         TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
         text.setText(mApplication.getString(R.string.statistics_no_challenge_selected));

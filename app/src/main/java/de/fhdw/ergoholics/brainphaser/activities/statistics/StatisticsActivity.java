@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 
 import javax.inject.Inject;
 
@@ -24,9 +22,11 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016.
+ *
+ * This is the activity showing statistics for the user in a specified category
  */
 public class StatisticsActivity extends BrainPhaserActivity {
-    private RecyclerView mRecyclerView;
+    //Attributes
     @Inject
     UserManager mUserManager;
     @Inject
@@ -34,6 +34,10 @@ public class StatisticsActivity extends BrainPhaserActivity {
     @Inject
     ChallengeDataSource mChallengeDataSource;
 
+    /**
+     * This method is called when the activity is created
+     * @param savedInstanceState ignored
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +51,13 @@ public class StatisticsActivity extends BrainPhaserActivity {
         ActionBar ab = getSupportActionBar();
 
         // Enable the Up button
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null)
+            ab.setDisplayHomeAsUpEnabled(true);
 
         User user = mUserManager.getCurrentUser();
         long categoryId = getIntent().getLongExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.statisticsRecycler);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.statisticsRecycler);
         mRecyclerView.setHasFixedSize(true);
 
         final boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
@@ -74,6 +79,10 @@ public class StatisticsActivity extends BrainPhaserActivity {
         mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource, (BrainPhaserApplication) getApplication(), user, categoryId, isLandscape));
     }
 
+    /**
+     * This method injects the activity to the BrainPhaseComponent object
+     * @param component the component the activity is injected to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);

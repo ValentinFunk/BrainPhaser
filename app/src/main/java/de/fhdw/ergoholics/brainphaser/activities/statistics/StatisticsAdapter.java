@@ -15,8 +15,11 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016.
+ *
+ * This adapter adds the StatisticViewHolder objects to the recycler view it is assigned to
  */
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder> {
+    //Attributes
     private UserLogicFactory mUserLogicFactory;
     private ChallengeDataSource mChallengeDataSource;
     private BrainPhaserApplication mApplication;
@@ -26,6 +29,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
 
     private int mViewNumber;
 
+    //Constructor
     public StatisticsAdapter(UserLogicFactory userLogicFactory, ChallengeDataSource challengeDataSource, BrainPhaserApplication application, User user, long categoryId, boolean isLandscape) {
         mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
@@ -39,13 +43,12 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
 
     /**
      * Called to create the ViewHolder at the given position.
-     *
      * @param parent parent to assign the newly created view to
      * @param viewType ignored
      */
     @Override
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = null;
+        View v;
 
         if (mIsLandscape) {
             if (mViewNumber == 0 || mViewNumber == 2)
@@ -67,7 +70,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
         return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId);
     }
 
-    // Bind data to the view
+    /**
+     * Called to bind the ViewHolder at the given position.
+     * @param holder the ViewHolder object to be bound
+     * @param position the position where a new ViewHolder is created
+     */
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         if (mIsLandscape) {
@@ -96,6 +103,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
         }
     }
 
+    /**
+     * Returns the count of ViewHolders in the adapter
+     * @return the fixed count of ViewHolders
+     */
     @Override
     public int getItemCount() {
         return 5;
