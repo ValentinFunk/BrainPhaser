@@ -6,7 +6,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,12 +17,21 @@ import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementExc
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
+ *
+ * Contains the logic for reading the root element of an .bpc file
  */
 public class BPCRead {
+    /**
+     * Reads the categories node from an input stream of a .bpc file and returns it
+     * @param is the input stream of the .bpc file
+     * @throws FileFormatException if file is no xml file
+     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @return the categories node of the .bpc file
+     */
     public static Node getCategoriesNode(InputStream is)
             throws FileFormatException, UnexpectedElementException {
         //Read document
-        Document document = null;
+        Document document;
 
         try {
             document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -38,11 +46,10 @@ public class BPCRead {
         //Get Nodes from document
         Node childRoot = document.getFirstChild();
 
-        /*
-         * By the definition of the file format it is expected that the root
-         * element is a <category> element. If this requirement is not met, an
-         * exception is caused. Otherwise the method returns the correct root
-         * element.
+        /**
+         * By the definition of the file format it is expected that the root  element is a
+         * <category> element. If this requirement is not met, an exception is caused. Otherwise
+         * the method returns the correct root element.
          */
         if (!childRoot.getNodeName().equals("categories"))
             throw new UnexpectedElementException("BPC");
