@@ -72,15 +72,16 @@
                     android:layout_weight="1"
                     android:id="@+id/challenge_fragment"/>
 
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnNextChallenge"
-                    android:src="@android:drawable/ic_media_next"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="16dp"
-                    />
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnNextChallenge"
+        android:src="@android:drawable/ic_media_next"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        />
 </android.support.design.widget.CoordinatorLayout>

@@ -1,6 +1,8 @@
 package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -311,9 +313,6 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         long stage = mCompletionDataSource.findByChallengeAndUser(mCurrentChallenge.getId(),mUserManager.getCurrentUser().getId()).getStage();
 
         switch((int)stage){
-            case 1:
-                stageColor=ContextCompat.getColor(this.getBaseContext(), R.color.colorStage1);
-                break;
             case 2:
                 stageColor=ContextCompat.getColor(this.getBaseContext(), R.color.colorStage2);
                 break;
@@ -334,8 +333,9 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                 stageColor=ContextCompat.getColor(this.getBaseContext(), R.color.colorStage1);
                 break;
         }
+        Drawable classBackground=mClassText.getBackground();
+        classBackground.setColorFilter(stageColor, PorterDuff.Mode.MULTIPLY);
         mClassText.setText("Klasse " + stage);
-        mClassText.setBackgroundColor(stageColor);
 
         String type;
         int typeColor;
@@ -357,7 +357,8 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                 type="";
                 break;
         }
+        Drawable typeBackground=mTypeText.getBackground();
+        typeBackground.setColorFilter(typeColor, PorterDuff.Mode.MULTIPLY);
         mTypeText.setText(type);
-        mTypeText.setBackgroundColor(typeColor);
     }
 }
