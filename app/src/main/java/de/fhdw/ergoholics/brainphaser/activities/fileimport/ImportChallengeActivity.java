@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.ChallengeImport;
+package de.fhdw.ergoholics.brainphaser.activities.fileimport;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,13 +26,23 @@ import java.io.InputStream;
  * This is the activity shown when a bpc file is opened with the app
  */
 public class ImportChallengeActivity extends Activity {
+    /**
+     * This method is called when the activity is created
+     * @param savedInstanceState ignored
+     */
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_import_challenges);
     }
 
-    public void onButtonYesClicked(View v) {
+    /**
+     * This method is called the yes button in the activity is clicked. It imports the bpc file
+     * opened with the app after showing a confirmation dialogue. In the end the main activity is
+     * called.
+     * @param view ignored
+     */
+    public void onButtonYesClicked(View view) {
         Intent intent = getIntent();
         InputStream is;
 
@@ -104,7 +114,11 @@ public class ImportChallengeActivity extends Activity {
         messageBox.show();
     }
 
-    public void onButtonNoClicked(View v) {
+    /**
+     * This method is called the no button in the activity is clicked. It calls the main activity.
+     * @param view ignored
+     */
+    public void onButtonNoClicked(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
         // Recreate the activity to respect new categories

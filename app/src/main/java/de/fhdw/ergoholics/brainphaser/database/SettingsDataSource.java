@@ -13,8 +13,10 @@ import javax.inject.Inject;
  * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
+    //Attributes
     private DaoSession mDaoSession;
 
+    //Constructor
     @Inject
     SettingsDataSource(DaoSession session) {
         mDaoSession = session;
@@ -33,7 +35,7 @@ public class SettingsDataSource {
      * Creates a new Settings object with default values in the database.
      * @return Setttings Object containing default values
      */
-    public Settings getNewDefaultSettings() {
+    public Settings createNewDefaultSettings() {
         Settings settings = new Settings();
 
         settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes

@@ -17,9 +17,11 @@ import javax.inject.Inject;
  * Data Source class for custom access to challenge table entries in the database
  */
 public class ChallengeDataSource {
+    //Attributes
     private DaoSession mDaoSession;
     private CompletionDataSource mCompletionDataSource;
 
+    //Constructor
     @Inject
     ChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
         mDaoSession = session;
@@ -27,8 +29,8 @@ public class ChallengeDataSource {
     }
 
     /**
-     * Returns the Settings object with the given id
-     * @return Settings object with the given id
+     * Returns a list with all challenges
+     * @return list with all challenges
      */
     public List<Challenge> getAll() {
         return mDaoSession.getChallengeDao().loadAll();
@@ -36,7 +38,7 @@ public class ChallengeDataSource {
 
     /**
      * Returns the Challenge object with the given id
-     * @param id challenge id in the database
+     * @param id challenge id in the challenge table
      * @return Challenge object with the given id
      */
     public Challenge getById(long id) {
@@ -45,7 +47,7 @@ public class ChallengeDataSource {
 
     /**
      * Adds a Challenge object to the database
-     * @param challenge challege to be created in the challenge table
+     * @param challenge challenge to be created in the challenge table
      * @return id of the created object
      */
     public long create(Challenge challenge) {
@@ -72,9 +74,12 @@ public class ChallengeDataSource {
         return notCompleted;
     }
 
+    /**
+     * Returns all challenges with the given category id
+     * @param categoryId the category id of the category whose challenges are returned
+     * @return list of challenges with the given category id
+     */
     public List<Challenge> getByCategoryId(long categoryId) {
-        QueryBuilder challenges;
-
         if (categoryId == CategoryDataSource.CATEGORY_ID_ALL)
             return getAll();
         else

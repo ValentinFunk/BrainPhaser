@@ -13,8 +13,10 @@ import javax.inject.Inject;
  * Data Source class for custom access to answer table entries in the database
  */
 public class AnswerDataSource {
+    //Attributes
     private DaoSession mDaoSession;
 
+    //Constructor
     @Inject
     AnswerDataSource(DaoSession session) {
         mDaoSession = session;
@@ -39,7 +41,7 @@ public class AnswerDataSource {
 
     /**
      * Adds an Answer object to the database
-     * @param answer answer to be created in the challenge table
+     * @param answer answer to be created in the answer table
      * @return id of the created object
      */
     public long create(Answer answer) {

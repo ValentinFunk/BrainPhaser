@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
-import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsMode;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
@@ -26,56 +24,52 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * RecyclerView.
  */
 public class StatisticViewHolder extends RecyclerView.ViewHolder {
+    //Attributes
     private View mItemView;
-    private UserLogicFactory mUserLogicFactory;
     private ChallengeDataSource mChallengeDataSource;
     private BrainPhaserApplication mApplication;
     private StatisticsLogic mStatisticsLogic;
     private List<Long> mShownChallenges;
 
-    public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory, ChallengeDataSource challengeDataSource,
+    //Constructor
+    public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory,
+                               ChallengeDataSource challengeDataSource,
                                BrainPhaserApplication application, User user, long categoryId) {
         super(itemView);
         mItemView = itemView;
-        mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mApplication = application;
 
-        mStatisticsLogic = mUserLogicFactory.createStatisticsLogic(user, categoryId);
+        mStatisticsLogic = userLogicFactory.createStatisticsLogic(user, categoryId);
     }
 
+    /**
+     * Applies a due chart to the chart in the mItemView view
+     */
     public void applyDueChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mStatisticsLogic.fillDueChart(chart);
+        mStatisticsLogic.fillChart(chart, StatisticType.TYPE_DUE);
     }
 
+    /**
+     * Applies a stage chart to the chart in the mItemView view
+     */
     public void applyStageChart() {
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mStatisticsLogic.fillStageChart(chart);
+        mStatisticsLogic.fillChart(chart, StatisticType.TYPE_STAGE);
     }
 
-    public void applyMostPlayedChart(StatisticsMode mode) {
+    /**
+     * Applies a most played / failed / succeeded chart to the chart in the mItemView view
+     * @param type the statistic type of the chart to be applied
+     */
+    public void applyMostPlayedChart(StatisticType type) {
         //Apply chart
         PieChart chart = (PieChart) mItemView.findViewById(R.id.statisticsChart);
-        mShownChallenges = mStatisticsLogic.fillMostPlayedChart(chart, mode);
+        mShownChallenges = mStatisticsLogic.fillChart(chart, type);
 
         //Add chart selection listener
-        chart.setOnChartValueSelectedListener(
-            new OnChartValueSelectedListener() {
-                @Override
-                public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-                    long challengeId = mShownChallenges.get(e.getXIndex());
-                    TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-                    text.setText(mChallengeDataSource.getById(challengeId).getQuestion());
-                }
-
-                @Override
-                public void onNothingSelected() {
-                    TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-                    text.setText(mApplication.getString(R.string.statistics_no_challenge_selected));
-                }
-            }
-        );
+        chart.setOnChartValueSelectedListener(new ChartValueSelectedListener(this));
 
         //Select first entry
         if (chart.getData() != null) {
@@ -84,22 +78,44 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
             text.setText(mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion());
         }
 
-        //Set texts
-        String titleText = "";
-
-        switch (mode) {
-            case MOST_PLAYED_MODE_ALL:
-                titleText = mApplication.getString(R.string.statistics_most_played);
-                break;
-            case MOST_PLAYED_MODE_FAILED:
-                titleText = mApplication.getString(R.string.statistics_most_failed);
-                break;
-            case MOST_PLAYED_MODE_SUCCEEDED:
-                titleText = mApplication.getString(R.string.statistics_most_succeeded);
-                break;
-        }
-
         TextView title = (TextView) mItemView.findViewById(R.id.titleView);
-        title.setText(titleText);
+        title.setText(getTitle(type));
+    }
+
+    /**
+     * Returns a title string depending on the given statistic type
+     * @param type the type of the statistic
+     * @return the title string for the statistic type
+     */
+    private String getTitle(StatisticType type) {
+        switch (type) {
+            case TYPE_MOST_PLAYED:
+                return mApplication.getString(R.string.statistics_most_played);
+            case TYPE_MOST_FAILED:
+                return mApplication.getString(R.string.statistics_most_failed);
+            case TYPE_MOST_SUCCEEDED:
+                return mApplication.getString(R.string.statistics_most_succeeded);
+        }
+        return null;
+    }
+
+    /**
+     * This method is called when a value in a most played / failed / succeeded chart is selected.
+     * It shows the challenge text in the text view of the mItemView view.
+     * @param e the entry that has been selected
+     */
+    public void onValueSelected(Entry e) {
+        long challengeId = mShownChallenges.get(e.getXIndex());
+        TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
+        text.setText(mChallengeDataSource.getById(challengeId).getQuestion());
+    }
+
+    /**
+     * This method is called when the selected value in a most played / failed / succeeded chart is
+     * deselected. It applies a standard text to the mTextView view.
+     */
+    public void onNothingSelected() {
+        TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
+        text.setText(mApplication.getString(R.string.statistics_no_challenge_selected));
     }
 }

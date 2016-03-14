@@ -19,10 +19,12 @@ import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
+import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
+import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
@@ -46,6 +48,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     CompletionDataSource mCompletionDataSource;
     @Inject
     SettingsDataSource mSettingsDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
 
     /**
      * inject components
@@ -146,7 +150,7 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
      */
     @Override
     public void onDeleteUser(User user, int position) {
-              //Delete Settings
+        //Delete Settings
         Settings settings = user.getSettings();
         mSettingsDataSource.delete(settings);
 
@@ -154,6 +158,11 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         List<Completion> completions = user.getCompletions();
         for (Completion completion : completions)
                 completion.delete();
+
+        //Delete Statistics
+        List<Statistics> statistics = user.getStatistics();
+        for (Statistics statistic : statistics)
+                statistic.delete();
 
         //Delete User
         user.delete();
