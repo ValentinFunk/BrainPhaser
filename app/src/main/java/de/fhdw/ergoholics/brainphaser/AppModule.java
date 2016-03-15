@@ -3,15 +3,14 @@ package de.fhdw.ergoholics.brainphaser;
 import android.app.Application;
 import android.content.Context;
 
-import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
-import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.logic.UserManager;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.ChartSettings;
 
 /**
  * Created by funkv on 06.03.2016.
@@ -56,5 +55,11 @@ public class AppModule {
         UserLogicFactory factory =  new UserLogicFactory();
         app.getComponent().inject(factory);
         return factory;
+    }
+
+    @Provides
+    @Singleton
+    ChartSettings providesChartSettings(BrainPhaserApplication app) {
+        return new ChartSettings(app);
     }
 }

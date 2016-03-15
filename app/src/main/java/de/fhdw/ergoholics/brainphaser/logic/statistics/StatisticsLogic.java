@@ -6,13 +6,10 @@ import com.github.mikephil.charting.data.PieData;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
-import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
-import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 05/03/2016.
@@ -26,11 +23,12 @@ public class StatisticsLogic {
     private ChartDataLogic mDataLogic;
 
     //Constructor
-    public StatisticsLogic(User user, long categoryId, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource, StatisticsDataSource statisticsDataSource, UserLogicFactory userLogicFactory) {
+    @Inject
+    public StatisticsLogic(BrainPhaserApplication application, ChartSettings chartSettings, ChartDataLogic chartDataLogic) {
         mApplication = application;
 
-        mSettings = new ChartSettings(application);
-        mDataLogic = new ChartDataLogic(user, categoryId, application, userLogicFactory, challengeDataSource, completionDataSource, statisticsDataSource);
+        mSettings = chartSettings;
+        mDataLogic = chartDataLogic;
     }
 
     /**

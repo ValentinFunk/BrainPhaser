@@ -20,7 +20,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 /**
  * Created by Daniel Hoogen on 12/03/2016.
  *
- * This class contains the logic for creating datasets to be visualiyed in statistics
+ * This class contains the logic for creating datasets to be visualized in statistics
  */
 public class ChartDataLogic {
     //Constants
@@ -38,14 +38,14 @@ public class ChartDataLogic {
     private ChartSettings mSettings;
 
     //Constructor
-    public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application, UserLogicFactory userLogicFactory, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource, StatisticsDataSource statisticsDataSource) {
+    public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource, StatisticsDataSource statisticsDataSource, UserLogicFactory userLogicFactory) {
         mUser = user;
         mCategoryId = categoryId;
         mApplication = application;
-        mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mCompletionDataSource = completionDataSource;
         mStatisticsDataSource = statisticsDataSource;
+        mUserLogicFactory = userLogicFactory;
 
         mSettings = new ChartSettings(application);
     }

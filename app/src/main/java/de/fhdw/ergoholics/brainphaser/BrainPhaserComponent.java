@@ -15,8 +15,8 @@ import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActi
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
 import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
-import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCWrite;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCWrite;
 
 /**
  * Created by funkv on 06.03.2016.

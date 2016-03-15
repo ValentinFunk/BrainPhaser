@@ -1,19 +1,17 @@
-package de.fhdw.ergoholics.brainphaser.fileimport;
+package de.fhdw.ergoholics.brainphaser.logic.fileimport;
 
 import org.w3c.dom.Node;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCObjects;
-import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCRead;
-import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCWrite;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCObjects;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCRead;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCWrite;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;

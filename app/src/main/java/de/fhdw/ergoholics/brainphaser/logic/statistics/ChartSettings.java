@@ -9,6 +9,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 
@@ -31,6 +33,7 @@ public class ChartSettings {
     private BrainPhaserApplication mApplication;
 
     //Constructor
+    @Inject
     public ChartSettings(BrainPhaserApplication application) {
         mApplication = application;
 

@@ -8,17 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.fileimport.FileImport;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.FileImport;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
 
 /**
  * Created by Daniel Hoogen on 16/02/2016.

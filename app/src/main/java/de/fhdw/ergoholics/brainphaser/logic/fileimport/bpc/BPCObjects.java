@@ -1,11 +1,11 @@
-package de.fhdw.ergoholics.brainphaser.fileimport.bpc;
+package de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc;
 
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.util.List;
 
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
