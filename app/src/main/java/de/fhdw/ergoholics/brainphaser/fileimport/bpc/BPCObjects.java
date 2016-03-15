@@ -5,6 +5,9 @@ import org.w3c.dom.Node;
 
 import java.util.List;
 
+import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.ElementAmountException;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.InvalidAttributeException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
@@ -24,13 +27,15 @@ public class BPCObjects {
      * @param categoryList the list created categories are added to
      * @param challengeList the list created challenges are added to
      * @param answerList the list created answers are added to
-     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @throws UnexpectedElementException if an unexpected element was found in the file
+     * @throws ElementAmountException if an element occurs more or less often than expected
+     * @throws InvalidAttributeException if an attribute has an invalid value
      * @return the next free challengeId
      */
     public static long readCategory(Node categoryNode, long categoryId,
                                      long challengeId, List<Category> categoryList,
                                      List<Challenge> challengeList, List<Answer> answerList)
-            throws UnexpectedElementException {
+            throws UnexpectedElementException, ElementAmountException, InvalidAttributeException {
         //Check if the node is the correct element type
         if (!categoryNode.getNodeName().equals("category"))
         {
@@ -53,15 +58,22 @@ public class BPCObjects {
 
         Node childCategory = categoryNode.getFirstChild();
 
+        int challengeCount = 0;
         while (childCategory != null)
         {
             if (childCategory.getNodeType()==Node.ELEMENT_NODE) {
                 readChallenge(childCategory, categoryId, challengeId,
                         challengeList, answerList);
                 challengeId++;
+                challengeCount++;
             }
 
             childCategory = childCategory.getNextSibling();
+        }
+
+        //Throw an exception if no challenge was found
+        if (challengeCount == 0) {
+            throw new ElementAmountException("<challenge>", ">0", "0");
         }
 
         //Return next free challengeId
@@ -75,11 +87,13 @@ public class BPCObjects {
      * @param challengeId the id to be assigned to the read challenge
      * @param challengeList the list created challenges are added to
      * @param answerList the list created answers are added to
-     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @throws UnexpectedElementException if an unexpected element was found in the file
+     * @throws ElementAmountException if an element occurs more or less often than expected
+     * @throws InvalidAttributeException if an attribute has an invalid value
      */
     private static void readChallenge(Node challengeNode, long categoryId, long challengeId,
                                       List<Challenge> challengeList, List<Answer> answerList)
-            throws UnexpectedElementException {
+            throws UnexpectedElementException, ElementAmountException, InvalidAttributeException {
         //Check if the node is the correct element type
         if (!challengeNode.getNodeName().equals("challenge")) {
             throw new UnexpectedElementException(challengeNode.getNodeName());
@@ -94,18 +108,33 @@ public class BPCObjects {
         int type = Integer.parseInt(typeNode.getNodeValue());
         String question = questionNode.getNodeValue();
 
+        //Validate challenge type
+        if (type != ChallengeType.MULTIPLE_CHOICE && type != ChallengeType.SELF_TEST && type != ChallengeType.TEXT) {
+            throw new InvalidAttributeException("type", "" + type);
+        }
+
         //Add challenge to the list
         challengeList.add(new Challenge(challengeId, type, question, categoryId));
 
         Node childChallenge = challengeNode.getFirstChild();
 
+        int answerCount = 0;
         while (childChallenge != null) {
             if (childChallenge.getNodeType()==Node.ELEMENT_NODE) {
                 readAnswer(childChallenge, challengeId, answerList);
+                answerCount++;
             }
 
             childChallenge = childChallenge.getNextSibling();
         }
+
+        //Throw an exception if no answer was found
+        if (answerCount == 0)
+            throw new ElementAmountException("<answer>", ">0", "0");
+
+        //Throw an exception if the challenge type is MULTIPLE_CHOICE and there are not exactly 4 answers
+        else if (type == ChallengeType.MULTIPLE_CHOICE && answerCount != 4)
+            throw new ElementAmountException("<answer>", "4", "" + answerCount);
     }
 
     /**
@@ -113,7 +142,7 @@ public class BPCObjects {
      * @param answerNode the node of the answer to be read
      * @param challengeId the challenge id to be assigned to the read answer
      * @param answerList the list created answers are added to
-     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @throws UnexpectedElementException if an unexpected element was found in the file
      */
     private static void readAnswer(Node answerNode, long challengeId,
                                    List<Answer> answerList) throws UnexpectedElementException {
