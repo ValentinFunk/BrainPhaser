@@ -61,4 +61,6 @@
     <string name="statistics_most_failed">Am häufigsten falsch</string>
     <string name="statistics_most_succeeded">Am häufigsten richtig</string>
     <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
+
+    <string name="about_teamMembers">Valentin Funk \nChristian Kost \nLars Kahra \nDaniel Hoogen \nThomas Stückel</string>
 </resources>
