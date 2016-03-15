@@ -12,7 +12,9 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.fileimport.FileImport;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.ElementAmountException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.InvalidAttributeException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
 
 import java.io.File;
@@ -90,6 +92,12 @@ public class ImportChallengeActivity extends Activity {
         } catch (UnexpectedElementException e) {
             Log.d("Unexpected Element", e.toString());
             message = "Fehler: Die Datei enthält ungültige Elemente!";
+        } catch (InvalidAttributeException e) {
+            message = "Fehler: Der Attributwert " + e.getValue() +
+                    " ist kein gültiger Wert für das Attribut " + e.getAttribute();
+        } catch (ElementAmountException e) {
+            message = "Das Attribut " + e.getElement() + " wird " + e.getExpectedAmount() +
+                    " mal erwartet, aber wurde " + e.getAmount() + " mal gefunden.";
         }
 
         //Show the message in a dialogue

@@ -12,7 +12,9 @@ import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCObjects;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCRead;
 import de.fhdw.ergoholics.brainphaser.fileimport.bpc.BPCWrite;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.ElementAmountException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.InvalidAttributeException;
 import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
@@ -30,9 +32,11 @@ public class FileImport {
      * @param application the BrainPhaserApplication instance
      * @throws FileFormatException if file is no xml file
      * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @throws ElementAmountException if an element occurs more or less often than expected
+     * @throws InvalidAttributeException if an attribute has an invalid value
      */
     public static void importBPC(InputStream is, BrainPhaserApplication application)
-            throws FileFormatException, UnexpectedElementException {
+            throws FileFormatException, UnexpectedElementException, ElementAmountException, InvalidAttributeException {
 
         //Get root element
         Node categoriesNode = BPCRead.getCategoriesNode(is);
@@ -57,6 +61,9 @@ public class FileImport {
             }
 
             childCategories = childCategories.getNextSibling();
+        }
+        if (i==0) {
+            throw new ElementAmountException("<category>", ">0", "0");
         }
 
         //No syntax errors were found, so the read information is being written
