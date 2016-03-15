@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.activities.About;
 
+import android.support.v7.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,12 @@ public class AboutActivity extends BrainPhaserActivity {
 
         // Set as Actionbar
         setSupportActionBar(toolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     String getStringFromRawFile() throws IOException {
