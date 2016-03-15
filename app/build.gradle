@@ -41,7 +41,6 @@ android {
 repositories {
     mavenCentral()
     jcenter()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots"}
     maven { url "https://jitpack.io" }
 }
 
@@ -58,8 +57,8 @@ dependencies {
     compile 'com.nononsenseapps:filepicker:2.5.2'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
 
-    compile 'com.google.dagger:dagger:2.1-SNAPSHOT'
-    apt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
+    compile 'com.google.dagger:dagger:2.1'
+    apt 'com.google.dagger:dagger-compiler:2.1'
 
     testCompile 'junit:junit:4.12'
 
@@ -86,6 +85,6 @@ dependencies {
         exclude module: 'recyclerview-v7'
     }
 
-    androidTestApt 'com.google.dagger:dagger-compiler:2.1-SNAPSHOT'
+    androidTestApt 'com.google.dagger:dagger-compiler:2.1'
 }
 
