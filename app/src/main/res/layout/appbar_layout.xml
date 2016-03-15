@@ -12,5 +12,5 @@ android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    android:fitsSystemWindows="true"/>
+    />
 </android.support.design.widget.AppBarLayout>

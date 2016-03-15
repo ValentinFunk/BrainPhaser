@@ -1,93 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp">
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
-       <LinearLayout
-           android:layout_height="wrap_content"
-           android:layout_width="0dp"
-           android:layout_weight="1"
-           android:orientation="vertical">
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceLarge"
-               android:text="Large Text"
-               android:id="@+id/stageTitle"
-                />
-
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:textAppearance="?android:attr/textAppearanceMedium"
-               android:text="Large Text"
-               android:layout_marginTop="8dp"
-               android:id="@+id/stageTime"
-               />
-       </LinearLayout>
-
-       <RelativeLayout
-           android:layout_width="wrap_content"
-           android:layout_height="match_parent">
-           <ImageView
-               android:layout_width="24dp"
-               android:layout_height="24dp"
-               android:layout_marginRight="12dp"
-               android:layout_marginLeft="12dp"
-               android:tint="@android:color/darker_gray"
-               android:src="@drawable/ic_expand_more_white_24dp"
-               android:layout_centerVertical="true" />
-       </RelativeLayout>
-   </LinearLayout>
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        >
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/stageTitle"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Large Text"
+                android:layout_marginTop="8dp"
+                android:id="@+id/stageTime"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginLeft="12dp"
+                android:tint="@android:color/darker_gray"
+                android:src="@drawable/ic_expand_more_white_24dp"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider
-                android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/sliderContainer">
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundEmptyState"
+            >
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                xmlns:custom="http://schemas.android.com/apk/lib/de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider"
-                custom:dateComponent="months"
-                android:id="@+id/monthsSlider"
-                />
-            <de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                xmlns:custom="http://schemas.android.com/apk/lib/de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider"
-                custom:dateComponent="weeks"
-                android:id="@+id/weeksSlider"
-                />
-            <de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                xmlns:custom="http://schemas.android.com/apk/lib/de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider"
-                custom:dateComponent="days"
-                android:id="@+id/daysSlider"
-                />
-            <de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                xmlns:custom="http://schemas.android.com/apk/lib/de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider"
-                custom:dateComponent="hours"
-                android:id="@+id/hoursSlider"
-                />
-            <de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                xmlns:custom="http://schemas.android.com/apk/lib/de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider"
-                custom:dateComponent="minutes"
-                android:id="@+id/minutesSlider"
+                android:layout_margin="8dp"
+                android:textAppearance="?android:textAppearance"
+                android:textColor="@color/colorWrong"
+                android:text="@string/error_less_than_previous"
                 />
         </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/saveButton"
+            android:layout_gravity="left"
+            android:onClick="onButtonNoClicked"
+            style="?attr/borderlessButtonStyle"/>
     </LinearLayout>
 </LinearLayout>
