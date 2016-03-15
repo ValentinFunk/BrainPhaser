@@ -45,6 +45,10 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
         //Adapter which sets all users into the list
         mSettingsAdapter = new SettingsAdapter(mUserManager.getCurrentUser().getSettings(), this);
         settingsList.setAdapter(mSettingsAdapter);
+
+        // Prevent scrollin gthere
+        settingsList.setFocusable(false);
+        findViewById(R.id.heading).requestFocus();
     }
 
     @Override

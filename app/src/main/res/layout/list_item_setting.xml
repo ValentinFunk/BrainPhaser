@@ -52,7 +52,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -84,7 +86,6 @@
             android:text="@string/save"
             android:id="@+id/saveButton"
             android:layout_gravity="left"
-            android:onClick="onButtonNoClicked"
             style="?attr/borderlessButtonStyle"/>
     </LinearLayout>
 </LinearLayout>
