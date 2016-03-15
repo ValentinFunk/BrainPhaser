@@ -10,6 +10,7 @@ import java.util.List;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
@@ -89,7 +90,7 @@ public class DueChallengeLogic {
             List<Completion> completedInStage = mCompletionDataSource.findByUserAndStage(mUser, stage);
 
             //Get the timebox for this stage
-            timebox = getTimeboxByStage(mUser.getSettings(), stage);
+            timebox = SettingsDataSource.getTimeboxByStage(mUser.getSettings(), stage);
 
             //Check for all challenges if they are due and in the correct category
             for (Completion completed : completedInStage) {
@@ -120,7 +121,7 @@ public class DueChallengeLogic {
 
         //Calculate the lastCompleted time which needs to be set for making the challenge due
         Date dateChallengesDue = new Date(now.getTime() -
-                getTimeboxByStage(mUser.getSettings(), 1).getTime());
+                SettingsDataSource.getTimeboxByStage(mUser.getSettings(), 1).getTime());
 
         /*
          * If categoryId is CategoryDataSource.CATEGORY_ID_ALL or matches the challenge's id, the
@@ -133,32 +134,6 @@ public class DueChallengeLogic {
                 mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }
-        }
-    }
-
-    /**
-     * Returns the timebox of the given stage in the given Settings object
-     * @param settings Settings object whose timebox will be returned
-     * @param stage number of the stage whose timebox will be returned
-     * @return the Date object containing the timebox of the given settings object
-     */
-    @NonNull
-    private Date getTimeboxByStage(Settings settings, int stage) {
-        switch (stage) {
-            case 1:
-                return settings.getTimeBoxStage1();
-            case 2:
-                return settings.getTimeBoxStage2();
-            case 3:
-                return settings.getTimeBoxStage3();
-            case 4:
-                return settings.getTimeBoxStage4();
-            case 5:
-                return settings.getTimeBoxStage5();
-            case 6:
-                return settings.getTimeBoxStage6();
-            default:
-                throw new IllegalArgumentException("Attempting to get invalid timebox " + stage);
         }
     }
 }

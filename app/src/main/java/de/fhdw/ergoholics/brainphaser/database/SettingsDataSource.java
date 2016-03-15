@@ -1,5 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
@@ -47,6 +49,32 @@ public class SettingsDataSource {
 
         mDaoSession.getSettingsDao().insert(settings);
         return settings;
+    }
+
+    /**
+     * Returns the timebox of the given stage in the given Settings object
+     * @param settings Settings object whose timebox will be returned
+     * @param stage number of the stage whose timebox will be returned
+     * @return the Date object containing the timebox of the given settings object
+     */
+    @NonNull
+    public static Date getTimeboxByStage(Settings settings, int stage) {
+        switch (stage) {
+            case 1:
+                return settings.getTimeBoxStage1();
+            case 2:
+                return settings.getTimeBoxStage2();
+            case 3:
+                return settings.getTimeBoxStage3();
+            case 4:
+                return settings.getTimeBoxStage4();
+            case 5:
+                return settings.getTimeBoxStage5();
+            case 6:
+                return settings.getTimeBoxStage6();
+            default:
+                throw new IllegalArgumentException("Attempting to get invalid timebox " + stage);
+        }
     }
 
     /**
