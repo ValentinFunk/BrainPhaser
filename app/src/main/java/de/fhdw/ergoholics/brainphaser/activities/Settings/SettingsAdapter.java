@@ -1,15 +1,15 @@
 package de.fhdw.ergoholics.brainphaser.activities.Settings;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import android.widget.LinearLayout;
 
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.DateComponent;
+import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 
@@ -18,7 +18,7 @@ import de.fhdw.ergoholics.brainphaser.model.Settings;
  *
  * Adapter for creating a settings panel for each stage
  */
-public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder> {
+public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
     /**
      * Needs to be implemented to react to changed settings
      */
@@ -31,27 +31,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         void onStageChanged(int stage, int seconds);
     }
 
-    class SettingsViewHolder extends RecyclerView.ViewHolder {
-        private SettingsAdapter mAdapter;
-        private TextView mTitle;
-        private TextView mTime;
-
-        public SettingsViewHolder(View itemView, SettingsAdapter adapter) {
-            super(itemView);
-            mAdapter = adapter;
-
-            mTitle = (TextView)itemView.findViewById(R.id.stageTitle);
-            mTime = (TextView) itemView.findViewById(R.id.stageTime);
-        }
-
-        public void bindStage(Date selectedDate, int stage) {
-            mTitle.setText(itemView.getResources().getString(R.string.setting_stage, stage));
-            mTime.setText(SimpleDateFormat.getTimeInstance().format(selectedDate));
-        }
-    }
-
     private OnSettingsChangedListener mListener;
     private Settings mSettings;
+
     public SettingsAdapter(Settings settings, OnSettingsChangedListener listener) {
         mListener = listener;
         mSettings = settings;
@@ -62,7 +44,18 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
         //Load the list template
         View customView = myInflater.inflate(R.layout.list_item_setting, parent, false);
-        return new SettingsViewHolder(customView, this);
+
+        LinearLayout layout = (LinearLayout)customView.findViewById(R.id.sliderContainer);
+
+        SparseArray<TimePeriodSlider> sliders = new SparseArray<>();
+        for (int dateType : SettingsViewHolder.COMPONENT_SLIDERS_TO_CREATE) {
+            TimePeriodSlider periodSlider = new TimePeriodSlider(layout.getContext());
+            periodSlider.setDateType(dateType);
+            layout.addView(periodSlider);
+
+            sliders.put(dateType, periodSlider);
+        }
+        return new SettingsViewHolder(customView, sliders, this);
     }
 
     @Override
@@ -73,6 +66,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
 
     @Override
     public int getItemCount() {
-        return 6;
+        return SettingsDataSource.STAGE_COUNT;
     }
 }

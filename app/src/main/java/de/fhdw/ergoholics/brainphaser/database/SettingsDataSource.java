@@ -7,6 +7,8 @@ import java.util.Date;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
 
+import org.joda.time.Period;
+
 import javax.inject.Inject;
 
 /**
@@ -15,6 +17,9 @@ import javax.inject.Inject;
  * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
+    // Amount of classes/stages
+    public static final int STAGE_COUNT = 6;
+
     //Attributes
     private DaoSession mDaoSession;
 
@@ -40,12 +45,12 @@ public class SettingsDataSource {
     public Settings createNewDefaultSettings() {
         Settings settings = new Settings();
 
-        settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes
-        settings.setTimeBoxStage2(new Date(1000 * 60 * 60));        //1 hour
-        settings.setTimeBoxStage3(new Date(1000 * 60 * 60 * 24));     //1 day
-        settings.setTimeBoxStage4(new Date(1000 * 60 * 60 * 24 * 7));   //7 days
-        settings.setTimeBoxStage5(new Date(1000l * 60 * 60 * 24 * 30));  //30 days
-        settings.setTimeBoxStage6(new Date(1000l * 60 * 60 * 24 * 180)); //180 days
+        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
+        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
 
         mDaoSession.getSettingsDao().insert(settings);
         return settings;

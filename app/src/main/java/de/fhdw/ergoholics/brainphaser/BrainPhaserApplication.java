@@ -4,6 +4,8 @@ import android.app.Application;
 
 import de.fhdw.ergoholics.brainphaser.database.DatabaseModule;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import javax.inject.Singleton;
 import dagger.Component;
 
@@ -49,6 +51,7 @@ public class BrainPhaserApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JodaTimeAndroid.init(this);
         mComponent = createComponent();
     }
 }

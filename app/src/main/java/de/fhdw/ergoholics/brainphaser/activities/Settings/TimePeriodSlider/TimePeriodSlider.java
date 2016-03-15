@@ -2,13 +2,16 @@ package de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
+import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
@@ -17,8 +20,12 @@ import de.fhdw.ergoholics.brainphaser.R;
  * GUI component to allow selection of a certain timespan component (e.g. months, days, weeks)
  */
 public class TimePeriodSlider extends LinearLayout implements DiscreteSeekBar.OnProgressChangeListener {
-
     private TextView mCurrentValue;
+    private DiscreteSeekBar mSeekBar;
+    private int mDateType;
+    private OnChangeListener mOnChangeListener;
+    private DateComponent.ComponentInfo mComponentInfo;
+    private TextView mTypeText;
 
     /**
      * Interface that should be implemented to react to user changes.
@@ -26,39 +33,46 @@ public class TimePeriodSlider extends LinearLayout implements DiscreteSeekBar.On
     public interface OnChangeListener {
         /**
          * Called when the user changes the value through the slider.
-         * @param timeInSecs The value selected represented in seconds (e.g. 1 Minute = 1000 * 60)
+         * @param slider The calling slider
+         * @param value the new value
          */
-        void onSelectionChanged(long timeInSecs);
+        void onSelectionChanged(TimePeriodSlider slider, int value);
     }
-    private DiscreteSeekBar mSeekBar;
 
     public TimePeriodSlider(Context context) {
         super(context);
+        init();
     }
-
-    private int mDateType;
-    private OnChangeListener mOnChangeListener;
-    private DateComponent.ComponentInfo mComponentInfo;
 
     public TimePeriodSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+        readAttributes(attrs);
+    }
 
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.control_time_period_slider, this);
+    public TimePeriodSlider(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+        readAttributes(attrs);
+    }
 
-        TypedArray attrArray = context.obtainStyledAttributes(attrs, new int[]{R.attr.dateComponent});
-        mDateType = attrArray.getInt(0, DateComponent.MONTHS);
-        mComponentInfo = DateComponent.getInfo(mDateType);
-        attrArray.recycle();
+    private void readAttributes(AttributeSet attrs) {
+        // Read the correct DateComponent out of the attribute passed via XML
+        TypedArray attrArray = getContext().obtainStyledAttributes(attrs, R.styleable.TimePeriodSlider, 0, 0);
+        try {
+            mDateType = attrArray.getInteger(R.styleable.TimePeriodSlider_dateComponent, DateComponent.WEEKS);
+            setDateType(mDateType);
+        } finally {
+            attrArray.recycle();
+        }
+    }
 
-        TextView typeText = (TextView) findViewById(R.id.typeText);
-        typeText.setText(context.getString(DateComponent.getInfo(mDateType).getResourceId()));
-
-        mCurrentValue = (TextView) findViewById(R.id.currentValue);
+    public void init() {
+        LayoutInflater.from(getContext()).inflate(R.layout.control_time_period_slider, this, true);
+        this.setOrientation(VERTICAL);
 
         mSeekBar = (DiscreteSeekBar) findViewById(R.id.seekBar);
-        mSeekBar.setMin(0);
-        mSeekBar.setMax(mComponentInfo.getRangeMax());
+        mTypeText = (TextView) findViewById(R.id.typeText);
         mSeekBar.setIndicatorPopupEnabled(true);
         mSeekBar.setOnProgressChangeListener(this);
     }
@@ -74,18 +88,43 @@ public class TimePeriodSlider extends LinearLayout implements DiscreteSeekBar.On
     @Override
     public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
         if (fromUser && mOnChangeListener != null) {
-            mOnChangeListener.onSelectionChanged(value * mComponentInfo.getSecondFactor());
+            mOnChangeListener.onSelectionChanged(this, value);
         }
-        mCurrentValue.setText(Integer.toString(value));
+
+        mCurrentValue.setText(String.format("%d", value));
     }
 
     @Override
     public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
-
     }
 
     @Override
     public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
+    }
 
+    public int getDateType() {
+        return mDateType;
+    }
+
+    /**
+     * Set the Date type/unit to represent.
+     *
+     * @param dateType one of DateComponent.* (e.g. DateComponent.DAYS)
+     */
+    public void setDateType(int dateType) {
+        mDateType = dateType;
+        mComponentInfo = DateComponent.getInfo(mDateType);
+        if (mComponentInfo == null) {
+            throw new RuntimeException("Invalid date type");
+        }
+
+        // Update view:
+
+        // Set the correct text
+        mTypeText.setText(getContext().getString(mComponentInfo.getResourceId()));
+        mCurrentValue = (TextView) findViewById(R.id.currentValue);
+        // Set up the DiscreteSeekBar
+        mSeekBar.setMin(0);
+        mSeekBar.setMax(mComponentInfo.getRangeMax());
     }
 }

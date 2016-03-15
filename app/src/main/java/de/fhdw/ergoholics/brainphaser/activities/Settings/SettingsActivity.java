@@ -34,12 +34,11 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
 
         //loading of the components
         RecyclerView settingsList = (RecyclerView) findViewById(R.id.settingsList);
-        settingsList.setHasFixedSize(true);
         settingsList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setAutoMeasureEnabled(true);
         settingsList.setLayoutManager(layoutManager);
 
         //Create the View
