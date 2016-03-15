@@ -7,4 +7,16 @@
     <color name="colorWrong">#FF0000</color>
     <color name="colorStandard">#FFFFFF</color>
     <color name="backgroundEmptyState">#CECECE</color>
+    <color name="colorNoDataText">#000000</color>
+
+    <color name="colorStage1">#303F9F</color>
+    <color name="colorStage2">#727272</color>
+    <color name="colorStage3">#FF4081</color>
+    <color name="colorStage4">#EEEEEE</color>
+    <color name="colorStage5">#C5CAE9</color>
+    <color name="colorStage6">#B6B6B6</color>
+
+    <color name="colorText">#E0A7A5</color>
+    <color name="colorMultipleChoice">#A7E0A5</color>
+    <color name="colorSelfCheck">#A7A5E0</color>
 </resources>

@@ -26,7 +26,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 import javax.inject.Inject;
 
 /**
- * Created by Christian on 16.02.2016. Adapter and ViewHolder for the UserLists
+ *  Adapter to load all users into a list
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     /**
@@ -35,7 +35,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public interface ResultListener {
         void onUserSelected(User user);
         void onEditUser(User user);
-        void onDeleteUser(User user);
+        void onDeleteUser(User user, int position);
     }
 
     /**
@@ -43,9 +43,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
      */
     public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener, View.OnClickListener,
             MenuItem.OnMenuItemClickListener{
-        //Constants
-        private static final String CONTEXT_MENU_BUTTON_EDIT = "Bearbeiten";
-        private static final String CONTEXT_MENU_BUTTON_DELETE = "Löschen";
 
         //Attributes
         private TextView mUserText;
@@ -66,19 +63,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v,
                                         ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem editItem = menu.add(CONTEXT_MENU_BUTTON_EDIT);
-            MenuItem deleteItem = menu.add(CONTEXT_MENU_BUTTON_DELETE);
+            MenuItem editItem = menu.add(mApplication.getString(R.string.user_context_menu_button_edit));
             editItem.setOnMenuItemClickListener(this);
-            deleteItem.setOnMenuItemClickListener(this);
+
+            if (!mUsers.get(getPosition()).getId().equals(mUserManager.getCurrentUser().getId())) {
+                MenuItem deleteItem = menu.add(mApplication.getString(R.string.user_context_menu_button_delete));
+                deleteItem.setOnMenuItemClickListener(this);
+            }
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            if (item.getTitle().equals(CONTEXT_MENU_BUTTON_EDIT)) {
+            if (item.getTitle().equals(mApplication.getString(R.string.user_context_menu_button_edit))) {
                 mResultListener.onEditUser(mUsers.get(getPosition()));
             }
-            else if (item.getTitle().equals(CONTEXT_MENU_BUTTON_DELETE)) {
-                mResultListener.onDeleteUser(mUsers.get(getPosition()));
+            else if (item.getTitle().equals(mApplication.getString(R.string.user_context_menu_button_delete))) {
+                mResultListener.onDeleteUser(mUsers.get(getPosition()), getPosition());
             }
 
             return true;
@@ -90,8 +90,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
         /**
-         * Bind the item to the View Holder and add an OnClickListener
-         *
+         * Bind the user to the View Holder and add an OnClickListener
          * @param user User to bind to the view
          */
         public void bindUser(final User user) {
@@ -123,8 +122,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
 
+    //Attributes
     private ResultListener mResultListener;
     private List<User> mUsers;
+    private BrainPhaserApplication mApplication;
 
     @Inject UserManager mUserManager;
 
@@ -132,14 +133,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return mUserManager;
     }
 
+    /**
+     * Constructor
+     * @param allUsers list of all users
+     * @param resultListener Listener of the activity
+     * @param application App
+     */
     public UserAdapter(List<User> allUsers, ResultListener resultListener, BrainPhaserApplication application) {
         mUsers = allUsers;
         mResultListener = resultListener;
+        mApplication = application;
 
         application.getComponent().inject(this);
     }
 
-    // Creates the list item's view
+    /**
+     * Creates the list item's view
+     */
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
@@ -149,16 +159,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     /**
-     * Pass selection on to the listener
-     *
-     * @param user selected user
+     * Binds list element of given position to the view
+     * @param holder UserViewHolder
+     * @param position Positon
      */
-    public void onUserSelected(User user) {
-        mResultListener.onUserSelected(user);
-    }
-
-
-    // Binds list element of given position to the view
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
         //bind the user
@@ -166,9 +170,31 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.bindUser(user);
     }
 
-    // Amount of items = amount of users
+    /**
+     * Get the size of the view
+     * @return size of the user list
+     */
     @Override
     public int getItemCount() {
         return mUsers.size();
     }
+
+    /**
+     * Pass selection on to the ResultListener
+     * @param user selected user
+     */
+    public void onUserSelected(User user) {
+        mResultListener.onUserSelected(user);
+    }
+
+    /**
+     * Removes a user from the list
+     * @param position user's position
+     */
+    public void removeAt(int position) {
+        mUsers.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, mUsers.size());
+    }
+
 }

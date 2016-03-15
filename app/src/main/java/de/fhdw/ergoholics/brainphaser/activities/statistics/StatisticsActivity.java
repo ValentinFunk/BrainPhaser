@@ -2,13 +2,10 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.support.v7.widget.Toolbar;
 
 import javax.inject.Inject;
 
@@ -18,54 +15,76 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
+import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
- * Created by funkv on 17.02.2016.
+ * Created by Daniel Hoogen on 09/03/2016.
+ *
+ * This is the activity showing statistics for the user in a specified category
  */
 public class StatisticsActivity extends BrainPhaserActivity {
-    private RecyclerView mRecyclerView;
-    private User mUser;
-    private long mCategoryId;
+    //Attributes
     @Inject
     UserManager mUserManager;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
 
+    /**
+     * This method is called when the activity is created
+     * @param savedInstanceState ignored
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        injectComponent(((BrainPhaserApplication) getApplication()).getComponent());
 
-        mUser = mUserManager.getCurrentUser();
-        mCategoryId = getIntent().getLongExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
+        //Add toolbar
+        Toolbar myChildToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.statisticsRecycler);
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
 
-        // get 300dpi in px
-        float cardWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 300.f, getResources().getDisplayMetrics());
-        boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        // Enable the Up button
+        if (ab != null)
+            ab.setDisplayHomeAsUpEnabled(true);
 
-        int spans = (int)Math.floor(getResources().getDisplayMetrics().widthPixels / cardWidth);
-        int orientation = isLandscape ? StaggeredGridLayoutManager.VERTICAL : StaggeredGridLayoutManager.VERTICAL;
+        User user = mUserManager.getCurrentUser();
+        long categoryId = getIntent().getLongExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.statisticsRecycler);
+        mRecyclerView.setHasFixedSize(true);
+
+        final boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        GridLayoutManager layoutManager = new GridLayoutManager(this, isLandscape ? 3 : 2, GridLayoutManager.VERTICAL, false);
+        layoutManager.setSpanSizeLookup(
+            new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (isLandscape) {
+                        return (position == 0 || position == 2) ? 1 : 2;
+                    }
+                    else
+                        return position < 2 ? 1 : 2;
+                }
+        });
+
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView.setAdapter(new StatisticsAdapter(mUser, mCategoryId));
+        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource, (BrainPhaserApplication) getApplication(), user, categoryId, isLandscape));
     }
 
+    /**
+     * This method injects the activity to the BrainPhaseComponent object
+     * @param component the component the activity is injected to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
-
-    }
-
-    // Sort categories when activity is started, to make sure the set is sorted when returning
-    // from challenge solving
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        component.inject(this);
     }
 }

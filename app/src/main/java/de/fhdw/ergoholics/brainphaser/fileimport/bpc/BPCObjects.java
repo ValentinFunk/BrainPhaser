@@ -12,8 +12,21 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
+ *
+ * Contains the logic for creating Category, Challenge and Answer objects from a categories node
  */
 public class BPCObjects {
+    /**
+     * Creates a category object from a category node
+     * @param categoryNode the node of the category to be read
+     * @param categoryId the id to be assigned to the read category
+     * @param challengeId the first free challengeId
+     * @param categoryList the list created categories are added to
+     * @param challengeList the list created challenges are added to
+     * @param answerList the list created answers are added to
+     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     * @return the next free challengeId
+     */
     public static long readCategory(Node categoryNode, long categoryId,
                                      long challengeId, List<Category> categoryList,
                                      List<Challenge> challengeList, List<Answer> answerList)
@@ -55,6 +68,15 @@ public class BPCObjects {
         return challengeId;
     }
 
+    /**
+     * Creates a challenge object from a challenge node
+     * @param challengeNode the node of the challenge to be read
+     * @param categoryId the id of the category the read challenge belongs to
+     * @param challengeId the id to be assigned to the read challenge
+     * @param challengeList the list created challenges are added to
+     * @param answerList the list created answers are added to
+     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     */
     private static void readChallenge(Node challengeNode, long categoryId, long challengeId,
                                       List<Challenge> challengeList, List<Answer> answerList)
             throws UnexpectedElementException {
@@ -86,6 +108,13 @@ public class BPCObjects {
         }
     }
 
+    /**
+     * Creates an answer object from an answer node
+     * @param answerNode the node of the answer to be read
+     * @param challengeId the challenge id to be assigned to the read answer
+     * @param answerList the list created answers are added to
+     * @throws UnexpectedElementException if an unexpected element was fond in the file
+     */
     private static void readAnswer(Node answerNode, long challengeId,
                                    List<Answer> answerList) throws UnexpectedElementException {
         //Check if the node is the correct element type

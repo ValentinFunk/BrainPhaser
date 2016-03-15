@@ -2,25 +2,30 @@ package de.fhdw.ergoholics.brainphaser.activities.Challenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.TextInputLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-
+import android.widget.TextView;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
- * Created by Chris on 2/25/2016.
+ * Fragment for a text challenge
  */
-public class TextFragment extends AnswerFragment {
-    View mView;
+public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
     //Textfield of the answer
-    EditText mAnswerText;
+    private TextView mAnswerInput;
+    private TextInputLayout mAnswerInputLayout;
 
+    /**
+     * inject components
+     * @param component
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
@@ -30,8 +35,36 @@ public class TextFragment extends AnswerFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_challenge_text, container, false);
-        mAnswerText = (EditText) mView.findViewById(R.id.answerText);
+        mAnswerInput = (EditText) mView.findViewById(R.id.answerText);
+        mAnswerInputLayout = (TextInputLayout) mView.findViewById(R.id.input_answer_layout);
+        mAnswerInput.setOnEditorActionListener(this);
         return mView;
+    }
+
+
+    /*
+     * Validate answer and update GUI with errors
+     */
+    private boolean validateAnswerLength() {
+        boolean isValid = true;
+        String answer = mAnswerInput.getText().toString().trim();
+        if (answer.length() == 0) {
+            mAnswerInput.setError(getString(R.string.empty_answer));
+            mAnswerInputLayout.setErrorEnabled(true);
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    /*
+     * Called when an action is performed on the answer input. Checks the challenge
+     */
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
+                checkAnswers();
+        }
+        return false;
     }
 
     /**
@@ -39,30 +72,17 @@ public class TextFragment extends AnswerFragment {
      * @return Is the answer right or nah
      */
     @Override
-    public boolean checkAnswers() {
-        boolean answerRight=false;
-        for (Answer item:mAnswerList) {
-            if(item.getText().equals(mAnswerText.getText().toString())){
-                answerRight=true;
+    public void checkAnswers() {
+        if (validateAnswerLength()) {
+            boolean answerRight = false;
+            String givenAnswer = mAnswerInput.getText().toString();
+            for (Answer item : mAnswerList) {
+                if (item.getText().equals(givenAnswer)) {
+                    answerRight = true;
+                }
             }
+            loadAnswers(R.id.answerListText, givenAnswer);
+            mListener.onAnswerChecked(answerRight);
         }
-        loadAnswers();
-        return answerRight;
-    }
-
-    /**
-     * Loads the answers of the current challenge into a list and displays it
-     */
-    private void loadAnswers(){
-        //loading of the components
-        RecyclerView answerList = (RecyclerView) mView.findViewById(R.id.answerList);
-        answerList.setHasFixedSize(true);
-        // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        answerList.setLayoutManager(layoutManager);
-        //Create the View
-        //Adapter which sets all answers into the list
-        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList);
-        answerList.setAdapter(listAdapter);
     }
 }

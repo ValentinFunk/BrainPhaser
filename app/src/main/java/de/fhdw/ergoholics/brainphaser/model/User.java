@@ -30,6 +30,7 @@ public class User {
     private Long settings__resolvedKey;
 
     private List<Completion> completions;
+    private List<Statistics> statistics;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -138,6 +139,28 @@ public class User {
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     public synchronized void resetCompletions() {
         completions = null;
+    }
+
+    /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
+    public List<Statistics> getStatistics() {
+        if (statistics == null) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            StatisticsDao targetDao = daoSession.getStatisticsDao();
+            List<Statistics> statisticsNew = targetDao._queryUser_Statistics(id);
+            synchronized (this) {
+                if(statistics == null) {
+                    statistics = statisticsNew;
+                }
+            }
+        }
+        return statistics;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    public synchronized void resetStatistics() {
+        statistics = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */

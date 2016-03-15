@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v7.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/challenge_class"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/text_meta_data"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="15"
+            android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/challenge_type"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/text_meta_data"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15"
+        android:paddingRight="@dimen/activity_horizontal_margin"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:id="@+id/challenge_category"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/text_meta_data"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>

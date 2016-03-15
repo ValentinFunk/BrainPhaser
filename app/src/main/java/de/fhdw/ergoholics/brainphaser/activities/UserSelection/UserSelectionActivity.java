@@ -17,8 +17,14 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
+import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
+import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.model.Completion;
+import de.fhdw.ergoholics.brainphaser.model.Settings;
+import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
@@ -27,17 +33,28 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Created by Christian on 16.02.2016.
- *
  * Activity used to chose an existing user. Can load the create user activity
  * Persistent data: none
  * Parameters: none
  */
 
 public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
-    @Inject UserManager mUserManager;
-    @Inject UserDataSource mUserDataSource;
+    UserAdapter mListAdapter;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    UserDataSource mUserDataSource;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    SettingsDataSource mSettingsDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
 
+    /**
+     * inject components
+     * @param component
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
@@ -73,8 +90,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
 
         //Create the View
         //Adapter which sets all users into the list
-        UserAdapter listAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
-        userList.setAdapter(listAdapter);
+        mListAdapter = new UserAdapter(allUsers, this, (BrainPhaserApplication) getApplication());
+        userList.setAdapter(mListAdapter);
 
         /**
          * Is the add button selected load Create-User-Activity.
@@ -115,6 +132,10 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         finish();
     }
 
+    /**
+     * On edit a user, finish this activity and load edit user activity
+     * @param user To edited User
+     */
     @Override
     public void onEditUser(User user) {
         Intent intent = new Intent(Intent.ACTION_EDIT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class);
@@ -122,8 +143,30 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         startActivityForResult(intent, 0);
     }
 
+    /**
+     * On delete a user, remove its data and remove the user from the list
+     * @param user to deleted user
+     * @param position position of the user in the list
+     */
     @Override
-    public void onDeleteUser(User user) {
-        //Todo
+    public void onDeleteUser(User user, int position) {
+        //Delete Settings
+        Settings settings = user.getSettings();
+        mSettingsDataSource.delete(settings);
+
+        //Delete Completions
+        List<Completion> completions = user.getCompletions();
+        for (Completion completion : completions)
+                completion.delete();
+
+        //Delete Statistics
+        List<Statistics> statistics = user.getStatistics();
+        for (Statistics statistic : statistics)
+                statistic.delete();
+
+        //Delete User
+        user.delete();
+
+        mListAdapter.removeAt(position);
     }
 }

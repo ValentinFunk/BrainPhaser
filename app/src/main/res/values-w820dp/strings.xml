@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="due_chart_center_text">Fälligkeit</string>
-    <string name="stage_chart_center_text">Klassen</string>
-    <string name="chart_no_data_text">Keine Challenges vorhanden!</string>
-    <string name="challeng_not_due_text">Nein</string>
-    <string name="chart_stage_others_text">Andere</string>
+
 </resources>

@@ -21,8 +21,8 @@ public class Completion {
     /** Used for active entity operations. */
     private transient CompletionDao myDao;
 
-    private Challenge challengeCompletions;
-    private Long challengeCompletions__resolvedKey;
+    private Challenge challenge;
+    private Long challenge__resolvedKey;
 
 
     public Completion() {
@@ -87,30 +87,30 @@ public class Completion {
     }
 
     /** To-one relationship, resolved on first access. */
-    public Challenge getChallengeCompletions() {
+    public Challenge getChallenge() {
         long __key = this.challengeId;
-        if (challengeCompletions__resolvedKey == null || !challengeCompletions__resolvedKey.equals(__key)) {
+        if (challenge__resolvedKey == null || !challenge__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             ChallengeDao targetDao = daoSession.getChallengeDao();
-            Challenge challengeCompletionsNew = targetDao.load(__key);
+            Challenge challengeNew = targetDao.load(__key);
             synchronized (this) {
-                challengeCompletions = challengeCompletionsNew;
-            	challengeCompletions__resolvedKey = __key;
+                challenge = challengeNew;
+            	challenge__resolvedKey = __key;
             }
         }
-        return challengeCompletions;
+        return challenge;
     }
 
-    public void setChallengeCompletions(Challenge challengeCompletions) {
-        if (challengeCompletions == null) {
+    public void setChallenge(Challenge challenge) {
+        if (challenge == null) {
             throw new DaoException("To-one property 'challengeId' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
-            this.challengeCompletions = challengeCompletions;
-            challengeId = challengeCompletions.getId();
-            challengeCompletions__resolvedKey = challengeId;
+            this.challenge = challenge;
+            challengeId = challenge.getId();
+            challenge__resolvedKey = challengeId;
         }
     }
 

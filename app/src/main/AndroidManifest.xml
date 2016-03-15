@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ChallengeImport.ImportChallengeActivity">
+        <activity android:name=".activities.fileimport.ImportChallengeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -88,6 +88,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity"/>
         </activity>
-        <activity android:name=".activities.statistics.StatisticsActivity"/>
+        <activity android:name=".activities.statistics.StatisticsActivity"
+            android:label="@string/statistics_label"
+            android:parentActivityName=".activities.main.MainActivity">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.main.MainActivity"/>
+        </activity>
     </application>
 </manifest>
