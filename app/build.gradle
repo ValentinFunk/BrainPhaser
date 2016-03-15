@@ -47,10 +47,11 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:cardview-v7:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+
     compile 'com.makeramen:roundedimageview:2.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.greenrobot:greendao:2.1.0'
@@ -74,7 +75,7 @@ dependencies {
     androidTestCompile group: 'com.google.guava', name: 'guava', version: '15.0'
 
     // Fix version mismatch
-    androidTestCompile "com.android.support:support-annotations:23.1.1"
+    androidTestCompile "com.android.support:support-annotations:23.2.0"
 
     // Mockito
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
