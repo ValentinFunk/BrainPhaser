@@ -62,5 +62,32 @@
     <string name="statistics_most_succeeded">Am häufigsten richtig</string>
     <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
 
+    <string name="months">Monate</string>
+    <string name="weeks">Wochen</string>
+    <string name="days">Tage</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
+    <string name="setting_stage">Klasse %d</string>
+
+    <string name="settings_label">Einstellungen</string>
+
+
+    <string name="formatter_minutes">Minuten</string>
+    <string name="formatter_minute">Minute</string>
+    <string name="formatter_hour">Stunde</string>
+    <string name="formatter_hours">Stunden</string>
+    <string name="formatter_day">Tag</string>
+    <string name="formatter_days">Tage</string>
+    <string name="formatter_week">Woche</string>
+    <string name="formatter_weeks">Wochen</string>
+    <string name="formatter_month">Monat</string>
+    <string name="formatter_months">Monate</string>
+    <string name="save">Speichern</string>
+    <string name="stages">Zeitabstände der Klassen</string>
+
+    <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
+    <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
+    <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
+
     <string name="about_teamMembers">Valentin Funk \nChristian Kost \nLars Kahra \nDaniel Hoogen \nThomas Stückel</string>
 </resources>

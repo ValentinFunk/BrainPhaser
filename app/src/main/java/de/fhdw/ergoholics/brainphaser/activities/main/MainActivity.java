@@ -16,6 +16,7 @@ import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.Settings.SettingsActivity;
 import de.fhdw.ergoholics.brainphaser.activities.fileimport.ImportChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
@@ -77,7 +78,8 @@ public class MainActivity extends BrainPhaserActivity {
                 startActivity(new Intent(getApplicationContext(), AboutActivity.class));
                 return true;
             case R.id.action_settings:
-                // TODO
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+                return true;
             case 0: // Only in debug mode: File Picker
                 Intent i = new Intent(getApplicationContext(), FilePickerActivity.class);
                 startActivityForResult(i, CODE_FILEPICKER);

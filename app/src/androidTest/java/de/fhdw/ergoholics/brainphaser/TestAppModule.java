@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 
@@ -53,5 +54,11 @@ public class TestAppModule {
     @Singleton
     UserLogicFactory providesUserLogic(BrainPhaserApplication app) {
         return Mockito.mock(UserLogicFactory.class);
+    }
+
+    @Provides
+    @Singleton
+    SettingsLogic providesSettingsLogic() {
+        return new SettingsLogic();
     }
 }

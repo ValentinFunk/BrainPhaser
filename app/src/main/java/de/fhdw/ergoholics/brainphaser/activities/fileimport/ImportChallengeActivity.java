@@ -11,11 +11,11 @@ import android.view.View;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.fileimport.FileImport;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.ElementAmountException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.InvalidAttributeException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.FileImport;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.ElementAmountException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.InvalidAttributeException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -113,7 +113,13 @@ public class ImportChallengeActivity extends Activity {
                         dialog.dismiss();
 
                         //Switch to the main activity when the button is clicked
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                        // Recreate the activity to respect new categories
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
 
                         setResult(RESULT_OK);
                         finish();
@@ -127,12 +133,8 @@ public class ImportChallengeActivity extends Activity {
      * @param view ignored
      */
     public void onButtonNoClicked(View view) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        // Recreate the activity to respect new categories
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }
