@@ -1,7 +1,6 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +15,6 @@ import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
-import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
 /**

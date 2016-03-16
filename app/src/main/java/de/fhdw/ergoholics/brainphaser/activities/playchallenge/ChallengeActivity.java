@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Challenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -25,7 +25,6 @@ import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
-import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;

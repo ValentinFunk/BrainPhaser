@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Challenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;

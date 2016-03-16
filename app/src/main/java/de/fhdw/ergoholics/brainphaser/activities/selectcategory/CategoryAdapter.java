@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
+package de.fhdw.ergoholics.brainphaser.activities.selectcategory;
 
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.LinearLayoutCompat;

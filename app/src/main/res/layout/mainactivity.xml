@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:name="de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage"
+        android:name="de.fhdw.ergoholics.brainphaser.activities.selectcategory.SelectCategoryPage"
         android:id="@+id/select_category_fragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

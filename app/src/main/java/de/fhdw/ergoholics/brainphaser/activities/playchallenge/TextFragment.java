@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Challenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

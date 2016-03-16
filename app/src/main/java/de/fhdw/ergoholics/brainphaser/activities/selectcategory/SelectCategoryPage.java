@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
+package de.fhdw.ergoholics.brainphaser.activities.selectcategory;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
