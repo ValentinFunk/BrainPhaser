@@ -48,12 +48,6 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      */
     @Override
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mViewNumber >= getItemCount())
-            mViewNumber = 0;
-        return createViewHolder(parent);
-    }
-
-    public StatisticViewHolder createViewHolder(ViewGroup parent) {
         View v;
 
         if (mIsLandscape) {
@@ -69,7 +63,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
         }
 
-        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
         mViewNumber++;
 

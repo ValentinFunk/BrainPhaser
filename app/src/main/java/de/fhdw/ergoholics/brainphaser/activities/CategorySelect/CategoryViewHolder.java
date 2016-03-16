@@ -93,6 +93,7 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
                 mSelectionListener.onAllCategoriesStatisticsSelected();
             }
         });
+        mImage.setImageResource(R.drawable.all);
 
         updateDueCounter(dueChallenges);
     }
