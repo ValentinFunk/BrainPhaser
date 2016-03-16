@@ -84,11 +84,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
             } else if (mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect()) {
                 //If answer is toggled and correct
                 booleanArray[i] = true;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_checked_right);
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
                 //if answers is not toggled and correct
                 booleanArray[i] = false;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_unchecked_wrong);
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else {
                 //if answer is toggled and not correct
                 bg = ContextCompat.getDrawable(getContext(), R.drawable.multiple_choice_checked_wrong);
