@@ -10,9 +10,9 @@ import de.fhdw.ergoholics.brainphaser.activities.Challenge.SelfTestDialogFragmen
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.SelfTestFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.TextFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Settings.SettingsActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
+import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserAdapter;
+import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
 import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
