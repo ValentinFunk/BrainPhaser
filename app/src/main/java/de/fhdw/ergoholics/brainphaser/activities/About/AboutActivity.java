@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.About;
+package de.fhdw.ergoholics.brainphaser.activities.about;
 
 import android.support.v7.app.ActionBar;
 import android.content.res.Resources;
