@@ -50,7 +50,7 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-        
+
 
         //loading of the components
         RecyclerView settingsList = (RecyclerView) findViewById(R.id.settingsList);
