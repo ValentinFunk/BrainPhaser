@@ -1,6 +1,6 @@
 package de.fhdw.ergoholics.brainphaser;
 
-import de.fhdw.ergoholics.brainphaser.activities.about.AboutActivity;
+import de.fhdw.ergoholics.brainphaser.activities.aboutscreen.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
@@ -40,7 +40,6 @@ public interface BrainPhaserComponent {
     void inject(SettingsActivity activity);
 
     void inject(AboutActivity activity);
-
 
     void inject(SelectCategoryPage selectCategoryPage);
     void inject(AnswerFragment answerFragment);
