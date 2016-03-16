@@ -1,18 +1,16 @@
-package de.fhdw.ergoholics.brainphaser.fileimport.bpc;
+package de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.database.AnswerDataSource;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-
-import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.

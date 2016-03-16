@@ -51,7 +51,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
         View v;
 
         if (mIsLandscape) {
-            if (mViewNumber == 0 || mViewNumber == 2)
+            if (mViewNumber == 1 || mViewNumber == 3)
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
             else
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
@@ -63,11 +63,11 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
         }
 
-        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
         mViewNumber++;
 
-        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId);
+        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId, parent);
     }
 
     /**
@@ -79,13 +79,13 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         if (mIsLandscape) {
             if (position==0)
-                holder.applyDueChart();
-            else if (position==1)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
+            else if (position==1)
+                holder.applyDueChart();
             else if (position==2)
-                holder.applyStageChart();
-            else if (position==3)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
+            else if (position==3)
+                holder.applyStageChart();
             else if (position==4)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
         }

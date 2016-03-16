@@ -1,9 +1,13 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
+import android.support.annotation.NonNull;
+
 import java.util.Date;
 
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
+
+import org.joda.time.Period;
 
 import javax.inject.Inject;
 
@@ -13,6 +17,9 @@ import javax.inject.Inject;
  * Data Source class for custom access to settings table entries in the database
  */
 public class SettingsDataSource {
+    // Amount of classes/stages
+    public static final int STAGE_COUNT = 6;
+
     //Attributes
     private DaoSession mDaoSession;
 
@@ -38,15 +45,72 @@ public class SettingsDataSource {
     public Settings createNewDefaultSettings() {
         Settings settings = new Settings();
 
-        settings.setTimeBoxStage1(new Date(1000 * 60 * 5));         //5 minutes
-        settings.setTimeBoxStage2(new Date(1000 * 60 * 60));        //1 hour
-        settings.setTimeBoxStage3(new Date(1000 * 60 * 60 * 24));     //1 day
-        settings.setTimeBoxStage4(new Date(1000 * 60 * 60 * 24 * 7));   //7 days
-        settings.setTimeBoxStage5(new Date(1000l * 60 * 60 * 24 * 30));  //30 days
-        settings.setTimeBoxStage6(new Date(1000l * 60 * 60 * 24 * 180)); //180 days
+        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
+        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
 
         mDaoSession.getSettingsDao().insert(settings);
         return settings;
+    }
+
+    /**
+     * Returns the timebox of the given stage in the given Settings object
+     * @param settings Settings object whose timebox will be returned
+     * @param stage number of the stage whose timebox will be returned
+     * @return the Date object containing the timebox of the given settings object
+     */
+    @NonNull
+    public static Date getTimeboxByStage(Settings settings, int stage) {
+        switch (stage) {
+            case 1:
+                return settings.getTimeBoxStage1();
+            case 2:
+                return settings.getTimeBoxStage2();
+            case 3:
+                return settings.getTimeBoxStage3();
+            case 4:
+                return settings.getTimeBoxStage4();
+            case 5:
+                return settings.getTimeBoxStage5();
+            case 6:
+                return settings.getTimeBoxStage6();
+            default:
+                throw new IllegalArgumentException("Attempting to get invalid timebox " + stage);
+        }
+    }
+
+    /**
+     * Sets the timebox of the given stage in the given Settings object
+     * @param settings Settings object whose timebox will be set
+     * @param stage number of the stage whose timebox will be set
+     * @param date Date representation of msec duration
+     */
+    public static void setTimeboxByStage(Settings settings, int stage, Date date) {
+        switch (stage) {
+            case 1:
+                settings.setTimeBoxStage1(date);
+                break;
+            case 2:
+                settings.setTimeBoxStage2(date);
+                break;
+            case 3:
+                settings.setTimeBoxStage3(date);
+                break;
+            case 4:
+                settings.setTimeBoxStage4(date);
+                break;
+            case 5:
+                settings.setTimeBoxStage5(date);
+                break;
+            case 6:
+                settings.setTimeBoxStage6(date);
+                break;
+            default:
+                throw new IllegalArgumentException("Attempting to set invalid timebox " + stage);
+        }
     }
 
     /**
@@ -55,5 +119,13 @@ public class SettingsDataSource {
      */
     public void delete(Settings settings) {
         mDaoSession.delete(settings);
+    }
+
+    /**
+     * Updates settings in the database
+     * @param settings object to save changes from
+     */
+    public void update(Settings settings) {
+        mDaoSession.update(settings);
     }
 }
