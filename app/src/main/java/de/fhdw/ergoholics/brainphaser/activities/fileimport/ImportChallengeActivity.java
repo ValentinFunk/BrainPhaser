@@ -105,7 +105,13 @@ public class ImportChallengeActivity extends Activity {
                         dialog.dismiss();
 
                         //Switch to the main activity when the button is clicked
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                        // Recreate the activity to respect new categories
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        startActivity(intent);
 
                         setResult(RESULT_OK);
                         finish();
@@ -119,12 +125,8 @@ public class ImportChallengeActivity extends Activity {
      * @param view ignored
      */
     public void onButtonNoClicked(View view) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-        // Recreate the activity to respect new categories
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }
