@@ -90,4 +90,5 @@
     <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
 
     <string name="about_teamMembers">Valentin Funk \nChristian Kost \nLars Kahra \nDaniel Hoogen \nThomas Stückel</string>
+    <string name="statistics_most_played_information_text">Tippe auf ein Tortenstück, um die Challenge anzuzeigen.</string>
 </resources>
