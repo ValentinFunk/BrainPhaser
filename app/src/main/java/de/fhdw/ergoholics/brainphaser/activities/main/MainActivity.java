@@ -14,7 +14,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
+import de.fhdw.ergoholics.brainphaser.activities.about.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.Settings.SettingsActivity;
 import de.fhdw.ergoholics.brainphaser.activities.fileimport.ImportChallengeActivity;

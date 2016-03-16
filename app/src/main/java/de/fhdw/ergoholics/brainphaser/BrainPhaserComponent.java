@@ -1,6 +1,6 @@
 package de.fhdw.ergoholics.brainphaser;
 
-import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
+import de.fhdw.ergoholics.brainphaser.activities.about.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;

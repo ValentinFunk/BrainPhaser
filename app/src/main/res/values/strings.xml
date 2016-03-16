@@ -92,5 +92,7 @@
     <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
     <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
 
-    <string name="about_teamMembers">Valentin Funk \nChristian Kost \nLars Kahra \nDaniel Hoogen \nThomas Stückel</string>
+    <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
+    <string name="title_about">Bild und Software Lizenzen:</string>
+    <string name="about_team_headline">Team ERGOHolics:</string>
 </resources>
