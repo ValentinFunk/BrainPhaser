@@ -167,7 +167,7 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
 
         // Get period
         final DurationFieldType[] durationFields = new DurationFieldType[]{DurationFieldType.weeks(), DurationFieldType.days(), DurationFieldType.hours(), DurationFieldType.minutes()};
-        mPeriod = mDuration.toPeriod(PeriodType.forFields(durationFields));
+        mPeriod = mDuration.toPeriod(PeriodType.forFields(durationFields)).normalizedStandard();
         updatePeriod();
     }
 
@@ -198,7 +198,7 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         mErrorLayout.setLayoutParams(layoutParams);
 
-        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(mErrorLayout.getWidth(), View.MeasureSpec.AT_MOST);
         final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         mErrorLayout.measure(widthSpec, heightSpec);
 
