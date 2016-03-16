@@ -15,9 +15,19 @@ import de.fhdw.ergoholics.brainphaser.R;
  */
 public class SelfTestDialogFragment extends AnswerFragment {
 
+    /**
+     * Interface
+     */
+    public interface SelfCheckAnswerListener{
+        void onSelfCheckAnswerChecked();
+    }
+    SelfCheckAnswerListener mSelfCheckAnswerListener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //load the interface
+        loadSelfCheckAnswerListener();
         //infalte the view
         mView = inflater.inflate(R.layout.fragment_challenge_self_test, container, false);
         Button btnRight = (Button)mView.findViewById(R.id.answerRight);
@@ -28,7 +38,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
             public void onClick(View view) {
                 //execute AnswerListener and unloads the fragment
                 mListener.onAnswerChecked(true);
-                changeFragment();
+                mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
         });
         btnWrong.setOnClickListener(new View.OnClickListener() {
@@ -36,32 +46,30 @@ public class SelfTestDialogFragment extends AnswerFragment {
             public void onClick(View view) {
                 //execute AnswerListener and unloads the fragment
                 mListener.onAnswerChecked(false);
-                changeFragment();
+                mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
         });
 
         //Loads the possible answers into a list
-        loadAnswers(R.id.answerListSelfCheck,null);
+        loadAnswers(R.id.answerListSelfCheck, null);
         return mView;
     }
 
     /**
-     * unloads the fragment and loads an empty fragment
+     * Loads the AnswerListener of the opening activity
      */
-    private void changeFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putLong(ChallengeActivity.KEY_CHALLENGE_ID, mChallenge.getId());
-        //Load End Screen
-        FragmentTransaction fTransaction = getFragmentManager().beginTransaction();
-        fTransaction.disallowAddToBackStack();
-        SelfTestFragment selfTestFragment = new SelfTestFragment();
-        //Commit the bundle
-        selfTestFragment.setArguments(bundle);
-        //Inflate the MultipleChoiceFragment in the challenge_fragment
-        fTransaction.replace(R.id.challenge_fragment, selfTestFragment);
-        //Commit the changes
-        fTransaction.commit();
-        getFragmentManager().executePendingTransactions();
+    private void loadSelfCheckAnswerListener(){
+        // The activity that opens these fragments must implement AnswerListener.
+        // This method stores the listener when the activity is attached.
+        // Verify that the host activity implements the callback interface
+        try {
+            // Cast to SelfTestDialogListener so we can send events to the host
+            mSelfCheckAnswerListener = (SelfCheckAnswerListener) getActivity();
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement NoticeDialogListener");
+        }
     }
 
     /**
@@ -69,7 +77,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
      */
     @Override
     public void checkAnswers() {
-        return;
+        mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
     }
 
     /**

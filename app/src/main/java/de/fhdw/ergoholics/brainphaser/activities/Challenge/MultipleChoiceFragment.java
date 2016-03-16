@@ -76,7 +76,7 @@ public class MultipleChoiceFragment extends AnswerFragment {
 
         for (int i = 0; i < mAnswerList.size(); i++) {
             answer = mAnswerList.get(i);
-            Drawable bg = ContextCompat.getDrawable(getContext(),R.drawable.multiple_choice_unchecked);
+            Drawable bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_bg_unchecked);
 
             if (!mCheckBoxArray[i].isChecked() && !answer.getAnswerCorrect()) {
                 //If answers is not toggled and not correct
@@ -87,11 +87,13 @@ public class MultipleChoiceFragment extends AnswerFragment {
                 bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
                 //if answers is not toggled and correct
+                //TODO ersetzen mit uncheck_correct
                 booleanArray[i] = false;
                 bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else {
                 //if answer is toggled and not correct
-                bg = ContextCompat.getDrawable(getContext(), R.drawable.multiple_choice_checked_wrong);
+                //TODO ersetzen mit check_wrong
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_bg_unchecked);
                 booleanArray[i] = false;
             }
             //Displays the state of the answer

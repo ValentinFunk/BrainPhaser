@@ -32,7 +32,6 @@ public class SelfTestFragment extends AnswerFragment {
         //Commit the changes
         fTransaction.commit();
         getFragmentManager().executePendingTransactions();
-
     }
 
     @Nullable
