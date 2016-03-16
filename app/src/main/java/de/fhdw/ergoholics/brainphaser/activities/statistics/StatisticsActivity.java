@@ -57,26 +57,28 @@ public class StatisticsActivity extends BrainPhaserActivity {
         User user = mUserManager.getCurrentUser();
         long categoryId = getIntent().getLongExtra(ChallengeActivity.EXTRA_CATEGORY_ID, CategoryDataSource.CATEGORY_ID_ALL);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.statisticsRecycler);
-        mRecyclerView.setHasFixedSize(true);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.statisticsRecycler);
+        recyclerView.setHasFixedSize(true);
 
         final boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         GridLayoutManager layoutManager = new GridLayoutManager(this, isLandscape ? 3 : 2, GridLayoutManager.VERTICAL, false);
         layoutManager.setSpanSizeLookup(
-            new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    if (isLandscape) {
-                        return (position == 0 || position == 2) ? 1 : 2;
+                new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        if (isLandscape) {
+                            return (position == 1 || position == 3) ? 1 : 2;
+                        } else
+                            return position < 2 ? 1 : 2;
                     }
-                    else
-                        return position < 2 ? 1 : 2;
-                }
-        });
+                });
 
-        mRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView.setAdapter(new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource, (BrainPhaserApplication) getApplication(), user, categoryId, isLandscape));
+        StatisticsAdapter adapter = new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource, (BrainPhaserApplication) getApplication(), user, categoryId, isLandscape);
+        recyclerView.setAdapter(adapter);
+
+        //adapter.recreateViews();
     }
 
     /**

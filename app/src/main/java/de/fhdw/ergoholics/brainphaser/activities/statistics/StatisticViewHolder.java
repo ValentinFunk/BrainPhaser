@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -34,7 +35,7 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
     //Constructor
     public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory,
                                ChallengeDataSource challengeDataSource,
-                               BrainPhaserApplication application, User user, long categoryId) {
+                               BrainPhaserApplication application, User user, long categoryId, ViewGroup parent) {
         super(itemView);
         mItemView = itemView;
         mChallengeDataSource = challengeDataSource;
@@ -75,11 +76,13 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
         if (chart.getData() != null) {
             chart.highlightValue(0, 0);
             TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-            text.setText(mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion());
+            if (text != null)
+                text.setText(mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion());
         }
 
         TextView title = (TextView) mItemView.findViewById(R.id.titleView);
-        title.setText(getTitle(type));
+        if (title != null)
+            title.setText(getTitle(type));
     }
 
     /**

@@ -146,7 +146,7 @@ public class ChartDataLogic {
             statistics = removeSucceeded(statistics);
         else if (type == StatisticType.TYPE_MOST_SUCCEEDED)
             statistics = removeFailed(statistics);
-        else
+        else if (type != StatisticType.TYPE_MOST_PLAYED)
             return null;
 
         //Add entries

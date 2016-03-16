@@ -56,12 +56,10 @@ public class StatisticsLogic {
             case TYPE_DUE:
                 data = mDataLogic.findDueData();
                 chart.setCenterText(mApplication.getString(R.string.due_chart_center_text));
-                chart.setCenterText("");
                 break;
             case TYPE_STAGE:
                 data = mDataLogic.findStageData();
                 chart.setCenterText(mApplication.getString(R.string.stage_chart_center_text));
-                chart.setCenterText("");
                 break;
             default:
                 data = mDataLogic.findMostPlayedData(type, shownChallenges);

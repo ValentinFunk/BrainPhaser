@@ -48,10 +48,16 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      */
     @Override
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (mViewNumber >= getItemCount())
+            mViewNumber = 0;
+        return createViewHolder(parent);
+    }
+
+    public StatisticViewHolder createViewHolder(ViewGroup parent) {
         View v;
 
         if (mIsLandscape) {
-            if (mViewNumber == 0 || mViewNumber == 2)
+            if (mViewNumber == 1 || mViewNumber == 3)
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
             else
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
@@ -67,7 +73,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
         mViewNumber++;
 
-        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId);
+        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId, parent);
     }
 
     /**
@@ -79,13 +85,13 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         if (mIsLandscape) {
             if (position==0)
-                holder.applyDueChart();
-            else if (position==1)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
+            else if (position==1)
+                holder.applyDueChart();
             else if (position==2)
-                holder.applyStageChart();
-            else if (position==3)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
+            else if (position==3)
+                holder.applyStageChart();
             else if (position==4)
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
         }
