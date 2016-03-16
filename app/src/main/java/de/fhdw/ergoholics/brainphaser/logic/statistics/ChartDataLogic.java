@@ -24,7 +24,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  */
 public class ChartDataLogic {
     //Constants
-    private static final int NUMBER_PLAYED_LISTED = 5;
+    private static final int NUMBER_PLAYED_LISTED = 3;
 
     //Attributes
     private User mUser;
