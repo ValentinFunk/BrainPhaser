@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:background="@color/backgroundEmptyState"
             android:layout_marginTop="8dp"
+            android:id="@+id/errorLayout"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -78,6 +79,7 @@
                 android:textAppearance="?android:textAppearance"
                 android:textColor="@color/colorWrong"
                 android:text="@string/error_less_than_previous"
+                android:id="@+id/errorText"
                 />
         </LinearLayout>
 

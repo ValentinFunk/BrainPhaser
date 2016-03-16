@@ -83,10 +83,49 @@ public class SettingsDataSource {
     }
 
     /**
+     * Sets the timebox of the given stage in the given Settings object
+     * @param settings Settings object whose timebox will be set
+     * @param stage number of the stage whose timebox will be set
+     * @param date Date representation of msec duration
+     */
+    public static void setTimeboxByStage(Settings settings, int stage, Date date) {
+        switch (stage) {
+            case 1:
+                settings.setTimeBoxStage1(date);
+                break;
+            case 2:
+                settings.setTimeBoxStage2(date);
+                break;
+            case 3:
+                settings.setTimeBoxStage3(date);
+                break;
+            case 4:
+                settings.setTimeBoxStage4(date);
+                break;
+            case 5:
+                settings.setTimeBoxStage5(date);
+                break;
+            case 6:
+                settings.setTimeBoxStage6(date);
+                break;
+            default:
+                throw new IllegalArgumentException("Attempting to set invalid timebox " + stage);
+        }
+    }
+
+    /**
      * Removes a Settings object from the database
      * @param settings the representation of the Settings object to be removed from the database
      */
     public void delete(Settings settings) {
         mDaoSession.delete(settings);
+    }
+
+    /**
+     * Updates settings in the database
+     * @param settings object to save changes from
+     */
+    public void update(Settings settings) {
+        mDaoSession.update(settings);
     }
 }

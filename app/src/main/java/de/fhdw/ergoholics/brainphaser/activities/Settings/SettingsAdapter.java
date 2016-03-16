@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.DateComponent;
 import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
+
+import java.util.Date;
 
 /**
  * Created by funkv on 15.03.2016.
@@ -24,24 +26,29 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
      */
     public interface OnSettingsChangedListener {
         /**
-         * Called when the timespan for a specific stage changes.
-         * @param stage number of the stage that was updated (1-6)
-         * @param seconds timespan represented in seconds
+         * Called when the constructor-passed settings object has been changed.
+         * @param adapter adapter that triggered the change
          */
-        void onStageChanged(int stage, int seconds);
+        void onSettingsChanged(SettingsAdapter adapter);
     }
 
     private OnSettingsChangedListener mListener;
-    private Settings mSettings;
 
-    public SettingsAdapter(Settings settings, OnSettingsChangedListener listener) {
+    private Settings mSettings;
+    private SettingsLogic mSettingsLogic;
+
+    public SettingsAdapter(Settings settings,
+                           OnSettingsChangedListener listener,
+                           SettingsLogic logic) {
         mListener = listener;
         mSettings = settings;
+        mSettingsLogic = logic;
     }
 
     @Override
     public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
+
         //Load the list template
         View customView = myInflater.inflate(R.layout.list_item_setting, parent, false);
 
@@ -67,5 +74,17 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
     @Override
     public int getItemCount() {
         return SettingsDataSource.STAGE_COUNT;
+    }
+
+    public Integer isTimeValidForStage(int stage, long durationMsec) {
+        return mSettingsLogic.isTimeValidForStage(mSettings, stage, durationMsec);
+    }
+
+    public Settings getSettings() {
+        return mSettings;
+    }
+
+    void stageTimeSaved(int stage, long durationMsec) {
+        SettingsDataSource.setTimeboxByStage(mSettings, stage, new Date(durationMsec));
     }
 }

@@ -84,5 +84,8 @@
     <string name="formatter_months">Monate</string>
     <string name="save">Speichern</string>
     <string name="stages">Zeitabstände der Klassen</string>
+
     <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
+    <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
+    <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
 </resources>

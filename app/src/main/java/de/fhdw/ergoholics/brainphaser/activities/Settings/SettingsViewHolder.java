@@ -1,14 +1,21 @@
 package de.fhdw.ergoholics.brainphaser.activities.Settings;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.DateComponent;
 import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
+import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
@@ -30,15 +37,23 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         DateComponent.MINUTES
     };
 
+
+
     private SettingsAdapter mAdapter;
     private TextView mTitle;
     private TextView mTime;
+    private Button mButton;
+    private LinearLayout mErrorLayout;
+    private TextView mErrorText;
     private SparseArray<TimePeriodSlider> mTimePeriodSliders; // SparseArray mapping dateTypes from DateComponent to their respective slider
 
     private final PeriodFormatter mFormatter;
     private Period mPeriod;
     private Duration mDuration;
+    private int mStage;
     private final SparseArray<DurationFieldType> mConversion; // Map between representations or DateComponent and DurationFieldType
+    ValueAnimator mAnimator;
+    private boolean mReversing = false;
 
     /**
      * Create a ViewHolder for a stage object
@@ -48,7 +63,9 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
      *                 slider
      * @param adapter  adapter to pass callbacks on to
      */
-    public SettingsViewHolder(View itemView, SparseArray<TimePeriodSlider> sliders, SettingsAdapter adapter) {
+    public SettingsViewHolder(View itemView,
+                              SparseArray<TimePeriodSlider> sliders,
+                              SettingsAdapter adapter) {
         super(itemView);
         mAdapter = adapter;
 
@@ -61,6 +78,9 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
 
         mTitle = (TextView) itemView.findViewById(R.id.stageTitle);
         mTime = (TextView) itemView.findViewById(R.id.stageTime);
+        mButton = (Button) itemView.findViewById(R.id.saveButton);
+        mErrorLayout = (LinearLayout) itemView.findViewById(R.id.errorLayout);
+        mErrorText = (TextView) itemView.findViewById(R.id.errorText);
 
         // Intialize the formater
         Resources res = itemView.getResources();
@@ -79,6 +99,52 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         for (int i = 0; i < sliders.size(); i++) {
             sliders.valueAt(i).setOnChangeListener(this);
         }
+
+        // Set up error box animator
+        mAnimator = ValueAnimator.ofInt(0,100);
+
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int interpolated = (Integer) mAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = mErrorLayout.getLayoutParams();
+                layoutParams.height = interpolated;
+                mErrorLayout.setLayoutParams(layoutParams);
+            }
+        });
+
+        mAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (!mReversing) {
+                    mErrorLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                if (mReversing) {
+                    mErrorLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mButton.isEnabled()) {
+                    mAdapter.stageTimeSaved(mStage, mDuration.getMillis());
+                }
+            }
+        });
     }
 
     /**
@@ -116,11 +182,77 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
             slider.setValue(mPeriod.get(mConversion.valueAt(i)));
         }
         mTime.setText(getFormattedPeriod());
+        mDuration = mPeriod.toStandardDuration();
+
+        doValidation();
     }
 
+    /**
+     * Measure the error box and update animator
+     */
+
+    void measureError( ) {
+        mErrorLayout.setVisibility(View.VISIBLE);
+
+        ViewGroup.LayoutParams layoutParams = mErrorLayout.getLayoutParams();
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        mErrorLayout.setLayoutParams(layoutParams);
+
+        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        mErrorLayout.measure(widthSpec, heightSpec);
+
+        mAnimator.setIntValues(0, mErrorLayout.getMeasuredHeight());
+    }
+
+    /**
+     * Expand the error box
+     */
+    private void expandError() {
+        measureError();
+        if (mErrorLayout.getVisibility() == View.GONE || mReversing) {
+            mAnimator.start();
+        }
+        mReversing = false;
+    }
+
+    /**
+     * Collapse the error box
+     */
+    private void collapseError() {
+        if (!mReversing) {
+            mAnimator.reverse();
+            mReversing = true;
+        }
+    }
+
+    /**
+     * Validate Period and update view with error
+     */
+    private void doValidation() {
+        Integer error = mAdapter.isTimeValidForStage(mStage, mDuration.getMillis());
+        if (error == null) {
+            mButton.setEnabled(true);
+            collapseError();
+
+        } else {
+            mButton.setEnabled(false);
+            mErrorText.setText(itemView.getResources().getString(error));
+            expandError();
+        }
+    }
+
+    /**
+     * Bind a stage to this ViewHolder
+     * @param currentDate date that represents the current period for this stage
+     * @param stage stage number to modify
+     */
     public void bindStage(Date currentDate, int stage) {
+        mStage = stage;
         mTitle.setText(itemView.getResources().getString(R.string.setting_stage, stage));
         initializeDuration(currentDate);
+        mButton.setEnabled(false);
+        mErrorLayout.setVisibility(View.GONE);
     }
 
     @Override

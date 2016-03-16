@@ -8,6 +8,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.ChartSettings;
@@ -61,5 +62,11 @@ public class AppModule {
     @Singleton
     ChartSettings providesChartSettings(BrainPhaserApplication app) {
         return new ChartSettings(app);
+    }
+
+    @Provides
+    @Singleton
+    SettingsLogic providesSettingsLogic() {
+        return new SettingsLogic();
     }
 }
