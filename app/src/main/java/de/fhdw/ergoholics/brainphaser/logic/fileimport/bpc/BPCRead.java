@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.fileimport.bpc;
+package de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc;
 
 import android.util.Log;
 
@@ -12,8 +12,8 @@ import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.

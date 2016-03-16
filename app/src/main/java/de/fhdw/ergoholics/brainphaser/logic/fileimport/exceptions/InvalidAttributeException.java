@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.fileimport.exceptions;
+package de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions;
 
 /**
  * Created by Daniel Hoogen on 15/03/2016.
