@@ -87,13 +87,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
                 bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
                 //if answers is not toggled and correct
-                //TODO ersetzen mit uncheck_correct
                 booleanArray[i] = false;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_unchecked_correct);
             } else {
                 //if answer is toggled and not correct
-                //TODO ersetzen mit check_wrong
-                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_bg_unchecked);
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_background_checked_incorrect);
                 booleanArray[i] = false;
             }
             //Displays the state of the answer
