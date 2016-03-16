@@ -40,15 +40,16 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setAutoMeasureEnabled(true);
         settingsList.setLayoutManager(layoutManager);
+        settingsList.setNestedScrollingEnabled(false);
 
         //Create the View
         //Adapter which sets all users into the list
         mSettingsAdapter = new SettingsAdapter(mUserManager.getCurrentUser().getSettings(), this);
         settingsList.setAdapter(mSettingsAdapter);
 
-        // Prevent scrollin gthere
+        // Avoid scrolldown
         settingsList.setFocusable(false);
-        findViewById(R.id.heading).requestFocus();
+        (findViewById(R.id.heading)).requestFocus();
     }
 
     @Override
