@@ -8,7 +8,7 @@ import de.fhdw.ergoholics.brainphaser.model.Settings;
 import java.util.Date;
 
 /**
- * Created by funkv on 16.03.2016.
+ * Created by Lars Kahra on 16.03.2016.
  *
  * Provides functions for Settings logic checking
  */

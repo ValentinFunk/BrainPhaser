@@ -12,7 +12,7 @@ import org.joda.time.Period;
 import javax.inject.Inject;
 
 /**
- * Created by Daniel Hoogen on 25/02/2016.
+ * Created by Lars Kahra on 25/02/2016.
  *
  * Data Source class for custom access to settings table entries in the database
  */
