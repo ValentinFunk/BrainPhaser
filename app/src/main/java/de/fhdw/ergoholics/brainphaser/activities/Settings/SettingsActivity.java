@@ -2,8 +2,10 @@ package de.fhdw.ergoholics.brainphaser.activities.Settings;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 
 import javax.inject.Inject;
 
@@ -38,6 +40,17 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_settings);
+
+        Toolbar myChildToolbar =
+            (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myChildToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+        
 
         //loading of the components
         RecyclerView settingsList = (RecyclerView) findViewById(R.id.settingsList);
