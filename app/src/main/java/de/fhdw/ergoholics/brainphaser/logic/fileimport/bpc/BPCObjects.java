@@ -1,17 +1,17 @@
 package de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc;
 
+import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.ElementAmountException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.InvalidAttributeException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.model.Answer;
+import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.Challenge;
+
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import java.util.List;
-
-import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.ElementAmountException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.InvalidAttributeException;
-import de.fhdw.ergoholics.brainphaser.fileimport.exceptions.UnexpectedElementException;
-import de.fhdw.ergoholics.brainphaser.model.Answer;
-import de.fhdw.ergoholics.brainphaser.model.Category;
-import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
