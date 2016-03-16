@@ -39,22 +39,13 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
      */
     public abstract void checkAnswers();
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // The activity that opens these fragments must implement AnswerListener.
-        // This method stores the listener when the activity is attached.
-        // Verify that the host activity implements the callback interface
-        try {
-            // Cast to SelfTestDialogListener so we can send events to the host
-            mListener = (AnswerListener) getActivity();
-        } catch (ClassCastException e) {
-            // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement NoticeDialogListener");
-        }
 
+        loadAnswerListener();
         //Load the current challenge
         Bundle bundle = getArguments();
         long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
@@ -85,5 +76,21 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         //Adapter which sets all answers into the list
         AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
         answerList.setAdapter(listAdapter);
+    }
+    /**
+     * Loads the AnswerListener of the opening activity
+     */
+    private void loadAnswerListener(){
+        // The activity that opens these fragments must implement AnswerListener.
+        // This method stores the listener when the activity is attached.
+        // Verify that the host activity implements the callback interface
+        try {
+            // Cast to SelfTestDialogListener so we can send events to the host
+            mListener = (AnswerListener) getActivity();
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement NoticeDialogListener");
+        }
     }
 }

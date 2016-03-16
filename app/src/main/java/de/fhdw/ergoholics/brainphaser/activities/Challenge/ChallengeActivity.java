@@ -39,7 +39,7 @@ import javax.inject.Inject;
 /**
  * Activity used to handle challenges. Loads fragments depending on the challenge type
  */
-public class ChallengeActivity extends BrainPhaserActivity implements AnswerFragment.AnswerListener {
+public class ChallengeActivity extends BrainPhaserActivity implements AnswerFragment.AnswerListener, SelfTestDialogFragment.SelfCheckAnswerListener {
 
     public static final String EXTRA_CATEGORY_ID ="KEY_CURRENT_CATEGORY_ID";
     public static final String KEY_CHALLENGE_ID="KEY_CHALLENGE_ID";
@@ -151,22 +151,30 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
                     //checks the answer
                     currentFragment.checkAnswers();
                 } else {
-                    //If the all challenge are completed load the finish screen
-                    if (mChallengeNo == mAllChallenges.size() - 1) {
-                        loadFinishScreen();
-                        return;
-                    }
-                    //increment counter
-                    mChallengeNo += 1;
-                    //set the progrees in the progessbar
-                    mProgress.setProgress(mChallengeNo);
-                    //load the next challenge
-                    loadChallenge(mAllChallenges.get(mChallengeNo));
-                    mAnswerChecked = false;
+                    //loads the next screen (challenge or finish screen)
+                    loadNextScreen();
                 }
             }
         });
 
+    }
+
+    /**
+     * Loads the next screen (next challenge or the finish screen)
+     */
+    private void loadNextScreen(){
+        //If the all challenge are completed load the finish screen
+        if (mChallengeNo == mAllChallenges.size() - 1) {
+            loadFinishScreen();
+            return;
+        }
+        //increment counter
+        mChallengeNo += 1;
+        //set the progrees in the progessbar
+        mProgress.setProgress(mChallengeNo);
+        //load the next challenge
+        loadChallenge(mAllChallenges.get(mChallengeNo));
+        mAnswerChecked = false;
     }
 
     /**
@@ -360,5 +368,13 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         Drawable typeBackground=mTypeText.getBackground();
         typeBackground.setColorFilter(typeColor, PorterDuff.Mode.MULTIPLY);
         mTypeText.setText(type);
+    }
+
+    /**
+     * Load the next screen after the self challenge answer was checked
+     */
+    @Override
+    public void onSelfCheckAnswerChecked() {
+        loadNextScreen();
     }
 }

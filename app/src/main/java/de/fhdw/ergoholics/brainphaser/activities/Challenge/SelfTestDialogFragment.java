@@ -15,9 +15,26 @@ import de.fhdw.ergoholics.brainphaser.R;
  */
 public class SelfTestDialogFragment extends AnswerFragment {
 
+    /**
+     * Interface toggles, when the SelfCheck-Challenge was checked by the user
+     */
+    public interface SelfCheckAnswerListener{
+        void onSelfCheckAnswerChecked();
+    }
+    SelfCheckAnswerListener mSelfCheckAnswerListener;
+
+    /**
+     * Loads the Listener and sets up the view
+     * @param inflater Inlfates the Fragment
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //load the interface
+        loadSelfCheckAnswerListener();
         //infalte the view
         mView = inflater.inflate(R.layout.fragment_challenge_self_test, container, false);
         Button btnRight = (Button)mView.findViewById(R.id.answerRight);
@@ -26,55 +43,55 @@ public class SelfTestDialogFragment extends AnswerFragment {
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //execute AnswerListener and unloads the fragment
+                //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(true);
-                changeFragment();
+                mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
         });
         btnWrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //execute AnswerListener and unloads the fragment
+                //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(false);
-                changeFragment();
+                mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
         });
 
         //Loads the possible answers into a list
-        loadAnswers(R.id.answerListSelfCheck,null);
+        loadAnswers(R.id.answerListSelfCheck, null);
         return mView;
     }
 
     /**
-     * unloads the fragment and loads an empty fragment
+     * Loads the AnswerListener of the opening activity
      */
-    private void changeFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putLong(ChallengeActivity.KEY_CHALLENGE_ID, mChallenge.getId());
-        //Load End Screen
-        FragmentTransaction fTransaction = getFragmentManager().beginTransaction();
-        fTransaction.disallowAddToBackStack();
-        SelfTestFragment selfTestFragment = new SelfTestFragment();
-        //Commit the bundle
-        selfTestFragment.setArguments(bundle);
-        //Inflate the MultipleChoiceFragment in the challenge_fragment
-        fTransaction.replace(R.id.challenge_fragment, selfTestFragment);
-        //Commit the changes
-        fTransaction.commit();
-        getFragmentManager().executePendingTransactions();
+    private void loadSelfCheckAnswerListener(){
+        // The activity that opens these fragments must implement AnswerListener.
+        // This method stores the listener when the activity is attached.
+        // Verify that the host activity implements the callback interface
+        try {
+            // Cast to SelfTestDialogListener so we can send events to the host
+            mSelfCheckAnswerListener = (SelfCheckAnswerListener) getActivity();
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement NoticeDialogListener");
+        }
     }
 
     /**
-     * Check answer
+     * Check answer (given answers is false)
      */
     @Override
     public void checkAnswers() {
-        return;
+        //execute AnswerListener and loads the next screen
+        mListener.onAnswerChecked(false);
+        mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
     }
 
     /**
      * Inject components
-     * @param component
+     * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
