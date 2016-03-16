@@ -92,6 +92,8 @@ public class ChartSettings {
         chart.setNoDataText(mApplication.getString(R.string.chart_no_data_text));
         Paint p = chart.getPaint(Chart.PAINT_INFO);
         p.setTextSize(NO_DATA_TEXT_SIZE);
-        p.setColor(ContextCompat.getColor(mApplication.getApplicationContext(), R.color.colorNoDataText));
+
+
+        p.setColor(ContextCompat.getColor(mApplication.getApplicationContext(), android.R.color.tertiary_text_light));
     }
 }
