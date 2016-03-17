@@ -6,7 +6,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 /**
  * Created by Daniel Hoogen on 13/03/2016.
- *
+ * <p>
  * This class implements a listener for selecting and deselecting values in a chart
  */
 public class ChartValueSelectedListener implements OnChartValueSelectedListener {
@@ -21,9 +21,10 @@ public class ChartValueSelectedListener implements OnChartValueSelectedListener 
     /**
      * This method is called when a value in the chart, this listener is assigned to, is selected.
      * It runs the corresponding method with the ViewHolder object containing the chart.
-     * @param e the selected entry
+     *
+     * @param e            the selected entry
      * @param dataSetIndex ignored
-     * @param h ignored
+     * @param h            ignored
      */
     @Override
     public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {

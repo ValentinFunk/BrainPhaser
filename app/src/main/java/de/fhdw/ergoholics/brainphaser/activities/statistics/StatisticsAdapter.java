@@ -1,5 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016.
- *
+ * <p>
  * This adapter adds the StatisticViewHolder objects to the recycler view it is assigned to
  */
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder> {
@@ -30,7 +31,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     private int mViewNumber;
 
     //Constructor
-    public StatisticsAdapter(UserLogicFactory userLogicFactory, ChallengeDataSource challengeDataSource, BrainPhaserApplication application, User user, long categoryId, boolean isLandscape) {
+    public StatisticsAdapter(UserLogicFactory userLogicFactory,
+                             ChallengeDataSource challengeDataSource,
+                             BrainPhaserApplication application, User user, long categoryId,
+                             boolean isLandscape) {
         mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mApplication = application;
@@ -43,68 +47,82 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
 
     /**
      * Called to create the ViewHolder at the given position.
-     * @param parent parent to assign the newly created view to
+     *
+     * @param parent   parent to assign the newly created view to
      * @param viewType ignored
      */
     @Override
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
 
+        Context parentContext = parent.getContext();
+
+        int pieLayout = R.layout.list_item_statistic_pie_chart;
+        int mostPlayedLayout = R.layout.list_item_statistic_most_played;
+
         if (mIsLandscape) {
-            if (mViewNumber == 1 || mViewNumber == 3)
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
-            else
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
-        }
-        else {
-            if (mViewNumber < 2)
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_pie_chart, parent, false);
-            else
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_statistic_most_played, parent, false);
+            if (mViewNumber == 1 || mViewNumber == 3) {
+                v = LayoutInflater.from(parentContext).inflate(pieLayout, parent, false);
+            } else {
+                v = LayoutInflater.from(parentContext).inflate(mostPlayedLayout, parent, false);
+            }
+        } else {
+            if (mViewNumber < 2) {
+                v = LayoutInflater.from(parentContext).inflate(pieLayout, parent, false);
+            } else {
+                v = LayoutInflater.from(parentContext).inflate(mostPlayedLayout, parent, false);
+            }
         }
 
-        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT,
-                LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+        LinearLayoutCompat.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(
+                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+
+        v.setLayoutParams(layoutParams);
         mViewNumber++;
 
-        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication, mUser, mCategoryId, parent);
+        return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication,
+                mUser, mCategoryId);
     }
 
     /**
      * Called to bind the ViewHolder at the given position.
-     * @param holder the ViewHolder object to be bound
+     *
+     * @param holder   the ViewHolder object to be bound
      * @param position the position where a new ViewHolder is created
      */
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         if (mIsLandscape) {
-            if (position==0)
+            if (position == 0) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
-            else if (position==1)
+            } else if (position == 1) {
                 holder.applyDueChart();
-            else if (position==2)
+            } else if (position == 2) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
-            else if (position==3)
+            } else if (position == 3) {
                 holder.applyStageChart();
-            else if (position==4)
+            } else if (position == 4) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
-        }
-        else {
-            if (position==0)
+            }
+        } else {
+            if (position == 0) {
                 holder.applyDueChart();
-            else if (position==1)
+            } else if (position == 1) {
                 holder.applyStageChart();
-            else if (position==2)
+            } else if (position == 2) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
-            else if (position==3)
+            } else if (position == 3) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
-            else if (position==4)
+            } else if (position == 4) {
                 holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
+            }
         }
     }
 
     /**
      * Returns the count of ViewHolders in the adapter
+     *
      * @return the fixed count of ViewHolders
      */
     @Override
