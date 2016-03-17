@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
 
 import javax.inject.Inject;
 
@@ -15,6 +17,7 @@ import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
 /**
@@ -67,8 +70,23 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
 
         // Avoid scrolldown
         settingsList.setFocusable(false);
-
         (findViewById(R.id.heading)).requestFocus();
+
+        final SettingsActivity self = this;
+        Button resetButton = (Button) findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                self.resetSettings();
+            }
+        });
+    }
+
+    private void resetSettings() {
+        Settings settings = mUserManager.getCurrentUser().getSettings();
+        mSettingsDataSource.setToDefaultSettings(settings);
+        mSettingsDataSource.update(settings);
+        mSettingsAdapter.notifyDataSetChanged();
     }
 
     @Override

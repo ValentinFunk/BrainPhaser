@@ -65,7 +65,7 @@
     <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
     <string name="statistics_most_played_information_text">Tippe auf ein Tortenstück, um die Challenge anzuzeigen.</string>
 
-    <string name="stages_desc">Hier kannst du die Zeitabstände für die Klassen ändern.</string>
+    <string name="stages_desc">Hier kannst du die Zeitabstände der Klassen ändern.</string>
     <string name="months">Monate</string>
     <string name="weeks">Wochen</string>
     <string name="days">Tage</string>
@@ -85,6 +85,7 @@
     <string name="formatter_months">Monate</string>
     <string name="save">Speichern</string>
     <string name="stages">Zeitabstände der Klassen</string>
+    <string name="reset_settings">Einstellungen Zurücksetzen</string>
 
     <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
     <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>

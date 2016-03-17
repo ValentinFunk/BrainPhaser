@@ -25,7 +25,7 @@
                 android:text="@string/stages"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:id="@+id/heading"
                 />
@@ -34,11 +34,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/stages_desc"
-                android:textAppearance="?android:textAppearanceLarge"
+                android:textAppearance="?android:textAppearanceMedium"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="0dp"
                 />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset_settings"
+                android:id="@+id/resetButton"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                style="?attr/borderlessButtonStyle"/>
 
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                                                     android:id="@+id/settingsList"

@@ -44,14 +44,7 @@ public class SettingsDataSource {
      */
     public Settings createNewDefaultSettings() {
         Settings settings = new Settings();
-
-        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
-        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
-
+        setToDefaultSettings(settings);
         mDaoSession.getSettingsDao().insert(settings);
         return settings;
     }
@@ -111,6 +104,19 @@ public class SettingsDataSource {
             default:
                 throw new IllegalArgumentException("Attempting to set invalid timebox " + stage);
         }
+    }
+
+    /**
+     * Applies default values to a settings object
+     * @param settings object to reset to defaults
+     */
+    public void setToDefaultSettings(Settings settings) {
+        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
+        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
     }
 
     /**
