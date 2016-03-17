@@ -76,6 +76,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return SettingsDataSource.STAGE_COUNT;
     }
 
+    /**
+     * Check whether the given duration is valid for a given stage.
+     * @param stage stage to check
+     * @param durationMsec duration for this stage
+     * @return null if this is a valid value, error string id if it is invalid
+     */
     public Integer isTimeValidForStage(int stage, long durationMsec) {
         return mSettingsLogic.isTimeValidForStage(mSettings, stage, durationMsec);
     }
@@ -84,6 +90,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return mSettings;
     }
 
+    /**
+     * Called by ViewHolder to notify a change
+     * @param stage stage number that changed
+     * @param durationMsec the new duration in milliseconds
+     */
     void stageTimeSaved(int stage, long durationMsec) {
         SettingsDataSource.setTimeboxByStage(mSettings, stage, new Date(durationMsec));
     }
