@@ -13,12 +13,12 @@ import de.fhdw.ergoholics.brainphaser.R;
 
 /**
  * Created by Daniel Hoogen on 05/03/2016.
- *
+ * <p/>
  * This class contains the logic for creating statistics about due challenges and challenge stages
  */
 public class StatisticsLogic {
     //Attributes
-    private BrainPhaserApplication mApplication ;
+    private BrainPhaserApplication mApplication;
     private ChartSettings mSettings;
     private ChartDataLogic mDataLogic;
 
@@ -33,14 +33,14 @@ public class StatisticsLogic {
 
     /**
      * Creates a PieData object containing entries with the numbers of due and not due challenges.
+     *
      * @param chart the PieChart object the calculated data will be applied to
-     * @param type the type of the statistic to be created
+     * @param type  the type of the statistic to be created
      * @return a list of the ids of the shown challenges, if a most played / failed / succeeded
      * challenges chart is created. Otherwise null will be returned.
      */
     public List<Long> fillChart(PieChart chart, StatisticType type) {
-        if (chart==null)
-            return null;
+        if (chart == null) return null;
 
         //Clear the chart for reloading
         chart.clear();
@@ -71,10 +71,10 @@ public class StatisticsLogic {
 
             //Apply default chart settings to the chart
             mSettings.applyChartSettings(chart);
-        }
-        else
+        } else {
             //Format the no data text of the chart
             mSettings.applyNoDataSettings(chart);
+        }
 
         //If there are shown challenges in the List object return the List object, else return null
         return (shownChallenges.size() > 0) ? shownChallenges : null;

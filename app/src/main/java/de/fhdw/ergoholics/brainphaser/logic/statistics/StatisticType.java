@@ -2,7 +2,7 @@ package de.fhdw.ergoholics.brainphaser.logic.statistics;
 
 /**
  * Created by Daniel Hoogen on 12/03/2016.
- *
+ * <p/>
  * Enumeration for the different statistic types
  */
 public enum StatisticType {

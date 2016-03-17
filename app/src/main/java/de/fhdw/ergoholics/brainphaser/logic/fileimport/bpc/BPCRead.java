@@ -17,16 +17,17 @@ import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElem
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
- *
+ * <p/>
  * Contains the logic for reading the root element of an .bpc file
  */
 public class BPCRead {
     /**
      * Reads the categories node from an input stream of a .bpc file and returns it
+     *
      * @param is the input stream of the .bpc file
-     * @throws FileFormatException if file is no xml file
-     * @throws UnexpectedElementException if an unexpected element was fond in the file
      * @return the categories node of the .bpc file
+     * @throws FileFormatException        if file is no xml file
+     * @throws UnexpectedElementException if an unexpected element was fond in the file
      */
     public static Node getCategoriesNode(InputStream is)
             throws FileFormatException, UnexpectedElementException {
@@ -53,8 +54,7 @@ public class BPCRead {
          */
         if (!childRoot.getNodeName().equals("categories"))
             throw new UnexpectedElementException("BPC");
-        else
-        {
+        else {
             return childRoot;
         }
     }

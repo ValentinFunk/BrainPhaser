@@ -17,9 +17,12 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
  */
 public class BPCWrite {
     //Attributes
-    @Inject CategoryDataSource mCategoryDataSource;
-    @Inject ChallengeDataSource mChallengeDataSource;
-    @Inject AnswerDataSource mAnswerDataSource;
+    @Inject
+    CategoryDataSource mCategoryDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
+    @Inject
+    AnswerDataSource mAnswerDataSource;
 
     //Constructor
     public BPCWrite(BrainPhaserApplication application) {
@@ -28,9 +31,10 @@ public class BPCWrite {
 
     /**
      * Writes all categories with their challenges and their answers to the database
-     * @param categoryList the list of categories to be written to the database
+     *
+     * @param categoryList  the list of categories to be written to the database
      * @param challengeList the list of challenges to be written to the database
-     * @param answerList the list of answers to be written to the database
+     * @param answerList    the list of answers to be written to the database
      */
     public void writeAll(List<Category> categoryList, List<Challenge> challengeList, List<Answer> answerList) {
         for (Category category : categoryList) {
@@ -40,9 +44,10 @@ public class BPCWrite {
 
     /**
      * Writes a category with their challenges and their answers to the database
-     * @param category the category to be written to the database
+     *
+     * @param category      the category to be written to the database
      * @param challengeList the list of challenges to be written to the database
-     * @param answerList the list of answers to be written to the database
+     * @param answerList    the list of answers to be written to the database
      */
     private void writeCategory(Category category, List<Challenge> challengeList, List<Answer> answerList) {
         long oldCategoryId = category.getId();
@@ -60,7 +65,8 @@ public class BPCWrite {
 
     /**
      * Writes a challenge with their answers to the database
-     * @param challenge the challenge to be written to the database
+     *
+     * @param challenge  the challenge to be written to the database
      * @param answerList the list of answers to be written to the database
      */
     private void writeChallenge(Challenge challenge, List<Answer> answerList) {
@@ -79,6 +85,7 @@ public class BPCWrite {
 
     /**
      * Writes an answer to the database
+     *
      * @param answer the answer to be written to the database
      */
     private void writeAnswer(Answer answer) {

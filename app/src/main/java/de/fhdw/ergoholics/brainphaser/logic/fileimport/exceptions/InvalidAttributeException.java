@@ -2,7 +2,7 @@ package de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions;
 
 /**
  * Created by Daniel Hoogen on 15/03/2016.
- *
+ * <p/>
  * This exception is thrown when an invalid attribute value was found in a file
  */
 public class InvalidAttributeException extends Exception {
@@ -11,8 +11,7 @@ public class InvalidAttributeException extends Exception {
     private String mValue;
 
     //Constructor
-    public InvalidAttributeException(String attributeName, String attributeValue)
-    {
+    public InvalidAttributeException(String attributeName, String attributeValue) {
         super("The attribute " + attributeName + " has an invalid value: " + attributeValue + "!");
 
         mAttribute = attributeName;
@@ -21,6 +20,7 @@ public class InvalidAttributeException extends Exception {
 
     /**
      * Returns the name of the attribute that was given when the exception was created
+     *
      * @return the name of the attribute
      */
     public String getAttribute() {
@@ -29,6 +29,7 @@ public class InvalidAttributeException extends Exception {
 
     /**
      * Returns the value of the attribute that was given when the exception was created
+     *
      * @return the value of the attribute
      */
     public String getValue() {

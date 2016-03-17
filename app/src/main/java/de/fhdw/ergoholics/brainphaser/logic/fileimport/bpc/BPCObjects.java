@@ -15,37 +15,37 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.
- *
+ * <p/>
  * Contains the logic for creating Category, Challenge and Answer objects from a categories node
  */
 public class BPCObjects {
     /**
      * Creates a category object from a category node
-     * @param categoryNode the node of the category to be read
-     * @param categoryId the id to be assigned to the read category
-     * @param challengeId the first free challengeId
-     * @param categoryList the list created categories are added to
+     *
+     * @param categoryNode  the node of the category to be read
+     * @param categoryId    the id to be assigned to the read category
+     * @param challengeId   the first free challengeId
+     * @param categoryList  the list created categories are added to
      * @param challengeList the list created challenges are added to
-     * @param answerList the list created answers are added to
-     * @throws UnexpectedElementException if an unexpected element was found in the file
-     * @throws ElementAmountException if an element occurs more or less often than expected
-     * @throws InvalidAttributeException if an attribute has an invalid value
+     * @param answerList    the list created answers are added to
      * @return the next free challengeId
+     * @throws UnexpectedElementException if an unexpected element was found in the file
+     * @throws ElementAmountException     if an element occurs more or less often than expected
+     * @throws InvalidAttributeException  if an attribute has an invalid value
      */
     public static long readCategory(Node categoryNode, long categoryId,
-                                     long challengeId, List<Category> categoryList,
-                                     List<Challenge> challengeList, List<Answer> answerList)
+                                    long challengeId, List<Category> categoryList,
+                                    List<Challenge> challengeList, List<Answer> answerList)
             throws UnexpectedElementException, ElementAmountException, InvalidAttributeException {
         //Check if the node is the correct element type
-        if (!categoryNode.getNodeName().equals("category"))
-        {
+        if (!categoryNode.getNodeName().equals("category")) {
             throw new UnexpectedElementException(categoryNode.getNodeName());
         }
 
         //Read the attributes
         NamedNodeMap attributes = categoryNode.getAttributes();
 
-        Node titleNode =attributes.getNamedItem("title");
+        Node titleNode = attributes.getNamedItem("title");
         Node descriptionNode = attributes.getNamedItem("description");
         Node imageNode = attributes.getNamedItem("image");
 
@@ -59,9 +59,8 @@ public class BPCObjects {
         Node childCategory = categoryNode.getFirstChild();
 
         int challengeCount = 0;
-        while (childCategory != null)
-        {
-            if (childCategory.getNodeType()==Node.ELEMENT_NODE) {
+        while (childCategory != null) {
+            if (childCategory.getNodeType() == Node.ELEMENT_NODE) {
                 readChallenge(childCategory, categoryId, challengeId,
                         challengeList, answerList);
                 challengeId++;
@@ -82,14 +81,15 @@ public class BPCObjects {
 
     /**
      * Creates a challenge object from a challenge node
+     *
      * @param challengeNode the node of the challenge to be read
-     * @param categoryId the id of the category the read challenge belongs to
-     * @param challengeId the id to be assigned to the read challenge
+     * @param categoryId    the id of the category the read challenge belongs to
+     * @param challengeId   the id to be assigned to the read challenge
      * @param challengeList the list created challenges are added to
-     * @param answerList the list created answers are added to
+     * @param answerList    the list created answers are added to
      * @throws UnexpectedElementException if an unexpected element was found in the file
-     * @throws ElementAmountException if an element occurs more or less often than expected
-     * @throws InvalidAttributeException if an attribute has an invalid value
+     * @throws ElementAmountException     if an element occurs more or less often than expected
+     * @throws InvalidAttributeException  if an attribute has an invalid value
      */
     private static void readChallenge(Node challengeNode, long categoryId, long challengeId,
                                       List<Challenge> challengeList, List<Answer> answerList)
@@ -120,7 +120,7 @@ public class BPCObjects {
 
         int answerCount = 0;
         while (childChallenge != null) {
-            if (childChallenge.getNodeType()==Node.ELEMENT_NODE) {
+            if (childChallenge.getNodeType() == Node.ELEMENT_NODE) {
                 readAnswer(childChallenge, challengeId, answerList);
                 answerCount++;
             }
@@ -132,16 +132,17 @@ public class BPCObjects {
         if (answerCount == 0)
             throw new ElementAmountException("<answer>", ">0", "0");
 
-        //Throw an exception if the challenge type is MULTIPLE_CHOICE and there are not exactly 4 answers
+            //Throw an exception if the challenge type is MULTIPLE_CHOICE and there are not exactly 4 answers
         else if (type == ChallengeType.MULTIPLE_CHOICE && answerCount != 4)
             throw new ElementAmountException("<answer>", "4", "" + answerCount);
     }
 
     /**
      * Creates an answer object from an answer node
-     * @param answerNode the node of the answer to be read
+     *
+     * @param answerNode  the node of the answer to be read
      * @param challengeId the challenge id to be assigned to the read answer
-     * @param answerList the list created answers are added to
+     * @param answerList  the list created answers are added to
      * @throws UnexpectedElementException if an unexpected element was found in the file
      */
     private static void readAnswer(Node answerNode, long challengeId,
@@ -162,11 +163,9 @@ public class BPCObjects {
         boolean answerCorrect;
         if (answerCorrectString.equals("true")) {
             answerCorrect = true;
-        }
-        else if (answerCorrectString.equals("false")) {
+        } else if (answerCorrectString.equals("false")) {
             answerCorrect = false;
-        }
-        else {
+        } else {
             throw new UnexpectedElementException(answerCorrectString);
         }
 
