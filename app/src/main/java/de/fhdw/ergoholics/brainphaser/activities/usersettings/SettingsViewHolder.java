@@ -24,6 +24,8 @@ import java.util.Date;
 
 /**
  * Created by funkv on 15.03.2016.
+ *
+ * View Holder for the individual stage settings
  */
 class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSlider.OnChangeListener {
     public final static int[] COMPONENT_SLIDERS_TO_CREATE = new int[]{
@@ -46,6 +48,7 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
     private final PeriodFormatter mFormatter;
     private Period mPeriod;
     private Duration mDuration;
+    private Date mInitialDate;
     private int mStage;
     private final SparseArray<DurationFieldType> mConversion; // Map between representations or DateComponent and DurationFieldType
 
@@ -135,6 +138,16 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
                 }
             }
         });
+
+        // Reset and collapse on abort
+        Button cancelButton = (Button) itemView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mConfigArea.collapse();
+                bindStage(mInitialDate, mStage); //Reset
+            }
+        });
     }
 
     /**
@@ -201,6 +214,7 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
     public void bindStage(Date currentDate, int stage) {
         mStage = stage;
         mTitle.setText(itemView.getResources().getString(R.string.setting_stage, stage));
+        mInitialDate = currentDate;
         initializeDuration(currentDate);
         mButton.setEnabled(false);
         mErrorLayout.setVisibility(View.GONE);

@@ -43,7 +43,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:onClick="onButtonYesClicked"
-                style="?attr/borderlessButtonStyle"/>
+                style="@style/BrainPhaserButton"/>
 
             <Space
                 android:layout_width="20dp"
@@ -58,7 +58,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:onClick="onButtonNoClicked"
-                style="?attr/borderlessButtonStyle"/>
+                style="@style/BrainPhaserButton" />
 
             <Space
                 android:layout_width="20dp"

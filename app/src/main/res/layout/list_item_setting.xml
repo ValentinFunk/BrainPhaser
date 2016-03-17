@@ -87,14 +87,27 @@
                 />
         </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:id="@+id/saveButton"
-            android:layout_gravity="left"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/colorAccent"
-            style="?attr/borderlessButtonStyle"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:id="@+id/saveButton"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorAccent"
+                style="?attr/borderlessButtonStyle"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/abort"
+                android:id="@+id/cancelButton"
+                android:layout_gravity="left"
+                android:layout_marginTop="8dp"
+                style="?attr/borderlessButtonStyle"/>
+        </LinearLayout>
     </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 </LinearLayout>

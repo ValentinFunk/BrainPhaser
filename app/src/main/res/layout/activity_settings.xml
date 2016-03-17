@@ -46,10 +46,10 @@
                 android:text="@string/reset_settings"
                 android:id="@+id/resetButton"
                 android:layout_gravity="left"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginBottom="8dp"
-                style="?attr/borderlessButtonStyle"/>
+                style="@style/BrainPhaserButton" />
 
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                                                     android:id="@+id/settingsList"

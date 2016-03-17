@@ -88,6 +88,7 @@
     <string name="reset_settings">Einstellungen Zurücksetzen</string>
     <string name="settings_reset">Einstellungen zurückgesetzt.</string>
     <string name="undo">Rückgängig</string>
+    <string name="abort">Abbrechen</string>
 
     <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
     <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
