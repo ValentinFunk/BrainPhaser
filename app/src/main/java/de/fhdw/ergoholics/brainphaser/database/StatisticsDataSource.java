@@ -12,7 +12,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 11/03/2016.
- *
+ * <p/>
  * Data Source class for custom access to statistics table entries in the database
  */
 public class StatisticsDataSource {
@@ -27,6 +27,7 @@ public class StatisticsDataSource {
 
     /**
      * Updates a Statistics object in the database
+     *
      * @param statistics representation of the object to be updated
      */
     public void update(Statistics statistics) {
@@ -35,6 +36,7 @@ public class StatisticsDataSource {
 
     /**
      * Adds a Statistics object to the database
+     *
      * @param statistics statistics entry to be created in the statistics table
      * @return id of the created object
      */
@@ -44,8 +46,9 @@ public class StatisticsDataSource {
 
     /**
      * Returns all Statistics objects of the given user and category
+     *
      * @param categoryId the id of the category whose statistics entries will be returned
-     * @param user the user whose statistics entries will be returned
+     * @param user       the user whose statistics entries will be returned
      * @return list of Statistics objects with the given category id and user
      */
     public List<Statistics> findByCategoryAndUser(long categoryId, User user) {
@@ -55,7 +58,9 @@ public class StatisticsDataSource {
         else {
             List<Statistics> statistics = new ArrayList<>();
             for (Statistics statistic : userStatistics) {
-                Challenge challenge = mDaoSession.getChallengeDao().load(statistic.getChallengeId());
+                Challenge challenge;
+                challenge = mDaoSession.getChallengeDao().load(statistic.getChallengeId());
+
                 if (challenge.getCategoryId() == categoryId) {
                     statistics.add(statistic);
                 }
