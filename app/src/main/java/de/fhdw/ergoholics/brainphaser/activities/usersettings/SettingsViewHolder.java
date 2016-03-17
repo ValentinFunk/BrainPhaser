@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
@@ -49,6 +50,11 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
     private Period mPeriod;
     private Duration mDuration;
     private Date mInitialDate;
+
+    public int getStage() {
+        return mStage;
+    }
+
     private int mStage;
     private final SparseArray<DurationFieldType> mConversion; // Map between representations or DateComponent and DurationFieldType
 
@@ -112,8 +118,6 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         final int expand = itemView.getResources().getIdentifier("ic_expand_more_white_24dp", "drawable", BrainPhaserApplication.PACKAGE_NAME);
         final int collapse = itemView.getResources().getIdentifier( "ic_expand_less_white_24dp","drawable", BrainPhaserApplication.PACKAGE_NAME);
 
-        // mConfigArea.measureAndAdjust();
-        final Boolean doExpand = true;
         mConfigArea.setVisibility(View.GONE);
         mConfigArea.setOnChangeListener(new CollapsingLinearLayout.OnChangeListener() {
             @Override
@@ -127,27 +131,38 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
             }
         });
 
-        mExpandButton.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener expander = new View.OnClickListener() {
             public void onClick(View v) {
                 if (mConfigArea.isCollapsing()) {
                     mConfigArea.expand();
 
                 } else {
                     mConfigArea.collapse();
-
                 }
             }
-        });
+        };
+
+        LinearLayout header = (LinearLayout) itemView.findViewById(R.id.header);
+        header.setOnClickListener(expander);
+        mExpandButton.setOnClickListener(expander);
 
         // Reset and collapse on abort
+        final SettingsViewHolder self = this;
         Button cancelButton = (Button) itemView.findViewById(R.id.cancelButton);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mConfigArea.collapse();
-                bindStage(mInitialDate, mStage); //Reset
+                self.resetAndCollapse();
             }
         });
+    }
+
+    /**
+     * Resets and collapses this view holder
+     */
+    public void resetAndCollapse() {
+        mConfigArea.collapse();
+        bindStage(mInitialDate, mStage); //Reset
     }
 
     /**

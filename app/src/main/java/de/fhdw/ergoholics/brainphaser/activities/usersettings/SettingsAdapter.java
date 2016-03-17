@@ -97,5 +97,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
      */
     void stageTimeSaved(int stage, long durationMsec) {
         SettingsDataSource.setTimeboxByStage(mSettings, stage, new Date(durationMsec));
+        notifyDataSetChanged();
     }
 }
