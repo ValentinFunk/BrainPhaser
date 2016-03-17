@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.CategorySelect;
+package de.fhdw.ergoholics.brainphaser.activities.selectcategory;
 
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -50,12 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_category, parent, false);
-
-        int sizeDip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-            300.f,
-            parent.getContext().getResources().getDisplayMetrics());
-
-        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(sizeDip, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
+        v.setLayoutParams(new LinearLayoutCompat.LayoutParams(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT));
 
         return new CategoryViewHolder(v, mListener);
     }

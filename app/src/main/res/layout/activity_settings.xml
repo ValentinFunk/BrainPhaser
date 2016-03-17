@@ -3,16 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.Settings.SettingsActivity"
+    tools:context=".activities.usersettings.SettingsActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:id="@+id/main_content">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,10 +25,32 @@
                 android:text="@string/stages"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:id="@+id/heading"
                 />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stages_desc"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="0dp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reset_settings"
+                android:id="@+id/resetButton"
+                android:layout_gravity="left"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                style="@style/BrainPhaserButton" />
+
             <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
                                                     android:id="@+id/settingsList"
                                                     android:layout_width="match_parent"

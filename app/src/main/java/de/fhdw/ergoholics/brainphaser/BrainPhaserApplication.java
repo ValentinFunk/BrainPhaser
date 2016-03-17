@@ -15,6 +15,8 @@ import dagger.Component;
  * Custom Application class for hooking into App creation
  */
 public class BrainPhaserApplication extends Application {
+    public static String PACKAGE_NAME;
+
     /**
      * Defines the Component to use in the Production Application.
      * The component is a bridge between Modules and Injects.
@@ -53,5 +55,6 @@ public class BrainPhaserApplication extends Application {
         super.onCreate();
         JodaTimeAndroid.init(this);
         mComponent = createComponent();
+        PACKAGE_NAME = getApplicationContext().getPackageName();
     }
 }

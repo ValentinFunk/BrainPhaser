@@ -55,9 +55,9 @@
                 <data android:mimeType="application/octet-stream"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UserCreation.CreateUserActivity"/>
+        <activity android:name=".activities.createuser.CreateUserActivity"/>
         <activity
-            android:name=".activities.UserSelection.UserSelectionActivity"
+            android:name=".activities.selectuser.UserSelectionActivity"
             android:label="@string/select_user"
             android:parentActivityName=".activities.main.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -66,7 +66,7 @@
                 android:value=".activities.main.MainActivity"/>
         </activity>
         <activity
-            android:name=".activities.About.AboutActivity"
+            android:name=".activities.aboutscreen.AboutActivity"
             android:parentActivityName=".activities.main.MainActivity"
             android:label="@string/about">
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -79,7 +79,7 @@
             android:launchMode="singleTask">
         </activity>
         <activity
-            android:name=".activities.Challenge.ChallengeActivity"
+            android:name=".activities.playchallenge.ChallengeActivity"
             android:label="@string/nav_learn"
             android:parentActivityName=".activities.main.MainActivity"
             >
@@ -96,8 +96,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.main.MainActivity"/>
         </activity>
-        <activity android:name=".activities.Settings.SettingsActivity"
+        <activity android:name=".activities.usersettings.SettingsActivity"
             android:label="@string/settings_label"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName=".activities.main.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

@@ -3,12 +3,12 @@ package de.fhdw.ergoholics.brainphaser.activities.main;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 
 import javax.inject.Inject;

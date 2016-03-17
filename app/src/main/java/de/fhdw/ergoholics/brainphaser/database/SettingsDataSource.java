@@ -44,14 +44,7 @@ public class SettingsDataSource {
      */
     public Settings createNewDefaultSettings() {
         Settings settings = new Settings();
-
-        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
-        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
-        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
-
+        setToDefaultSettings(settings);
         mDaoSession.getSettingsDao().insert(settings);
         return settings;
     }
@@ -83,6 +76,31 @@ public class SettingsDataSource {
     }
 
     /**
+     * Copy all settings parameters from src into dest
+     * @param dest destination object
+     * @param src source object
+     */
+    public void copySettings(Settings dest, Settings src) {
+        dest.setTimeBoxStage1(src.getTimeBoxStage1());
+        dest.setTimeBoxStage2(src.getTimeBoxStage2());
+        dest.setTimeBoxStage3(src.getTimeBoxStage3());
+        dest.setTimeBoxStage4(src.getTimeBoxStage4());
+        dest.setTimeBoxStage5(src.getTimeBoxStage5());
+        dest.setTimeBoxStage6(src.getTimeBoxStage6());
+    }
+
+    /**
+     * Clones a settings object
+     * @param settings object received
+     * @return cloned Object
+     */
+    public Settings cloneSettings(Settings settings) {
+        Settings clone = new Settings();
+        copySettings(clone, settings);
+        return clone;
+    }
+
+    /**
      * Sets the timebox of the given stage in the given Settings object
      * @param settings Settings object whose timebox will be set
      * @param stage number of the stage whose timebox will be set
@@ -111,6 +129,19 @@ public class SettingsDataSource {
             default:
                 throw new IllegalArgumentException("Attempting to set invalid timebox " + stage);
         }
+    }
+
+    /**
+     * Applies default values to a settings object
+     * @param settings object to reset to defaults
+     */
+    public void setToDefaultSettings(Settings settings) {
+        settings.setTimeBoxStage1(new Date(Period.minutes(5).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage2(new Date(Period.hours(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage3(new Date(Period.days(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage4(new Date(Period.weeks(1).toStandardDuration().getMillis()));
+        settings.setTimeBoxStage5(new Date(Period.weeks(4).toStandardDuration().getMillis())); // a Month
+        settings.setTimeBoxStage6(new Date(Period.weeks(24).toStandardDuration().getMillis())); // 6 Months
     }
 
     /**

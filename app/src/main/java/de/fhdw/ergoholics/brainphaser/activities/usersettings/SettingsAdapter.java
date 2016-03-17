@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
@@ -76,6 +76,12 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return SettingsDataSource.STAGE_COUNT;
     }
 
+    /**
+     * Check whether the given duration is valid for a given stage.
+     * @param stage stage to check
+     * @param durationMsec duration for this stage
+     * @return null if this is a valid value, error string id if it is invalid
+     */
     public Integer isTimeValidForStage(int stage, long durationMsec) {
         return mSettingsLogic.isTimeValidForStage(mSettings, stage, durationMsec);
     }
@@ -84,7 +90,13 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return mSettings;
     }
 
+    /**
+     * Called by ViewHolder to notify a change
+     * @param stage stage number that changed
+     * @param durationMsec the new duration in milliseconds
+     */
     void stageTimeSaved(int stage, long durationMsec) {
         SettingsDataSource.setTimeboxByStage(mSettings, stage, new Date(durationMsec));
+        notifyDataSetChanged();
     }
 }

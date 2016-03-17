@@ -1,8 +1,7 @@
-package de.fhdw.ergoholics.brainphaser.activities.Challenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,20 @@ import de.fhdw.ergoholics.brainphaser.R;
 public class SelfTestDialogFragment extends AnswerFragment {
 
     /**
-     * Interface
+     * Interface toggles, when the SelfCheck-Challenge was checked by the user
      */
     public interface SelfCheckAnswerListener{
         void onSelfCheckAnswerChecked();
     }
     SelfCheckAnswerListener mSelfCheckAnswerListener;
 
+    /**
+     * Loads the Listener and sets up the view
+     * @param inflater Inlfates the Fragment
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +42,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //execute AnswerListener and unloads the fragment
+                //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(true);
                 mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
@@ -44,7 +50,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
         btnWrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //execute AnswerListener and unloads the fragment
+                //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(false);
                 mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
             }
@@ -73,16 +79,18 @@ public class SelfTestDialogFragment extends AnswerFragment {
     }
 
     /**
-     * Check answer
+     * Check answer (given answers is false)
      */
     @Override
     public void checkAnswers() {
+        //execute AnswerListener and loads the next screen
+        mListener.onAnswerChecked(false);
         mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
     }
 
     /**
      * Inject components
-     * @param component
+     * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

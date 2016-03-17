@@ -1,21 +1,18 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.DateComponent;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
-import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.DateComponent;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
 
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
@@ -28,6 +25,8 @@ import java.util.Date;
 
 /**
  * Created by funkv on 15.03.2016.
+ *
+ * View Holder for the individual stage settings
  */
 class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSlider.OnChangeListener {
     public final static int[] COMPONENT_SLIDERS_TO_CREATE = new int[]{
@@ -37,23 +36,27 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         DateComponent.MINUTES
     };
 
-
-
     private SettingsAdapter mAdapter;
     private TextView mTitle;
     private TextView mTime;
     private Button mButton;
-    private LinearLayout mErrorLayout;
+    private CollapsingLinearLayout mErrorLayout;
     private TextView mErrorText;
     private SparseArray<TimePeriodSlider> mTimePeriodSliders; // SparseArray mapping dateTypes from DateComponent to their respective slider
+    private CollapsingLinearLayout mConfigArea;
+    private ImageButton mExpandButton;
 
     private final PeriodFormatter mFormatter;
     private Period mPeriod;
     private Duration mDuration;
+    private Date mInitialDate;
+
+    public int getStage() {
+        return mStage;
+    }
+
     private int mStage;
     private final SparseArray<DurationFieldType> mConversion; // Map between representations or DateComponent and DurationFieldType
-    ValueAnimator mAnimator;
-    private boolean mReversing = false;
 
     /**
      * Create a ViewHolder for a stage object
@@ -79,8 +82,10 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         mTitle = (TextView) itemView.findViewById(R.id.stageTitle);
         mTime = (TextView) itemView.findViewById(R.id.stageTime);
         mButton = (Button) itemView.findViewById(R.id.saveButton);
-        mErrorLayout = (LinearLayout) itemView.findViewById(R.id.errorLayout);
+        mErrorLayout = (CollapsingLinearLayout) itemView.findViewById(R.id.errorLayout);
         mErrorText = (TextView) itemView.findViewById(R.id.errorText);
+        mConfigArea = (CollapsingLinearLayout) itemView.findViewById(R.id.config_area);
+        mExpandButton = (ImageButton) itemView.findViewById(R.id.expand_settings_button);
 
         // Intialize the formater
         Resources res = itemView.getResources();
@@ -100,51 +105,64 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
             sliders.valueAt(i).setOnChangeListener(this);
         }
 
-        // Set up error box animator
-        mAnimator = ValueAnimator.ofInt(0,100);
-
-        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int interpolated = (Integer) mAnimator.getAnimatedValue();
-                ViewGroup.LayoutParams layoutParams = mErrorLayout.getLayoutParams();
-                layoutParams.height = interpolated;
-                mErrorLayout.setLayoutParams(layoutParams);
-            }
-        });
-
-        mAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                if (!mReversing) {
-                    mErrorLayout.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                if (mReversing) {
-                    mErrorLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mButton.isEnabled()) {
                     mAdapter.stageTimeSaved(mStage, mDuration.getMillis());
+                    mConfigArea.collapse();
                 }
             }
         });
+
+        final int expand = itemView.getResources().getIdentifier("ic_expand_more_white_24dp", "drawable", BrainPhaserApplication.PACKAGE_NAME);
+        final int collapse = itemView.getResources().getIdentifier( "ic_expand_less_white_24dp","drawable", BrainPhaserApplication.PACKAGE_NAME);
+
+        mConfigArea.setVisibility(View.GONE);
+        mConfigArea.setOnChangeListener(new CollapsingLinearLayout.OnChangeListener() {
+            @Override
+            public void onExpand() {
+                mExpandButton.setImageResource(collapse);
+            }
+
+            @Override
+            public void onCollapse() {
+                mExpandButton.setImageResource(expand);
+            }
+        });
+
+        View.OnClickListener expander = new View.OnClickListener() {
+            public void onClick(View v) {
+                if (mConfigArea.isCollapsing()) {
+                    mConfigArea.expand();
+
+                } else {
+                    mConfigArea.collapse();
+                }
+            }
+        };
+
+        LinearLayout header = (LinearLayout) itemView.findViewById(R.id.header);
+        header.setOnClickListener(expander);
+        mExpandButton.setOnClickListener(expander);
+
+        // Reset and collapse on abort
+        final SettingsViewHolder self = this;
+        Button cancelButton = (Button) itemView.findViewById(R.id.cancelButton);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                self.resetAndCollapse();
+            }
+        });
+    }
+
+    /**
+     * Resets and collapses this view holder
+     */
+    public void resetAndCollapse() {
+        mConfigArea.collapse();
+        bindStage(mInitialDate, mStage); //Reset
     }
 
     /**
@@ -167,7 +185,7 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
 
         // Get period
         final DurationFieldType[] durationFields = new DurationFieldType[]{DurationFieldType.weeks(), DurationFieldType.days(), DurationFieldType.hours(), DurationFieldType.minutes()};
-        mPeriod = mDuration.toPeriod(PeriodType.forFields(durationFields));
+        mPeriod = mDuration.toPeriod(PeriodType.forFields(durationFields)).normalizedStandard();
         updatePeriod();
     }
 
@@ -188,57 +206,18 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
     }
 
     /**
-     * Measure the error box and update animator
-     */
-
-    void measureError( ) {
-        mErrorLayout.setVisibility(View.VISIBLE);
-
-        ViewGroup.LayoutParams layoutParams = mErrorLayout.getLayoutParams();
-        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        mErrorLayout.setLayoutParams(layoutParams);
-
-        final int widthSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        final int heightSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        mErrorLayout.measure(widthSpec, heightSpec);
-
-        mAnimator.setIntValues(0, mErrorLayout.getMeasuredHeight());
-    }
-
-    /**
-     * Expand the error box
-     */
-    private void expandError() {
-        measureError();
-        if (mErrorLayout.getVisibility() == View.GONE || mReversing) {
-            mAnimator.start();
-        }
-        mReversing = false;
-    }
-
-    /**
-     * Collapse the error box
-     */
-    private void collapseError() {
-        if (!mReversing) {
-            mAnimator.reverse();
-            mReversing = true;
-        }
-    }
-
-    /**
      * Validate Period and update view with error
      */
     private void doValidation() {
         Integer error = mAdapter.isTimeValidForStage(mStage, mDuration.getMillis());
         if (error == null) {
             mButton.setEnabled(true);
-            collapseError();
+            mErrorLayout.collapse();
 
         } else {
             mButton.setEnabled(false);
             mErrorText.setText(itemView.getResources().getString(error));
-            expandError();
+            mErrorLayout.expand();
         }
     }
 
@@ -250,9 +229,11 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
     public void bindStage(Date currentDate, int stage) {
         mStage = stage;
         mTitle.setText(itemView.getResources().getString(R.string.setting_stage, stage));
+        mInitialDate = currentDate;
         initializeDuration(currentDate);
         mButton.setEnabled(false);
         mErrorLayout.setVisibility(View.GONE);
+        mErrorLayout.collapse();
     }
 
     @Override

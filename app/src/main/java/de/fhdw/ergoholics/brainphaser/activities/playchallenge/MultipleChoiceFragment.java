@@ -1,7 +1,5 @@
-package de.fhdw.ergoholics.brainphaser.activities.Challenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ToggleButton;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
@@ -87,13 +84,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
                 bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
             } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
                 //if answers is not toggled and correct
-                //TODO ersetzen mit uncheck_correct
                 booleanArray[i] = false;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
+                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_unchecked_correct);
             } else {
                 //if answer is toggled and not correct
-                //TODO ersetzen mit check_wrong
-                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_bg_unchecked);
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_background_checked_incorrect);
                 booleanArray[i] = false;
             }
             //Displays the state of the answer
