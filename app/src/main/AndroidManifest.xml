@@ -98,6 +98,7 @@
         </activity>
         <activity android:name=".activities.usersettings.SettingsActivity"
             android:label="@string/settings_label"
+            android:configChanges="orientation|screenSize"
             android:parentActivityName=".activities.main.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
