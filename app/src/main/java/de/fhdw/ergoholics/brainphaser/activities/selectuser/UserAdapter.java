@@ -1,13 +1,10 @@
-package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
+package de.fhdw.ergoholics.brainphaser.activities.selectuser;
 
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +16,7 @@ import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.Avatars;
+import de.fhdw.ergoholics.brainphaser.activities.createuser.Avatars;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
 

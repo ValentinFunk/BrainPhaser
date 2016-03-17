@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.UserSelection;
+package de.fhdw.ergoholics.brainphaser.activities.selectuser;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;

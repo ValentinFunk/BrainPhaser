@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.model.Settings;

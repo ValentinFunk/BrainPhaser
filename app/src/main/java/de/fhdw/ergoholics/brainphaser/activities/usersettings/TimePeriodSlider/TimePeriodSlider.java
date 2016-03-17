@@ -1,17 +1,14 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
-import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**

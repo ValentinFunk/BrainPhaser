@@ -1,10 +1,9 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,8 @@ import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.DateComponent;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.TimePeriodSlider.TimePeriodSlider;
-import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.DateComponent;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
 
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;

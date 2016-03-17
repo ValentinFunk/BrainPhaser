@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.UserCreation;
+package de.fhdw.ergoholics.brainphaser.activities.createuser;
 
 import android.content.Context;
 import android.content.res.Resources;
