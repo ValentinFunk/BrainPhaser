@@ -52,7 +52,7 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <de.fhdw.ergoholics.brainphaser.activities.settings.CollapsingLinearLayout
+    <de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout
         android:id="@+id/config_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         </LinearLayout>
 
 
-        <de.fhdw.ergoholics.brainphaser.activities.settings.CollapsingLinearLayout
+        <de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundEmptyState"
@@ -85,7 +85,7 @@
                 android:text="@string/error_less_than_previous"
                 android:id="@+id/errorText"
                 />
-        </de.fhdw.ergoholics.brainphaser.activities.settings.CollapsingLinearLayout>
+        </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 
         <Button
             android:layout_width="wrap_content"
@@ -96,5 +96,5 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/colorAccent"
             style="?attr/borderlessButtonStyle"/>
-    </de.fhdw.ergoholics.brainphaser.activities.settings.CollapsingLinearLayout>
+    </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 </LinearLayout>

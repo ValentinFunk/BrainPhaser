@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.settings.CollapsingLinearLayout;
 import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.DateComponent;
 import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
 
