@@ -62,7 +62,6 @@ public class CollapsingLinearLayout extends LinearLayout implements ValueAnimato
         layoutParams.height = interpolated;
         setLayoutParams(layoutParams);
         requestLayout();
-        Log.d("asd", " " + interpolated);
     }
 
     /**
