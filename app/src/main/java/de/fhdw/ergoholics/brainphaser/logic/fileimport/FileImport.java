@@ -1,5 +1,11 @@
 package de.fhdw.ergoholics.brainphaser.logic.fileimport;
 
+import org.w3c.dom.Node;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCObjects;
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.bpc.BPCRead;
@@ -11,12 +17,6 @@ import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElem
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-
-import org.w3c.dom.Node;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Daniel Hoogen on 19/02/2016.

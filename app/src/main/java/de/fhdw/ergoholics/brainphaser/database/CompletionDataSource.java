@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.model.Completion;
 import de.fhdw.ergoholics.brainphaser.model.CompletionDao;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.greenrobot.dao.query.QueryBuilder;
-
-import javax.inject.Inject;
 
 /**
  * Created by Chris on 2/25/2016.

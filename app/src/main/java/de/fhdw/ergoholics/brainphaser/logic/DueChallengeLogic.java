@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
-import android.support.annotation.NonNull;
 import android.support.v4.util.LongSparseArray;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Completion;
-import de.fhdw.ergoholics.brainphaser.model.Settings;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**

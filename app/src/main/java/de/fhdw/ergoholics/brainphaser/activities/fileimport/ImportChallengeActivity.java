@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
@@ -16,11 +21,6 @@ import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.ElementAmountE
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.InvalidAttributeException;
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /**
  * Created by Daniel Hoogen on 16/02/2016.

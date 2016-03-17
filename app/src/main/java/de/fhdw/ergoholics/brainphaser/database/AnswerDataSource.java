@@ -2,10 +2,10 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
-
-import javax.inject.Inject;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.

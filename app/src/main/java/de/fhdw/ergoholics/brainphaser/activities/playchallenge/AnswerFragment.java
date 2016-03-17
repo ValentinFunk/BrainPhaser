@@ -4,15 +4,16 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * The abstract fragment contains all necessary  methods for the different challenge-type fragments

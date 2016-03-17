@@ -3,11 +3,11 @@ package de.fhdw.ergoholics.brainphaser.logic;
 import android.app.Application;
 import android.content.SharedPreferences;
 
-import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
-import de.fhdw.ergoholics.brainphaser.model.User;
-
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by funkv on 06.03.2016.

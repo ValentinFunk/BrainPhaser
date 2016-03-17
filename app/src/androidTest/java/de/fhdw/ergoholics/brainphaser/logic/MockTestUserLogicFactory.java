@@ -1,8 +1,8 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
-import de.fhdw.ergoholics.brainphaser.model.User;
-
 import org.mockito.Mockito;
+
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by funkv on 07.03.2016.

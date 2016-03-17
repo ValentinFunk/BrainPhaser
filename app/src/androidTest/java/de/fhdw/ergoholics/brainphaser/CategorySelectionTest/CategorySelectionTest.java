@@ -12,22 +12,6 @@ import android.test.suitebuilder.annotation.LargeTest;
 import android.util.SparseArray;
 import android.view.View;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
-import de.fhdw.ergoholics.brainphaser.DaggerActivityTestRule;
-import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.TestAppModule;
-import de.fhdw.ergoholics.brainphaser.TestBrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.TestUtils;
-import de.fhdw.ergoholics.brainphaser.activities.selectcategory.CategoryViewHolder;
-import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
-import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
-import de.fhdw.ergoholics.brainphaser.database.MockDatabaseModule;
-import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
-import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.model.Category;
-import de.fhdw.ergoholics.brainphaser.model.User;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
@@ -42,6 +26,21 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
+import de.fhdw.ergoholics.brainphaser.DaggerActivityTestRule;
+import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.TestAppModule;
+import de.fhdw.ergoholics.brainphaser.TestBrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.TestUtils;
+import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
+import de.fhdw.ergoholics.brainphaser.activities.selectcategory.CategoryViewHolder;
+import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
+import de.fhdw.ergoholics.brainphaser.database.MockDatabaseModule;
+import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
+import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
+import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.User;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;

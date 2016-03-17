@@ -14,8 +14,8 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**

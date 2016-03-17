@@ -16,11 +16,11 @@ package de.fhdw.ergoholics.brainphaser;
  * limitations under the License.
  */
 
-    import android.app.Activity;
-    import android.app.Application;
-    import android.support.annotation.NonNull;
-    import android.support.test.InstrumentationRegistry;
-    import android.support.test.rule.ActivityTestRule;
+import android.app.Activity;
+import android.app.Application;
+import android.support.annotation.NonNull;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 
 /**
  * {@link ActivityTestRule} which provides hook for

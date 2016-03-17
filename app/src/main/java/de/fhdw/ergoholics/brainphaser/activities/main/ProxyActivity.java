@@ -4,14 +4,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
-
-import javax.inject.Inject;
 
 /**
  * Created by funkv on 29.02.2016.
