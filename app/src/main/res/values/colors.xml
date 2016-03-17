@@ -23,4 +23,5 @@
     <color name="buttonBorder">#3C3C3C</color>
     <color name="buttonBorderChecked">@color/colorAccent</color>
     <color name="buttonBackground">#FFFFFF</color>
+    <color name="buttonBackgroundRight">#E8F5E9</color>
 </resources>
