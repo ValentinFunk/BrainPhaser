@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.Settings;
+package de.fhdw.ergoholics.brainphaser.activities.settings;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
