@@ -13,7 +13,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;

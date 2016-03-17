@@ -45,33 +45,34 @@
 
 
     <string name="nav_learn">Lernen</string>
-    <string name="statistics">Statistiken</string>
     <string name="due_chart_center_text">Fälligkeit</string>
     <string name="stage_chart_center_text">Klassen</string>
-    <string name="chart_no_data_text">Keine Statistikdaten vorhanden :(</string>
+    <string name="chart_no_data_text">Keine Statistikdaten vorhanden!</string>
     <string name="challenge_due_text">Ja</string>
     <string name="challeng_not_due_text">Nein</string>
     <string name="chart_stage_others_text">Andere</string>
     <string name="import_activity_button_no">Nein</string>
     <string name="import_activity_button_yes">Ja</string>
-    <string name="statistics_label">Statistiken</string>
+
     <string name="user_context_menu_button_edit">Bearbeiten</string>
     <string name="user_context_menu_button_delete">Löschen</string>
+
+    <string name="statistics">Statistiken</string>
+    <string name="statistics_label">Statistiken</string>
     <string name="statistics_most_played">Am häufigsten beantwortet</string>
     <string name="statistics_most_failed">Am häufigsten falsch</string>
     <string name="statistics_most_succeeded">Am häufigsten richtig</string>
     <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
+    <string name="statistics_most_played_information_text">Tippe auf ein Tortenstück, um die Challenge anzuzeigen.</string>
 
+    <string name="stages_desc">Hier kannst du die Zeitabstände der Klassen ändern.</string>
     <string name="months">Monate</string>
     <string name="weeks">Wochen</string>
     <string name="days">Tage</string>
     <string name="hours">Stunden</string>
     <string name="minutes">Minuten</string>
     <string name="setting_stage">Klasse %d</string>
-
     <string name="settings_label">Einstellungen</string>
-
-
     <string name="formatter_minutes">Minuten</string>
     <string name="formatter_minute">Minute</string>
     <string name="formatter_hour">Stunde</string>
@@ -84,10 +85,15 @@
     <string name="formatter_months">Monate</string>
     <string name="save">Speichern</string>
     <string name="stages">Zeitabstände der Klassen</string>
+    <string name="reset_settings">Einstellungen Zurücksetzen</string>
+    <string name="settings_reset">Einstellungen zurückgesetzt.</string>
+    <string name="undo">Rückgängig</string>
 
     <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
     <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
     <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
 
-    <string name="about_teamMembers">Valentin Funk \nChristian Kost \nLars Kahra \nDaniel Hoogen \nThomas Stückel</string>
+    <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
+    <string name="title_about">Bild und Software Lizenzen:</string>
+    <string name="about_team_headline">Team ERGOHolics:</string>
 </resources>

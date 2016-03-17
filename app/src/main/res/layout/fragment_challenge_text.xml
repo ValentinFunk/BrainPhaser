@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_answer_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:minHeight="64dp">
+        android:layout_weight="1"
+        android:minHeight="70dp">
         <EditText
             android:id="@+id/answerText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:hint="@string/answer"
             android:singleLine="true"
             android:imeOptions="actionDone"

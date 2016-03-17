@@ -14,11 +14,11 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
+import de.fhdw.ergoholics.brainphaser.activities.aboutscreen.AboutActivity;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.SettingsActivity;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.SettingsActivity;
 import de.fhdw.ergoholics.brainphaser.activities.fileimport.ImportChallengeActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
+import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 
 import javax.inject.Inject;

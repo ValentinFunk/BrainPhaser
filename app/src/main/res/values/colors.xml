@@ -19,4 +19,9 @@
     <color name="colorText">#E0A7A5</color>
     <color name="colorMultipleChoice">#A7E0A5</color>
     <color name="colorSelfCheck">#A7A5E0</color>
+
+    <color name="buttonBorder">#3C3C3C</color>
+    <color name="buttonBorderChecked">@color/colorAccent</color>
+    <color name="buttonBackground">#FFFFFF</color>
+    <color name="buttonBackgroundRight">#E8F5E9</color>
 </resources>

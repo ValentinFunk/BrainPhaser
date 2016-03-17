@@ -19,7 +19,7 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.TestAppModule;
 import de.fhdw.ergoholics.brainphaser.TestBrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.TestUtils;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.CategoryViewHolder;
+import de.fhdw.ergoholics.brainphaser.activities.selectcategory.CategoryViewHolder;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.database.MockDatabaseModule;

@@ -1,18 +1,18 @@
 package de.fhdw.ergoholics.brainphaser;
 
-import de.fhdw.ergoholics.brainphaser.activities.About.AboutActivity;
-import de.fhdw.ergoholics.brainphaser.activities.CategorySelect.SelectCategoryPage;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.AnswerFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.ChallengeActivity;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.FinishChallengeFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.MultipleChoiceFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.SelfTestDialogFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.SelfTestFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Challenge.TextFragment;
-import de.fhdw.ergoholics.brainphaser.activities.Settings.SettingsActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserCreation.CreateUserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserAdapter;
-import de.fhdw.ergoholics.brainphaser.activities.UserSelection.UserSelectionActivity;
+import de.fhdw.ergoholics.brainphaser.activities.aboutscreen.AboutActivity;
+import de.fhdw.ergoholics.brainphaser.activities.selectcategory.SelectCategoryPage;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.FinishChallengeFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.MultipleChoiceFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestDialogFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.TextFragment;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.SettingsActivity;
+import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserAdapter;
+import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
 import de.fhdw.ergoholics.brainphaser.activities.statistics.StatisticsActivity;
@@ -40,7 +40,6 @@ public interface BrainPhaserComponent {
     void inject(SettingsActivity activity);
 
     void inject(AboutActivity activity);
-
 
     void inject(SelectCategoryPage selectCategoryPage);
     void inject(AnswerFragment answerFragment);

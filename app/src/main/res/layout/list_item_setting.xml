@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceListItem"
                 android:text="Large Text"
                 android:id="@+id/stageTitle"
                 />
@@ -27,7 +27,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="?android:textColorSecondary"
                 android:text="Large Text"
                 android:layout_marginTop="8dp"
                 android:id="@+id/stageTime"
@@ -38,18 +39,21 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+            <ImageButton
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
                 android:tint="@android:color/darker_gray"
                 android:src="@drawable/ic_expand_more_white_24dp"
+                android:id="@+id/expand_settings_button"
+                style="?attr/borderlessButtonStyle"
                 android:layout_centerVertical="true"/>
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout
+        android:id="@+id/config_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -65,7 +69,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundEmptyState"
@@ -81,7 +85,7 @@
                 android:text="@string/error_less_than_previous"
                 android:id="@+id/errorText"
                 />
-        </LinearLayout>
+        </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 
         <Button
             android:layout_width="wrap_content"
@@ -90,6 +94,7 @@
             android:id="@+id/saveButton"
             android:layout_gravity="left"
             android:layout_marginTop="8dp"
+            android:textColor="@color/colorAccent"
             style="?attr/borderlessButtonStyle"/>
-    </LinearLayout>
+    </de.fhdw.ergoholics.brainphaser.activities.usersettings.CollapsingLinearLayout>
 </LinearLayout>

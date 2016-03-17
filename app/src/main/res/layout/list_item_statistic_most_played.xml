@@ -24,16 +24,14 @@
             android:id="@+id/titleView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/categoryImage"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_marginStart="8dip"
             android:layout_marginBottom="8dip"
             android:includeFontPadding="false"
             android:text="@string/statistics_most_played"
-            android:textColor="#000000"
+            android:textColor="?android:textColorPrimary"
             android:textSize="24sp"
             android:layout_marginTop="8dip"
-            android:gravity="center_horizontal" />
+            android:gravity="start" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,6 +70,19 @@
                 android:layout_weight="5" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/informationText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dip"
+            android:layout_marginBottom="8dip"
+            android:includeFontPadding="false"
+            android:text="@string/statistics_most_played_information_text"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="12sp"
+            android:layout_marginTop="8dip"
+            android:gravity="start" />
 
     </LinearLayout>
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:state_checked="true"
-    android:drawable="@drawable/multiple_choice_checked"
+    android:drawable="@drawable/multichoice_bg_checked"
     android:textColor="@color/colorAccent"/>
 <item android:state_pressed="true"
-    android:drawable="@drawable/multiple_choice_checked"
+    android:drawable="@drawable/multichoice_bg_checked"
     android:textColor="@color/colorAccent"/>
 <item android:state_checked="false"
-    android:drawable="@drawable/multiple_choice_unchecked"
+    android:drawable="@drawable/multichoice_bg_unchecked"
     android:textColor="@color/colorAccent"/>
 </selector>

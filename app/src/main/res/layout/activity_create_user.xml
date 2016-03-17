@@ -5,7 +5,7 @@
                                                  android:layout_width="match_parent"
                                                  android:layout_height="match_parent"
                                                  android:fitsSystemWindows="true"
-                                                 tools:context=".activities.UserCreation.CreateUserActivity">
+                                                 tools:context=".activities.createuser.CreateUserActivity">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +17,7 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="@dimen/activity_vertical_margin"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:context=".activities.UserCreation.CreateUserActivity"
+                    tools:context=".activities.createuser.CreateUserActivity"
                     tools:showIn="@layout/activity_create_user">
 
         <TextView
