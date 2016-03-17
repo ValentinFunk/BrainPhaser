@@ -76,6 +76,31 @@ public class SettingsDataSource {
     }
 
     /**
+     * Copy all settings parameters from src into dest
+     * @param dest destination object
+     * @param src source object
+     */
+    public void copySettings(Settings dest, Settings src) {
+        dest.setTimeBoxStage1(src.getTimeBoxStage1());
+        dest.setTimeBoxStage2(src.getTimeBoxStage2());
+        dest.setTimeBoxStage3(src.getTimeBoxStage3());
+        dest.setTimeBoxStage4(src.getTimeBoxStage4());
+        dest.setTimeBoxStage5(src.getTimeBoxStage5());
+        dest.setTimeBoxStage6(src.getTimeBoxStage6());
+    }
+
+    /**
+     * Clones a settings object
+     * @param settings object received
+     * @return cloned Object
+     */
+    public Settings cloneSettings(Settings settings) {
+        Settings clone = new Settings();
+        copySettings(clone, settings);
+        return clone;
+    }
+
+    /**
      * Sets the timebox of the given stage in the given Settings object
      * @param settings Settings object whose timebox will be set
      * @param stage number of the stage whose timebox will be set
