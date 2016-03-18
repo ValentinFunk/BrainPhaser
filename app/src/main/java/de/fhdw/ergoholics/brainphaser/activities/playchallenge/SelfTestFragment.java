@@ -11,6 +11,7 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
+ * Created by Christian Kost
  * Fragment for a self-check challenge. Loads the SelfTestDialogFragment on checkAnswers.
  */
 public class SelfTestFragment extends AnswerFragment {
@@ -23,7 +24,7 @@ public class SelfTestFragment extends AnswerFragment {
         Bundle bundle = new Bundle();
         bundle.putLong(ChallengeActivity.KEY_CHALLENGE_ID, mChallenge.getId());
         //Load End Screen
-        FragmentTransaction fTransaction=getFragmentManager().beginTransaction();
+        FragmentTransaction fTransaction = getFragmentManager().beginTransaction();
         fTransaction.disallowAddToBackStack();
         SelfTestDialogFragment selfTestDialogFragment = new SelfTestDialogFragment();
         //Commit the bundle
@@ -35,6 +36,14 @@ public class SelfTestFragment extends AnswerFragment {
         getFragmentManager().executePendingTransactions();
     }
 
+    /**
+     * Loads the self test view
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Ignored
+     * @return Return the inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +54,8 @@ public class SelfTestFragment extends AnswerFragment {
 
     /**
      * Inject components
-     * @param component
+     *
+     * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

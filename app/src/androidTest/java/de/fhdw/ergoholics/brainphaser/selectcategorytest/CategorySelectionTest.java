@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.CategorySelectionTest;
+package de.fhdw.ergoholics.brainphaser.selectcategorytest;
 
 import android.app.Application;
 import android.support.annotation.NonNull;

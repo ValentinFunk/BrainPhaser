@@ -16,16 +16,19 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
- * Fragment for a text challenge
+ * Created by Christian Kost
+ * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on checkAnswers.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
     //Textfield of the answer
     private TextView mAnswerInput;
     private TextInputLayout mAnswerInputLayout;
 
+
     /**
-     * inject components
-     * @param component
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -63,13 +66,14 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
-                checkAnswers();
+            checkAnswers();
         }
         return false;
     }
 
     /**
      * Checks the given answer
+     *
      * @return Is the answer right or nah
      */
     @Override
