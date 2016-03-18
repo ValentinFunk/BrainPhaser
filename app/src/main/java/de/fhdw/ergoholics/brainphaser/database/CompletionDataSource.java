@@ -13,13 +13,16 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 import de.greenrobot.dao.query.QueryBuilder;
 
 /**
- * Created by Chris on 2/25/2016.
+ * Created by Christian Kost
+ * Data Source class for custom access to completion table entries in the database
  */
 public class CompletionDataSource {
-    public static int ANSWER_RIGHT = 1;
-    public static int ANSWER_WRONG = -1;
     private DaoSession mDaoSession;
 
+    /**
+     * Constructor defines the daosession
+     * @param session the DaoSession
+     */
     @Inject
     CompletionDataSource(DaoSession session) {
         mDaoSession = session;
@@ -87,34 +90,5 @@ public class CompletionDataSource {
         }
     }
 
-    /**
-     * Updates or inserts a completion object
-     * @param challengeId The Challenge ID
-     * @param userId      The currently loggen in user
-     * @param stageUp     1 for StageUp -1 for StageDown (answer right, answer wrong)
-     */
-    // TODO: This is logic.
-    public void updateAfterAnswer(long challengeId, long userId, int stageUp) {
-        if (stageUp != ANSWER_WRONG && stageUp != ANSWER_RIGHT) {
-            return;
-        }
-        Completion completed = findByChallengeAndUser(challengeId, userId);
-        if (completed == null) {
-            completed = new Completion(null, 2, new Date(), userId, challengeId);
-            if (stageUp == ANSWER_WRONG) {
-                completed.setStage(1);
-            }
-            create(completed);
-        } else {
-            completed.setStage(completed.getStage() + stageUp);
-            if (completed.getStage() < 1) {
-                completed.setStage(1);
-            } else if (completed.getStage() > 6) {
-                completed.setStage(6);
-            }
-            completed.setLastCompleted(new Date());
-            update(completed);
-        }
 
-    }
 }

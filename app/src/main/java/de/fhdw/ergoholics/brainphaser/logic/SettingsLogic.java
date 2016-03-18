@@ -9,13 +9,14 @@ import de.fhdw.ergoholics.brainphaser.model.Settings;
 
 /**
  * Created by Lars Kahra on 16.03.2016.
- *
+ * <p/>
  * Provides functions for Settings logic checking
  */
 public class SettingsLogic {
     /**
      * Check whether the given duration is valid for a given stage
-     * @param stage stage to check
+     *
+     * @param stage        stage to check
      * @param durationMsec duration for this stage
      * @return null if this is a valid value, error string id if it is invalid
      */

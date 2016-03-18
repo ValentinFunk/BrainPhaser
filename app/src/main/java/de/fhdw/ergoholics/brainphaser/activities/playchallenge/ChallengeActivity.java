@@ -29,6 +29,7 @@ import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.CompletionLogic;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
@@ -304,16 +305,17 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         User currentUser = mUserManager.getCurrentUser();
         //The current Challenge was checked
         mAnswerChecked = true;
+        CompletionLogic completionLogic = new CompletionLogic(mCompletionDataSource);
         if (answer) {
             //Write completion entry
-            mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_RIGHT);
+            completionLogic.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionLogic.ANSWER_RIGHT);
 
             //Create statistics entry
             Statistics statistics = new Statistics(null, true, new Date(), currentUser.getId(), mAllChallenges.get(mChallengeNo));
             mStatisticsDataSource.create(statistics);
         } else {
             //Write completion entry
-            mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionDataSource.ANSWER_WRONG);
+            completionLogic.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), CompletionLogic.ANSWER_WRONG);
 
             //Create statistics entry
             Statistics statistics = new Statistics(null, false, new Date(), currentUser.getId(), mAllChallenges.get(mChallengeNo));
