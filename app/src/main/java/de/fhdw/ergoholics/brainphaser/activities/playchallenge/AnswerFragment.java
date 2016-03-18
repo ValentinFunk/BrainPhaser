@@ -24,7 +24,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     protected Challenge mChallenge;
     protected View mView;
     // Use this interface to deliver action events
-    AnswerListener mListener;
+    protected AnswerListener mListener;
     @Inject
     ChallengeDataSource mChallengeDataSource;
 
