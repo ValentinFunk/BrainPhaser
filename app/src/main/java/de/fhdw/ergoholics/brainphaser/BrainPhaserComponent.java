@@ -7,7 +7,7 @@ import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.FinishChallengeFragment;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.MultipleChoiceFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice.MultipleChoiceFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestDialogFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.TextFragment;
