@@ -12,12 +12,8 @@
         android:layout_weight="1"
         android:background="@drawable/text_meta_data"
         android:gravity="center"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="15"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="?android:textColorTertiary" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/challenge_type"
@@ -27,12 +23,8 @@
         android:layout_weight="1"
         android:background="@drawable/text_meta_data"
         android:gravity="center"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="15"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="?android:textColorTertiary" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/challenge_category"
@@ -41,10 +33,6 @@
         android:layout_weight="1"
         android:background="@drawable/text_meta_data"
         android:gravity="center"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="15"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="?android:textColorTertiary" />
 </android.support.v7.widget.LinearLayoutCompat>
