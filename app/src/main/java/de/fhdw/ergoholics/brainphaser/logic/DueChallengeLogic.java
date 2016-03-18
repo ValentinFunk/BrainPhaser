@@ -122,10 +122,6 @@ public class DueChallengeLogic {
         //Get uncompleted challenges
         List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(mUser);
 
-        //Calculate the lastCompleted time which needs to be set for making the challenge due
-        Date dateChallengesDue = new Date(now.getTime() -
-                SettingsDataSource.getTimeboxByStage(mUser.getSettings(), 1).getTime());
-
         /*
          * If categoryId is CategoryDataSource.CATEGORY_ID_ALL or matches the challenge's id, the
          * challenge will be added to the list and an entry will be created.
@@ -137,7 +133,7 @@ public class DueChallengeLogic {
                 long challengeId = challenge.getId();
 
                 Completion completed;
-                completed = new Completion(null, 1, dateChallengesDue, userId, challengeId);
+                completed = new Completion(null, 1, new Date(0l), userId, challengeId);
                 mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }
