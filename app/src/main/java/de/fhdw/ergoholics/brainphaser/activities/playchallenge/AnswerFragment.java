@@ -22,16 +22,30 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 public abstract class AnswerFragment extends BrainPhaserFragment {
     protected List<Answer> mAnswerList;
     protected Challenge mChallenge;
-    protected View mView;
-    // Use this interface to deliver action events
+
+    // Interface to pass events to the activity
     protected AnswerListener mListener;
+
     @Inject
     ChallengeDataSource mChallengeDataSource;
 
     /**
-     * Called to check the given answer(s)
+     * Called by the Activity when the floating action button has been pressed.
+     * Should be used to check answers or query information from the user.
+     *
+     * After this call the fragment is responsible for calling onAnswerChecked to continue to the
+     * next challenge.
+     *
+     * @return Whether or not to disable the challenge FloatingActionButton for custom view: if true, the floating action button is hidden for the state.
      */
-    public abstract void checkAnswers();
+    public abstract boolean goToNextState();
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putLong(ChallengeActivity.KEY_CHALLENGE_ID, mChallenge.getId());
+    }
 
     /**
      * Loads the Listener, the current challenge and its answers
@@ -44,8 +58,8 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
 
         loadAnswerListener();
 
-        //Load the current challenge
-        Bundle bundle = getArguments();
+        // Load the current challenge from saved state or arguments
+        Bundle bundle = savedInstanceState != null ? savedInstanceState : getArguments();
         long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
         mChallenge = mChallengeDataSource.getById(id);
         if (BuildConfig.DEBUG && mChallenge == null) {
@@ -60,24 +74,6 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         if (BuildConfig.DEBUG && mAnswerList == null) {
             throw new RuntimeException("Invalid Answers for challenge " + mChallenge.getId() + "(" + mChallenge.getQuestion() + ")");
         }
-    }
-
-    /**
-     * Loads all answers of the current challenge into a simple list
-     *
-     * @param listViewId RecyclerView, which will contain the answers
-     */
-    protected void loadAnswers(int listViewId, String givenAnswer) {
-        //loading of the components
-        RecyclerView answerList = (RecyclerView) mView.findViewById(listViewId);
-        answerList.setHasFixedSize(true);
-        // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        answerList.setLayoutManager(layoutManager);
-        //Create the View
-        //Adapter which sets all answers into the list
-        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
-        answerList.setAdapter(listAdapter);
     }
 
     /**
@@ -98,9 +94,36 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     }
 
     /**
-     * Interface witch listener to determine when the answer was checked
+     * Utility function that loads all of the correct answers of the current challenge into a
+     * recycler view.
+     *
+     * @param listViewId id of the recycler view, which will contain the answers
+     */
+    protected void populateRecyclerViewWithCorrectAnswers(int listViewId, String givenAnswer) {
+        //loading of the components
+        RecyclerView answerList = (RecyclerView) getView().findViewById(listViewId);
+        answerList.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        answerList.setLayoutManager(layoutManager);
+
+        //Create the View
+        //Adapter which sets all answers into the list
+        AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
+        answerList.setAdapter(listAdapter);
+    }
+
+    /**
+     * Interface to pass answer checks on to the activity.
      */
     public interface AnswerListener {
-        void onAnswerChecked(boolean answer);
+        /**
+         * Called by the Fragment when the correctness of an answer has been determined.
+         * @param answerCorrect whether or not the user answered correctly
+         * @param skipConfirm when true the activity switches directly to the next challenge without
+         *                    waiting for the user to click on the FAB
+         */
+        void onAnswerChecked(boolean answerCorrect, boolean skipConfirm);
     }
 }

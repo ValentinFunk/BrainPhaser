@@ -30,7 +30,7 @@ public class BrainPhaserApplication extends Application {
     /**
      * Creates the Production app Component
      */
-    private BrainPhaserComponent mComponent;
+    public static BrainPhaserComponent component;
     protected BrainPhaserComponent createComponent( ) {
         return DaggerBrainPhaserApplication_ApplicationComponent.builder()
             .appModule(new AppModule(this))
@@ -44,7 +44,7 @@ public class BrainPhaserApplication extends Application {
      * @return compoenent to use for DI
      */
     public BrainPhaserComponent getComponent( ) {
-        return mComponent;
+        return component;
     }
 
     /**
@@ -54,7 +54,7 @@ public class BrainPhaserApplication extends Application {
     public void onCreate() {
         super.onCreate();
         JodaTimeAndroid.init(this);
-        mComponent = createComponent();
+        component = createComponent();
         PACKAGE_NAME = getApplicationContext().getPackageName();
     }
 }

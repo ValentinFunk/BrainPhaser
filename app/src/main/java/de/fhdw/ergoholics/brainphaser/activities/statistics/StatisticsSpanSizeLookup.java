@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
  * <p>
  * This class calculates the span sizes for the ViewHolders in the recycler view used in the
  * statistics activity
+ * </p>
  */
 public class StatisticsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     //Attributes

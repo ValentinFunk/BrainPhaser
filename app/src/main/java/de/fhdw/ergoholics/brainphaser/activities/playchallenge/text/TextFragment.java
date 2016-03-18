@@ -1,8 +1,10 @@
-package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
+package de.fhdw.ergoholics.brainphaser.activities.playchallenge.text;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +15,12 @@ import android.widget.TextView;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
  * Created by Christian Kost
- * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on checkAnswers.
+ * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on goToNextState.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
     //Textfield of the answer
@@ -38,11 +41,11 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_challenge_text, container, false);
-        mAnswerInput = (EditText) mView.findViewById(R.id.answerText);
-        mAnswerInputLayout = (TextInputLayout) mView.findViewById(R.id.input_answer_layout);
+        View view = inflater.inflate(R.layout.fragment_challenge_text, container, false);
+        mAnswerInput = (EditText) view.findViewById(R.id.answerText);
+        mAnswerInputLayout = (TextInputLayout) view.findViewById(R.id.input_answer_layout);
         mAnswerInput.setOnEditorActionListener(this);
-        return mView;
+        return view;
     }
 
 
@@ -66,28 +69,28 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
-            checkAnswers();
+            goToNextState();
         }
         return false;
     }
 
     /**
      * Checks the given answer
-     *
-     * @return Is the answer right or nah
      */
     @Override
-    public void checkAnswers() {
+    public boolean goToNextState() {
         if (validateAnswerLength()) {
             boolean answerRight = false;
             String givenAnswer = mAnswerInput.getText().toString();
             for (Answer item : mAnswerList) {
-                if (item.getText().equals(givenAnswer)) {
+                // Case insensitive check without trailing/leading spaces
+                if (item.getText().trim().toLowerCase().equals(givenAnswer.trim().toLowerCase())) {
                     answerRight = true;
                 }
             }
-            loadAnswers(R.id.answerListText, givenAnswer);
-            mListener.onAnswerChecked(answerRight);
+            populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
+            mListener.onAnswerChecked(answerRight, false);
         }
+        return false;
     }
 }

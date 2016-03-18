@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
@@ -24,6 +25,7 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         ToggleButton mToggleButton;
         ImageView mSelectionCorrectMarker;
         Answer mAnswer;
+        ButtonViewState mButtonViewState;
 
         public ButtonViewHolder(View itemView) {
             super(itemView);
@@ -63,19 +65,29 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
             return answerCorrect;
         }
 
-        public void bind(Answer answer) {
-            mAnswer = answer;
-            mToggleButton.setText(answer.getText());
-            mToggleButton.setTextOn(answer.getText());
-            mToggleButton.setTextOff(answer.getText());
+        public void bind(ButtonViewState buttonViewState) {
+            mAnswer = buttonViewState.getAnswer();
+            mButtonViewState = buttonViewState;
+
+            mToggleButton.setText(mAnswer.getText());
+            mToggleButton.setTextOn(mAnswer.getText());
+            mToggleButton.setTextOff(mAnswer.getText());
+            mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mButtonViewState.setToggleState(isChecked);
+                }
+            });
+            mToggleButton.setChecked(buttonViewState.getToggleState());
+
             mSelectionCorrectMarker.bringToFront();
             mSelectionCorrectMarker.setVisibility(View.GONE);
         }
     }
 
-    private List<Answer> mAnswers;
+    private List<ButtonViewState> mAnswers;
     private List<ButtonViewHolder> mButtons = new ArrayList<>();
-    public ButtonsAdapter(List<Answer> answers) {
+    public ButtonsAdapter(List<ButtonViewState> answers) {
         mAnswers = answers;
         mButtons = new ArrayList<>(mAnswers.size());
     }

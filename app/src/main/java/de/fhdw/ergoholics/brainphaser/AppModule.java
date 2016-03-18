@@ -7,6 +7,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragmentFactory;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
@@ -69,4 +71,8 @@ public class AppModule {
     SettingsLogic providesSettingsLogic() {
         return new SettingsLogic();
     }
+
+    @Provides
+    @Singleton
+    AnswerFragmentFactory providesFragmentFactory() { return new AnswerFragmentFactory(); }
 }

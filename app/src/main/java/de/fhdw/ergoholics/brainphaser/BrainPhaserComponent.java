@@ -6,11 +6,10 @@ import de.fhdw.ergoholics.brainphaser.activities.main.MainActivity;
 import de.fhdw.ergoholics.brainphaser.activities.main.ProxyActivity;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.FinishChallengeFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice.ButtonViewState;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice.MultipleChoiceFragment;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestDialogFragment;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.SelfTestFragment;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.TextFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.selfcheck.SelfTestFragment;
+import de.fhdw.ergoholics.brainphaser.activities.playchallenge.text.TextFragment;
 import de.fhdw.ergoholics.brainphaser.activities.selectcategory.SelectCategoryPage;
 import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserAdapter;
 import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserSelectionActivity;
@@ -31,8 +30,6 @@ public interface BrainPhaserComponent {
     void inject(MultipleChoiceFragment questionFragment);
     void inject(TextFragment textFragment);
     void inject(SelfTestFragment selfTestFragment);
-    void inject(SelfTestDialogFragment selfTestDialogFragment);
-    void inject(FinishChallengeFragment finishChallengeFragment);
     void inject(CreateUserActivity createUserActivity);
     void inject(UserAdapter userAdapter);
     void inject(UserSelectionActivity activity);
@@ -45,6 +42,7 @@ public interface BrainPhaserComponent {
     void inject(AnswerFragment answerFragment);
 
     void inject(BPCWrite bpcWrite);
+    void inject(ButtonViewState state);
 
     void inject(UserLogicFactory f);
 }
