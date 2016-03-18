@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod;
 
 import android.content.Context;
 import android.content.res.TypedArray;
