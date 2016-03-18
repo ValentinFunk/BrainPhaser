@@ -27,7 +27,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     }
 
     // Use this interface to deliver action events
-    AnswerListener mListener;
+    protected AnswerListener mListener;
 
     protected List<Answer> mAnswerList;
     protected Challenge mChallenge;
@@ -45,8 +45,8 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         loadAnswerListener();
+
         //Load the current challenge
         Bundle bundle = getArguments();
         long id = bundle.getLong(ChallengeActivity.KEY_CHALLENGE_ID);
@@ -55,6 +55,10 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
             throw new RuntimeException("Invalid challenge passed to AnswerFragment");
         }
 
+        loadAnswers();
+    }
+
+    protected void loadAnswers() {
         mAnswerList = mChallenge.getAnswers();
         if (BuildConfig.DEBUG && mAnswerList == null) {
             throw new RuntimeException("Invalid Answers for challenge " + mChallenge.getId() + "(" + mChallenge.getQuestion() + ")");
@@ -91,7 +95,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getActivity().toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement AnswerListener");
         }
     }
 }

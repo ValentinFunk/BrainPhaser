@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/multichoice_bg_checked_correct" />
-    <item android:drawable="@android:drawable/ic_dialog_info"  android:gravity="top|right" />
-</layer-list>

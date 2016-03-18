@@ -45,24 +45,36 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/challengeQuestion"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="16dp"
                     android:gravity="center"
                     android:textAlignment="center" />
 
                 <FrameLayout
-                    android:layout_marginTop="36dp"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="8dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     android:id="@+id/challenge_fragment"/>
             </LinearLayout>
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnNextChallenge"
         android:src="@android:drawable/ic_media_next"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/challenge_fragment"
+        app:layout_anchorGravity="bottom|right|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:layout_marginTop="36dp"
         />
 </android.support.design.widget.CoordinatorLayout>
