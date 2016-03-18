@@ -1,4 +1,4 @@
-package de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider;
+package de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod;
 
 import de.fhdw.ergoholics.brainphaser.R;
 

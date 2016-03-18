@@ -1,12 +1,12 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
-import de.fhdw.ergoholics.brainphaser.model.Category;
-import de.fhdw.ergoholics.brainphaser.model.DaoSession;
-
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import de.fhdw.ergoholics.brainphaser.model.Category;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 
 /**
  * Created by funkv on 20.02.2016.

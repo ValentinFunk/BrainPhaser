@@ -9,11 +9,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
-import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.DateComponent;
-import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
-
 import org.joda.time.Duration;
 import org.joda.time.DurationFieldType;
 import org.joda.time.Period;
@@ -22,6 +17,11 @@ import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
 import java.util.Date;
+
+import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
+import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod.DateComponent;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod.TimePeriodSlider;
 
 /**
  * Created by funkv on 15.03.2016.

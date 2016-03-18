@@ -3,17 +3,14 @@ package de.fhdw.ergoholics.brainphaser.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
-import de.fhdw.ergoholics.brainphaser.database.DatabaseModule;
-import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
-import de.fhdw.ergoholics.brainphaser.model.DaoSession;
-
 import org.mockito.Mockito;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import de.fhdw.ergoholics.brainphaser.model.DaoMaster;
+import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 
 /**
  * Created by funkv on 07.03.2016.

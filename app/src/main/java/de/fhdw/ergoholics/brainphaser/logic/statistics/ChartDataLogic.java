@@ -19,7 +19,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 12/03/2016.
- *
+ * <p/>
  * This class contains the logic for creating datasets to be visualized in statistics
  */
 public class ChartDataLogic {
@@ -38,7 +38,11 @@ public class ChartDataLogic {
     private ChartSettings mSettings;
 
     //Constructor
-    public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application, ChallengeDataSource challengeDataSource, CompletionDataSource completionDataSource, StatisticsDataSource statisticsDataSource, UserLogicFactory userLogicFactory) {
+    public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application,
+                          ChallengeDataSource challengeDataSource,
+                          CompletionDataSource completionDataSource,
+                          StatisticsDataSource statisticsDataSource,
+                          UserLogicFactory userLogicFactory) {
         mUser = user;
         mCategoryId = categoryId;
         mApplication = application;
@@ -52,6 +56,7 @@ public class ChartDataLogic {
 
     /**
      * Creates a PieData object containing entries with the numbers of due and not due challenges
+     *
      * @return PieData object containing the numbers of the due and not due challenges
      */
     public PieData findDueData() {
@@ -90,26 +95,28 @@ public class ChartDataLogic {
 
     /**
      * Creates a PieData object containing entries with the numbers of challenges in each stage
+     *
      * @return PieData object containing the numbers of the challenges in each stage
      */
     public PieData findStageData() {
         //Create lists
-        ArrayList <Entry> entries = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
         //Retrieve stage numbers
-        int numbers[] = {0,0,0,0,0,0};
+        int numbers[] = {0, 0, 0, 0, 0, 0};
         int totalNumber = 0;
 
-        for (int i = 0; i <=5; i++) {
-            numbers[i] = mCompletionDataSource.findByUserAndStageAndCategory(mUser, i + 1, mCategoryId).size();
+        for (int i = 0; i <= 5; i++) {
+            numbers[i] = mCompletionDataSource.findByUserAndStageAndCategory(mUser, i + 1,
+                    mCategoryId).size();
             totalNumber += numbers[i];
         }
         if (totalNumber > 0) {
             //Add entries
-            for (int i = 0; i <=5; i++) {
+            for (int i = 0; i <= 5; i++) {
                 entries.add(new Entry(numbers[i] != 0 ? numbers[i] : nullValue(totalNumber), i));
-                labels.add("" + (i+1));
+                labels.add("" + (i + 1));
             }
             //Create dataset
             PieDataSet dataset = new PieDataSet(entries, "");
@@ -121,8 +128,7 @@ public class ChartDataLogic {
 
             //Return the PieData object
             return data;
-        }
-        else
+        } else
             return null;
     }
 
@@ -130,24 +136,32 @@ public class ChartDataLogic {
      * Creates a PieData object containing entries of the most played / failed or succeded
      * challenges. Which of these entries are added depends on the given mode. The ids of the
      * challenges are also added to the shownChallenges list.
-     * @param type the type
+     *
+     * @param type            the type
      * @param shownChallenges a List object the ids of the challenges are added to
      * @return PieData object containing the numbers of the played / failed or succeeded challenges
      */
     public PieData findMostPlayedData(StatisticType type, List<Long> shownChallenges) {
         //Create lists
-        ArrayList <Entry> entries = new ArrayList<>();
+        ArrayList<Entry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
 
         //Retrieve numbers
-        List<Statistics> statistics = mStatisticsDataSource.findByCategoryAndUser(mCategoryId, mUser);
+        List<Statistics> statistics;
+        statistics = mStatisticsDataSource.findByCategoryAndUser(mCategoryId, mUser);
 
-        if (type == StatisticType.TYPE_MOST_FAILED)
-            statistics = removeSucceeded(statistics);
-        else if (type == StatisticType.TYPE_MOST_SUCCEEDED)
-            statistics = removeFailed(statistics);
-        else if (type != StatisticType.TYPE_MOST_PLAYED)
-            return null;
+        switch (type) {
+            case TYPE_MOST_PLAYED:
+                break;
+            case TYPE_MOST_FAILED:
+                statistics = removeSucceeded(statistics);
+                break;
+            case TYPE_MOST_SUCCEEDED:
+                statistics = removeFailed(statistics);
+                break;
+            default:
+                return null;
+        }
 
         //Add entries
         shownChallenges.addAll(getMost(entries, labels, statistics, NUMBER_PLAYED_LISTED));
@@ -163,13 +177,14 @@ public class ChartDataLogic {
 
             //Return the PieData object
             return data;
-        }
-        else
+        } else {
             return null;
+        }
     }
 
     /**
      * Returns a list which contains the failed Statistic objects of the given statistics list
+     *
      * @param statistics the list of statistics objects which will be evaluated
      * @return list of failed Statistic objects
      */
@@ -177,14 +192,14 @@ public class ChartDataLogic {
         List<Statistics> result = new ArrayList<>();
         for (Statistics statistic : statistics) {
             //Add only failed challenges to the result
-            if (!statistic.getSucceeded())
-                result.add(statistic);
+            if (!statistic.getSucceeded()) result.add(statistic);
         }
         return result;
     }
 
     /**
      * Returns a list which contains the succeeded Statistic objects of the given statistics list
+     *
      * @param statistics the list of statistics objects which will be evaluated
      * @return list of succeeded Statistic objects
      */
@@ -192,8 +207,7 @@ public class ChartDataLogic {
         List<Statistics> result = new ArrayList<>();
         for (Statistics statistic : statistics) {
             //Add only succeeded challenges to the result
-            if (statistic.getSucceeded())
-                result.add(statistic);
+            if (statistic.getSucceeded()) result.add(statistic);
         }
         return result;
     }
@@ -202,13 +216,15 @@ public class ChartDataLogic {
      * Returns a list with the challenges which occur most often in the statistics list. The
      * numberPlayedListed parameter defines how many entries will be added. Additionally Entry
      * objects and labels are created and added to the entries and labels List objects
-     * @param entries the entry list the created Entry objects are added to
-     * @param labels the label list the created label strings are added to
-     * @param statistics the list of statistics objects which will be evaluated
+     *
+     * @param entries            the entry list the created Entry objects are added to
+     * @param labels             the label list the created label strings are added to
+     * @param statistics         the list of statistics objects which will be evaluated
      * @param numberPlayedListed the number of challenges to be added to the shownChallenges list
      * @return list of shown challenges
      */
-    private List<Long> getMost(ArrayList<Entry> entries, ArrayList<String> labels, List<Statistics> statistics, int numberPlayedListed) {
+    private List<Long> getMost(ArrayList<Entry> entries, ArrayList<String> labels,
+                               List<Statistics> statistics, int numberPlayedListed) {
         //Create a List object for storing the ids of the shown challenges
         List<Long> shownChallenges = new ArrayList<>();
 
@@ -223,8 +239,7 @@ public class ChartDataLogic {
                 int index = ids.indexOf(challengeId);
                 Integer amount = amounts.get(index);
                 amounts.set(index, amount + 1);
-            }
-            else {
+            } else {
                 ids.add(challengeId);
                 amounts.add(1);
             }
@@ -241,8 +256,7 @@ public class ChartDataLogic {
                         indexMax = index;
                     }
                 }
-                if (amounts.get(indexMax) == 0)
-                    break;
+                if (amounts.get(indexMax) == 0) break;
 
                 //Create an entry and add it to the corresponding list
                 entries.add(new Entry(amounts.get(indexMax), i));
@@ -262,6 +276,7 @@ public class ChartDataLogic {
 
     /**
      * Creates a value which is an irrational number and about 0.63% of the given total value
+     *
      * @param totalValue the total value of items in the pie chart
      * @return an irrational number of about 0.63% of the total number
      */

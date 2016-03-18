@@ -10,7 +10,7 @@ import java.util.Locale;
 
 /**
  * Created by Daniel Hoogen on 06/03/2016.
- *
+ * <p/>
  * This class implements a ValueFormatter for formatting values for pie charts used in the app
  */
 public class CustomizedFormatter implements ValueFormatter {
@@ -28,20 +28,23 @@ public class CustomizedFormatter implements ValueFormatter {
     }
 
     /**
-     * Formats a value to be shown in a pie chart. Values with decimal places will be hidden, because
-     * they are unexpected. This also affects dummy values, which are shown as small slices.
+     * Formats a value to be shown in a pie chart. Values with decimal places will be hidden,
+     * because they are unexpected. This also affects dummy values, which are shown as small slices.
+     *
      * @param value the value to be formatted
      * @return String containing the formatted value
      */
     @Override
-    public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+    public String getFormattedValue(float value, Entry entry, int dataSetIndex,
+                                    ViewPortHandler viewPortHandler) {
         String valueText = mFormat.format(value);
         String[] valueParts = valueText.split("\\,");
         //If the value is 0 the value will be hidden for avoiding visual bugs
-        if (valueParts.length!=1)
+        if (valueParts.length != 1) {
             return "";
-        //Otherwise the result will be returned
-        else
+            //Otherwise the result will be returned
+        } else {
             return valueParts[0];
+        }
     }
 }

@@ -2,7 +2,6 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -14,13 +13,13 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
-import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticsLogic;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016
- *
+ * <p>
  * The view holder is responsible for the view interaction with each statistic within a
  * RecyclerView.
  */
@@ -35,7 +34,7 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
     //Constructor
     public StatisticViewHolder(View itemView, UserLogicFactory userLogicFactory,
                                ChallengeDataSource challengeDataSource,
-                               BrainPhaserApplication application, User user, long categoryId, ViewGroup parent) {
+                               BrainPhaserApplication application, User user, long categoryId) {
         super(itemView);
         mItemView = itemView;
         mChallengeDataSource = challengeDataSource;
@@ -62,6 +61,7 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
 
     /**
      * Applies a most played / failed / succeeded chart to the chart in the mItemView view
+     *
      * @param type the statistic type of the chart to be applied
      */
     public void applyMostPlayedChart(StatisticType type) {
@@ -76,17 +76,18 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
         if (chart.getData() != null) {
             chart.highlightValue(0, 0);
             TextView text = (TextView) mItemView.findViewById(R.id.challengeView);
-            if (text != null)
-                text.setText(mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion());
+            String question = mChallengeDataSource.getById(mShownChallenges.get(0)).getQuestion();
+
+            if (text != null) text.setText(question);
         }
 
         TextView title = (TextView) mItemView.findViewById(R.id.titleView);
-        if (title != null)
-            title.setText(getTitle(type));
+        if (title != null) title.setText(getTitle(type));
     }
 
     /**
      * Returns a title string depending on the given statistic type
+     *
      * @param type the type of the statistic
      * @return the title string for the statistic type
      */
@@ -105,6 +106,7 @@ public class StatisticViewHolder extends RecyclerView.ViewHolder {
     /**
      * This method is called when a value in a most played / failed / succeeded chart is selected.
      * It shows the challenge text in the text view of the mItemView view.
+     *
      * @param e the entry that has been selected
      */
     public void onValueSelected(Entry e) {

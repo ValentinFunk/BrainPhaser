@@ -1,8 +1,12 @@
-Avatars Icons made by: http://www.designshock.com/flat_character/
-created by iconshock.com
-license: http://www.iconshock.com/faq.php:
-Can I Use The Free Icons In My Projects ?
-Our free icons can be used in a commercial project. However you would have to add a link to our website and make a state where says that the icons were created by iconshock.com. In a personal project such an application or website it is fine if you need to use them. NOTE: You can Not re-sell the icons as is, and if you want to redistribute the icons in your own website, please contact us to send you a permission.
+Libraries:
+MPAndroidChart: https://github.com/PhilJay/MPAndroidChart license: http://www.apache.org/licenses/LICENSE-2.0
+Copyright 2016 Philipp Jahoda
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
 
 Library Dagger 2:
@@ -657,3 +661,20 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+
+Images:
+
+
+"European Commission flags URL:"https://commons.wikimedia.org/wiki/File:European_Commission_flags.jpg"" by Sébastien Bertrand, used under CC BY(https://creativecommons.org/licenses/by/2.0/deed.en) / tailored from original
+"Container ship URL:"https://pixabay.com/en/container-ship-container-ship-537724/"" by FraukeFeind used under CC0 BY / tailored from original
+"Flash electricity URL:"https://pixabay.com/en/flash-tesla-coil-experiment-113310/"" by Hans, used under CC0 BY / tailored from original
+
+
+Big Ben, Macbook and New York images by Unsplash (https://unsplash.com/) under Unsplash License/CC0
+UNSPLASH LICENSE
+All photos published on Unsplash are licensed under Creative Commons Zero which means you can copy, modify, distribute and use the photos for free, including commercial purposes, without asking permission from or providing attribution to the photographer or Unsplash.
+
+Avatars: http://www.designshock.com/flat_character/ license: http://www.iconshock.com/faq.php:
+Can I Use The Free Icons In My Projects ?
+
+Our free icons can be used in a commercial project. However you would have to add a link to our website and make a state where says that the icons were created by iconshock.com. In a personal project such an application or website it is fine if you need to use them. NOTE: You can Not re-sell the icons as is, and if you want to redistribute the icons in your own website, please contact us to send you a permission.

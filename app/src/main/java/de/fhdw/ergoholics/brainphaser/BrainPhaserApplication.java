@@ -2,12 +2,12 @@ package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
 
-import de.fhdw.ergoholics.brainphaser.database.DatabaseModule;
-
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import javax.inject.Singleton;
+
 import dagger.Component;
+import de.fhdw.ergoholics.brainphaser.database.DatabaseModule;
 
 /**
  * Created by funkv on 17.02.2016.

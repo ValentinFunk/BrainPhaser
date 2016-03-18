@@ -3,16 +3,15 @@ package de.fhdw.ergoholics.brainphaser.activities.selectcategory;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.CategoryDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Category;
-
-import java.util.List;
 
 /**
  * Created by funkv on 17.02.2016.
@@ -36,6 +35,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         setHasStableIds(true);
     }
 
+    /**
+     * Notify the adapter that new due challenge counts are to be displayed
+     * @param dueChallengeCounts due challenge counts to apply
+     */
     public void notifyDueChallengeCountsChanged(LongSparseArray<Integer> dueChallengeCounts) {
         mDueChallengeCounts = dueChallengeCounts;
         notifyDataSetChanged();

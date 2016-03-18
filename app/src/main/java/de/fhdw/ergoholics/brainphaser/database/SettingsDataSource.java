@@ -2,14 +2,14 @@ package de.fhdw.ergoholics.brainphaser.database;
 
 import android.support.annotation.NonNull;
 
+import org.joda.time.Period;
+
 import java.util.Date;
+
+import javax.inject.Inject;
 
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 import de.fhdw.ergoholics.brainphaser.model.Settings;
-
-import org.joda.time.Period;
-
-import javax.inject.Inject;
 
 /**
  * Created by Lars Kahra on 25/02/2016.

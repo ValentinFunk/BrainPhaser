@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.activities.usersettings;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
@@ -16,7 +15,6 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
-import de.fhdw.ergoholics.brainphaser.activities.selectuser.UserSelectionActivity;
 import de.fhdw.ergoholics.brainphaser.database.SettingsDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;

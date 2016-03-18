@@ -40,14 +40,14 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
          * @param dialog       The dialog that trigerred the action.
          * @param resourceName The resource name of the selected avatar.
          */
-        public void onAvatarSelected(AvatarPickerDialogFragment dialog, String resourceName);
+        void onAvatarSelected(AvatarPickerDialogFragment dialog, String resourceName);
 
         /**
          * Called when the avatar selection has been aborted by the user.
          *
          * @param dialog The dialog that triggered the action.
          */
-        public void onCancelled(AvatarPickerDialogFragment dialog);
+        void onCancelled(AvatarPickerDialogFragment dialog);
     }
 
     // Use this interface to deliver action events
