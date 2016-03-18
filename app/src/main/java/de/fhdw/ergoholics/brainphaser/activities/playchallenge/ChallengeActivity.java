@@ -371,6 +371,20 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         Drawable typeBackground = mTypeText.getBackground();
         typeBackground.setColorFilter(typeColor, PorterDuff.Mode.MULTIPLY);
         mTypeText.setText(type);
+    /**
+     * Loads the finish screen and unloads all other screens
+     */
+    private void loadFinishScreen() {
+        // Remove anchor by resetting layout params since anchor element has been removed from the screen
+        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams(CoordinatorLayout.LayoutParams.WRAP_CONTENT, CoordinatorLayout.LayoutParams.WRAP_CONTENT);
+        mFloatingActionButton.setLayoutParams(lp);
+        mFloatingActionButton.setVisibility(View.INVISIBLE);
+
+        LinearLayout contentLayout = (LinearLayout) findViewById(R.id.challenge_layout);
+        contentLayout.removeAllViews();
+
+        View view = getLayoutInflater().inflate(R.layout.fragment_finish_challenge, contentLayout, false);
+        contentLayout.addView(view);
     }
 
     /**
