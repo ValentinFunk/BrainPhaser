@@ -4,42 +4,40 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 /**
+ * Created by Christian Kost
  * The abstract fragment contains all necessary  methods for the different challenge-type fragments
  */
 public abstract class AnswerFragment extends BrainPhaserFragment {
-    /**
-     * Interface
-     */
-    public interface AnswerListener{
-        void onAnswerChecked(boolean answer);
-    }
-
-    // Use this interface to deliver action events
-    AnswerListener mListener;
-
     protected List<Answer> mAnswerList;
     protected Challenge mChallenge;
     protected View mView;
-
-    @Inject ChallengeDataSource mChallengeDataSource;
+    // Use this interface to deliver action events
+    AnswerListener mListener;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
 
     /**
      * Called to check the given answer(s)
      */
     public abstract void checkAnswers();
 
-
+    /**
+     * Loads the Listener, the current challenge and its answers
+     *
+     * @param savedInstanceState Ignored
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +58,12 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         }
     }
 
-
     /**
      * Loads all answers of the current challenge into a simple list
+     *
      * @param listViewId RecyclerView, which will contain the answers
      */
-    protected void loadAnswers(int listViewId, String givenAnswer){
+    protected void loadAnswers(int listViewId, String givenAnswer) {
         //loading of the components
         RecyclerView answerList = (RecyclerView) mView.findViewById(listViewId);
         answerList.setHasFixedSize(true);
@@ -77,10 +75,11 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
         answerList.setAdapter(listAdapter);
     }
+
     /**
      * Loads the AnswerListener of the opening activity
      */
-    private void loadAnswerListener(){
+    private void loadAnswerListener() {
         // The activity that opens these fragments must implement AnswerListener.
         // This method stores the listener when the activity is attached.
         // Verify that the host activity implements the callback interface
@@ -92,5 +91,12 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
             throw new ClassCastException(getActivity().toString()
                     + " must implement NoticeDialogListener");
         }
+    }
+
+    /**
+     * Interface witch listener to determine when the answer was checked
+     */
+    public interface AnswerListener {
+        void onAnswerChecked(boolean answer);
     }
 }

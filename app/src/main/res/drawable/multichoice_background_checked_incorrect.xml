@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/multichoice_bg_checked" />
-    <item android:drawable="@android:drawable/ic_menu_close_clear_cancel"  android:gravity="top|right" />
+    <item>
+        <bitmap android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:gravity="top|right" android:paddingTop="-10dp" />
+    </item>
 </layer-list>

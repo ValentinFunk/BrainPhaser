@@ -9,24 +9,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ToggleButton;
 
+import java.util.Collections;
+import java.util.List;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
- * Fragment for a multiple-choice challenge
+ * Created by Christian Kost
+ * Fragment for a multiple-choice challenge. Compares the given answers with the right answers of the challenge and displays the decisions on checkAnswers.
  */
 public class MultipleChoiceFragment extends AnswerFragment {
     private ToggleButton[] mCheckBoxArray;
 
+    /**
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * Setup the fragment. Instantiates the views and loads the answers.
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Ignored
+     * @return Return the inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +87,7 @@ public class MultipleChoiceFragment extends AnswerFragment {
 
         for (int i = 0; i < mAnswerList.size(); i++) {
             answer = mAnswerList.get(i);
-            Drawable bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_bg_unchecked);
+            Drawable bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_bg_unchecked);
 
             if (!mCheckBoxArray[i].isChecked() && !answer.getAnswerCorrect()) {
                 //If answers is not toggled and not correct
@@ -81,11 +95,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
             } else if (mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect()) {
                 //If answer is toggled and correct
                 booleanArray[i] = true;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_checked_correct);
-            } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect() ) {
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_background_checked_correct);
+            } else if (!mCheckBoxArray[i].isChecked() && answer.getAnswerCorrect()) {
                 //if answers is not toggled and correct
                 booleanArray[i] = false;
-                bg = ContextCompat.getDrawable(getContext(),R.drawable.multichoice_background_unchecked_correct);
+                bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_background_unchecked_correct);
             } else {
                 //if answer is toggled and not correct
                 bg = ContextCompat.getDrawable(getContext(), R.drawable.multichoice_background_checked_incorrect);

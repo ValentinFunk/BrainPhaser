@@ -6,28 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
+ * Created by Christian Kost
  * Fragment to let the user decide whether an answer is right or not
  */
 public class SelfTestDialogFragment extends AnswerFragment {
 
-    /**
-     * Interface toggles, when the SelfCheck-Challenge was checked by the user
-     */
-    public interface SelfCheckAnswerListener{
-        void onSelfCheckAnswerChecked();
-    }
     SelfCheckAnswerListener mSelfCheckAnswerListener;
 
     /**
      * Loads the Listener and sets up the view
-     * @param inflater Inlfates the Fragment
-     * @param container
-     * @param savedInstanceState
-     * @return
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Ignored
+     * @return Return the inflated view
      */
     @Nullable
     @Override
@@ -36,8 +33,8 @@ public class SelfTestDialogFragment extends AnswerFragment {
         loadSelfCheckAnswerListener();
         //infalte the view
         mView = inflater.inflate(R.layout.fragment_challenge_self_test, container, false);
-        Button btnRight = (Button)mView.findViewById(R.id.answerRight);
-        Button btnWrong = (Button)mView.findViewById(R.id.answerWrong);
+        Button btnRight = (Button) mView.findViewById(R.id.answerRight);
+        Button btnWrong = (Button) mView.findViewById(R.id.answerWrong);
         //set on click listener to the button
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +61,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
     /**
      * Loads the AnswerListener of the opening activity
      */
-    private void loadSelfCheckAnswerListener(){
+    private void loadSelfCheckAnswerListener() {
         // The activity that opens these fragments must implement AnswerListener.
         // This method stores the listener when the activity is attached.
         // Verify that the host activity implements the callback interface
@@ -90,10 +87,18 @@ public class SelfTestDialogFragment extends AnswerFragment {
 
     /**
      * Inject components
+     *
      * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
+    }
+
+    /**
+     * Interface toggles, when the SelfCheck-Challenge was checked by the user
+     */
+    public interface SelfCheckAnswerListener {
+        void onSelfCheckAnswerChecked();
     }
 }

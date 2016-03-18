@@ -11,6 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
@@ -28,16 +32,10 @@ import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
 /**
- * Activity used to chose an existing user. Can load the create user activity
- * Persistent data: none
- * Parameters: none
+ * Created by Christian Kost
+ * Activity used to chose an existing user. Can load the create user activity and the category selection
  */
-
 public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {
     UserAdapter mListAdapter;
     @Inject
@@ -52,21 +50,27 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     StatisticsDataSource mStatisticsDataSource;
 
     /**
-     * inject components
-     * @param component
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * Setup the view, adds listener and loads all users
+     *
+     * @param savedInstanceState Ignored
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_selection);
 
         Toolbar myChildToolbar =
-            (Toolbar) findViewById(R.id.toolbar);
+                (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myChildToolbar);
 
         // Get a support ActionBar corresponding to this toolbar
@@ -100,14 +104,18 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         btnAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
+                startActivityForResult(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class), 0);
             }
         });
     }
 
-    /*
+    /**
      * Used to track when the create user activity has finished. If it was cancelled, do nothing,
      * else finish this activity.
+     *
+     * @param requestCode Ignored
+     * @param resultCode  The result of the activity
+     * @param data        Ignored
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -118,8 +126,9 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     }
 
     /**
-     * When a user has been selected, finish this activity and load learning activity.
-     * @param user
+     * When a user has been selected, finish this activity and load select category activity.
+     *
+     * @param user To switched user
      */
     @Override
     public void onUserSelected(User user) {
@@ -136,7 +145,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
 
     /**
      * On edit a user, finish this activity and load edit user activity
-     * @param user To edited User
+     *
+     * @param user To edited user
      */
     @Override
     public void onEditUser(User user) {
@@ -147,7 +157,8 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
 
     /**
      * On delete a user, remove its data and remove the user from the list
-     * @param user to deleted user
+     *
+     * @param user     to deleted user
      * @param position position of the user in the list
      */
     @Override
@@ -159,12 +170,12 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
         //Delete Completions
         List<Completion> completions = user.getCompletions();
         for (Completion completion : completions)
-                completion.delete();
+            completion.delete();
 
         //Delete Statistics
         List<Statistics> statistics = user.getStatistics();
         for (Statistics statistic : statistics)
-                statistic.delete();
+            statistic.delete();
 
         //Delete User
         user.delete();
