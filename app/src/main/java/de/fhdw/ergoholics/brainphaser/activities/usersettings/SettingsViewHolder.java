@@ -20,8 +20,8 @@ import java.util.Date;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.DateComponent;
-import de.fhdw.ergoholics.brainphaser.activities.usersettings.TimePeriodSlider.TimePeriodSlider;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod.DateComponent;
+import de.fhdw.ergoholics.brainphaser.activities.usersettings.slidertimeperiod.TimePeriodSlider;
 
 /**
  * Created by funkv on 15.03.2016.
