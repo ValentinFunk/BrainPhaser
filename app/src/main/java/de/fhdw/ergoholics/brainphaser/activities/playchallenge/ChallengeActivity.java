@@ -307,8 +307,9 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         //The current Challenge was checked
         mAnswerChecked = true;
 
+        CompletionLogic completionLogic = new CompletionLogic(mCompletionDataSource);
         // Save the user completion for due calculation
-        mCompletionDataSource.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), answer ? CompletionDataSource.ANSWER_RIGHT : CompletionDataSource.ANSWER_WRONG);
+        completionLogic.updateAfterAnswer(mAllChallenges.get(mChallengeNo), currentUser.getId(), answer ? CompletionLogic.ANSWER_RIGHT : CompletionLogic.ANSWER_WRONG);
 
         //Create statistics entry
         Statistics statistics = new Statistics(null, answer, new Date(), currentUser.getId(), mAllChallenges.get(mChallengeNo));

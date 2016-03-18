@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ public class SelfTestDialogFragment extends AnswerFragment {
         mView = inflater.inflate(R.layout.fragment_challenge_self_test, container, false);
         Button btnRight = (Button) mView.findViewById(R.id.answerRight);
         Button btnWrong = (Button) mView.findViewById(R.id.answerWrong);
+        final FloatingActionButton btnNextChallenge = (FloatingActionButton) getActivity().findViewById(R.id.btnNextChallenge);
+        btnNextChallenge.setVisibility(View.INVISIBLE);
         //set on click listener to the button
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +45,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
                 //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(true);
                 mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
+                btnNextChallenge.setVisibility(View.VISIBLE);
             }
         });
         btnWrong.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +54,7 @@ public class SelfTestDialogFragment extends AnswerFragment {
                 //execute AnswerListener and loads the next screen
                 mListener.onAnswerChecked(false);
                 mSelfCheckAnswerListener.onSelfCheckAnswerChecked();
+                btnNextChallenge.setVisibility(View.VISIBLE);
             }
         });
 
