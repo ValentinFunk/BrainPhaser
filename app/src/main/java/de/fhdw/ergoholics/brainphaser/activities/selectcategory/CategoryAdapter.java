@@ -35,6 +35,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         setHasStableIds(true);
     }
 
+    /**
+     * Notify the adapter that new due challenge counts are to be displayed
+     * @param dueChallengeCounts due challenge counts to apply
+     */
     public void notifyDueChallengeCountsChanged(LongSparseArray<Integer> dueChallengeCounts) {
         mDueChallengeCounts = dueChallengeCounts;
         notifyDataSetChanged();

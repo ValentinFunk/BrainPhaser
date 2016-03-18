@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.LongSparseArray;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +56,6 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
 
         mDueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(mUserManager.getCurrentUser());
         mCategories = mCategoryDataSource.getAll();
-        sortCategories();
     }
 
     @Nullable
@@ -73,7 +73,6 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
-
         mRecyclerView.setAdapter(new CategoryAdapter(mCategories, mDueChallengeCounts, this));
 
         return rootView;
@@ -100,16 +99,27 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         });
     }
 
-    // Sort categories when activity is started/resumed, to make sure the set is sorted when returning
+    // Load due counts & sort categories
+    public void loadDueCounts( ){
+        sortCategories();
+        // Sort reloads the due challenges so we need to notify the adapter that they changed.
+        ((CategoryAdapter) mRecyclerView.getAdapter()).notifyDueChallengeCountsChanged(mDueChallengeCounts);
+    }
+
+    // Sort categories when activity is started, to make sure the set is sorted when returning
+    // from challenge solving
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadDueCounts();
+    }
+
+    // Sort categories when activity is resumed, to make sure the set is sorted when returning
     // from challenge solving
     @Override
     public void onResume() {
         super.onResume();
-
-        sortCategories();
-
-        // Sort reloads the due challenges so we need to notify the adapter that they changed.
-        ((CategoryAdapter) mRecyclerView.getAdapter()).notifyDueChallengeCountsChanged(mDueChallengeCounts);
+        loadDueCounts();
     }
 
     @Override
