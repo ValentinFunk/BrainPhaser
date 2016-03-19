@@ -3,6 +3,7 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.List;
 
@@ -16,7 +17,6 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by Christian Kost
- * <p/>
  * The abstract fragment contains all necessary  methods for the different challenge-type fragments
  */
 public abstract class AnswerFragment extends BrainPhaserFragment {
@@ -28,6 +28,29 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
 
     @Inject
     ChallengeDataSource mChallengeDataSource;
+
+    /**
+     * Possible modes for the Fragment to react to a request to goToNextState().
+     */
+    public enum ContinueMode {
+        /**
+         * Abort the action because some kind of validation failed. State was not changed.
+         */
+        CONTINUE_ABORT,
+
+        /**
+         * Successful state change, instruct activity to hide Floating Action Button.
+         * The Challenge will instruct the activity to load the next challenge through
+         * {@link de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment.AnswerListener#onAnswerChecked(boolean, boolean)}
+         */
+        CONTINUE_HIDE_FAB,
+
+        /**
+         * Successful state change, instruct activity to show the floating action button and
+         * allow progression to next challenge by clicking it.
+         */
+        CONTINUE_SHOW_FAB
+    }
 
     /**
      * Called by the Activity when the floating action button has been pressed.
@@ -73,6 +96,9 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         loadAnswers();
     }
 
+    /**
+     *
+     */
     protected void loadAnswers() {
         mAnswerList = mChallenge.getAnswers();
         if (BuildConfig.DEBUG && mAnswerList == null) {
@@ -116,29 +142,6 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         //Adapter which sets all answers into the list
         AnswerAdapter listAdapter = new AnswerAdapter(mAnswerList, givenAnswer);
         answerList.setAdapter(listAdapter);
-    }
-
-    /**
-     * Possible modes for the Fragment to react to a request to goToNextState().
-     */
-    public enum ContinueMode {
-        /**
-         * Abort the action because some kind of validation failed. State was not changed.
-         */
-        CONTINUE_ABORT,
-
-        /**
-         * Successful state change, instruct activity to hide Floating Action Button.
-         * The Challenge will instruct the activity to load the next challenge through
-         * {@link de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment.AnswerListener#onAnswerChecked(boolean, boolean)}
-         */
-        CONTINUE_HIDE_FAB,
-
-        /**
-         * Successful state change, instruct activity to show the floating action button and
-         * allow progression to next challenge by clicking it.
-         */
-        CONTINUE_SHOW_FAB
     }
 
     /**
