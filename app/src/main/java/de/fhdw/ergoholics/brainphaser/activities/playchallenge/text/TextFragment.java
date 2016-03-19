@@ -22,9 +22,13 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on goToNextState.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
+    private String KEY_ANSWER_CHECKED;
+
     //Textfield of the answer
     private TextView mAnswerInput;
     private TextInputLayout mAnswerInputLayout;
+    private boolean mAnswerChecked = false;
+
 
     /**
      * Inject components
@@ -36,6 +40,14 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         component.inject(this);
     }
 
+    /**
+     * Setups the view
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Ignored
+     * @return Return the inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +56,29 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         mAnswerInputLayout = (TextInputLayout) view.findViewById(R.id.input_answer_layout);
         mAnswerInput.setOnEditorActionListener(this);
         return view;
+    }
+
+    /**
+     * Restores the old state of the view
+     *
+     * @param savedInstanceState State if the answer was checked
+     */
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mAnswerChecked = savedInstanceState.getBoolean(KEY_ANSWER_CHECKED);
+            if (mAnswerChecked) {
+                mAnswerInput.setFocusable(false); // Don't auto focus
+            } else {
+                mAnswerInput.requestFocus();
+            }
+        }
+
+        if (mAnswerChecked) {
+            updateViewForAnswer();
+        }
     }
 
     /*
@@ -72,40 +107,63 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     }
 
     /**
+     * Updates the view to show the answered state
+     *
+     * @return whether or not the answer was correct.
+     */
+    private boolean updateViewForAnswer() {
+        boolean answerRight = false;
+        String givenAnswer = mAnswerInput.getText().toString();
+        for (Answer item : mAnswerList) {
+            // Case insensitive check without trailing/leading spaces
+            if (item.getText().trim().toLowerCase().equals(givenAnswer.trim().toLowerCase())) {
+                answerRight = true;
+            }
+        }
+        populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
+        mAnswerInput.setEnabled(false);
+        mAnswerInput.clearFocus();
+        if (!answerRight) {
+            mAnswerInput.setError(getString(R.string.wrong_answer));
+            mAnswerInputLayout.setErrorEnabled(true);
+        }
+        return answerRight;
+    }
+
+    /**
      * Checks the given answer
+     *
+     * @return ContinueMode
      */
     @Override
     public AnswerFragment.ContinueMode goToNextState() {
         if (validateAnswerLength()) {
-            boolean answerRight = false;
-            String givenAnswer = mAnswerInput.getText().toString();
-            for (Answer item : mAnswerList) {
-                // Case insensitive check without trailing/leading spaces
-                if (item.getText().trim().toLowerCase().equals(givenAnswer.trim().toLowerCase())) {
-                    answerRight = true;
-                }
+            final boolean result = updateViewForAnswer();
+            View view = getView();
+            if (view != null) {
+                getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.onAnswerChecked(result, false);
+                    }
+                });
             }
-            populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
-
-            final boolean result = answerRight;
-            getView().post(new Runnable() {
-                @Override
-                public void run() {
-                    mListener.onAnswerChecked(result, false);
-                }
-            });
-
-            mAnswerInput.setEnabled(false);
-            mAnswerInput.clearFocus();
-
-            if (!answerRight) {
-                mAnswerInput.setError(getString(R.string.wrong_answer));
-                mAnswerInputLayout.setErrorEnabled(true);
-            }
+            mAnswerChecked = true;
 
             return ContinueMode.CONTINUE_SHOW_FAB;
         } else {
             return ContinueMode.CONTINUE_ABORT;
         }
+    }
+
+    /**
+     * Saves the current state of the fragment
+     *
+     * @param outState Bundle that contains the Challenge-Id and
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_ANSWER_CHECKED, mAnswerChecked);
     }
 }

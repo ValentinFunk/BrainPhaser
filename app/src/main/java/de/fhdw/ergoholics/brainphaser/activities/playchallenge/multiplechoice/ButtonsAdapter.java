@@ -19,17 +19,31 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
- * Created by funkv on 18.03.2016.
+ * Created Christian Kost
+ * </p>
+ * Adapter which holds the Buttons for a multiple choice challenge
  */
 public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
     private List<ButtonViewState> mAnswers;
     private List<ButtonViewHolder> mButtons = new ArrayList<>();
 
+    /**
+     * Constructor instantiate the answer texts
+     *
+     * @param answers
+     */
     public ButtonsAdapter(List<ButtonViewState> answers) {
         mAnswers = answers;
         mButtons = new ArrayList<>(mAnswers.size());
     }
 
+    /**
+     * Inflates the view and creates the ViewHolder
+     *
+     * @param parent   Get the context from it
+     * @param viewType Ignored
+     * @return The created ViewHolder
+     */
     @Override
     public ButtonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.multiplechoice_button, parent, false);
@@ -51,12 +65,21 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         return new ButtonViewHolder(v);
     }
 
+    /**
+     * @param holder   The ViewHolder
+     * @param position Position of the item
+     */
     @Override
     public void onBindViewHolder(ButtonViewHolder holder, int position) {
         mButtons.add(position, holder);
         holder.bind(mAnswers.get(position));
     }
 
+    /**
+     * Get the size of the adapter
+     *
+     * @return Amount of the ViewStateButtons
+     */
     @Override
     public int getItemCount() {
         return mAnswers.size();
@@ -77,12 +100,20 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         return answerCorrect;
     }
 
+    /**
+     * ViewHolder class for the ButtonsAdapter
+     */
     public class ButtonViewHolder extends RecyclerView.ViewHolder {
         ToggleButton mToggleButton;
         ImageView mSelectionCorrectMarker;
         Answer mAnswer;
         ButtonViewState mButtonViewState;
 
+        /**
+         * Constructor instantiates the ToggleButton and the ImageView
+         *
+         * @param itemView Ignored
+         */
         public ButtonViewHolder(View itemView) {
             super(itemView);
             mToggleButton = (ToggleButton) itemView.findViewById(R.id.toggleButton);
@@ -91,23 +122,26 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
 
         /**
          * Modifies the button to show correct/incorrect background
+         *
+         * @param correct Decides which background is shown
          */
         public void adjustBackground(boolean correct) {
             // Correct answers get a green background
             if (correct) {
-                StateListDrawable drawable = (StateListDrawable)mToggleButton.getBackground();
-                ((GradientDrawable)drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackgroundRight));
+                StateListDrawable drawable = (StateListDrawable) mToggleButton.getBackground();
+                ((GradientDrawable) drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackgroundRight));
             } else {
-                StateListDrawable drawable = (StateListDrawable)mToggleButton.getBackground();
-                ((GradientDrawable)drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackground));
+                StateListDrawable drawable = (StateListDrawable) mToggleButton.getBackground();
+                ((GradientDrawable) drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackground));
             }
         }
 
         /**
          * Updates the view to indicate whether or not the answer was checked correctly.
+         *
          * @return true, if this answer is in the correct pressed state, else false
          */
-        public boolean performAnswerCheck( ) {
+        public boolean performAnswerCheck() {
             adjustBackground(mAnswer.getAnswerCorrect());
 
             // Correct selections receive a cross or check

@@ -14,11 +14,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -55,14 +55,22 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     public static final String KEY_NEXT_ON_FAB = "KEY_NEXT_ON_FAB";
     public static final String KEY_ALL_DUE_CHALLENGES = "KEY_ALL_DUE_CHALLENGES";
 
-    @Inject UserManager mUserManager;
-    @Inject CompletionDataSource mCompletionDataSource;
-    @Inject StatisticsDataSource mStatisticsDataSource;
-    @Inject ChallengeDataSource mChallengeDataSource;
-    @Inject CategoryDataSource mCategoryDataSource;
-    @Inject UserLogicFactory mUserLogicFactory;
-    @Inject AnswerFragmentFactory mAnswerFragmentFactory;
-    @Inject CompletionLogic mCompletionLogic;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
+    @Inject
+    CategoryDataSource mCategoryDataSource;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
+    @Inject
+    AnswerFragmentFactory mAnswerFragmentFactory;
+    @Inject
+    CompletionLogic mCompletionLogic;
 
     private ArrayList<Long> mAllDueChallenges;
 
@@ -80,6 +88,11 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     private TextView mTypeText;
     private TextView mClassText;
 
+    /**
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
@@ -89,7 +102,8 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
      * Setup the activity. Instantiates the views with its listeners. Loads the challenge
      * afterwards. If no challenges are due the function loads the finish screen.
      *
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState Current state of the due challenges, the current challenge and if
+     *                           the challenge is done
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -128,6 +142,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
             final User currentUser = mUserManager.getCurrentUser();
             DueChallengeLogic dueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
             mAllDueChallenges = new ArrayList<>(dueChallengeLogic.getDueChallenges(categoryId));
+            Collections.shuffle(mAllDueChallenges);
         }
 
         //Load the empty state screen if no challenges are due
@@ -214,7 +229,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
 
     /**
      * On Click for mFloatingActionButton
-     *
+     * <p/>
      * Delegate to Fragment or load the next question
      */
     private void floatingActionButtonClicked() {

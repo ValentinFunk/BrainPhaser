@@ -32,7 +32,7 @@ public class SettingsLogic {
         // Cannot be smaller than previous
         if (prevStage >= 1) {
             Date time = SettingsDataSource.getTimeboxByStage(settings, prevStage);
-            if (durationMsec < time.getTime()) {
+            if (durationMsec <= time.getTime()) {
                 return R.string.error_less_than_previous;
             }
         }
@@ -40,7 +40,7 @@ public class SettingsLogic {
         // Or bigger than next
         if (nextStage <= SettingsDataSource.STAGE_COUNT) {
             Date time = SettingsDataSource.getTimeboxByStage(settings, nextStage);
-            if (durationMsec > time.getTime()) {
+            if (durationMsec >= time.getTime()) {
                 return R.string.error_more_than_next;
             }
         }

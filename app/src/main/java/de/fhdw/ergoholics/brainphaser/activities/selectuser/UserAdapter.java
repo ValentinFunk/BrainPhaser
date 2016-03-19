@@ -139,7 +139,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         private ImageView mUserImage;
         private UserAdapter mAdapter;
 
-        //Constructor
+        /**
+         * Constructor instantiates the text and images
+         *
+         * @param itemView Ignored
+         * @param adapter  The UserAdapter
+         */
         public UserViewHolder(View itemView, UserAdapter adapter) {
             super(itemView);
             itemView.setOnClickListener(this);

@@ -98,8 +98,8 @@
     <string name="undo">Rückgängig</string>
     <string name="abort">Abbrechen</string>
 
-    <string name="error_less_than_previous">Der Zeitraum darf nicht kleiner sein als der der vorherigen Klasse.</string>
-    <string name="error_more_than_next">Der Zeitraum darf nicht größer sein als der der folgenden Klasse.</string>
+    <string name="error_less_than_previous">Der Zeitraum muss größer sein als der der vorherigen Klasse.</string>
+    <string name="error_more_than_next">Der Zeitraum muss kleiner sein als der der folgenden Klasse.</string>
     <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
 
     <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>

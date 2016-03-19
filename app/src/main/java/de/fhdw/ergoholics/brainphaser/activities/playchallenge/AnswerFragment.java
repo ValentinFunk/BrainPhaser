@@ -32,7 +32,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     /**
      * Called by the Activity when the floating action button has been pressed.
      * Should be used to check answers or query information from the user.
-     *
+     * <p/>
      * After this call the fragment is responsible for calling onAnswerChecked to continue to the
      * next challenge.
      *
@@ -40,6 +40,11 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
      */
     public abstract ContinueMode goToNextState();
 
+    /**
+     * Saves the current Challenge-Id
+     *
+     * @param outState Bundle that contains the Challenge-Id
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -50,7 +55,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     /**
      * Loads the Listener, the current challenge and its answers
      *
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState Reloads the old state of the fragment
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,9 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
         loadAnswers();
     }
 
+    /**
+     * Loads the answers of the challenge
+     */
     protected void loadAnswers() {
         mAnswerList = mChallenge.getAnswers();
         if (BuildConfig.DEBUG && mAnswerList == null) {
@@ -143,9 +151,10 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     public interface AnswerListener {
         /**
          * Called by the Fragment when the correctness of an answer has been determined.
+         *
          * @param answerCorrect whether or not the user answered correctly
-         * @param skipConfirm when true the activity switches directly to the next challenge without
-         *                    waiting for the user to click on the FAB
+         * @param skipConfirm   when true the activity switches directly to the next challenge without
+         *                      waiting for the user to click on the FAB
          */
         void onAnswerChecked(boolean answerCorrect, boolean skipConfirm);
     }
