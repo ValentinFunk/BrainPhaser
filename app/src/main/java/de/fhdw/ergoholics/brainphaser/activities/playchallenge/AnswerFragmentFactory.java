@@ -1,26 +1,21 @@
 package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
+import java.util.HashMap;
+
 import de.fhdw.ergoholics.brainphaser.BuildConfig;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice.MultipleChoiceFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.selfcheck.SelfTestFragment;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.text.TextFragment;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 
-import java.util.HashMap;
-
 /**
  * Created by Christian Kost
- *
+ * </p>
  * Abstracts and bundles the creation of Fragments for Challenge Types.
  */
 public class AnswerFragmentFactory {
-    /**
-     * Interface to create an AnswerFragment
-     */
-    private interface AnswerFragmentCreator {
-        AnswerFragment createFragment();
-    }
     private static HashMap<Integer, AnswerFragmentCreator> challengeTypeFactories;
+
     static {
         challengeTypeFactories = new HashMap<>();
         challengeTypeFactories.put(ChallengeType.MULTIPLE_CHOICE, new AnswerFragmentCreator() {
@@ -45,6 +40,7 @@ public class AnswerFragmentFactory {
 
     /**
      * Creates a fragment for the specified challengeType.
+     *
      * @param challengeType one of ChallengeType.*
      * @return newly created fragment.
      */
@@ -55,5 +51,12 @@ public class AnswerFragmentFactory {
         }
 
         return creator.createFragment();
+    }
+
+    /**
+     * Interface to create an AnswerFragment
+     */
+    private interface AnswerFragmentCreator {
+        AnswerFragment createFragment();
     }
 }

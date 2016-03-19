@@ -3,7 +3,6 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * The abstract fragment contains all necessary  methods for the different challenge-type fragments
  */
 public abstract class AnswerFragment extends BrainPhaserFragment {
@@ -30,32 +30,9 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     ChallengeDataSource mChallengeDataSource;
 
     /**
-     * Possible modes for the Fragment to react to a request to goToNextState().
-     */
-    public enum ContinueMode {
-        /**
-         * Abort the action because some kind of validation failed. State was not changed.
-         */
-        CONTINUE_ABORT,
-
-        /**
-         * Successful state change, instruct activity to hide Floating Action Button.
-         * The Challenge will instruct the activity to load the next challenge through
-         * {@link de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment.AnswerListener#onAnswerChecked(boolean, boolean)}
-         */
-        CONTINUE_HIDE_FAB,
-
-        /**
-         * Successful state change, instruct activity to show the floating action button and
-         * allow progression to next challenge by clicking it.
-         */
-        CONTINUE_SHOW_FAB
-    }
-
-    /**
      * Called by the Activity when the floating action button has been pressed.
      * Should be used to check answers or query information from the user.
-     *
+     * <p/>
      * After this call the fragment is responsible for calling onAnswerChecked to continue to the
      * next challenge.
      *
@@ -65,6 +42,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
 
     /**
      * Saves the current Challenge-Id
+     *
      * @param outState Bundle that contains the Challenge-Id
      */
     @Override
@@ -77,7 +55,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     /**
      * Loads the Listener, the current challenge and its answers
      *
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState Reloads the old state of the fragment
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +75,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     }
 
     /**
-     *
+     * Loads the answers of the challenge
      */
     protected void loadAnswers() {
         mAnswerList = mChallenge.getAnswers();
@@ -145,14 +123,38 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     }
 
     /**
+     * Possible modes for the Fragment to react to a request to goToNextState().
+     */
+    public enum ContinueMode {
+        /**
+         * Abort the action because some kind of validation failed. State was not changed.
+         */
+        CONTINUE_ABORT,
+
+        /**
+         * Successful state change, instruct activity to hide Floating Action Button.
+         * The Challenge will instruct the activity to load the next challenge through
+         * {@link de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment.AnswerListener#onAnswerChecked(boolean, boolean)}
+         */
+        CONTINUE_HIDE_FAB,
+
+        /**
+         * Successful state change, instruct activity to show the floating action button and
+         * allow progression to next challenge by clicking it.
+         */
+        CONTINUE_SHOW_FAB
+    }
+
+    /**
      * Interface to pass answer checks on to the activity.
      */
     public interface AnswerListener {
         /**
          * Called by the Fragment when the correctness of an answer has been determined.
+         *
          * @param answerCorrect whether or not the user answered correctly
-         * @param skipConfirm when true the activity switches directly to the next challenge without
-         *                    waiting for the user to click on the FAB
+         * @param skipConfirm   when true the activity switches directly to the next challenge without
+         *                      waiting for the user to click on the FAB
          */
         void onAnswerChecked(boolean answerCorrect, boolean skipConfirm);
     }

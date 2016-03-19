@@ -22,11 +22,11 @@ public class SelfTestFragment extends AnswerFragment {
     private boolean mCheckingAnswer = false;
 
     /**
-     * Loads the Listener and sets up the view
+     * Sets up the view depending on the state
      *
      * @param inflater           Inflates the fragment
      * @param container          Container to inflate the fragment
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState Reloads the old state of the fragment
      * @return Return the inflated view
      */
     @Nullable
@@ -66,6 +66,9 @@ public class SelfTestFragment extends AnswerFragment {
         }
     }
 
+    /**
+     * Loads the list of answers
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -76,6 +79,11 @@ public class SelfTestFragment extends AnswerFragment {
         }
     }
 
+    /**
+     * Saves the current state of the fragment
+     *
+     * @param outState Bundle that contains the Challenge-Id and
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -91,9 +99,9 @@ public class SelfTestFragment extends AnswerFragment {
         if (!this.isDetached()) {
             // Reload this fragment
             getFragmentManager().beginTransaction()
-                .detach(this)
-                .attach(this)
-                .commit();
+                    .detach(this)
+                    .attach(this)
+                    .commit();
         }
         return ContinueMode.CONTINUE_HIDE_FAB;
     }

@@ -33,11 +33,24 @@ public class MultipleChoiceFragment extends AnswerFragment {
     private boolean mAnswersChecked = false;
     private ButtonViewState[] mStateHolder;
 
+    /**
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * Sets up the view
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Reloads the old state of the fragment
+     * @return Return the inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -108,6 +121,11 @@ public class MultipleChoiceFragment extends AnswerFragment {
         return ContinueMode.CONTINUE_SHOW_FAB;
     }
 
+    /**
+     * Saves the current state of the view
+     *
+     * @param outState Bundle that contains the Challenge-Id and the state of the fragment
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

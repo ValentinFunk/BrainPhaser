@@ -18,6 +18,7 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on goToNextState.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
@@ -39,6 +40,14 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         component.inject(this);
     }
 
+    /**
+     * Setups the view
+     *
+     * @param inflater           Inflates the fragment
+     * @param container          Container to inflate the fragment
+     * @param savedInstanceState Ignored
+     * @return Return the inflated view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +58,11 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         return view;
     }
 
+    /**
+     * Restores the old state of the view
+     *
+     * @param savedInstanceState State if the answer was checked
+     */
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
@@ -68,8 +82,8 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     }
 
     /*
-         * Validate answer and update GUI with errors
-         */
+     * Validate answer and update GUI with errors
+     */
     private boolean validateAnswerLength() {
         boolean isValid = true;
         String answer = mAnswerInput.getText().toString().trim();
@@ -118,6 +132,8 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
 
     /**
      * Checks the given answer
+     *
+     * @return ContinueMode
      */
     @Override
     public AnswerFragment.ContinueMode goToNextState() {
@@ -140,6 +156,11 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         }
     }
 
+    /**
+     * Saves the current state of the fragment
+     *
+     * @param outState Bundle that contains the Challenge-Id and
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

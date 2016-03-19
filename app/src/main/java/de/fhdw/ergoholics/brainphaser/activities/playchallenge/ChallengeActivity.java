@@ -14,9 +14,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+
+import javax.inject.Inject;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
@@ -35,15 +40,9 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-
-import javax.inject.Inject;
-
 /**
  * Created by Christian Kost
- *
+ * <p/>
  * Activity used to handle challenges. Loads fragments depending on the
  * challenge type. Implements the interface to determine when an challenge was checked and when a
  * self check challenge was checked.
@@ -56,14 +55,22 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     public static final String KEY_NEXT_ON_FAB = "KEY_NEXT_ON_FAB";
     public static final String KEY_ALL_DUE_CHALLENGES = "KEY_ALL_DUE_CHALLENGES";
 
-    @Inject UserManager mUserManager;
-    @Inject CompletionDataSource mCompletionDataSource;
-    @Inject StatisticsDataSource mStatisticsDataSource;
-    @Inject ChallengeDataSource mChallengeDataSource;
-    @Inject CategoryDataSource mCategoryDataSource;
-    @Inject UserLogicFactory mUserLogicFactory;
-    @Inject AnswerFragmentFactory mAnswerFragmentFactory;
-    @Inject CompletionLogic mCompletionLogic;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    CompletionDataSource mCompletionDataSource;
+    @Inject
+    StatisticsDataSource mStatisticsDataSource;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
+    @Inject
+    CategoryDataSource mCategoryDataSource;
+    @Inject
+    UserLogicFactory mUserLogicFactory;
+    @Inject
+    AnswerFragmentFactory mAnswerFragmentFactory;
+    @Inject
+    CompletionLogic mCompletionLogic;
 
     private ArrayList<Long> mAllDueChallenges;
 
@@ -222,7 +229,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
 
     /**
      * On Click for mFloatingActionButton
-     *
+     * <p/>
      * Delegate to Fragment or load the next question
      */
     private void floatingActionButtonClicked() {
