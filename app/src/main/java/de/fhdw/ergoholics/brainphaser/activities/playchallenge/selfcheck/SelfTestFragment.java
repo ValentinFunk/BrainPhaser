@@ -2,7 +2,6 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge.selfcheck;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
-import de.fhdw.ergoholics.brainphaser.activities.playchallenge.ChallengeActivity;
 
 /**
  * Created by Christian Kost
@@ -87,7 +85,7 @@ public class SelfTestFragment extends AnswerFragment {
      * Reloads the fragment in checkAnswer mode.
      */
     @Override
-    public boolean goToNextState() {
+    public AnswerFragment.ContinueMode goToNextState() {
         this.mCheckingAnswer = true;
         if (!this.isDetached()) {
             // Reload this fragment
@@ -96,7 +94,7 @@ public class SelfTestFragment extends AnswerFragment {
                 .attach(this)
                 .commit();
         }
-        return true;
+        return ContinueMode.CONTINUE_HIDE_FAB;
     }
 
     /**

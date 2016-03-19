@@ -227,12 +227,17 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         AnswerFragment currentFragment = (AnswerFragment) getSupportFragmentManager().findFragmentById(R.id.challenge_fragment);
 
         // Instruct the Fragment to begin answer checking
-        boolean hideFab = currentFragment.goToNextState();
-        if (hideFab) {
-            mFloatingActionButton.setVisibility(View.GONE);
-        } else {
-            mLoadNextChallengeOnFabClick = true;
-            mFloatingActionButton.setImageResource(R.drawable.ic_navigate_next_white_24dp);
+        AnswerFragment.ContinueMode continueMode = currentFragment.goToNextState();
+        switch (continueMode) {
+            case CONTINUE_HIDE_FAB:
+                mFloatingActionButton.setVisibility(View.GONE);
+                break;
+            case CONTINUE_SHOW_FAB:
+                mLoadNextChallengeOnFabClick = true;
+                mFloatingActionButton.setImageResource(R.drawable.ic_navigate_next_white_24dp);
+                break;
+            case CONTINUE_ABORT:
+                break;
         }
     }
 

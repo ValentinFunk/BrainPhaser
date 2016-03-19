@@ -2,7 +2,6 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice;
 
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,17 +9,13 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ToggleButton;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
-import de.fhdw.ergoholics.brainphaser.model.Answer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Fragment for a multiple-choice challenge
@@ -108,10 +103,10 @@ public class MultipleChoiceFragment extends AnswerFragment {
      * Checks if the given answer is correct, displays it and passes the event on to the activity
      */
     @Override
-    public boolean goToNextState() {
+    public AnswerFragment.ContinueMode goToNextState() {
         mListener.onAnswerChecked(mAdapter.performAnswerCheck(), false);
         mAnswersChecked = true;
-        return false;
+        return ContinueMode.CONTINUE_SHOW_FAB;
     }
 
     @Override

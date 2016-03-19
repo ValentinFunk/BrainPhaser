@@ -3,8 +3,6 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge.text;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +76,7 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
      * Checks the given answer
      */
     @Override
-    public boolean goToNextState() {
+    public AnswerFragment.ContinueMode goToNextState() {
         if (validateAnswerLength()) {
             boolean answerRight = false;
             String givenAnswer = mAnswerInput.getText().toString();
@@ -90,7 +88,9 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
             }
             populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
             mListener.onAnswerChecked(answerRight, false);
+            return ContinueMode.CONTINUE_SHOW_FAB;
+        } else {
+            return ContinueMode.CONTINUE_ABORT;
         }
-        return false;
     }
 }

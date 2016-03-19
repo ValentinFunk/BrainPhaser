@@ -30,6 +30,29 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
     ChallengeDataSource mChallengeDataSource;
 
     /**
+     * Possible modes for the Fragment to react to a request to goToNextState().
+     */
+    public enum ContinueMode {
+        /**
+         * Abort the action because some kind of validation failed. State was not changed.
+         */
+        CONTINUE_ABORT,
+
+        /**
+         * Successful state change, instruct activity to hide Floating Action Button.
+         * The Challenge will instruct the activity to load the next challenge through
+         * {@link de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment.AnswerListener#onAnswerChecked(boolean, boolean)}
+         */
+        CONTINUE_HIDE_FAB,
+
+        /**
+         * Successful state change, instruct activity to show the floating action button and
+         * allow progression to next challenge by clicking it.
+         */
+        CONTINUE_SHOW_FAB
+    }
+
+    /**
      * Called by the Activity when the floating action button has been pressed.
      * Should be used to check answers or query information from the user.
      *
@@ -38,7 +61,7 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
      *
      * @return Whether or not to disable the challenge FloatingActionButton for custom view: if true, the floating action button is hidden for the state.
      */
-    public abstract boolean goToNextState();
+    public abstract ContinueMode goToNextState();
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
