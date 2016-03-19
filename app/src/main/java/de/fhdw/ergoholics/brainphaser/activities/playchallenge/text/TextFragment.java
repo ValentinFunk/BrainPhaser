@@ -21,9 +21,12 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
  * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on goToNextState.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
+    private String KEY_ANSWER_CHECKED;
+
     //Textfield of the answer
     private TextView mAnswerInput;
     private TextInputLayout mAnswerInputLayout;
+    private boolean mAnswerChecked = false;
 
 
     /**
@@ -46,10 +49,27 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         return view;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            mAnswerChecked = savedInstanceState.getBoolean(KEY_ANSWER_CHECKED);
+            if (mAnswerChecked) {
+                mAnswerInput.setFocusable(false); // Don't auto focus
+            } else {
+                mAnswerInput.requestFocus();
+            }
+        }
+
+        if (mAnswerChecked) {
+            updateViewForAnswer();
+        }
+    }
 
     /*
-     * Validate answer and update GUI with errors
-     */
+         * Validate answer and update GUI with errors
+         */
     private boolean validateAnswerLength() {
         boolean isValid = true;
         String answer = mAnswerInput.getText().toString().trim();
@@ -73,40 +93,56 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     }
 
     /**
+     * Updates the view to show the answered state
+     *
+     * @return whether or not the answer was correct.
+     */
+    private boolean updateViewForAnswer() {
+        boolean answerRight = false;
+        String givenAnswer = mAnswerInput.getText().toString();
+        for (Answer item : mAnswerList) {
+            // Case insensitive check without trailing/leading spaces
+            if (item.getText().trim().toLowerCase().equals(givenAnswer.trim().toLowerCase())) {
+                answerRight = true;
+            }
+        }
+        populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
+        mAnswerInput.setEnabled(false);
+        mAnswerInput.clearFocus();
+        if (!answerRight) {
+            mAnswerInput.setError(getString(R.string.wrong_answer));
+            mAnswerInputLayout.setErrorEnabled(true);
+        }
+        return answerRight;
+    }
+
+    /**
      * Checks the given answer
      */
     @Override
     public AnswerFragment.ContinueMode goToNextState() {
         if (validateAnswerLength()) {
-            boolean answerRight = false;
-            String givenAnswer = mAnswerInput.getText().toString();
-            for (Answer item : mAnswerList) {
-                // Case insensitive check without trailing/leading spaces
-                if (item.getText().trim().toLowerCase().equals(givenAnswer.trim().toLowerCase())) {
-                    answerRight = true;
-                }
+            final boolean result = updateViewForAnswer();
+            View view = getView();
+            if (view != null) {
+                getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mListener.onAnswerChecked(result, false);
+                    }
+                });
             }
-            populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
-
-            final boolean result = answerRight;
-            getView().post(new Runnable() {
-                @Override
-                public void run() {
-                    mListener.onAnswerChecked(result, false);
-                }
-            });
-
-            mAnswerInput.setEnabled(false);
-            mAnswerInput.clearFocus();
-
-            if (!answerRight) {
-                mAnswerInput.setError(getString(R.string.wrong_answer));
-                mAnswerInputLayout.setErrorEnabled(true);
-            }
+            mAnswerChecked = true;
 
             return ContinueMode.CONTINUE_SHOW_FAB;
         } else {
             return ContinueMode.CONTINUE_ABORT;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(KEY_ANSWER_CHECKED, mAnswerChecked);
     }
 }

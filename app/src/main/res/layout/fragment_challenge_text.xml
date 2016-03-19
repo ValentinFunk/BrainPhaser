@@ -10,13 +10,15 @@
         android:layout_height="0dp"
         android:layout_gravity="center"
         android:layout_weight="1"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         android:minHeight="70dp">
         <EditText
             android:id="@+id/answerText"
             android:layout_width="300dp"
             android:layout_height="match_parent"
             android:hint="@string/answer"
-            android:inputType="textShortMessage|textAutoCorrect|textCapSentences"
+            android:inputType="textVisiblePassword"
             android:singleLine="true"
             android:imeOptions="actionDone"
             android:textColor="@color/colorPrimary"

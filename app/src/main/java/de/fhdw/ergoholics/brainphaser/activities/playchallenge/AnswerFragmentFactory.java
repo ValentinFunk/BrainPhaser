@@ -9,11 +9,14 @@ import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import java.util.HashMap;
 
 /**
- * Created by funkv on 18.03.2016.
+ * Created by Christian Kost
  *
  * Abstracts and bundles the creation of Fragments for Challenge Types.
  */
 public class AnswerFragmentFactory {
+    /**
+     * Interface to create an AnswerFragment
+     */
     private interface AnswerFragmentCreator {
         AnswerFragment createFragment();
     }

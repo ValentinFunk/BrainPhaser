@@ -36,6 +36,7 @@ import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -80,6 +81,11 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     private TextView mTypeText;
     private TextView mClassText;
 
+    /**
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
@@ -89,7 +95,8 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
      * Setup the activity. Instantiates the views with its listeners. Loads the challenge
      * afterwards. If no challenges are due the function loads the finish screen.
      *
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState Current state of the due challenges, the current challenge and if
+     *                           the challenge is done
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -128,6 +135,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
             final User currentUser = mUserManager.getCurrentUser();
             DueChallengeLogic dueChallengeLogic = mUserLogicFactory.createDueChallengeLogic(currentUser);
             mAllDueChallenges = new ArrayList<>(dueChallengeLogic.getDueChallenges(categoryId));
+            Collections.shuffle(mAllDueChallenges);
         }
 
         //Load the empty state screen if no challenges are due

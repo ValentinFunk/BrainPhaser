@@ -63,6 +63,10 @@ public abstract class AnswerFragment extends BrainPhaserFragment {
      */
     public abstract ContinueMode goToNextState();
 
+    /**
+     * Saves the current Challenge-Id
+     * @param outState Bundle that contains the Challenge-Id
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
