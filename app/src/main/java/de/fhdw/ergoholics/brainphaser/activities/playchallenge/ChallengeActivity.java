@@ -26,6 +26,7 @@ import de.fhdw.ergoholics.brainphaser.database.ChallengeStage;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeType;
 import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.StatisticsDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.CompletionLogic;
 import de.fhdw.ergoholics.brainphaser.logic.DueChallengeLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
@@ -60,6 +61,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     @Inject CategoryDataSource mCategoryDataSource;
     @Inject UserLogicFactory mUserLogicFactory;
     @Inject AnswerFragmentFactory mAnswerFragmentFactory;
+    @Inject CompletionLogic mCompletionLogic;
 
     private ArrayList<Long> mAllDueChallenges;
 
@@ -245,7 +247,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         User currentUser = mUserManager.getCurrentUser();
 
         // Save the user completion for due calculation
-        mCompletionDataSource.updateAfterAnswer(mAllDueChallenges.get(mChallengeNo), currentUser.getId(), answer ? CompletionDataSource.ANSWER_RIGHT : CompletionDataSource.ANSWER_WRONG);
+        mCompletionLogic.updateAfterAnswer(mAllDueChallenges.get(mChallengeNo), currentUser.getId(), answer ? CompletionLogic.ANSWER_RIGHT : CompletionLogic.ANSWER_WRONG);
 
         //Create statistics entry
         Statistics statistics = new Statistics(null, answer, new Date(), currentUser.getId(), mAllDueChallenges.get(mChallengeNo));

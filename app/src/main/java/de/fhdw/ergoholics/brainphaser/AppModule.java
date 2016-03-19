@@ -9,7 +9,9 @@ import dagger.Module;
 import dagger.Provides;
 
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragmentFactory;
+import de.fhdw.ergoholics.brainphaser.database.CompletionDataSource;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
+import de.fhdw.ergoholics.brainphaser.logic.CompletionLogic;
 import de.fhdw.ergoholics.brainphaser.logic.SettingsLogic;
 import de.fhdw.ergoholics.brainphaser.logic.UserLogicFactory;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
@@ -75,4 +77,10 @@ public class AppModule {
     @Provides
     @Singleton
     AnswerFragmentFactory providesFragmentFactory() { return new AnswerFragmentFactory(); }
+
+    @Provides
+    @Singleton
+    CompletionLogic providesCompletionLogic(CompletionDataSource ds) {
+        return new CompletionLogic(ds);
+    }
 }
