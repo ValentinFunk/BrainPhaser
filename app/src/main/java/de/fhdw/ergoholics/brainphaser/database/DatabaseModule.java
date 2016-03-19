@@ -52,8 +52,8 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
-    ChallengeDataSource provideChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
-        return new ChallengeDataSource(session, completionDataSource);
+    ChallengeDataSource provideChallengeDataSource(DaoSession session) {
+        return new ChallengeDataSource(session);
     }
 
     @Provides

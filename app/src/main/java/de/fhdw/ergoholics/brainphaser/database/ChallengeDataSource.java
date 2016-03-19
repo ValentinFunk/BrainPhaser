@@ -18,18 +18,15 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 public class ChallengeDataSource {
     //Attributes
     private DaoSession mDaoSession;
-    private CompletionDataSource mCompletionDataSource;
 
     /**
      * Constructor which saves all given parameters to local member attributes.
      *
      * @param session              the session to be saved as a member attribute
-     * @param completionDataSource the completion data source to be saved as a member attribute
      */
     @Inject
-    ChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
+    ChallengeDataSource(DaoSession session) {
         mDaoSession = session;
-        mCompletionDataSource = completionDataSource;
     }
 
     /**
@@ -59,27 +56,6 @@ public class ChallengeDataSource {
      */
     public long create(Challenge challenge) {
         return mDaoSession.getChallengeDao().insert(challenge);
-    }
-
-    /**
-     * Returns all challenges that have never been completed by the given user before
-     *
-     * @param user the user whose not completed challenges will be returned
-     * @return list of uncompleted challenges
-     */
-    public List<Challenge> getUncompletedChallenges(User user) {
-        List<Challenge> notCompleted = new ArrayList<>();
-        long userId = user.getId();
-
-        List<Challenge> challenges = mDaoSession.getChallengeDao().queryBuilder().list();
-
-        for (Challenge challenge : challenges) {
-            if (mCompletionDataSource.findByChallengeAndUser(challenge.getId(), userId) == null) {
-                notCompleted.add(challenge);
-            }
-        }
-
-        return notCompleted;
     }
 
     /**

@@ -1,8 +1,11 @@
 package de.fhdw.ergoholics.brainphaser.logic.statistics;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
+import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -70,7 +73,17 @@ public class ChartSettings {
         chart.setDescription("");
 
         chart.getLegend().setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        chart.getLegend().setTextSize(LEGEND_TEXT_SIZE);
+
+
+        Context context = mApplication.getApplicationContext();
+        TypedValue typedValue = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.textAppearanceSmall, typedValue, true);
+        int[] textSizeAttr = new int[] { android.R.attr.textSize };
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, textSizeAttr);
+        float textSize = a.getDimension(0, -1);
+        a.recycle();
+
+        chart.getLegend().setTextSize(textSize);
     }
 
     /**

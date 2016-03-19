@@ -1,6 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
 import android.support.v4.util.LongSparseArray;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -115,6 +116,25 @@ public class DueChallengeLogic {
     }
 
     /**
+     * Returns all challenges that have never been completed by the given user before
+     *
+     * @return list of uncompleted challenges
+     */
+    public List<Challenge> getUncompletedChallenges() {
+        List<Challenge> notCompleted = new ArrayList<>();
+
+        List<Challenge> challenges = mChallengeDataSource.getAll();
+
+        for (Challenge challenge : challenges) {
+            if (mCompletionDataSource.findByChallengeAndUser(challenge.getId(), mUser.getId()) == null) {
+                notCompleted.add(challenge);
+            }
+        }
+
+        return notCompleted;
+    }
+
+    /**
      * Adds the ids of all due challenges without entries in the completed table to the given list.
      * The missing entries will also be created in the completed table.
      *
@@ -126,7 +146,7 @@ public class DueChallengeLogic {
         Date now = new Date();
 
         //Get uncompleted challenges
-        List<Challenge> notCompletedYet = mChallengeDataSource.getUncompletedChallenges(mUser);
+        List<Challenge> notCompletedYet = getUncompletedChallenges();
 
         /*
          * If categoryId is CategoryDataSource.CATEGORY_ID_ALL or matches the challenge's id, the

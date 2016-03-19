@@ -58,11 +58,12 @@ public class BPCWrite {
         category.setId(null);
         long categoryId = mCategoryDataSource.create(category);
 
-        for (Challenge challenge : challengeList) {
-            if (challenge.getCategoryId() == oldCategoryId) {
+        for (int i = 0; i < challengeList.size(); i++) {
+            Challenge challenge = challengeList.get(i);
+            if (challenge != null && challenge.getCategoryId() == oldCategoryId) {
                 challenge.setCategoryId(categoryId);
                 writeChallenge(challenge, answerList);
-                challenge.setCategoryId(-1);
+                challengeList.set(i, null);
             }
         }
     }
