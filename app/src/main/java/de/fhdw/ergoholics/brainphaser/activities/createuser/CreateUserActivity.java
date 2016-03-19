@@ -24,6 +24,8 @@ import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
+ * Created by funkv on 15.02.2016.
+ * <p/>
  * Activity used to create an user. Queries Username and avatar. <p/> Persistent data: none
  * Parameters: Intent with AC
  */

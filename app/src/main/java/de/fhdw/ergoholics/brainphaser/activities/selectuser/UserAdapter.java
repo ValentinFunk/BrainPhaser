@@ -24,6 +24,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Adapter to load all users into a list. Contains a context menu to perform actions on the users
  */
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
@@ -33,6 +34,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     private ResultListener mResultListener;
     private List<User> mUsers;
     private BrainPhaserApplication mApplication;
+
     /**
      * Constructor to setup the listener, inject components and get all users
      *

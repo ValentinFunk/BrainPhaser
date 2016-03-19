@@ -17,6 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.inject.Inject;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
@@ -34,14 +39,9 @@ import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.Statistics;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.inject.Inject;
-
 /**
  * Created by Christian Kost
- *
+ * <p/>
  * Activity used to handle challenges. Loads fragments depending on the
  * challenge type. Implements the interface to determine when an challenge was checked and when a
  * self check challenge was checked.

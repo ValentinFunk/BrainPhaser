@@ -18,13 +18,13 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Fragment for a text challenge. Compares the given text with the answers of the challenge and loads all answers on goToNextState.
  */
 public class TextFragment extends AnswerFragment implements TextView.OnEditorActionListener {
     //Textfield of the answer
     private TextView mAnswerInput;
     private TextInputLayout mAnswerInputLayout;
-
 
     /**
      * Inject components
@@ -45,7 +45,6 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
         mAnswerInput.setOnEditorActionListener(this);
         return view;
     }
-
 
     /*
      * Validate answer and update GUI with errors

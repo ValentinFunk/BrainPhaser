@@ -30,7 +30,17 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
 
     private int mViewNumber;
 
-    //Constructor
+    /**
+     * This constructor saves the given parameters as member attributes and sets the value of the
+     * view number.
+     *
+     * @param userLogicFactory    the user logic factory to be saved as a member attribute
+     * @param challengeDataSource the challenge data source to be saved as a member attribute
+     * @param application         the BrainPhaserApplication to be saved as a member attribute
+     * @param user                the user to be saved as a member attribute
+     * @param categoryId          the category id to be saved as a member attribute
+     * @param isLandscape         the landscape boolean to be saved as a member attribute
+     */
     public StatisticsAdapter(UserLogicFactory userLogicFactory,
                              ChallengeDataSource challengeDataSource,
                              BrainPhaserApplication application, User user, long categoryId,

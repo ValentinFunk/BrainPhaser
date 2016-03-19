@@ -13,7 +13,11 @@ public class ChartValueSelectedListener implements OnChartValueSelectedListener 
     //Attributes
     private StatisticViewHolder mHolder;
 
-    //Constructor
+    /**
+     * This constructor saves the given parameters as member attributes
+     *
+     * @param holder the view holder to be saved as a member attribute
+     */
     public ChartValueSelectedListener(StatisticViewHolder holder) {
         mHolder = holder;
     }

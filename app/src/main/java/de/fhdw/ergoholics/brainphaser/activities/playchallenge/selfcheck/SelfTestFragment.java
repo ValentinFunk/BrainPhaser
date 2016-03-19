@@ -13,6 +13,7 @@ import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Fragment for a self-check challenge.
  */
 public class SelfTestFragment extends AnswerFragment {

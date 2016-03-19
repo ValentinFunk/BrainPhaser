@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice;
 
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
@@ -13,16 +12,71 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ToggleButton;
 
-import de.fhdw.ergoholics.brainphaser.R;
-import de.fhdw.ergoholics.brainphaser.model.Answer;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import de.fhdw.ergoholics.brainphaser.R;
+import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
  * Created by funkv on 18.03.2016.
  */
 public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonViewHolder> {
+    private List<ButtonViewState> mAnswers;
+    private List<ButtonViewHolder> mButtons = new ArrayList<>();
+
+    public ButtonsAdapter(List<ButtonViewState> answers) {
+        mAnswers = answers;
+        mButtons = new ArrayList<>(mAnswers.size());
+    }
+
+    @Override
+    public ButtonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.multiplechoice_button, parent, false);
+
+        // Clone drawable to allow modifications
+        ToggleButton button = (ToggleButton) v.findViewById(R.id.toggleButton);
+        StateListDrawable drawable = (StateListDrawable) button.getBackground();
+        drawable = (StateListDrawable) drawable.mutate();
+        button.setBackgroundDrawable(drawable.getConstantState().newDrawable());
+        drawable = (StateListDrawable) button.getBackground();
+        // Deep Clone (necessary for API Version 15 apparently)
+        DrawableContainer.DrawableContainerState drawableContainerState = (DrawableContainer.DrawableContainerState) drawable.getConstantState();
+        for (int i = 0; i < drawableContainerState.getChildren().length; i++) {
+            if (drawableContainerState.getChildren()[i] != null) {
+                drawableContainerState.getChildren()[i] = drawableContainerState.getChildren()[i].getConstantState().newDrawable().mutate();
+            }
+        }
+
+        return new ButtonViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ButtonViewHolder holder, int position) {
+        mButtons.add(position, holder);
+        holder.bind(mAnswers.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mAnswers.size();
+    }
+
+    /**
+     * Updates the view to display the correct answer and validates user selection.
+     *
+     * @return true, if the user answered correctly, else false
+     */
+    public boolean performAnswerCheck() {
+        boolean answerCorrect = true;
+        for (ButtonViewHolder vh : mButtons) {
+            if (!vh.performAnswerCheck()) {
+                answerCorrect = false;
+            }
+        }
+        return answerCorrect;
+    }
+
     public class ButtonViewHolder extends RecyclerView.ViewHolder {
         ToggleButton mToggleButton;
         ImageView mSelectionCorrectMarker;
@@ -85,58 +139,5 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
             mSelectionCorrectMarker.bringToFront();
             mSelectionCorrectMarker.setVisibility(View.GONE);
         }
-    }
-
-    private List<ButtonViewState> mAnswers;
-    private List<ButtonViewHolder> mButtons = new ArrayList<>();
-    public ButtonsAdapter(List<ButtonViewState> answers) {
-        mAnswers = answers;
-        mButtons = new ArrayList<>(mAnswers.size());
-    }
-
-    @Override
-    public ButtonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.multiplechoice_button, parent, false);
-
-        // Clone drawable to allow modifications
-        ToggleButton button = (ToggleButton) v.findViewById(R.id.toggleButton);
-        StateListDrawable drawable = (StateListDrawable)button.getBackground();
-        drawable = (StateListDrawable) drawable.mutate();
-        button.setBackgroundDrawable(drawable.getConstantState().newDrawable());
-        drawable = (StateListDrawable)button.getBackground();
-        // Deep Clone (necessary for API Version 15 apparently)
-        DrawableContainer.DrawableContainerState drawableContainerState = (DrawableContainer.DrawableContainerState) drawable.getConstantState();
-        for (int i = 0; i < drawableContainerState.getChildren().length; i++) {
-            if (drawableContainerState.getChildren()[i] != null) {
-                drawableContainerState.getChildren()[i] = drawableContainerState.getChildren()[i].getConstantState().newDrawable().mutate();
-            }
-        }
-
-        return new ButtonViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(ButtonViewHolder holder, int position) {
-        mButtons.add(position, holder);
-        holder.bind(mAnswers.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mAnswers.size();
-    }
-
-    /**
-     * Updates the view to display the correct answer and validates user selection.
-     * @return true, if the user answered correctly, else false
-     */
-    public boolean performAnswerCheck() {
-        boolean answerCorrect = true;
-        for (ButtonViewHolder vh : mButtons) {
-            if (!vh.performAnswerCheck()) {
-                answerCorrect = false;
-            }
-        }
-        return answerCorrect;
     }
 }
