@@ -66,7 +66,7 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) { // Enter is pressed
-            goToNextState();
+            getActivity().findViewById(R.id.btnNextChallenge).callOnClick(); // Same as FAB click
         }
         return false;
     }
@@ -86,7 +86,23 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
                 }
             }
             populateRecyclerViewWithCorrectAnswers(R.id.answerListText, givenAnswer);
-            mListener.onAnswerChecked(answerRight, false);
+
+            final boolean result = answerRight;
+            getView().post(new Runnable() {
+                @Override
+                public void run() {
+                    mListener.onAnswerChecked(result, false);
+                }
+            });
+
+            mAnswerInput.setEnabled(false);
+            mAnswerInput.clearFocus();
+
+            if (!answerRight) {
+                mAnswerInput.setError(getString(R.string.wrong_answer));
+                mAnswerInputLayout.setErrorEnabled(true);
+            }
+
             return ContinueMode.CONTINUE_SHOW_FAB;
         } else {
             return ContinueMode.CONTINUE_ABORT;

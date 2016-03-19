@@ -9,6 +9,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -299,7 +300,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
         mFloatingActionButton.setLayoutParams(lp);
         mFloatingActionButton.setVisibility(View.INVISIBLE);
 
-        LinearLayout contentLayout = (LinearLayout) findViewById(R.id.challenge_layout);
+        NestedScrollView contentLayout = (NestedScrollView) findViewById(R.id.challenge_rootcontainer);
         if (contentLayout != null) {
             contentLayout.removeAllViews();
             View view = getLayoutInflater().inflate(R.layout.fragment_finish_challenge, contentLayout, false);

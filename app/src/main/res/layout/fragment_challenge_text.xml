@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_answer_layout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:minHeight="70dp">
         <EditText
             android:id="@+id/answerText"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:hint="@string/answer"
+            android:inputType="textShortMessage|textAutoCorrect|textCapSentences"
             android:singleLine="true"
             android:imeOptions="actionDone"
             android:textColor="@color/colorPrimary"
@@ -24,7 +26,7 @@
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/answerListText"
         android:layout_gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center">
     </android.support.v7.widget.RecyclerView>

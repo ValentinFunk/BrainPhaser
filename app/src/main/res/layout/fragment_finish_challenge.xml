@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/backgroundEmptyState">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundEmptyState"
+    android:fillViewport="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,34 +15,32 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_happyphaser"
             android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
-            android:layout_gravity="center_horizontal"
-            />
+            android:src="@drawable/ic_happyphaser" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/well_done"
-            android:singleLine="true"
             android:id="@+id/textView"
-            android:padding="0dp"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/secondary_text_light"
-            android:layout_marginBottom="5dp"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/enjoy_day"
-            android:id="@+id/textView2"
-            android:textColor="@android:color/secondary_text_light"
-            android:layout_marginBottom="20dp"
             android:layout_gravity="center_horizontal"
-            />
+            android:layout_marginBottom="5dp"
+            android:padding="0dp"
+            android:singleLine="true"
+            android:text="@string/well_done"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/secondary_text_light" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:text="@string/enjoy_day"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/secondary_text_light" />
 
 
     </LinearLayout>

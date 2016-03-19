@@ -40,6 +40,7 @@
     <string name="multiple_choice">Multiple Choice</string>
     <string name="self_check">Selbstkontrolle</string>
     <string name="text">Freitext</string>
+    <string name="wrong_answer">Antwort Falsch</string>
 
     <string name="well_done">Gut gemacht!</string>
     <string name="enjoy_day">Keine Challenges fällig. Zeit für eine Pause.</string>
