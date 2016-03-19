@@ -2,6 +2,7 @@ package de.fhdw.ergoholics.brainphaser.activities.playchallenge;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerView
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
         //Load the list template
         View customView = myInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+        TextView textView = (TextView) customView.findViewById(android.R.id.text1);
+        textView.setGravity(Gravity.CENTER);
         return new AnswerViewHolder(customView);
     }
 

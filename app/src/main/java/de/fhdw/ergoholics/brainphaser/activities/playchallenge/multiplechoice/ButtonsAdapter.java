@@ -36,18 +36,25 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         }
 
         /**
-         * Updates the view to indicate whether or not the answer was checked correctly.
-         * @return true, if this answer is in the correct pressed state, else false
+         * Modifies the button to show correct/incorrect background
          */
-        public boolean performAnswerCheck( ) {
+        public void adjustBackground(boolean correct) {
             // Correct answers get a green background
-            if (mAnswer.getAnswerCorrect()) {
+            if (correct) {
                 StateListDrawable drawable = (StateListDrawable)mToggleButton.getBackground();
                 ((GradientDrawable)drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackgroundRight));
             } else {
                 StateListDrawable drawable = (StateListDrawable)mToggleButton.getBackground();
                 ((GradientDrawable)drawable.getCurrent()).setColor(ContextCompat.getColor(itemView.getContext(), R.color.buttonBackground));
             }
+        }
+
+        /**
+         * Updates the view to indicate whether or not the answer was checked correctly.
+         * @return true, if this answer is in the correct pressed state, else false
+         */
+        public boolean performAnswerCheck( ) {
+            adjustBackground(mAnswer.getAnswerCorrect());
 
             // Correct selections receive a cross or check
             boolean answerCorrect = mAnswer.getAnswerCorrect() == mToggleButton.isChecked();
@@ -81,6 +88,7 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
                 }
             });
             mToggleButton.setChecked(buttonViewState.getToggleState());
+            adjustBackground(false); // Reset background
 
             mSelectionCorrectMarker.bringToFront();
             mSelectionCorrectMarker.setVisibility(View.GONE);
