@@ -16,6 +16,13 @@
     <color name="colorStage5">#26A69A</color>
     <color name="colorStage6">#9CCC65</color>
 
+    <color name="colorPlayed1">#a1887f</color>
+    <color name="colorPlayed2">#e0e0e0</color>
+    <color name="colorPlayed3">#90a4ae</color>
+
+    <color name="colorDue">#f06292</color>
+    <color name="colorNotDue">#7986cb</color>
+
     <color name="colorText">#E1BEE7</color>
     <color name="colorMultipleChoice">#B3E5FC</color>
     <color name="colorSelfCheck">#F0F4C3</color>

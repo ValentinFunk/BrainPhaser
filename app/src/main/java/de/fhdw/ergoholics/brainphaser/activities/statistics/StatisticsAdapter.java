@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.HashMap;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
@@ -16,19 +18,27 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016.
- * <p>
+ * <p/>
  * This adapter adds the StatisticViewHolder objects to the recycler view it is assigned to
  */
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder> {
+    private static final HashMap<StatisticType, Integer> VIEW_TYPE_MAP = new HashMap<>();
+
+    static {
+        VIEW_TYPE_MAP.put(StatisticType.TYPE_DUE, StatisticViewHolder.TYPE_SMALL);
+        VIEW_TYPE_MAP.put(StatisticType.TYPE_STAGE, StatisticViewHolder.TYPE_SMALL);
+        VIEW_TYPE_MAP.put(StatisticType.TYPE_MOST_PLAYED, StatisticViewHolder.TYPE_LARGE);
+        VIEW_TYPE_MAP.put(StatisticType.TYPE_MOST_FAILED, StatisticViewHolder.TYPE_LARGE);
+        VIEW_TYPE_MAP.put(StatisticType.TYPE_MOST_SUCCEEDED, StatisticViewHolder.TYPE_LARGE);
+    }
+
     //Attributes
     private UserLogicFactory mUserLogicFactory;
     private ChallengeDataSource mChallengeDataSource;
     private BrainPhaserApplication mApplication;
     private User mUser;
     private long mCategoryId;
-    private boolean mIsLandscape;
-
-    private int mViewNumber;
+    private StatisticType[] mStatisticItems;
 
     /**
      * This constructor saves the given parameters as member attributes and sets the value of the
@@ -39,20 +49,17 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      * @param application         the BrainPhaserApplication to be saved as a member attribute
      * @param user                the user to be saved as a member attribute
      * @param categoryId          the category id to be saved as a member attribute
-     * @param isLandscape         the landscape boolean to be saved as a member attribute
      */
     public StatisticsAdapter(UserLogicFactory userLogicFactory,
                              ChallengeDataSource challengeDataSource,
                              BrainPhaserApplication application, User user, long categoryId,
-                             boolean isLandscape) {
+                             StatisticType[] itemsToShow) {
         mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mApplication = application;
         mUser = user;
         mCategoryId = categoryId;
-        mIsLandscape = isLandscape;
-
-        mViewNumber = 0;
+        mStatisticItems = itemsToShow;
     }
 
     /**
@@ -64,35 +71,41 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     @Override
     public StatisticViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
+        int layout;
 
         Context parentContext = parent.getContext();
 
-        int pieLayout = R.layout.list_item_statistic_pie_chart;
-        int mostPlayedLayout = R.layout.list_item_statistic_most_played;
+        if (viewType == StatisticViewHolder.TYPE_LARGE) {
+            layout = R.layout.list_item_statistic_most_played;
 
-        if (mIsLandscape) {
-            if (mViewNumber == 1 || mViewNumber == 3) {
-                v = LayoutInflater.from(parentContext).inflate(pieLayout, parent, false);
-            } else {
-                v = LayoutInflater.from(parentContext).inflate(mostPlayedLayout, parent, false);
-            }
+        } else if (viewType == StatisticViewHolder.TYPE_SMALL) {
+            layout = R.layout.list_item_statistic_pie_chart;
         } else {
-            if (mViewNumber < 2) {
-                v = LayoutInflater.from(parentContext).inflate(pieLayout, parent, false);
-            } else {
-                v = LayoutInflater.from(parentContext).inflate(mostPlayedLayout, parent, false);
-            }
+            throw new RuntimeException("Invalid view type!");
         }
+
+        v = LayoutInflater.from(parentContext).inflate(layout, parent, false);
 
         LinearLayoutCompat.LayoutParams layoutParams = new LinearLayoutCompat.LayoutParams(
                 LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                 LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
 
         v.setLayoutParams(layoutParams);
-        mViewNumber++;
 
         return new StatisticViewHolder(v, mUserLogicFactory, mChallengeDataSource, mApplication,
                 mUser, mCategoryId);
+    }
+
+    /**
+     * Returns the type of the item view at the given position
+     *
+     * @param position the position of the item view
+     * @return the type of the item view
+     */
+    @Override
+    public int getItemViewType(int position) {
+        StatisticType type = mStatisticItems[position];
+        return VIEW_TYPE_MAP.get(type);
     }
 
     /**
@@ -103,40 +116,39 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      */
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
-        if (mIsLandscape) {
-            if (position == 0) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
-            } else if (position == 1) {
-                holder.applyDueChart();
-            } else if (position == 2) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
-            } else if (position == 3) {
-                holder.applyStageChart();
-            } else if (position == 4) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
-            }
-        } else {
-            if (position == 0) {
-                holder.applyDueChart();
-            } else if (position == 1) {
-                holder.applyStageChart();
-            } else if (position == 2) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_PLAYED);
-            } else if (position == 3) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_FAILED);
-            } else if (position == 4) {
-                holder.applyMostPlayedChart(StatisticType.TYPE_MOST_SUCCEEDED);
-            }
+        switch (getItemViewType(position)) {
+            case StatisticViewHolder.TYPE_SMALL:
+                switch (mStatisticItems[position]) {
+                    case TYPE_DUE:
+                        holder.applyDueChart();
+                        break;
+                    case TYPE_STAGE:
+                        holder.applyStageChart();
+                        break;
+                }
+                break;
+            case StatisticViewHolder.TYPE_LARGE:
+                holder.applyMostPlayedChart(mStatisticItems[position]);
+                break;
         }
     }
 
     /**
      * Returns the count of ViewHolders in the adapter
      *
-     * @return the fixed count of ViewHolders
+     * @return the count of ViewHolders
      */
     @Override
     public int getItemCount() {
-        return 5;
+        return mStatisticItems.length;
+    }
+
+    /**
+     * Sets the statistic items member to the parameter object
+     *
+     * @param statisticItems the statistic items to be shown in the recycler view
+     */
+    public void setStatisticItems(StatisticType[] statisticItems) {
+        this.mStatisticItems = statisticItems;
     }
 }

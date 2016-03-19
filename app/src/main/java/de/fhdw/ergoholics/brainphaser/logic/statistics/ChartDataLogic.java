@@ -49,7 +49,8 @@ public class ChartDataLogic {
      * @param statisticsDataSource the statistics data source to be saved as a member attribute
      * @param userLogicFactory     the user logic factory  to be saved as a member attribute
      */
-    public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application,
+    public ChartDataLogic(User user, long categoryId,
+                          BrainPhaserApplication application,
                           ChallengeDataSource challengeDataSource,
                           CompletionDataSource completionDataSource,
                           StatisticsDataSource statisticsDataSource,
@@ -92,7 +93,7 @@ public class ChartDataLogic {
 
             //Create dataset
             PieDataSet dataset = new PieDataSet(entries, "");
-            mSettings.applyDataSetSettings(dataset);
+            mSettings.applyDataSetSettings(dataset, StatisticType.TYPE_DUE);
 
             //Create data
             PieData data = new PieData(labels, dataset);
@@ -131,7 +132,7 @@ public class ChartDataLogic {
             }
             //Create dataset
             PieDataSet dataset = new PieDataSet(entries, "");
-            mSettings.applyDataSetSettings(dataset);
+            mSettings.applyDataSetSettings(dataset, StatisticType.TYPE_STAGE);
 
             //Create data
             PieData data = new PieData(labels, dataset);
@@ -180,7 +181,7 @@ public class ChartDataLogic {
         if (entries.size() > 1) {
             //Create dataset
             PieDataSet dataset = new PieDataSet(entries, "");
-            mSettings.applyDataSetSettings(dataset);
+            mSettings.applyDataSetSettings(dataset, type);
 
             //Create data
             PieData data = new PieData(labels, dataset);

@@ -1,6 +1,9 @@
 package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -56,5 +59,21 @@ public class BrainPhaserApplication extends Application {
     @Singleton
     @Component(modules = {AppModule.class, DatabaseModule.class})
     public interface ApplicationComponent extends BrainPhaserComponent {
+    }
+
+    /**
+     * Licensed under CC BY-SA (c) 2012 Muhammad Nabeel Arif
+     * http://stackoverflow.com/questions/4605527/converting-pixels-to-dp
+     *
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into dp
+     * @return A float value to represent dp equivalent to px value
+     */
+    public float convertPixelsToDp(float px){
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
     }
 }

@@ -7,7 +7,13 @@ android {
             description "Generates Javadoc for $variant.name."
             source = variant.javaCompile.source
             ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar) - fileTree(dir:'src', include: '**/*.java', exclude: '**/*model*/**')
+            options.showAll()
+            options.docletpath = [new File("../pdfdoclet-1.0.3-all.jar")]
+            options.doclet = "com.tarsec.javadoc.pdfdoclet.PDFDoclet"
+            options.optionFiles = [file("../javadoc.cfg")]
+
+            options.addFileOption("pdf", file('../javadoc.pdf'))
         }
     }
 

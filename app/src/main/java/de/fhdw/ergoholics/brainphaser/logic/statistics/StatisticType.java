@@ -6,5 +6,9 @@ package de.fhdw.ergoholics.brainphaser.logic.statistics;
  * Enumeration for the different statistic types
  */
 public enum StatisticType {
-    TYPE_DUE, TYPE_STAGE, TYPE_MOST_PLAYED, TYPE_MOST_FAILED, TYPE_MOST_SUCCEEDED
+    TYPE_DUE,
+    TYPE_STAGE,
+    TYPE_MOST_PLAYED,
+    TYPE_MOST_FAILED,
+    TYPE_MOST_SUCCEEDED
 }
