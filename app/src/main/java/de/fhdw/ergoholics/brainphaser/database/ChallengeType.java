@@ -3,8 +3,8 @@ package de.fhdw.ergoholics.brainphaser.database;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
- * Created by Christian on 03.03.2016.
- *
+ * Created by Christian Kost on 03.03.2016.
+ * <p/>
  * Defines valid challenge types.
  */
 public class ChallengeType {
@@ -19,6 +19,13 @@ public class ChallengeType {
         R.string.self_check
     };
 
+    private static int[] challengeColorResources = new int[]{
+            -1,
+            R.color.colorMultipleChoice,
+            R.color.colorText,
+            R.color.colorSelfCheck
+    };
+
     /**
      * Returns the resource id of the name string for this challenge type
      * @param challengeType challenge type to get the name for
@@ -28,12 +35,6 @@ public class ChallengeType {
         return challengeNameResources[challengeType];
     }
 
-    private static int[] challengeColorResources = new int[] {
-        -1,
-        R.color.colorMultipleChoice,
-        R.color.colorText,
-        R.color.colorSelfCheck
-    };
     /**
      * Returns the resource id of the color for this challenge type
      * @param challengeType challenge type to get the color for

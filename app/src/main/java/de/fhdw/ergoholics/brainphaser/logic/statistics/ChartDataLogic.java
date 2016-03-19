@@ -37,7 +37,18 @@ public class ChartDataLogic {
 
     private ChartSettings mSettings;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes and creates the chart
+     * settings member.
+     *
+     * @param user                 the user to be saved as a member attribute
+     * @param categoryId           the category id to be saved as a member attribute
+     * @param application          the BrainPhaserApplication to be saved as a member attribute
+     * @param challengeDataSource  the challenge data source to be saved as a member attribute
+     * @param completionDataSource the completion data source to be saved as a member attribute
+     * @param statisticsDataSource the statistics data source to be saved as a member attribute
+     * @param userLogicFactory     the user logic factory  to be saved as a member attribute
+     */
     public ChartDataLogic(User user, long categoryId, BrainPhaserApplication application,
                           ChallengeDataSource challengeDataSource,
                           CompletionDataSource completionDataSource,

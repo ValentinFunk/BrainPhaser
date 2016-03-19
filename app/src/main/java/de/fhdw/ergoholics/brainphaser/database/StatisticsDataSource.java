@@ -19,7 +19,11 @@ public class StatisticsDataSource {
     //Attributes
     private DaoSession mDaoSession;
 
-    //Constructor
+    /**
+     * Constructor which saves all given parameters to local member attributes.
+     *
+     * @param session the session to be saved as a member attribute
+     */
     @Inject
     StatisticsDataSource(DaoSession session) {
         mDaoSession = session;

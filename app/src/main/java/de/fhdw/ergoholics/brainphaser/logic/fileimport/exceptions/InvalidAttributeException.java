@@ -10,7 +10,13 @@ public class InvalidAttributeException extends Exception {
     private String mAttribute;
     private String mValue;
 
-    //Constructor
+    /**
+     * Constructor which creates an error string from the given string parameters and saves them as
+     * member attributes.
+     *
+     * @param attributeName  the name of the attribute
+     * @param attributeValue the value of the attribute
+     */
     public InvalidAttributeException(String attributeName, String attributeValue) {
         super("The attribute " + attributeName + " has an invalid value: " + attributeValue + "!");
 

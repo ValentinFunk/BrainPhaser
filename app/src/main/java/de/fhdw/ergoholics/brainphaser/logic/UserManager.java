@@ -9,12 +9,10 @@ import javax.inject.Singleton;
 import de.fhdw.ergoholics.brainphaser.database.UserDataSource;
 import de.fhdw.ergoholics.brainphaser.model.User;
 
-/**
- * Created by funkv on 06.03.2016.
- */
-
 @Singleton
 /**
+ * Created by funkv on 06.03.2016.
+ *
  * Controls the saving of the last logged in user and provides functions
  * for switching and persisting the current user.
  */

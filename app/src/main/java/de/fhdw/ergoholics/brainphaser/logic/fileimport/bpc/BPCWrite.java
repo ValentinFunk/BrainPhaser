@@ -24,7 +24,11 @@ public class BPCWrite {
     @Inject
     AnswerDataSource mAnswerDataSource;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes.
+     *
+     * @param application the BrainPhaserApplication to be saved as a member attribute
+     */
     public BPCWrite(BrainPhaserApplication application) {
         application.getComponent().inject(this);
     }

@@ -1,7 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Data Source class for custom access to completion table entries in the database
  */
 public class CompletionDataSource {
@@ -89,6 +89,4 @@ public class CompletionDataSource {
             return completions;
         }
     }
-
-
 }

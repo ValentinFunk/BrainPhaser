@@ -20,7 +20,9 @@ public class CustomizedFormatter implements ValueFormatter {
     //Attributes
     DecimalFormat mFormat;
 
-    //Constructors
+    /**
+     * Standard constructor which created the decimal format
+     */
     public CustomizedFormatter() {
         //Create a decimal format
         mFormat = (DecimalFormat) NumberFormat.getNumberInstance(Locale.GERMANY);
