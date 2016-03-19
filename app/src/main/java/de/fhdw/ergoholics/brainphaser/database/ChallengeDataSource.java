@@ -20,7 +20,12 @@ public class ChallengeDataSource {
     private DaoSession mDaoSession;
     private CompletionDataSource mCompletionDataSource;
 
-    //Constructor
+    /**
+     * Constructor which saves all given parameters to local member attributes.
+     *
+     * @param session              the session to be saved as a member attribute
+     * @param completionDataSource the completion data source to be saved as a member attribute
+     */
     @Inject
     ChallengeDataSource(DaoSession session, CompletionDataSource completionDataSource) {
         mDaoSession = session;

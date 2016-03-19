@@ -14,7 +14,6 @@ import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.utility.FileUtils;
 
-
 /**
  * Created by thomasstuckel on 07/03/2016.
  * opens and reads the license from a .txt file and shows on the about screen
@@ -53,6 +52,7 @@ public class AboutActivity extends BrainPhaserActivity {
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
     }
+
     /**
      * Resource: Pro Android by Syes Y. Hashimi and Satya Komatineni (2009) p.59
      * opens the textfile from credits.txt and reads and converts with convertStreamToString() into a String
@@ -66,5 +66,4 @@ public class AboutActivity extends BrainPhaserActivity {
         is.close();
         return myText;
     }
-
 }

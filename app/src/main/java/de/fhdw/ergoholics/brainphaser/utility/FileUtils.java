@@ -6,7 +6,8 @@ import java.io.InputStream;
 
 /**
  * Created by thomasstuckel on 10/03/2016.
-
+ *
+ * This class contains all file utilitiy methods.
  */
 public class FileUtils {
     /**

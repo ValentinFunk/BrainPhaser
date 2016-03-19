@@ -7,6 +7,7 @@ import de.fhdw.ergoholics.brainphaser.model.Completion;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Provides functions for completion logic checking
  */
 public class CompletionLogic {
@@ -16,7 +17,11 @@ public class CompletionLogic {
 
     private CompletionDataSource mCompletionDataSource;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes.
+     *
+     * @param completionDataSource the completion data source to be saved as a member attribute
+     */
     public CompletionLogic(CompletionDataSource completionDataSource) {
         mCompletionDataSource = completionDataSource;
     }
@@ -48,6 +53,5 @@ public class CompletionLogic {
             completed.setLastCompleted(new Date());
             mCompletionDataSource.update(completed);
         }
-
     }
 }

@@ -27,7 +27,13 @@ public class DueChallengeLogic {
     private CompletionDataSource mCompletionDataSource;
     private ChallengeDataSource mChallengeDataSource;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes.
+     *
+     * @param user                 the user to be saved as a member attribute
+     * @param completionDataSource the completion data source to be saved as a member attribute
+     * @param challengeDataSource  the completion data source to be saved as a member attribute
+     */
     public DueChallengeLogic(User user, CompletionDataSource completionDataSource,
                              ChallengeDataSource challengeDataSource) {
         mCompletionDataSource = completionDataSource;

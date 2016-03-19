@@ -22,7 +22,13 @@ public class StatisticsLogic {
     private ChartSettings mSettings;
     private ChartDataLogic mDataLogic;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes.
+     *
+     * @param application    the BrainPhaserApplication to be saved as a member attribute
+     * @param chartSettings  the chart settings to be saved as a member attribute
+     * @param chartDataLogic the chart data logic to be saved as a member attribute
+     */
     @Inject
     public StatisticsLogic(BrainPhaserApplication application, ChartSettings chartSettings, ChartDataLogic chartDataLogic) {
         mApplication = application;

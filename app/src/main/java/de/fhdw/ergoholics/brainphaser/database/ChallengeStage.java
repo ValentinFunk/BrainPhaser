@@ -3,6 +3,8 @@ package de.fhdw.ergoholics.brainphaser.database;
 import de.fhdw.ergoholics.brainphaser.R;
 
 /**
+ * Created by Christian Kost
+ *
  * Defines common functions for stages
  */
 public class ChallengeStage {

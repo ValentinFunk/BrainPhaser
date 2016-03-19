@@ -10,7 +10,14 @@ public class ElementAmountException extends Exception {
     private String mExpectedAmount;
     private String mAmount;
 
-    //Constructor
+    /**
+     * Constructor which creates an error string from the given string parameters and saves them as
+     * member attributes.
+     *
+     * @param element        the element that did not occur as often as expected
+     * @param amountExpected the expected amount of occurences of the element
+     * @param amount         the amount of occurences of the element
+     */
     public ElementAmountException(String element, String amountExpected, String amount) {
         super("The element " + element + " is expected " + amountExpected + " times but was found " + amount + " times!");
 
@@ -46,4 +53,3 @@ public class ElementAmountException extends Exception {
         return mAmount;
     }
 }
-

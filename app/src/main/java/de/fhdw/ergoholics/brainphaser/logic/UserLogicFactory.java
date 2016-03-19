@@ -13,9 +13,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by funkv on 06.03.2016.
- */
-
-/**
+ *
  * Factory that is used to create logic objects which require a user.
  * Dependencies are injected automatically.
  */

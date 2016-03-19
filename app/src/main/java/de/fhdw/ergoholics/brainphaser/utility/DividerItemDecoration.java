@@ -10,10 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-// DividerItemDecoration taken from the Support Libarary Examples (c) 2014 The Android Open Source Project
-// Source: https://chromium.googlesource.com/android_tools/+/882ee91503f28d1fd60ba939c5b37db6b9d4ad29/sdk/extras/android/support/samples/Support7Demos/src/com/example/android/supportv7/widget/decorator/DividerItemDecoration.java?autodive=0%2F
-
-/*
+/** DividerItemDecoration taken from the Support Libarary Examples (c) 2014 The Android Open Source Project
+ *  Source: https://chromium.googlesource.com/android_tools/+/882ee91503f28d1fd60ba939c5b37db6b9d4ad29/sdk/extras/android/support/samples/Support7Demos/src/com/example/android/supportv7/widget/decorator/DividerItemDecoration.java?autodive=0%2F
+ *
+ *
  * Copyright (C) 2014 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

@@ -33,7 +33,12 @@ public class ChartSettings {
     private int[] mColorset = new int[6];
     private BrainPhaserApplication mApplication;
 
-    //Constructor
+    /**
+     * Constructor which saves the given parameters as member attributes and retrieves the stage
+     * colors from the colors.xml.
+     *
+     * @param application the BrainPhaserApplication to be saved as a member attribute
+     */
     @Inject
     public ChartSettings(BrainPhaserApplication application) {
         mApplication = application;

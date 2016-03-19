@@ -23,30 +23,14 @@ public class SettingsDataSource {
     //Attributes
     private DaoSession mDaoSession;
 
-    //Constructor
+    /**
+     * Constructor which saves all given parameters to local member attributes.
+     *
+     * @param session the session to be saved as a member attribute
+     */
     @Inject
     SettingsDataSource(DaoSession session) {
         mDaoSession = session;
-    }
-
-    /**
-     * Returns the Settings object with the given id
-     * @param id settings id in the database
-     * @return Settings object with the given id
-     */
-    public Settings getById(long id) {
-        return mDaoSession.getSettingsDao().load(id);
-    }
-
-    /**
-     * Creates a new Settings object with default values in the database.
-     * @return Setttings Object containing default values
-     */
-    public Settings createNewDefaultSettings() {
-        Settings settings = new Settings();
-        setToDefaultSettings(settings);
-        mDaoSession.getSettingsDao().insert(settings);
-        return settings;
     }
 
     /**
@@ -73,31 +57,6 @@ public class SettingsDataSource {
             default:
                 throw new IllegalArgumentException("Attempting to get invalid timebox " + stage);
         }
-    }
-
-    /**
-     * Copy all settings parameters from src into dest
-     * @param dest destination object
-     * @param src source object
-     */
-    public void copySettings(Settings dest, Settings src) {
-        dest.setTimeBoxStage1(src.getTimeBoxStage1());
-        dest.setTimeBoxStage2(src.getTimeBoxStage2());
-        dest.setTimeBoxStage3(src.getTimeBoxStage3());
-        dest.setTimeBoxStage4(src.getTimeBoxStage4());
-        dest.setTimeBoxStage5(src.getTimeBoxStage5());
-        dest.setTimeBoxStage6(src.getTimeBoxStage6());
-    }
-
-    /**
-     * Clones a settings object
-     * @param settings object received
-     * @return cloned Object
-     */
-    public Settings cloneSettings(Settings settings) {
-        Settings clone = new Settings();
-        copySettings(clone, settings);
-        return clone;
     }
 
     /**
@@ -129,6 +88,55 @@ public class SettingsDataSource {
             default:
                 throw new IllegalArgumentException("Attempting to set invalid timebox " + stage);
         }
+    }
+
+    /**
+     * Returns the Settings object with the given id
+     *
+     * @param id settings id in the database
+     * @return Settings object with the given id
+     */
+    public Settings getById(long id) {
+        return mDaoSession.getSettingsDao().load(id);
+    }
+
+    /**
+     * Creates a new Settings object with default values in the database.
+     *
+     * @return Setttings Object containing default values
+     */
+    public Settings createNewDefaultSettings() {
+        Settings settings = new Settings();
+        setToDefaultSettings(settings);
+        mDaoSession.getSettingsDao().insert(settings);
+        return settings;
+    }
+
+    /**
+     * Copy all settings parameters from src into dest
+     *
+     * @param dest destination object
+     * @param src  source object
+     */
+    public void copySettings(Settings dest, Settings src) {
+        dest.setTimeBoxStage1(src.getTimeBoxStage1());
+        dest.setTimeBoxStage2(src.getTimeBoxStage2());
+        dest.setTimeBoxStage3(src.getTimeBoxStage3());
+        dest.setTimeBoxStage4(src.getTimeBoxStage4());
+        dest.setTimeBoxStage5(src.getTimeBoxStage5());
+        dest.setTimeBoxStage6(src.getTimeBoxStage6());
+    }
+
+    /**
+     * Clones a settings object
+     *
+     * @param settings object received
+     * @return cloned Object
+     */
+    public Settings cloneSettings(Settings settings) {
+        Settings clone = new Settings();
+        copySettings(clone, settings);
+        return clone;
     }
 
     /**
