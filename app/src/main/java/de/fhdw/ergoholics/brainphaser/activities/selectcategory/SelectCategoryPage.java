@@ -74,6 +74,7 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(spans, orientation);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(new CategoryAdapter(mCategories, mDueChallengeCounts, this));
+        mRecyclerView.setHasFixedSize(true);
 
         return rootView;
     }
