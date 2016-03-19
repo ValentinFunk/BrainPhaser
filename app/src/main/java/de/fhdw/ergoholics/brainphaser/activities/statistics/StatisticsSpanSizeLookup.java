@@ -13,7 +13,11 @@ public class StatisticsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     //Attributes
     private boolean mIsLandscape;
 
-    //Constructor
+    /**
+     * This constructor saves the given parameters as member attributes.
+     *
+     * @param isLandscape the landscape boolean to be saved as a member attribute
+     */
     public StatisticsSpanSizeLookup(boolean isLandscape) {
         mIsLandscape = isLandscape;
     }

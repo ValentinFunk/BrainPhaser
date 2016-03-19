@@ -34,6 +34,7 @@ import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Activity used to chose an existing user. Can load the create user activity and the category selection
  */
 public class UserSelectionActivity extends BrainPhaserActivity implements UserAdapter.ResultListener {

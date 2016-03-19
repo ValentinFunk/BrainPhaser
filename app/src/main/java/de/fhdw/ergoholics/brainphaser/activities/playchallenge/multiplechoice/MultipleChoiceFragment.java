@@ -10,29 +10,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.playchallenge.AnswerFragment;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 /**
+ * Created by Christian Kost
+ * <p/>
  * Fragment for a multiple-choice challenge
  */
 public class MultipleChoiceFragment extends AnswerFragment {
     private static final String KEY_BUTTONS_STATE = "KEY_BUTTONS_STATE";
     private static final String KEY_ANSWERS_CHECKED = "KEY_ANSWERS_CHECKED";
-
+    private static Bundle mBundleRecyclerViewState;
     private RecyclerView mRecyclerView;
     private ButtonsAdapter mAdapter;
     private GridLayoutManager mLayoutManager;
-
     // State
     private boolean mAnswersChecked = false;
     private ButtonViewState[] mStateHolder;
-
-    private static Bundle mBundleRecyclerViewState;
 
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

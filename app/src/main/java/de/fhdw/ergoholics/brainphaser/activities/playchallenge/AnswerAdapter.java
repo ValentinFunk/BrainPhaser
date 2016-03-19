@@ -15,11 +15,13 @@ import de.fhdw.ergoholics.brainphaser.model.Answer;
 
 /**
  * Created by Christian Kost
+ * <p/>
  * Adapter to load the given answers into a simple list
  */
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder> {
     private List<Answer> mAnswers;
     private String mGivenAnswer;
+
     /**
      * Constructor for the answer adapter which loads the different answers of a challenge
      *

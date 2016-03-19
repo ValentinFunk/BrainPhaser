@@ -28,35 +28,11 @@ import de.fhdw.ergoholics.brainphaser.R;
  * Documentation (GridView): http://developer.android.com/guide/topics/ui/layout/gridview.html
  */
 public class AvatarPickerDialogFragment extends DialogFragment implements AdapterView.OnItemClickListener {
-    /**
-     * The activity that creates an instance of this dialog fragment must
-     * implement this interface in order to receive event callbacks.
-     * Each method passes the DialogFragment in case the host needs to query it.
-     */
-    public interface AvatarPickerDialogListener {
-        /**
-         * Called when an avatar has been selected by the user.
-         *
-         * @param dialog       The dialog that trigerred the action.
-         * @param resourceName The resource name of the selected avatar.
-         */
-        void onAvatarSelected(AvatarPickerDialogFragment dialog, String resourceName);
-
-        /**
-         * Called when the avatar selection has been aborted by the user.
-         *
-         * @param dialog The dialog that triggered the action.
-         */
-        void onCancelled(AvatarPickerDialogFragment dialog);
-    }
-
     // Use this interface to deliver action events
     AvatarPickerDialogListener mListener;
-
     // References to currently selected item
     private String mSelectedAvatarResourceEntryName;
     private RoundedImageView mSelectedAvatarImageView = null;
-
     // Reference to the created AlertDialog instance
     private AlertDialog mCreatedDialog;
 
@@ -128,7 +104,9 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
         return mCreatedDialog;
     }
 
-    // Called when an avatar is selected in the dialog
+    /**
+     * This method is called when an avatar is selected in the dialog
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Avatar selected, allow clicking confirmation button
@@ -156,5 +134,27 @@ public class AvatarPickerDialogFragment extends DialogFragment implements Adapte
         Integer avatarResourceId = Avatars.getAvatarResources()[position];
         mSelectedAvatarResourceEntryName = Avatars.getAvatarResourceName(getContext(), avatarResourceId);
         mSelectedAvatarImageView = imageView;
+    }
+
+    /**
+     * The activity that creates an instance of this dialog fragment must
+     * implement this interface in order to receive event callbacks.
+     * Each method passes the DialogFragment in case the host needs to query it.
+     */
+    public interface AvatarPickerDialogListener {
+        /**
+         * Called when an avatar has been selected by the user.
+         *
+         * @param dialog       The dialog that trigerred the action.
+         * @param resourceName The resource name of the selected avatar.
+         */
+        void onAvatarSelected(AvatarPickerDialogFragment dialog, String resourceName);
+
+        /**
+         * Called when the avatar selection has been aborted by the user.
+         *
+         * @param dialog The dialog that triggered the action.
+         */
+        void onCancelled(AvatarPickerDialogFragment dialog);
     }
 }
