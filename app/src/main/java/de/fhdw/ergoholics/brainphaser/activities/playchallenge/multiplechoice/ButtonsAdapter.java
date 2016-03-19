@@ -1,5 +1,7 @@
 package de.fhdw.ergoholics.brainphaser.activities.playchallenge.multiplechoice;
 
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.support.v4.content.ContextCompat;
@@ -99,7 +101,16 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
         // Clone drawable to allow modifications
         ToggleButton button = (ToggleButton) v.findViewById(R.id.toggleButton);
         StateListDrawable drawable = (StateListDrawable)button.getBackground();
+        drawable = (StateListDrawable) drawable.mutate();
         button.setBackgroundDrawable(drawable.getConstantState().newDrawable());
+        drawable = (StateListDrawable)button.getBackground();
+        // Deep Clone (necessary for API Version 15 apparently)
+        DrawableContainer.DrawableContainerState drawableContainerState = (DrawableContainer.DrawableContainerState) drawable.getConstantState();
+        for (int i = 0; i < drawableContainerState.getChildren().length; i++) {
+            if (drawableContainerState.getChildren()[i] != null) {
+                drawableContainerState.getChildren()[i] = drawableContainerState.getChildren()[i].getConstantState().newDrawable().mutate();
+            }
+        }
 
         return new ButtonViewHolder(v);
     }
