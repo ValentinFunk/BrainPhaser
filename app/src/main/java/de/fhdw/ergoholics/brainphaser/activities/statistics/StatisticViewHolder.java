@@ -19,11 +19,15 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 09/03/2016
- * <p>
+ * <p/>
  * The view holder is responsible for the view interaction with each statistic within a
  * RecyclerView.
  */
 public class StatisticViewHolder extends RecyclerView.ViewHolder {
+    //Constants
+    public static final int TYPE_SMALL = 0;
+    public static final int TYPE_LARGE = 1;
+
     //Attributes
     private View mItemView;
     private ChallengeDataSource mChallengeDataSource;
