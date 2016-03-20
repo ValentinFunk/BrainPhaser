@@ -36,11 +36,21 @@ public class MainActivity extends BrainPhaserActivity {
 
     @Inject UserManager mUserManager;
 
+    /**
+     * This method injects the activity to the given BrainPhaserComponent
+     *
+     * @param component the component to inject the activity to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * This method is called when the activity is created
+     *
+     * @param savedInstanceState handed over to super constructor
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +64,11 @@ public class MainActivity extends BrainPhaserActivity {
 
     }
 
-
-
+    /**
+     * This method is called for creating the menu
+     *
+     * @param menu the menu to be created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -68,6 +81,12 @@ public class MainActivity extends BrainPhaserActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * This method is called when an action in the menu is selected
+     *
+     * @param item the item which has been selected
+     * @return if the item was found in the menu
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
@@ -88,6 +107,13 @@ public class MainActivity extends BrainPhaserActivity {
         }
     }
 
+    /**
+     * This method is called when the activity was called for a result
+     *
+     * @param requestCode the request code
+     * @param resultCode the result code
+     * @param data the intent
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Pass the intent containing the file URI on to the Import Challenge method
@@ -102,8 +128,9 @@ public class MainActivity extends BrainPhaserActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-
+    /**
+     * This method is called hen the activity is started.
+     */
     @Override
     protected void onStart() {
         super.onStart();

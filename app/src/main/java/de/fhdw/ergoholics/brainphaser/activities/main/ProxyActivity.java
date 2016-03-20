@@ -22,11 +22,21 @@ import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 public class ProxyActivity extends BrainPhaserActivity {
     @Inject UserManager mUserManager;
 
+    /**
+     * This method injects the activity to the given BrainPhaserComponent
+     *
+     * @param component the component to inject the activity to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * This method is called when the activity is created
+     *
+     * @param savedInstanceState handed over to super constructor
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
