@@ -64,7 +64,7 @@ public class StatisticsActivity extends BrainPhaserActivity {
     StatisticsDataSource mStatisticsDataSource;
 
     private StatisticsAdapter mAdapter;
-    private StatisticType[] mShownTypes;
+    private List<StatisticType> mShownTypes;
     private long mCategoryId;
     private boolean mIsLandscape;
 
@@ -88,6 +88,8 @@ public class StatisticsActivity extends BrainPhaserActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
 
+        mShownTypes = new ArrayList<>();
+
         //Add toolbar
         Toolbar myChildToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myChildToolbar);
@@ -108,14 +110,15 @@ public class StatisticsActivity extends BrainPhaserActivity {
         int deviceOrientation = getResources().getConfiguration().orientation;
 
         mIsLandscape = (deviceOrientation == Configuration.ORIENTATION_LANDSCAPE);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, mIsLandscape ? 3 : 2,
-                GridLayoutManager.VERTICAL, false);
-        layoutManager.setSpanSizeLookup(new StatisticsSpanSizeLookup(mIsLandscape));
-
-        recyclerView.setLayoutManager(layoutManager);
 
         //Look up which statistics can be shown
         setShownTypes();
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, mIsLandscape ? 3 : 2,
+                GridLayoutManager.VERTICAL, false);
+        layoutManager.setSpanSizeLookup(new StatisticsSpanSizeLookup(mShownTypes));
+
+        recyclerView.setLayoutManager(layoutManager);
 
         //Add adapter
         mAdapter = new StatisticsAdapter(mUserLogicFactory, mChallengeDataSource,
@@ -135,28 +138,27 @@ public class StatisticsActivity extends BrainPhaserActivity {
                 mCategoryId, mApplication, mChallengeDataSource, mCompletionDataSource,
                 mStatisticsDataSource, mUserLogicFactory);
 
-        ArrayList<StatisticType> typesToAdd = new ArrayList<>();
+        mShownTypes.clear();
+
         for (StatisticType type : types) {
             switch (type) {
                 case TYPE_DUE:
                     if (chartDataLogic.findDueData() != null) {
-                        typesToAdd.add(type);
+                        mShownTypes.add(type);
                     }
                     break;
                 case TYPE_STAGE:
                     if (chartDataLogic.findStageData() != null) {
-                        typesToAdd.add(type);
+                        mShownTypes.add(type);
                     }
                     break;
                 default:
                     if (chartDataLogic.findMostPlayedData(type, new ArrayList<Long>()) != null) {
-                        typesToAdd.add(type);
+                        mShownTypes.add(type);
                     }
                     break;
             }
         }
-
-        mShownTypes = getTypeArray(typesToAdd);
     }
 
     /**
@@ -169,31 +171,5 @@ public class StatisticsActivity extends BrainPhaserActivity {
         setShownTypes();
         mAdapter.setStatisticItems(mShownTypes);
         mAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * This method is called when the activity is resumed. It resets the shown item views.
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        setShownTypes();
-        mAdapter.setStatisticItems(mShownTypes);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * This method converts a given list of StatisticType objects to an array and returns it
-     *
-     * @param list the list that will be converted
-     * @return the array containing the list's StatisticType objects
-     */
-    private StatisticType[] getTypeArray(List<StatisticType> list) {
-        StatisticType[] finalTypes = new StatisticType[list.size()];
-
-        for (int i = 0; i < finalTypes.length; i++) finalTypes[i] = list.get(i);
-
-        return finalTypes;
     }
 }

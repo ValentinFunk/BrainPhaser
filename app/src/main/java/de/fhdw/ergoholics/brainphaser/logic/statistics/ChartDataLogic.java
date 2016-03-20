@@ -164,6 +164,7 @@ public class ChartDataLogic {
 
         switch (type) {
             case TYPE_MOST_PLAYED:
+                //Do nothing
                 break;
             case TYPE_MOST_FAILED:
                 statistics = removeSucceeded(statistics);
@@ -172,6 +173,7 @@ public class ChartDataLogic {
                 statistics = removeFailed(statistics);
                 break;
             default:
+                //Unexpected type: return null
                 return null;
         }
 

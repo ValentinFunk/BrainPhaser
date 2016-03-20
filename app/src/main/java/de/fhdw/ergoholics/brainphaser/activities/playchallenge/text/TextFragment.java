@@ -29,7 +29,6 @@ public class TextFragment extends AnswerFragment implements TextView.OnEditorAct
     private TextInputLayout mAnswerInputLayout;
     private boolean mAnswerChecked = false;
 
-
     /**
      * Inject components
      *

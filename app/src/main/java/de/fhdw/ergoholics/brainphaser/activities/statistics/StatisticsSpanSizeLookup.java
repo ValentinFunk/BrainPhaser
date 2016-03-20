@@ -2,6 +2,10 @@ package de.fhdw.ergoholics.brainphaser.activities.statistics;
 
 import android.support.v7.widget.GridLayoutManager;
 
+import java.util.List;
+
+import de.fhdw.ergoholics.brainphaser.logic.statistics.StatisticType;
+
 /**
  * Created by Daniel Hoogen on 17/03/2016.
  * <p>
@@ -11,15 +15,15 @@ import android.support.v7.widget.GridLayoutManager;
  */
 public class StatisticsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
     //Attributes
-    private boolean mIsLandscape;
+    private final List<StatisticType> mTypes;
 
     /**
      * This constructor saves the given parameters as member attributes.
      *
-     * @param isLandscape the landscape boolean to be saved as a member attribute
+     * @param types the types to be saved as a member attribute
      */
-    public StatisticsSpanSizeLookup(boolean isLandscape) {
-        mIsLandscape = isLandscape;
+    public StatisticsSpanSizeLookup(List<StatisticType> types) {
+        mTypes = types;
     }
 
     /**
@@ -30,10 +34,12 @@ public class StatisticsSpanSizeLookup extends GridLayoutManager.SpanSizeLookup {
      */
     @Override
     public int getSpanSize(int position) {
-        if (mIsLandscape) {
-            return (position == 1 || position == 3) ? 1 : 2;
-        } else {
-            return position < 2 ? 1 : 2;
+        switch (StatisticsAdapter.VIEW_TYPE_MAP.get(mTypes.get(position))) {
+            case StatisticViewHolder.TYPE_LARGE:
+                return 2;
+            case StatisticViewHolder.TYPE_SMALL:
+                return 1;
         }
+        return 0;
     }
 }
