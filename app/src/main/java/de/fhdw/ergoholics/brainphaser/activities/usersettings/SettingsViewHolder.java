@@ -236,6 +236,12 @@ class SettingsViewHolder extends RecyclerView.ViewHolder implements TimePeriodSl
         mErrorLayout.collapse();
     }
 
+    /**
+     * This method is called when the selection in the view holder has changed
+     *
+     * @param slider The calling slider
+     * @param value the new value
+     */
     @Override
     public void onSelectionChanged(TimePeriodSlider slider, int value) {
         DurationFieldType fieldType = mConversion.get(slider.getDateType());

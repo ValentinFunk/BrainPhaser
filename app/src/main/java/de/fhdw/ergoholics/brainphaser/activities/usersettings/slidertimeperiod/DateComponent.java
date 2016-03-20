@@ -43,10 +43,20 @@ public class DateComponent {
             this.mRangeMax = rangeMax;
         }
 
+        /**
+         * Returns the max range of the component info
+         *
+         * @return the max range attribute
+         */
         public int getRangeMax() {
             return mRangeMax;
         }
 
+        /**
+         * Returns the ressource id of the component info
+         *
+         * @return the ressource id attribute
+         */
         public int getResourceId() {
             return mResourceId;
         }

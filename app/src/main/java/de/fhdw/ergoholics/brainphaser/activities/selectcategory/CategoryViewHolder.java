@@ -27,6 +27,13 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
 
     private CategoryAdapter.SelectionListener mSelectionListener;
 
+    /**
+     * This constructor saves the given parameters as member attributes and retrieves all necessary
+     * views from the given itemView.
+     *
+     * @param itemView the item view of the view holder
+     * @param selectionListener the selection listener for the view holder
+     */
     public CategoryViewHolder(View itemView, CategoryAdapter.SelectionListener selectionListener) {
         super(itemView);
         mSelectionListener = selectionListener;
@@ -111,6 +118,11 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    /**
+     * Returns the title view
+     *
+     * @return the title view of the view holder
+     */
     public TextView getTitle() {
         return mTitle;
     }

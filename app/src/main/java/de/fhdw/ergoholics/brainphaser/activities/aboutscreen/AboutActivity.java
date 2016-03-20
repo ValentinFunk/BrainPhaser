@@ -16,16 +16,27 @@ import de.fhdw.ergoholics.brainphaser.utility.FileUtils;
 
 /**
  * Created by thomasstuckel on 07/03/2016.
+ *
  * opens and reads the license from a .txt file and shows on the about screen
  */
 public class AboutActivity extends BrainPhaserActivity {
     private TextView mAboutText;
 
+    /**
+     * This method injects the activity to the given BrainPhaserComponent
+     *
+     * @param component the component to inject the activity to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * This method is called when the activity is created
+     *
+     * @param savedInstanceState handed over to super constructor
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

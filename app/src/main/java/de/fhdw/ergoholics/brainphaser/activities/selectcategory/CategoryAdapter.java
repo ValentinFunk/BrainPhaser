@@ -58,7 +58,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         return new CategoryViewHolder(v, mListener);
     }
 
-    // Bind data to the view
+    /**
+     * Called to bind the ViewHolder at the given position.
+     *
+     * @param holder   the ViewHolder object to be bound
+     * @param position the position of the ViewHolder
+     */
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         // Categories
@@ -74,6 +79,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         }
     }
 
+    /**
+     * Returns the count of ViewHolders in the adapter
+     *
+     * @return the count of ViewHolders
+     */
     @Override
     public int getItemCount() {
         return mCategories.size() + 1;

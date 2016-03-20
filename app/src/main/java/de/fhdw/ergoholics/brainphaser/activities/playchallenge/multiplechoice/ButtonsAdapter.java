@@ -162,6 +162,11 @@ public class ButtonsAdapter extends RecyclerView.Adapter<ButtonsAdapter.ButtonVi
             return answerCorrect;
         }
 
+        /**
+         * Binds a toggle button to the given view state
+         *
+         * @param buttonViewState  the view state to bind the button to
+         */
         public void bind(ButtonViewState buttonViewState) {
             mAnswer = buttonViewState.getAnswer();
             mButtonViewState = buttonViewState;

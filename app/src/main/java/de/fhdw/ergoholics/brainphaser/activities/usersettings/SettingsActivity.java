@@ -27,16 +27,30 @@ import de.fhdw.ergoholics.brainphaser.utility.DividerItemDecoration;
  * Activity used for changing settings of the current user.
  */
 public class SettingsActivity extends BrainPhaserActivity implements SettingsAdapter.OnSettingsChangedListener {
-    @Inject UserManager mUserManager;
-    @Inject SettingsLogic mSettingsLogic;
-    @Inject SettingsDataSource mSettingsDataSource;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    SettingsLogic mSettingsLogic;
+    @Inject
+    SettingsDataSource mSettingsDataSource;
+
     private SettingsAdapter mSettingsAdapter;
 
+    /**
+     * This method injects the activity to the given BrainPhaserComponent
+     *
+     * @param component the component to inject the activity to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * This method is called when the activity is created
+     *
+     * @param savedInstanceState handed over to super constructor
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +66,6 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
 
         //loading of the components
         RecyclerView settingsList = (RecyclerView) findViewById(R.id.settingsList);
@@ -83,6 +96,10 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
         });
     }
 
+    /**
+     * This method resets the settings of the user to the default settings and shows thm in the
+     * activity.
+     */
     private void resetSettings() {
         final Settings settings = mUserManager.getCurrentUser().getSettings();
         final Settings prevSettings = mSettingsDataSource.cloneSettings(settings);
@@ -105,6 +122,11 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
         snackbar.show();
     }
 
+    /**
+     * Called when the constructor-passed settings object has been changed.
+     *
+     * @param adapter adapter that triggered the change
+     */
     @Override
     public void onSettingsChanged(SettingsAdapter adapter) {
         mSettingsDataSource.update(adapter.getSettings());

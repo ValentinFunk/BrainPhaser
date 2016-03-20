@@ -45,11 +45,21 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
     private LongSparseArray<Integer> mDueChallengeCounts = new LongSparseArray<>();
     private DueChallengeLogic mDueChallengeLogic;
 
+    /**
+     * This method injects the fragment to the given BrainPhaserComponent
+     *
+     * @param component the component to inject the activity to
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * This method is called when the fragment is created
+     *
+     * @param savedInstanceState handed over to super constructor
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +68,14 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         mCategories = mCategoryDataSource.getAll();
     }
 
+    /**
+     * This method is called to create th fragment view
+     *
+     * @param inflater the layout inflater to inflate the layout with
+     * @param container the container the view is created in
+     * @param savedInstanceState ignored
+     * @return the created view
+     */
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,29 +118,40 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         });
     }
 
-    // Load due counts & sort categories
+    /**
+     * Load due counts & sort categories
+     */
     public void loadDueCounts( ){
         sortCategories();
         // Sort reloads the due challenges so we need to notify the adapter that they changed.
         ((CategoryAdapter) mRecyclerView.getAdapter()).notifyDueChallengeCountsChanged(mDueChallengeCounts);
     }
 
-    // Sort categories when activity is started, to make sure the set is sorted when returning
-    // from challenge solving
+    /**
+     * Sort categories when activity is started, to make sure the set is sorted when returning
+     * from challenge solving
+     */
     @Override
     public void onStart() {
         super.onStart();
         loadDueCounts();
     }
 
-    // Sort categories when activity is resumed, to make sure the set is sorted when returning
-    // from challenge solving
+    /**
+     * Sort categories when activity is resumed, to make sure the set is sorted when returning
+     * from challenge solving
+     */
     @Override
     public void onResume() {
         super.onResume();
         loadDueCounts();
     }
 
+    /**
+     * This method is called when a category was selected
+     *
+     * @param category the category that has been selected
+     */
     @Override
     public void onCategorySelected(Category category) {
         Intent intent = new Intent(getContext(), ChallengeActivity.class);
@@ -130,6 +159,9 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         startActivity(intent);
     }
 
+    /**
+     * This method is called when all categories were selected
+     */
     @Override
     public void onAllCategoriesSelected() {
         Intent intent = new Intent(getContext(), ChallengeActivity.class);
@@ -137,6 +169,11 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         startActivity(intent);
     }
 
+    /**
+     * This method is called when the statistic button of a category was clicked
+     *
+     * @param category the category that has been selected
+     */
     @Override
     public void onCategoryStatisticsSelected(Category category) {
         Intent intent = new Intent(getActivity().getApplicationContext(), StatisticsActivity.class);
@@ -144,6 +181,9 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
         startActivity(intent);
     }
 
+    /**
+     * This method is called when the statistic button of all categories was clicked
+     */
     @Override
     public void onAllCategoriesStatisticsSelected() {
         Intent intent = new Intent(getActivity().getApplicationContext(), StatisticsActivity.class);

@@ -95,6 +95,12 @@ public class ButtonViewState implements Parcelable {
         return 0;
     }
 
+    /**
+     * Writes the answer id and the toggle state to the given parcel
+     *
+     * @param dest the parel to write to
+     * @param flags ignored
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mAnswer.getId());

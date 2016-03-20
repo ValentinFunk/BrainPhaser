@@ -116,7 +116,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      * Called to bind the ViewHolder at the given position.
      *
      * @param holder   the ViewHolder object to be bound
-     * @param position the position where a new ViewHolder is created
+     * @param position the position of the ViewHolder
      */
     @Override
     public void onBindViewHolder(StatisticViewHolder holder, int position) {

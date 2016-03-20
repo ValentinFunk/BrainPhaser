@@ -37,14 +37,19 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
     private Settings mSettings;
     private SettingsLogic mSettingsLogic;
 
-    public SettingsAdapter(Settings settings,
-                           OnSettingsChangedListener listener,
+    public SettingsAdapter(Settings settings, OnSettingsChangedListener listener,
                            SettingsLogic logic) {
         mListener = listener;
         mSettings = settings;
         mSettingsLogic = logic;
     }
 
+    /**
+     * Called to create the ViewHolder at the given position.
+     *
+     * @param parent   parent to assign the newly created view to
+     * @param viewType ignored
+     */
     @Override
     public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater myInflater = LayoutInflater.from(parent.getContext());
@@ -65,12 +70,23 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return new SettingsViewHolder(customView, sliders, this);
     }
 
+    /**
+     * Called to bind the ViewHolder at the given position.
+     *
+     * @param holder   the ViewHolder object to be bound
+     * @param position the position of the ViewHolder
+     */
     @Override
     public void onBindViewHolder(SettingsViewHolder holder, int position) {
         int stage = position + 1;
         holder.bindStage(SettingsDataSource.getTimeboxByStage(mSettings, stage), stage);
     }
 
+    /**
+     * Returns the count of ViewHolders in the adapter
+     *
+     * @return the count of ViewHolders
+     */
     @Override
     public int getItemCount() {
         return SettingsDataSource.STAGE_COUNT;
@@ -86,6 +102,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsViewHolder> {
         return mSettingsLogic.isTimeValidForStage(mSettings, stage, durationMsec);
     }
 
+    /**
+     * Returns the settings attribute
+     *
+     * @return the setting attribute of the activity
+     */
     public Settings getSettings() {
         return mSettings;
     }
