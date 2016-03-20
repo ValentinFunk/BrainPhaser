@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
 import de.fhdw.ergoholics.brainphaser.R;
@@ -22,7 +24,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
  * This adapter adds the StatisticViewHolder objects to the recycler view it is assigned to
  */
 public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder> {
-    private static final HashMap<StatisticType, Integer> VIEW_TYPE_MAP = new HashMap<>();
+    public static final HashMap<StatisticType, Integer> VIEW_TYPE_MAP = new HashMap<>();
 
     static {
         VIEW_TYPE_MAP.put(StatisticType.TYPE_DUE, StatisticViewHolder.TYPE_SMALL);
@@ -38,7 +40,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     private BrainPhaserApplication mApplication;
     private User mUser;
     private long mCategoryId;
-    private StatisticType[] mStatisticItems;
+    private List<StatisticType> mStatisticItems;
 
     /**
      * This constructor saves the given parameters as member attributes and sets the value of the
@@ -53,13 +55,15 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public StatisticsAdapter(UserLogicFactory userLogicFactory,
                              ChallengeDataSource challengeDataSource,
                              BrainPhaserApplication application, User user, long categoryId,
-                             StatisticType[] itemsToShow) {
+                             List<StatisticType> itemsToShow) {
         mUserLogicFactory = userLogicFactory;
         mChallengeDataSource = challengeDataSource;
         mApplication = application;
         mUser = user;
         mCategoryId = categoryId;
-        mStatisticItems = itemsToShow;
+
+        mStatisticItems = new ArrayList<>();
+        setStatisticItems(itemsToShow);
     }
 
     /**
@@ -104,7 +108,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      */
     @Override
     public int getItemViewType(int position) {
-        StatisticType type = mStatisticItems[position];
+        StatisticType type = mStatisticItems.get(position);
         return VIEW_TYPE_MAP.get(type);
     }
 
@@ -118,7 +122,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
     public void onBindViewHolder(StatisticViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case StatisticViewHolder.TYPE_SMALL:
-                switch (mStatisticItems[position]) {
+                switch (mStatisticItems.get(position)) {
                     case TYPE_DUE:
                         holder.applyDueChart();
                         break;
@@ -128,7 +132,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
                 }
                 break;
             case StatisticViewHolder.TYPE_LARGE:
-                holder.applyMostPlayedChart(mStatisticItems[position]);
+                holder.applyMostPlayedChart(mStatisticItems.get(position));
                 break;
         }
     }
@@ -140,7 +144,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      */
     @Override
     public int getItemCount() {
-        return mStatisticItems.length;
+        return mStatisticItems.size();
     }
 
     /**
@@ -148,7 +152,8 @@ public class StatisticsAdapter extends RecyclerView.Adapter<StatisticViewHolder>
      *
      * @param statisticItems the statistic items to be shown in the recycler view
      */
-    public void setStatisticItems(StatisticType[] statisticItems) {
-        this.mStatisticItems = statisticItems;
+    public void setStatisticItems(List<StatisticType> statisticItems) {
+        mStatisticItems.clear();
+        mStatisticItems.addAll(statisticItems);
     }
 }
