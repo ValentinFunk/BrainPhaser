@@ -39,11 +39,21 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
     private TextInputLayout mUsernameInputLayout;
     private User mEditingUser = null;
 
+    /**
+     * Inject components
+     *
+     * @param component BrainPhaserComponent
+     */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
         component.inject(this);
     }
 
+    /**
+     * Instantiates the view
+     *
+     * @param savedInstanceState Ignored
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +132,7 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
         if (foundUser != null) {
             // In edit mode do not check against currently editing user
             if (getIntent().getAction().equals(Intent.ACTION_EDIT)
-                && foundUser.getId() == mEditingUser.getId()) {
+                    && foundUser.getId() == mEditingUser.getId()) {
                 isValid = true;
             } else {
                 mUsernameInput.setError(getString(R.string.taken_username));
@@ -150,6 +160,9 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
         return false;
     }
 
+    /**
+     * Loads the avatar selection dialog
+     */
     private void createAvatarSelectDialog() {
         FragmentManager fm = getSupportFragmentManager();
         AvatarPickerDialogFragment avatarPickerDialog = new AvatarPickerDialogFragment();

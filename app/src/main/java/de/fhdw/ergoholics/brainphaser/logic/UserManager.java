@@ -24,6 +24,12 @@ public class UserManager {
     private Application mApplication;
     private UserDataSource mUserDataSource;
 
+    /**
+     * Constructor of the user manager requires the application and a user data source
+     *
+     * @param application    Apllication
+     * @param userDataSource UserDataSource
+     */
     @Inject
     public UserManager(Application application, UserDataSource userDataSource) {
         mApplication = application;
@@ -32,6 +38,7 @@ public class UserManager {
 
     /**
      * Logs in the last logged in user.
+     *
      * @return true, if user was logged in, false if no user has been persisted
      */
     public boolean logInLastUser() {
@@ -52,14 +59,16 @@ public class UserManager {
 
     /**
      * Get the currently logged in user
+     *
      * @return Currently logged in user
      */
-    public User getCurrentUser( ) {
+    public User getCurrentUser() {
         return mCurrentUser;
     }
 
     /**
      * Switches the current user.
+     *
      * @param user the user to log in
      */
     public void switchUser(User user) {

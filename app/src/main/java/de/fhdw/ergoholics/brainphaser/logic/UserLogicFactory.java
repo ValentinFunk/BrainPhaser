@@ -13,7 +13,7 @@ import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by funkv on 06.03.2016.
- *
+ * <p/>
  * Factory that is used to create logic objects which require a user.
  * Dependencies are injected automatically.
  */
@@ -31,6 +31,7 @@ public class UserLogicFactory {
 
     /**
      * Create a DueChallengeLogic for the specified user.
+     *
      * @param user user whose challenges are inspected
      * @return the DueChallengeLogic object
      */
@@ -39,11 +40,11 @@ public class UserLogicFactory {
     }
 
     /**
-     * Creates
+     * Creates ChartDataLogic
      *
      * @param user
      * @param categoryId category to inspect
-     * @return
+     * @return ChartDataLogic
      */
     public ChartDataLogic createChartDataLogic(User user, long categoryId) {
         return new ChartDataLogic(user,
@@ -57,7 +58,8 @@ public class UserLogicFactory {
 
     /**
      * Create a DueChallengeLogic for the specified user.
-     * @param user user whose challenges are inspected
+     *
+     * @param user       user whose challenges are inspected
      * @param categoryId category to inspect
      * @return the DueChallengeLogic object
      */

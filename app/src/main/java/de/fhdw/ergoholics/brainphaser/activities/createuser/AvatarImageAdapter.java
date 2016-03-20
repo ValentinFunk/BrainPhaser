@@ -16,24 +16,52 @@ import com.makeramen.roundedimageview.RoundedImageView;
  */
 public class AvatarImageAdapter extends BaseAdapter {
     private Context mContext;
+    // references to our images
+    private Integer[] mThumbIds = Avatars.getAvatarResources();
+    // references to ImageViews
+    private RoundedImageView[] mImages = new RoundedImageView[mThumbIds.length];
 
+    /**
+     * Constructor defines the context
+     *
+     * @param c Context
+     */
     public AvatarImageAdapter(Context c) {
         mContext = c;
     }
 
+    /**
+     * Get the length of the adapter
+     *
+     * @return Thumb-Id length
+     */
     public int getCount() {
         return mThumbIds.length;
     }
 
+    /**
+     * Get an object at the position
+     *
+     * @param position Position of the item
+     * @return Object at the position
+     */
     public Object getItem(int position) {
         return mImages[position];
     }
 
+    /**
+     * Get the id of an item
+     *
+     * @param position Position of the item
+     * @return 0
+     */
     public long getItemId(int position) {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    /**
+     * Create a new ImageView for each item referenced by the Adapter
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         RoundedImageView imageView;
         if (convertView == null) {
@@ -57,10 +85,4 @@ public class AvatarImageAdapter extends BaseAdapter {
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
-
-    // references to our images
-    private Integer[] mThumbIds = Avatars.getAvatarResources();
-
-    // references to ImageViews
-    private RoundedImageView[] mImages = new RoundedImageView[mThumbIds.length];
 }
