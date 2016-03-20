@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import java.io.InputStream;
+
 import javax.inject.Inject;
 
 import de.fhdw.ergoholics.brainphaser.BrainPhaserApplication;
@@ -11,7 +13,14 @@ import de.fhdw.ergoholics.brainphaser.BrainPhaserComponent;
 import de.fhdw.ergoholics.brainphaser.R;
 import de.fhdw.ergoholics.brainphaser.activities.BrainPhaserActivity;
 import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
+import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.FileImport;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.ElementAmountException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.InvalidAttributeException;
+import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
+import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by funkv on 29.02.2016.
@@ -20,7 +29,10 @@ import de.fhdw.ergoholics.brainphaser.logic.UserManager;
  * user and redirects to the main activity.
  */
 public class ProxyActivity extends BrainPhaserActivity {
-    @Inject UserManager mUserManager;
+    @Inject
+    UserManager mUserManager;
+    @Inject
+    ChallengeDataSource mChallengeDataSource;
 
     /**
      * This method injects the activity to the given BrainPhaserComponent
@@ -51,6 +63,17 @@ public class ProxyActivity extends BrainPhaserActivity {
             startActivity(intent);
             finish();
         } else {
+            // Import challenges if the database does not include any
+            if (mChallengeDataSource.getAll().size() == 0) {
+                InputStream is = getResources().openRawResource(R.raw.challenges);
+                try {
+                    FileImport.importBPC(is, application);
+                } catch (Exception e) {
+                    throw new RuntimeException("An unexpected error has occured when trying to add " +
+                            "example challenges!");
+                }
+            }
+
             startActivity(new Intent(Intent.ACTION_INSERT, Uri.EMPTY, getApplicationContext(), CreateUserActivity.class));
             finish();
         }

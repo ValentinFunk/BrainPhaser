@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<categories>
+    <category description="Schulwissen zu Elektrotechnik" image="@drawable/physik_elektrizitaet" title="Physik">
+        <challenge question="Mit welchem Symbol wird der elektrische Widerstand angegeben?"
+            type="1">
+            <answer correct="true" text="R" />
+            <answer correct="false" text="I" />
+            <answer correct="false" text="U" />
+            <answer correct="false" text="A" />
+        </challenge>
+        <challenge question="Wie lautet das Ohmsche Gesetz?" type="1">
+            <answer correct="true" text="R = U / I" />
+            <answer correct="true" text="U = R * I" />
+            <answer correct="true" text="I = U / R" />
+            <answer correct="false" text="R = U * I" />
+        </challenge>
+        <challenge question="In welcher Richtung fließt der elektische Strom aus technischer und aus physikalischer Sicht?" type="3">
+            <answer correct="true" text="Die technische Stromrichtung: Von Plus nach Minus" />
+            <answer correct="true" text="Die physikalische Stromrichtung: Von Minus nach Plus." />
+        </challenge>
+        <challenge question="Was ist die physische Einheit für elektrische Stromstärke?" type="1">
+            <answer correct="false" text="Volt V" />
+            <answer correct="true" text="Ampere A" />
+            <answer correct="false" text="Watt W" />
+            <answer correct="false" text="Ohm Ω" />
+        </challenge>
+        <challenge question="Wie groß ist der elektrische Gesamtwiderstand bei einer Reihenschaltung, in der ein Widerstand von 10 Ω, 20 Ω und 30 Ω verbaut sind?"
+            type="2">
+            <answer correct="true" text="60 Ω" />
+            <answer correct="true" text="60Ω" />
+            <answer correct="true" text="60" />
+            <answer correct="true" text="60 Ohm" />
+            <answer correct="true" text="60 ohm" />
+        </challenge>
+        <challenge question="Was gibt die physische Einheit Watt W an?" type="1">
+            <answer correct="false" text="Elektrische Spannung" />
+            <answer correct="true" text="Elektische Wirkleistung" />
+            <answer correct="false" text="Elektrischer Widerstand" />
+            <answer correct="false" text="Elektrische Stärke" />
+        </challenge>
+        <challenge question="In welcher Einheit wird die Spannung angegeben?" type="1">
+            <answer correct="true" text="Volt V" />
+            <answer correct="false" text="Ampere A" />
+            <answer correct="false" text="Watt W" />
+            <answer correct="false" text="Ohm Ω" />
+        </challenge>
+        <challenge question="In einem Stromkreis ist ein Widerstand von 10 Ohm verbaut und es fließen 5 Ampere elektrische Stromstärke hindurch. Wie groß ist die Spannung in diesem Stromkreis?"
+            type="2">
+            <answer correct="true" text="50 V" />
+            <answer correct="true" text="50" />
+            <answer correct="true" text="50V" />
+            <answer correct="true" text="50 v" />
+            <answer correct="true" text="50v" />
+        </challenge>
+    </category>
+
+
+    <category description="Business Englisch speziell zum Thema International Trade" image="@drawable/international_trade" title="Trade">
+        <challenge question="A maximum quantity of goods of a specific kind that can be imported into a country is a?"
+            type="1">
+            <answer correct="false" text="trade barrier" />
+            <answer correct="true" text="quota" />
+            <answer correct="false" text="comparative advantage" />
+            <answer correct="false" text="absolute advantage" />
+        </challenge>
+        <challenge question="A name or a symbol showing that a product is made by a particular producer and which cannot be legally used by anyone else is a?"
+            type="3">
+            <answer correct="true" text="trademark" />
+        </challenge>
+        <challenge question="What is a surplus?" type="1">
+            <answer correct="true" text="A negative balance of trade or payments." />
+            <answer
+                correct="false"
+                text="The difference between what a country receives and pays for its exports and imports of goods." />
+            <answer correct="true" text="A positive balance of trade or payments" />
+            <answer
+                correct="false"
+                text="The difference between a country’s total earnings and its total expenditure on imports." />
+        </challenge>
+        <challenge question="Which term describes the selling of goods abroad at a price that is lower than production cost?" type="2">
+            <answer correct="true" text="dumping" />
+            <answer correct="true" text="Dumping" />
+        </challenge>
+        <challenge question="What is a generic product?" type="3">
+            <answer correct="true"
+                text="A cheaper copy of a product that is not marked with the producer’s name." />
+        </challenge>
+        <challenge question="Which term describes the restriction of imports by means of trade barriers (such as tariffs and quotas)?"
+            type="2">
+            <answer correct="true" text="Protectionism" />
+            <answer correct="true" text="protectionism" />
+        </challenge>
+        <challenge question="What is the difference between a country’s total earnings and its total expenditure on imports called?"
+            type="1">
+            <answer correct="false" text="balance of trade" />
+            <answer correct="false" text="surplus" />
+            <answer correct="true" text="balance of payments" />
+            <answer correct="false" text="autarky" />
+        </challenge>
+        <challenge question="A strategic industry is one that …?" type="1">
+            <answer correct="true" text="is particularly important to a country’s economy." />
+            <answer correct="false" text="produces goods at a lower cost than any other country." />
+            <answer correct="false"
+                text="produces particular goods more efficiently than any other country." />
+            <answer correct="false"
+                text="has government policies or regulations that restrict international trade." />
+        </challenge>
+    </category>
+
+
+    <category description="Grundlagen zu IT-Netzwerken" image="@drawable/computer" title="Netzwerke">
+        <challenge question="Was bedeutet TCP" type="3">
+            <answer correct="true" text="Transmission Control Protocol" />
+        </challenge>
+        <challenge question="Was sind die grundlegenden Eigenschaften des Internet Protokolls?" type="1">
+            <answer correct="true" text="Unzuverlässig" />
+            <answer correct="false" text="Zuverlässig" />
+            <answer correct="true" text="Verbindungslos" />
+            <answer correct="true" text="Paketorientiert" />
+        </challenge>
+        <challenge question="Für welche Dienste ist SMB ein Kommunikationsprotokoll?" type="3">
+            <answer correct="true" text="SBM ist ein Kommunikationsprotokoll für Datei-, Druck- und andere Serverdienste im Netzwerk" />
+        </challenge>
+        <challenge question="Was bedeutet VNC?" type="2">
+            <answer correct="true" text="Virtual Network Computing" />
+            <answer correct="true" text="virtual network computing" />
+        </challenge>
+        <challenge question="Wozu dient das Address Resolution Protocol?" type="3">
+            <answer correct="true" text="Es wandelt MAC-Adressen in die zugehörigen IP-Adressen um" />
+        </challenge>
+        <challenge question="Welche Protokolle arbeiten nach dem OSI-Schichten Modell auf dem Application Layer?" type="1">
+            <answer correct="true" text="HTTP" />
+            <answer correct="false" text="IP" />
+            <answer correct="true" text="FTP" />
+            <answer correct="true" text="SMB" />
+        </challenge>
+        <challenge question="Wofür steht die Abkürzung DHCP?" type="2">
+            <answer correct="true" text="Dynamic Host Configuration Protocol" />
+            <answer correct="true" text="dynamic host configuration protocol" />
+        </challenge>
+        <challenge question="Was sind Komponenten eines HTTP Requests?" type="1">
+            <answer correct="true" text="HTTP Methode" />
+            <answer correct="false" text="MIME-Type" />
+            <answer correct="true" text="URL" />
+            <answer correct="false" text="Status-code" />
+        </challenge>
+    </category>
+
+
+    <category description="Vokabular zu Business Englisch" image="@drawable/englisch" title="Englisch">
+        <challenge question="Was bedeutet Vertrieb auf Englisch?" type="2">
+            <answer correct="true" text="Sales" />
+            <answer correct="true" text="sales" />
+        </challenge>
+        <challenge question="Was bedeutet Zahlungsunfähigkeit auf Englisch?" type="3">
+            <answer correct="true" text="failure to pay" />
+        </challenge>
+        <challenge question="What does liability mean in German?" type="1">
+            <answer correct="false" text="Liberalität" />
+            <answer correct="true" text="Haftung" />
+            <answer correct="false" text="Ausschluss" />
+            <answer correct="false" text="Lizenz" />
+        </challenge>
+        <challenge question="What does pundit mean in German?" type="3">
+            <answer correct="true" text="Experte, Insider" />
+        </challenge>
+        <challenge question="Was bedeutet Unterdrückung im Sinne von Volksunterdrückung?" type="2">
+            <answer correct="true" text="repression" />
+        </challenge>
+        <challenge question="Which parts constitute the triple bottom line?" type="1">
+            <answer correct="true" text="financial" />
+            <answer correct="false" text="social" />
+            <answer correct="true" text="private" />
+            <answer correct="true" text="environmental" />
+        </challenge>
+        <challenge question="Was bedeutet Konkurrenz auf Englisch?" type="2">
+            <answer correct="true" text="competitor" />
+            <answer correct="true" text="opponent" />
+            <answer correct="true" text="revil" />
+        </challenge>
+        <challenge question="To concide has the same meaning as?" type="1">
+            <answer correct="false" text="to consult" />
+            <answer correct="false" text="to negotiate" />
+            <answer correct="true" text="to admit" />
+            <answer correct="false" text="to access" />
+        </challenge>
+    </category>
+
+
+    <category description="Grundwissen zum Thema Europäische Union." image="@drawable/european_commission" title="EU">
+        <challenge question="In welchem Jahr wurde Kroatien ein Mitglied der EU?" type="2">
+            <answer correct="true" text="2013" />
+        </challenge>
+        <challenge question="Was besagt das Schengen Abkommen?" type="1">
+            <answer correct="true"
+                text="Keine Polizei Kontrollen an den Grenzen zwischen EU Ländern" />
+            <answer correct="true" text="Verstärkte Kontrollen an EU Grenzen zu nicht EU-Ländern" />
+            <answer correct="true" text="Freier Import und Export zwischen EU Staaten" />
+            <answer correct="false" text="Überall die gleiche Geldwährung" />
+        </challenge>
+        <challenge question="Unter welcher Bezeichnung haben sich im Jahr 1952 Deutschland, die Benelux Staaten, Frankreich und Italien zusammengeschlossen?"
+            type="3">
+            <answer correct="true" text="Die europäische Kohle und Stahl Gemeinschaft" />
+            <answer correct="true" text="Montanunion" />
+            <answer correct="true" text="EGKS" />
+        </challenge>
+        <challenge question="Welcher EU-Kreis wird nicht gewählt?" type="1">
+            <answer correct="false" text="EU-Parlament" />
+            <answer correct="true" text="EU-Kommission" />
+            <answer correct="false" text="EU-Rat" />
+            <answer correct="false" text="EU-Präsident" />
+        </challenge>
+        <challenge question="Was ist keine Rolle der europäischen Kommission?" type="1">
+            <answer correct="false" text="Legislative" />
+            <answer correct="false" text="Executive" />
+            <answer correct="true" text="Aufstellen des EU-Budgets" />
+            <answer correct="false" text="Repräsentation der EU auf der internationalen Ebene" />
+        </challenge>
+        <challenge question="Nach wie vielen Jahren wird das europäische Parlament gewählt?" type="2">
+            <answer correct="true" text="5" />
+            <answer correct="true" text="5 Jahre" />
+            <answer correct="true" text="nach 5 Jahren" />
+            <answer correct="true" text="5 jahre" />
+            <answer correct="true" text="nach 5 jahren" />
+            <answer correct="true" text="fünf Jahren" />
+            <answer correct="true" text="Fünf Jahren" />
+        </challenge>
+        <challenge question="Wer ist Präsident des EU-Parlaments?" type="1">
+            <answer correct="false" text="Angela Merkel" />
+            <answer correct="false" text="Jean-Claude Juncker" />
+            <answer correct="false" text="Donald Trump" />
+            <answer correct="true" text="Martin Schulz" />
+        </challenge>
+        <challenge question="Aus wie vielen Mitgliedsländern besteht das europäische Parlament?"
+            type="2">
+            <answer correct="true" text="28" />
+        </challenge>
+    </category>
+</categories>
