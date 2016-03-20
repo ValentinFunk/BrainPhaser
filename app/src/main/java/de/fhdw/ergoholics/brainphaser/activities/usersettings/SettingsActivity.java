@@ -37,9 +37,7 @@ public class SettingsActivity extends BrainPhaserActivity implements SettingsAda
     private SettingsAdapter mSettingsAdapter;
 
     /**
-     * This method injects the activity to the given BrainPhaserComponent
-     *
-     * @param component the component to inject the activity to
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

@@ -40,9 +40,7 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
     private User mEditingUser = null;
 
     /**
-     * Inject components
-     *
-     * @param component BrainPhaserComponent
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

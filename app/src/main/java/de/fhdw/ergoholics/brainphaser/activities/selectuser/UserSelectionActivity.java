@@ -51,9 +51,7 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     StatisticsDataSource mStatisticsDataSource;
 
     /**
-     * Inject components
-     *
-     * @param component BrainPhaserComponent
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

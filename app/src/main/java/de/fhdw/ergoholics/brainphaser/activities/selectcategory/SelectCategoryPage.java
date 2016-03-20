@@ -46,9 +46,7 @@ public class SelectCategoryPage extends BrainPhaserFragment implements CategoryA
     private DueChallengeLogic mDueChallengeLogic;
 
     /**
-     * This method injects the fragment to the given BrainPhaserComponent
-     *
-     * @param component the component to inject the activity to
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

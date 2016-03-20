@@ -89,9 +89,7 @@ public class ChallengeActivity extends BrainPhaserActivity implements AnswerFrag
     private TextView mClassText;
 
     /**
-     * Inject components
-     *
-     * @param component BrainPhaserComponent
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

@@ -69,9 +69,7 @@ public class StatisticsActivity extends BrainPhaserActivity {
     private boolean mIsLandscape;
 
     /**
-     * This method injects the activity to the BrainPhaseComponent object.
-     *
-     * @param component the component the activity is injected to
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

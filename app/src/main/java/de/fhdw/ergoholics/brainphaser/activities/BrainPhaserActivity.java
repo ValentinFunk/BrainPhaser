@@ -26,10 +26,10 @@ public abstract class BrainPhaserActivity extends AppCompatActivity {
     }
 
     /**
-     * Called to inject dependencies. Should call component.inject(this) as
+     * Called to inject dependencies. Calls component.inject(this) as
      * uniform implementation in all Activities.
      *
-     * @param component
+     * @param component the component supplied by the Application to resolve dependencies
      */
     protected abstract void injectComponent(BrainPhaserComponent component);
 }

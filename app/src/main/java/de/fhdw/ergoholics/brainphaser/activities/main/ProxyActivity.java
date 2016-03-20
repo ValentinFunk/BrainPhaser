@@ -35,9 +35,7 @@ public class ProxyActivity extends BrainPhaserActivity {
     ChallengeDataSource mChallengeDataSource;
 
     /**
-     * This method injects the activity to the given BrainPhaserComponent
-     *
-     * @param component the component to inject the activity to
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {

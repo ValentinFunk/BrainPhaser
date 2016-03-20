@@ -37,9 +37,7 @@ public class MainActivity extends BrainPhaserActivity {
     @Inject UserManager mUserManager;
 
     /**
-     * This method injects the activity to the given BrainPhaserComponent
-     *
-     * @param component the component to inject the activity to
+     * {@inheritDoc}
      */
     @Override
     protected void injectComponent(BrainPhaserComponent component) {
@@ -65,7 +63,8 @@ public class MainActivity extends BrainPhaserActivity {
     }
 
     /**
-     * This method is called for creating the menu
+     * This method is called for creating action menu.
+     * Adds the import BPC developer button in debug mode
      *
      * @param menu the menu to be created
      */
@@ -82,7 +81,7 @@ public class MainActivity extends BrainPhaserActivity {
     }
 
     /**
-     * This method is called when an action in the menu is selected
+     * This method handles the action menu item selections.
      *
      * @param item the item which has been selected
      * @return if the item was found in the menu
@@ -108,7 +107,8 @@ public class MainActivity extends BrainPhaserActivity {
     }
 
     /**
-     * This method is called when the activity was called for a result
+     * This method is called when the activity was called for a result.
+     * Used for the filepicker.
      *
      * @param requestCode the request code
      * @param resultCode the result code
@@ -130,6 +130,7 @@ public class MainActivity extends BrainPhaserActivity {
 
     /**
      * This method is called hen the activity is started.
+     * Shows a snackbar containing the current username when the app is started.
      */
     @Override
     protected void onStart() {
