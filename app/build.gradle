@@ -5,17 +5,31 @@ android {
     applicationVariants.all { variant ->
         task("generate${variant.name}Javadoc", type: Javadoc) {
             description "Generates Javadoc for $variant.name."
-            source = variant.javaCompile.source
+            source = files(variant.javaCompile.source) - files(fileTree(dir:'src/main/java/de/fhdw/ergoholics/brainphaser/model', include: '*.java'))
             ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar) - fileTree(dir:'src', include: '**/*.java', exclude: '**/*model*/**')
+            classpath = files(variant.javaCompile.classpath.files) + files(ext.androidJar)
             options.showAll()
-            options.docletpath = [new File("../pdfdoclet-1.0.3-all.jar")]
+            options.docletpath = [new File("../documentation/pdfdoclet-2.50.1-SNAPSHOT-all.jar")]
             options.doclet = "com.tarsec.javadoc.pdfdoclet.PDFDoclet"
-            options.optionFiles = [file("../javadoc.cfg")]
+            options.addFileOption("config", file("../documentation/config.properties"))
 
             options.addFileOption("pdf", file('../javadoc.pdf'))
         }
+        task("generate${variant.name}Listing") << {
+            def  collection = files(variant.javaCompile.source)
+            File out = new File("out.txt");
+            out.withWriter { writer ->
+                collection.collect { [relativePath(it), it] }.sort().each { ArrayList<Object> l ->
+                    if (l.get(1).text.size() > 0 ){
+                        writer.writeLine("\\begin{lstlisting}[caption=${(String)l.get(0).replace("src\\main\\java\\de\\fhdw\\ergoholics\\brainphaser\\", "")}]")
+                        writer.append(l.get(1).text + "\r\n")
+                        writer.writeLine("\\end{lstlisting}\r\n")
+                    }
+                }
+            }
+        }
     }
+
 
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
