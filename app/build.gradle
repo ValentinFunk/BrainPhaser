@@ -17,16 +17,30 @@ android {
         }
         task("generate${variant.name}Listing") << {
             def  collection = files(variant.javaCompile.source)
-            File out = new File("out.txt");
-            out.withWriter { writer ->
-                collection.collect { [relativePath(it), it] }.sort().each { ArrayList<Object> l ->
-                    if (l.get(1).text.size() > 0 ){
-                        writer.writeLine("\\begin{lstlisting}[caption=${(String)l.get(0).replace("src\\main\\java\\de\\fhdw\\ergoholics\\brainphaser\\", "")}]")
-                        writer.append(l.get(1).text + "\r\n")
-                        writer.writeLine("\\end{lstlisting}\r\n")
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("out.tex"), "UTF-8"
+            ));
+            collection.collect { [relativePath(it), it] }.sort().each { ArrayList<Object> l ->
+                if (l.get(1).text.size() > 0 ){
+                    def reader = l.get(1).newReader();
+
+                    writer.write("\\begin{lstlisting}[caption=${(String)l.get(0).replace("src\\main\\java\\de\\fhdw\\ergoholics\\brainphaser\\", "").replace("\\", "/")}]")
+                    writer.newLine();
+
+                    char[] buffer = new byte[ 0xFFFF ];
+                    while(true) {
+                        def len = reader.read(buffer);
+                        if (len == -1) break;
+                        writer.write(buffer, 0, len);
                     }
+
+                    writer.newLine();
+                    writer.writeLine("\\end{lstlisting}")
+                    writer.newLine();
                 }
             }
+            writer.flush();
+            writer.close();
         }
     }
 
