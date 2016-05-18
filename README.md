@@ -20,13 +20,14 @@ Android Quiz App in Material Design made with Java. Designed for tablets in land
 
 At the moment there are only German language strings, English will be added soon.
 
-![Category Selection](https://hostr.co/file/IJiUrngctBpv/2016-05-1808.02.06.png)
-![Category Selection](https://hostr.co/file/3SKdkFO0KuJ3/2016-05-1808.06.01.png)
-![Category Selection](https://hostr.co/file/tgq7Z0i3tVvf/2016-05-1808.06.09.png)
-![Category Selection](https://hostr.co/file/FEt2pZZi3Gcg/2016-05-1808.06.27.png)
-![Category Selection](https://hostr.co/file/uXxKcOh8eNLa/2016-05-1808.06.13.png)
-![Category Selection](https://hostr.co/file/5qRUjQ5nN88H/2016-05-1808.02.11.png)
-![Category Selection](https://hostr.co/file/vDmUfm2Xtu2C/2016-05-1808.02.40.png)
+![User Selection](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.11.jpg)
+![Category Selection](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.06.jpg)
+![Challengemc](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.06.01.jpg)
+![Selfcheck](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.06.09.jpg)
+![SC2](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.06.13.jpg)
+![FreeEntry](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.06.27.jpg)
+![Statistics](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.40.jpg)
+![Settings](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.24.jpg)
 
 Licensed under GPLv3
 
