@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<resources>
+    <string name="app_name">Brain Phaser</string>
+    <string name="title_activity_main">ActividadPrincipal</string>
+
+    <string name="dialog_pick_avatar">Elija su avatar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="select">Seleccionar</string>
+    <string name="create_profile">Guarde su progreso en el perfil.</string>
+    <string name="welcome">Bienvenido a BrainPhaser.</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="empty_username">El nombre de usuario no puede estar vacío.</string>
+    <string name="too_long_username">El nombre de usuario es demasiado largo.</string>
+    <string name="taken_username">El nombre de usuario ya lo ha elegido otra persona.</string>
+
+    <string name="import_challenge_text">¿Está seguro de que desea importar la biblioteca?</string>
+    <string name="select_user">Selección del usuario</string>
+    <string name="add_user">Agregar usuario</string>
+
+    <string name="all_categories">Todas las categorías</string>
+    <string name="all_categories_desc">Editar todos los retos pendientes en todas las categorías.</string>
+    <string name="title_activity_challenge">Reto</string>
+
+    <plurals name="challenges_due">
+        <item quantity="one">Un reto pendiente.</item>
+        <item quantity="other">%d retos pendientes.</item>
+    </plurals>
+    <string name="no_challenges_due">No hay retos pendientes.</string>
+
+    <string name="next_Challenge">Siguiente reto</string>
+    <string name="check_Challenge">Verificar respuesta</string>
+    <string name="end_Challenge">Fin</string>
+    <string name="self_test_right">Sí</string>
+    <string name="self_test_wrong">No</string>
+    <string name="self_test">Piense en su respuesta a este reto y no la olvide. Después pulse el botón para verificar su respuesta.</string>
+    <string name="answer">Respuesta</string>
+    <string name="empty_answer">La respuesta no puede estar vacía.</string>
+    <string name="correct_answer">Respuestas correctas:</string>,
+    <string name="query_correct_answer">¿Era correcta su respuesta?</string>
+    <string name="stage_num">Curso %d</string>
+    <string name="multiple_choice">Opción múltiple</string>
+    <string name="self_check">Autocontrol</string>
+    <string name="text">Texto libre</string>
+    <string name="wrong_answer">Respuesta incorrecta</string>
+
+    <string name="well_done">¡Bien hecho!</string>
+    <string name="enjoy_day">No hay retos pendientes. Tiempo para un descanso.</string>
+
+    <string name="switch_user">Usuario del interruptor</string>
+    <string name="switch_user_short">Interruptor</string>
+    <string name="settings">Configuración</string>
+    <string name="about">Acerca de</string>
+    <string name="logged_in_as">%1$s con sesión iniciada.</string>
+
+
+    <string name="nav_learn">Aprendizaje</string>
+    <string name="due_chart_center_text">Fecha de vencimiento</string>
+    <string name="stage_chart_center_text">Cursos</string>
+    <string name="chart_no_data_text">¡No hay datos estadísticos disponibles!</string>
+    <string name="challenge_due_text">Sí</string>
+    <string name="challeng_not_due_text">No</string>
+    <string name="chart_stage_others_text">Otros</string>
+    <string name="import_activity_button_no">No</string>
+    <string name="import_activity_button_yes">Sí</string>
+
+    <string name="user_context_menu_button_edit">Editar</string>
+    <string name="user_context_menu_button_delete">Eliminar</string>
+
+    <string name="statistics">Estadísticas</string>
+    <string name="statistics_label">Estadísticas</string>
+    <string name="statistics_most_played">La mayoría respondió:</string>
+    <string name="statistics_most_failed">En su mayor parte incorrectos</string>
+    <string name="statistics_most_succeeded">En su mayor parte correctos</string>
+    <string name="statistics_no_challenge_selected">Por favor, elija un reto en el gráfico circular.</string>
+    <string name="statistics_most_played_information_text">Toque una parte del gráfico circular para mostrar el reto.</string>
+
+    <string name="stages_desc">Aquí puede cambiar los intervalos de tiempo de los cursos.</string>
+    <string name="months">Meses</string>
+    <string name="weeks">Semanas</string>
+    <string name="days">Días</string>
+    <string name="hours">Horas</string>
+    <string name="minutes">Minutos</string>
+    <string name="setting_stage">Curso %d</string>
+    <string name="settings_label">Configuración</string>
+    <string name="formatter_minutes">Minutos</string>
+    <string name="formatter_minute">Minuto</string>
+    <string name="formatter_hour">Hora</string>
+    <string name="formatter_hours">Horas</string>
+    <string name="formatter_day">Día</string>
+    <string name="formatter_days">Días</string>
+    <string name="formatter_week">Semana</string>
+    <string name="formatter_weeks">Semanas</string>
+    <string name="formatter_month">Mes</string>
+    <string name="formatter_months">Meses</string>
+    <string name="save">Guardar</string>
+    <string name="stages">Intervalos de tiempo de los cursos</string>
+    <string name="reset_settings">Restablecer configuración.</string>
+    <string name="settings_reset">Restablecimiento de la configuración.</string>
+    <string name="undo">Deshacer</string>
+    <string name="abort">Cancelar</string>
+
+    <string name="error_less_than_previous">El período de tiempo debe ser mayor que el del curso anterior.</string>
+    <string name="error_more_than_next">El período de tiempo debe ser menor que el del curso siguiente.</string>
+    <string name="error_zero_value">El período de tiempo debe ser no nulo.</string>
+
+    <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
+    <string name="title_about">Licencias de software e imagen:</string>
+    <string name="about_team_headline">Equipo ERGOHolics:</string>
+</resources>
