@@ -15,10 +15,9 @@ Android Quiz App in Material Design made with Java. Designed for tablets in land
 - Multiple Users
 - Statistics
 - Settings
+- Supported Langauages: English, German and Spanish 
 
 ## Screenshots
-
-At the moment there are only German language strings, English will be added soon.
 
 ![User Selection](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.11.jpg)
 ![Category Selection](https://s3-eu-west-1.amazonaws.com/pointshop2/2016-05-18+08.02.06.jpg)
@@ -47,3 +46,4 @@ Brain Phase Android Quiz App
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+EN & ES translations by [ordago](https://github.com/ordago)
