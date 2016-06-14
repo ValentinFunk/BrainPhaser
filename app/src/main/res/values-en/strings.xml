@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<resources>
+    <string name="app_name">Brain Phaser</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="dialog_pick_avatar">Choose your avatar</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
+    <string name="create_profile">Save your progress in the profile.</string>
+    <string name="welcome">Welcome to BrainPhaser.</string>
+    <string name="username">Username</string>
+    <string name="empty_username">The username cannot be empty.</string>
+    <string name="too_long_username">The username is too long.</string>
+    <string name="taken_username">The username is already taken.</string>
+
+    <string name="import_challenge_text">Are you sure you would like to import the library?</string>
+    <string name="select_user">User selection</string>
+    <string name="add_user">Add user</string>
+
+    <string name="all_categories">All categories</string>
+    <string name="all_categories_desc">Edit all due challenges across all categories.</string>
+    <string name="title_activity_challenge">Challenge</string>
+
+    <plurals name="challenges_due">
+        <item quantity="one">One challenge due.</item>
+        <item quantity="other">%d challenges due.</item>
+    </plurals>
+    <string name="no_challenges_due">No challenges due.</string>
+
+    <string name="next_Challenge">Next challenge</string>
+    <string name="check_Challenge">Check answer</string>
+    <string name="end_Challenge">End</string>
+    <string name="self_test_right">Yes</string>
+    <string name="self_test_wrong">No</string>
+    <string name="self_test">Think about your response to this challenge and keep it in your head. Then press the button to check your answer.</string>
+    <string name="answer">Answer</string>
+    <string name="empty_answer">The answer cannot be empty.</string>
+    <string name="correct_answer">Correct answers:</string>,
+    <string name="query_correct_answer">Was your answer correct?</string>
+    <string name="stage_num">Course %d</string>
+    <string name="multiple_choice">Multiple choice</string>
+    <string name="self_check">Self evaluation</string>
+    <string name="text">Free text</string>
+    <string name="wrong_answer">Wrong answer</string>
+
+    <string name="well_done">Well done!</string>
+    <string name="enjoy_day">No challenges due. Time for a break.</string>
+
+    <string name="switch_user">Switch user</string>
+    <string name="switch_user_short">Switch</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="logged_in_as">%1$s logged in.</string>
+
+
+    <string name="nav_learn">Learning</string>
+    <string name="due_chart_center_text">Due date</string>
+    <string name="stage_chart_center_text">Courses</string>
+    <string name="chart_no_data_text">No statistical data available!</string>
+    <string name="challenge_due_text">Yes</string>
+    <string name="challeng_not_due_text">No</string>
+    <string name="chart_stage_others_text">Others</string>
+    <string name="import_activity_button_no">No</string>
+    <string name="import_activity_button_yes">Yes</string>
+
+    <string name="user_context_menu_button_edit">Edit</string>
+    <string name="user_context_menu_button_delete">Delete</string>
+
+    <string name="statistics">Statistics</string>
+    <string name="statistics_label">Statistics</string>
+    <string name="statistics_most_played">Most answered</string>
+    <string name="statistics_most_failed">Mostly wrong</string>
+    <string name="statistics_most_succeeded">Mostly correct</string>
+    <string name="statistics_no_challenge_selected">Please choose a challenge in the pie chart!</string>
+    <string name="statistics_most_played_information_text">Tap on a piece of the pie chart to display the challenge.</string>
+
+    <string name="stages_desc">Here you can change the time intervals of the courses.</string>
+    <string name="months">Months</string>
+    <string name="weeks">Weeks</string>
+    <string name="days">Days</string>
+    <string name="hours">Hours</string>
+    <string name="minutes">Minutes</string>
+    <string name="setting_stage">Course %d</string>
+    <string name="settings_label">Settings</string>
+    <string name="formatter_minutes">Minutes</string>
+    <string name="formatter_minute">Minute</string>
+    <string name="formatter_hour">Hour</string>
+    <string name="formatter_hours">Hours</string>
+    <string name="formatter_day">Day</string>
+    <string name="formatter_days">Days</string>
+    <string name="formatter_week">Week</string>
+    <string name="formatter_weeks">Weeks</string>
+    <string name="formatter_month">Month</string>
+    <string name="formatter_months">Months</string>
+    <string name="save">Save</string>
+    <string name="stages">Time intervals of the courses</string>
+    <string name="reset_settings">Reset settings.</string>
+    <string name="settings_reset">Settings reset.</string>
+    <string name="undo">Undo</string>
+    <string name="abort">Cancel</string>
+
+    <string name="error_less_than_previous">The time period must be greater than that of the previous course.</string>
+    <string name="error_more_than_next">The time period must be less than that of the following course.</string>
+    <string name="error_zero_value">The time period must be non-null.</string>
+
+    <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
+    <string name="title_about">Image and software licenses:</string>
+    <string name="about_team_headline">Team ERGOHolics:</string>
+</resources>

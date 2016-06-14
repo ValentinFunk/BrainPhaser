@@ -2,11 +2,13 @@ package de.fhdw.ergoholics.brainphaser.activities.createuser;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +40,7 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
     private TextView mUsernameInput;
     private TextInputLayout mUsernameInputLayout;
     private User mEditingUser = null;
+    private FloatingActionButton mloadAvatarPickerDialog;
 
     /**
      * {@inheritDoc}
@@ -57,6 +60,15 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
 
+        mloadAvatarPickerDialog = (FloatingActionButton) findViewById(R.id.loadAvatarPickerDialog);
+        mloadAvatarPickerDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (validateUsernameDuplicate() && validateUsernameLength()) {
+                    createAvatarSelectDialog();
+                }
+            }
+        });
         mUsernameInput = (TextView) findViewById(R.id.input_username);
         mUsernameInputLayout = (TextInputLayout) findViewById(R.id.input_username_layout);
         mUsernameInput.setOnEditorActionListener(this);
