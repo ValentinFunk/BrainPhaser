@@ -16,15 +16,16 @@ android {
             options.addFileOption("pdf", file('../javadoc.pdf'))
         }
         task("generate${variant.name}Listing") << {
-            def  collection = files(variant.javaCompile.source)
+            def  collection = files(variant.javaCompile.source) + fileTree(dir:'src/main/res', include: '**/*/*.xml')
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("out.tex"), "UTF-8"
             ));
             collection.collect { [relativePath(it), it] }.sort().each { ArrayList<Object> l ->
                 if (l.get(1).text.size() > 0 ){
+                    println l.get(0)
                     def reader = l.get(1).newReader();
 
-                    writer.write("\\begin{lstlisting}[caption=${(String)l.get(0).replace("src\\main\\java\\de\\fhdw\\ergoholics\\brainphaser\\", "").replace("\\", "/")}]")
+                    writer.write("\\begin{lstlisting}[caption=${(String)l.get(0).replace("src\\main\\java\\de\\fhdw\\ergoholics\\brainphaser\\", "").replace("\\", "/").replace("_", "\\_")}]")
                     writer.newLine();
 
                     char[] buffer = new byte[ 0xFFFF ];

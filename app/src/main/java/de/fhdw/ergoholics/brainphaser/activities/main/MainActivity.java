@@ -30,7 +30,6 @@ import de.fhdw.ergoholics.brainphaser.logic.UserManager;
  * been launched before.
  */
 public class MainActivity extends BrainPhaserActivity {
-    public static String EXTRA_NAVIGATE_TO = "NAVIGATE_TO";
     public static String EXTRA_SHOW_LOGGEDIN_SNACKBAR = "SHOW_SNACKBAR";
     private final static int CODE_FILEPICKER = 0;
 
