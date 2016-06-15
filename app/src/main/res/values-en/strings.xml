@@ -18,7 +18,7 @@
     <string name="add_user">Add user</string>
 
     <string name="all_categories">All categories</string>
-    <string name="all_categories_desc">Edit all due challenges across all categories.</string>
+    <string name="all_categories_desc">Answer due challenges across all categories.</string>
     <string name="title_activity_challenge">Challenge</string>
 
     <plurals name="challenges_due">
