@@ -6,14 +6,14 @@
     <string name="dialog_pick_avatar">Choose your avatar</string>
     <string name="cancel">Cancel</string>
     <string name="select">Select</string>
-    <string name="create_profile">Save your progress in the profile.</string>
+    <string name="create_profile">Save your progress in your profile.</string>
     <string name="welcome">Welcome to BrainPhaser.</string>
     <string name="username">Username</string>
-    <string name="empty_username">The username cannot be empty.</string>
-    <string name="too_long_username">The username is too long.</string>
-    <string name="taken_username">The username is already taken.</string>
+    <string name="empty_username">Your username cannot be empty.</string>
+    <string name="too_long_username">Your username is too long.</string>
+    <string name="taken_username">This username is already taken.</string>
 
-    <string name="import_challenge_text">Are you sure you would like to import the library?</string>
+    <string name="import_challenge_text">Are you sure you would like to import this library?</string>
     <string name="select_user">User selection</string>
     <string name="add_user">Add user</string>
 
@@ -32,7 +32,7 @@
     <string name="end_Challenge">End</string>
     <string name="self_test_right">Yes</string>
     <string name="self_test_wrong">No</string>
-    <string name="self_test">Think about your response to this challenge and keep it in your head. Then press the button to check your answer.</string>
+    <string name="self_test">Think about your response to this challenge and keep it in your mind. Then press the button to check your answer.</string>
     <string name="answer">Answer</string>
     <string name="empty_answer">The answer cannot be empty.</string>
     <string name="correct_answer">Correct answers:</string>,
@@ -74,7 +74,7 @@
     <string name="statistics_no_challenge_selected">Please choose a challenge in the pie chart!</string>
     <string name="statistics_most_played_information_text">Tap on a piece of the pie chart to display the challenge.</string>
 
-    <string name="stages_desc">Here you can change the time intervals of the courses.</string>
+    <string name="stages_desc">You can change the time intervals of the courses here.</string>
     <string name="months">Months</string>
     <string name="weeks">Weeks</string>
     <string name="days">Days</string>
@@ -101,7 +101,7 @@
 
     <string name="error_less_than_previous">The time period must be greater than that of the previous course.</string>
     <string name="error_more_than_next">The time period must be less than that of the following course.</string>
-    <string name="error_zero_value">The time period must be non-null.</string>
+    <string name="error_zero_value">The time period cannot be equal to zero.</string>
 
     <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
     <string name="title_about">Image and software licenses:</string>
