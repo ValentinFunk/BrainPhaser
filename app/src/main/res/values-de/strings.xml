@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">Brain Phaser</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="dialog_pick_avatar">Wähle deinen Avatar</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="select">Auswählen</string>
+    <string name="create_profile">Speichere deinen Lernfortschritt im Profil.</string>
+    <string name="welcome">Wilkommen zu BrainPhaser.</string>
+    <string name="username">Benutzername</string>
+    <string name="empty_username">Der Benutzername darf nicht leer sein.</string>
+    <string name="too_long_username">Der Benutzername ist zu lang.</string>
+    <string name="taken_username">Der Benutzername ist bereits vergeben.</string>
+
+    <string name="import_challenge_text">Möchten Sie die Bibliothek wirklich importieren?</string>
+    <string name="select_user">Benutzerauswahl</string>
+    <string name="add_user">Benutzer Hinzufügen</string>
+
+    <string name="all_categories">Alle Kategorien</string>
+    <string name="all_categories_desc">Alle fälligen Challenges über alle Kategorien hinweg bearbeiten.</string>
+    <string name="title_activity_challenge">Challenge</string>
+
+    <plurals name="challenges_due">
+        <item quantity="one">Eine Challenge fällig.</item>
+        <item quantity="other">%d Challenges fällig.</item>
+    </plurals>
+    <string name="no_challenges_due">Keine Challenges fällig.</string>
+
+    <string name="next_Challenge">Nächste Challenge</string>
+    <string name="check_Challenge">Überprüfe Antwort</string>
+    <string name="end_Challenge">Ende</string>
+    <string name="self_test_right">Ja</string>
+    <string name="self_test_wrong">Nein</string>
+    <string name="self_test">Denke dir die Antwort für diese Challenge und halte sie im Kopf. Drücke dann auf den Knopf, um deine Antwort zu prüfen.</string>
+    <string name="answer">Antwort</string>
+    <string name="empty_answer">Die Antwort darf nicht leer sein.</string>
+    <string name="correct_answer">Richtige Antwortmöglichkeiten: </string>,
+    <string name="query_correct_answer">War deine Antwort richtig?</string>
+    <string name="stage_num">Klasse %d</string>
+    <string name="multiple_choice">Multiple Choice</string>
+    <string name="self_check">Selbstkontrolle</string>
+    <string name="text">Freitext</string>
+    <string name="wrong_answer">Antwort Falsch</string>
+
+    <string name="well_done">Gut gemacht!</string>
+    <string name="enjoy_day">Keine Challenges fällig. Zeit für eine Pause.</string>
+
+    <string name="switch_user">Benutzer wechseln</string>
+    <string name="switch_user_short">Wechseln</string>
+    <string name="settings">Einstellungen</string>
+    <string name="about">Über</string>
+    <string name="logged_in_as">%1$s eingeloggt.</string>
+
+
+    <string name="nav_learn">Lernen</string>
+    <string name="due_chart_center_text">Fälligkeit</string>
+    <string name="stage_chart_center_text">Klassen</string>
+    <string name="chart_no_data_text">Keine Statistikdaten vorhanden!</string>
+    <string name="challenge_due_text">Ja</string>
+    <string name="challeng_not_due_text">Nein</string>
+    <string name="chart_stage_others_text">Andere</string>
+    <string name="import_activity_button_no">Nein</string>
+    <string name="import_activity_button_yes">Ja</string>
+
+    <string name="user_context_menu_button_edit">Bearbeiten</string>
+    <string name="user_context_menu_button_delete">Löschen</string>
+
+    <string name="statistics">Statistiken</string>
+    <string name="statistics_label">Statistiken</string>
+    <string name="statistics_most_played">Am häufigsten beantwortet</string>
+    <string name="statistics_most_failed">Am häufigsten falsch</string>
+    <string name="statistics_most_succeeded">Am häufigsten richtig</string>
+    <string name="statistics_no_challenge_selected">Bitte wähle eine Challenge in dem Tortendiagramm!</string>
+    <string name="statistics_most_played_information_text">Tippe auf ein Tortenstück, um die Challenge anzuzeigen.</string>
+
+    <string name="stages_desc">Hier kannst du die Zeitabstände der Klassen ändern.</string>
+    <string name="months">Monate</string>
+    <string name="weeks">Wochen</string>
+    <string name="days">Tage</string>
+    <string name="hours">Stunden</string>
+    <string name="minutes">Minuten</string>
+    <string name="setting_stage">Klasse %d</string>
+    <string name="settings_label">Einstellungen</string>
+    <string name="formatter_minutes">Minuten</string>
+    <string name="formatter_minute">Minute</string>
+    <string name="formatter_hour">Stunde</string>
+    <string name="formatter_hours">Stunden</string>
+    <string name="formatter_day">Tag</string>
+    <string name="formatter_days">Tage</string>
+    <string name="formatter_week">Woche</string>
+    <string name="formatter_weeks">Wochen</string>
+    <string name="formatter_month">Monat</string>
+    <string name="formatter_months">Monate</string>
+    <string name="save">Speichern</string>
+    <string name="stages">Zeitabstände der Klassen</string>
+    <string name="reset_settings">Einstellungen Zurücksetzen</string>
+    <string name="settings_reset">Einstellungen zurückgesetzt.</string>
+    <string name="undo">Rückgängig</string>
+    <string name="abort">Abbrechen</string>
+
+    <string name="error_less_than_previous">Der Zeitraum muss größer sein als der der vorherigen Klasse.</string>
+    <string name="error_more_than_next">Der Zeitraum muss kleiner sein als der der folgenden Klasse.</string>
+    <string name="error_zero_value">Der Zeitraum darf nicht Null betragen.</string>
+
+    <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
+    <string name="title_about">Bild und Software Lizenzen:</string>
+    <string name="about_team_headline">Team ERGOHolics:</string>
+</resources>
