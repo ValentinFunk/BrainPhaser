@@ -79,6 +79,8 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
+preBuild.dependsOn ':brainphaserdaogenerator:run'
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
