@@ -172,9 +172,13 @@ public class CategorySelectionTest {
     public void checkListOrdering() {
         for (int i = 0; i < mPositions.size(); i++) {
             int position = mPositions.keyAt(i);
+
             String categoryName = mPositions.get(position).getTitle();
+            Matcher<View> hasDescendantTitle = hasDescendant(withText(categoryName));
+
             onView(allOf(withId(R.id.select_category_fragment), withEffectiveVisibility(Visibility.VISIBLE)))
-                .check(matches(TestUtils.atPosition(position, hasDescendant(withText(categoryName)))));
+                .perform(RecyclerViewActions.scrollToHolder(categoryVH(categoryName)))
+                .check(matches(TestUtils.atPosition(position, hasDescendantTitle)));
         }
     }
 
