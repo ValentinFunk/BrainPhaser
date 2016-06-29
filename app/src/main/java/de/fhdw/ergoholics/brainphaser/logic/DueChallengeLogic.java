@@ -1,7 +1,6 @@
 package de.fhdw.ergoholics.brainphaser.logic;
 
 import android.support.v4.util.LongSparseArray;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -142,9 +141,6 @@ public class DueChallengeLogic {
      * @param categoryId    the id of the category whose due challenges will be added
      */
     private void createMissingCompletionsByCategory(List<Long> dueChallenges, long categoryId) {
-        //Create objects
-        Date now = new Date();
-
         //Get uncompleted challenges
         List<Challenge> notCompletedYet = getUncompletedChallenges();
 
@@ -159,7 +155,7 @@ public class DueChallengeLogic {
                 long challengeId = challenge.getId();
 
                 Completion completed;
-                completed = new Completion(null, 1, new Date(0l), userId, challengeId);
+                completed = new Completion(null, 1, new Date(0L), userId, challengeId);
                 mCompletionDataSource.create(completed);
                 dueChallenges.add(challenge.getId());
             }

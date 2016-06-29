@@ -14,7 +14,7 @@ import de.fhdw.ergoholics.brainphaser.model.DaoSession;
 @Singleton
 public class CategoryDataSource {
     //Constants
-    public static final long CATEGORY_ID_ALL = -1l;
+    public static final long CATEGORY_ID_ALL = -1L;
 
     //Attributes
     private DaoSession mDaoSession;

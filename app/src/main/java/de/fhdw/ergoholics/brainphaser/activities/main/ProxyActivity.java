@@ -16,11 +16,6 @@ import de.fhdw.ergoholics.brainphaser.activities.createuser.CreateUserActivity;
 import de.fhdw.ergoholics.brainphaser.database.ChallengeDataSource;
 import de.fhdw.ergoholics.brainphaser.logic.UserManager;
 import de.fhdw.ergoholics.brainphaser.logic.fileimport.FileImport;
-import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.ElementAmountException;
-import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.FileFormatException;
-import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.InvalidAttributeException;
-import de.fhdw.ergoholics.brainphaser.logic.fileimport.exceptions.UnexpectedElementException;
-import de.fhdw.ergoholics.brainphaser.model.Challenge;
 
 /**
  * Created by funkv on 29.02.2016.

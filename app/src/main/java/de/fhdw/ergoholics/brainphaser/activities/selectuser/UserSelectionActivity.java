@@ -44,11 +44,7 @@ public class UserSelectionActivity extends BrainPhaserActivity implements UserAd
     @Inject
     UserDataSource mUserDataSource;
     @Inject
-    CompletionDataSource mCompletionDataSource;
-    @Inject
     SettingsDataSource mSettingsDataSource;
-    @Inject
-    StatisticsDataSource mStatisticsDataSource;
 
     /**
      * {@inheritDoc}

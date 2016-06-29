@@ -1,7 +1,6 @@
 package de.fhdw.ergoholics.brainphaser;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
 

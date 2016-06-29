@@ -40,7 +40,7 @@ public class CustomizedFormatter implements ValueFormatter {
     public String getFormattedValue(float value, Entry entry, int dataSetIndex,
                                     ViewPortHandler viewPortHandler) {
         String valueText = mFormat.format(value);
-        String[] valueParts = valueText.split("\\,");
+        String[] valueParts = valueText.split(",");
         //If the value is 0 the value will be hidden for avoiding visual bugs
         if (valueParts.length != 1) {
             return "";

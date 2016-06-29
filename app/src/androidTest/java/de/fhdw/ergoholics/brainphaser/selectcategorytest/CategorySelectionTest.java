@@ -112,10 +112,10 @@ public class CategorySelectionTest {
 
         // Fake categories
         mFakeCategories = Arrays.asList(
-            new Category(1l, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
-            new Category(2l, "Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/architektur"),
-            new Category(3l, "Computer", "Lerne neue, coole Fakten über Computer und Informationstechnologie. Du wirst mit Fragen zu Netzwerken, Hardware, Software, Programmiersprachen und Softwareprojekten getestet.", "@drawable/computer"),
-            new Category(4l, "Geographie", "Länder, Kulturen und Traditionen.", "@drawable/englisch")
+            new Category(1L, "Englisch", "Verbessere deine Englischkenntnisse und dein Wissen über Englischsprachige Länder. Lerne nützliche Phrasen und Umgangsformen.", "@drawable/englisch"),
+            new Category(2L, "Architektur", "Verbessere dein Wissen über berühmte Gebäude, Bauarten und Architekturepochen..", "@drawable/architektur"),
+            new Category(3L, "Computer", "Lerne neue, coole Fakten über Computer und Informationstechnologie. Du wirst mit Fragen zu Netzwerken, Hardware, Software, Programmiersprachen und Softwareprojekten getestet.", "@drawable/computer"),
+            new Category(4L, "Geographie", "Länder, Kulturen und Traditionen.", "@drawable/englisch")
         );
         Mockito.when(mockCategoryDataSource.getAll()).thenReturn(
             mFakeCategories

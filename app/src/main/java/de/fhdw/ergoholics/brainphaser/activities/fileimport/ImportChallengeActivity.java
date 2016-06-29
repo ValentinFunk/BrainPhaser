@@ -77,7 +77,7 @@ public class ImportChallengeActivity extends Activity implements DialogInterface
 
         //The file is being imported. String message is filled with a message for the user which
         //informs about a successful import or occurred errors.
-        String message = "";
+        String message;
         try {
             if (is != null) {
                 FileImport.importBPC(is, (BrainPhaserApplication) getApplication());

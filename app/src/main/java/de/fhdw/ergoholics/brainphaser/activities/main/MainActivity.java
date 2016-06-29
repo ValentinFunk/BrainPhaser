@@ -143,7 +143,6 @@ public class MainActivity extends BrainPhaserActivity {
         // If EXTRA_SHOW_LOGGEDIN_SNACKBAR is passed,
         // show a little snackbar that shows the currently logged in user's name
         if (intent.getBooleanExtra(EXTRA_SHOW_LOGGEDIN_SNACKBAR, false)) {
-            BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
             View rootView = findViewById(R.id.main_content);
             String text = String.format(getResources().getString(R.string.logged_in_as), mUserManager.getCurrentUser().getName());
             final Snackbar snackbar = Snackbar

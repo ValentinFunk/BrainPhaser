@@ -17,7 +17,7 @@ import java.io.File;
  * then the resource name.
  */
 public class ImageProxy {
-    private static SparseArray<RequestCreator> requestCache = new SparseArray<RequestCreator>( );
+    private static SparseArray<RequestCreator> requestCache = new SparseArray<>();
 
     /**
      * Returns whether the path represents a drawable resource.

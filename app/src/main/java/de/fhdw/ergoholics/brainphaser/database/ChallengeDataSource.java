@@ -1,6 +1,5 @@
 package de.fhdw.ergoholics.brainphaser.database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +7,6 @@ import javax.inject.Inject;
 import de.fhdw.ergoholics.brainphaser.model.Challenge;
 import de.fhdw.ergoholics.brainphaser.model.ChallengeDao;
 import de.fhdw.ergoholics.brainphaser.model.DaoSession;
-import de.fhdw.ergoholics.brainphaser.model.User;
 
 /**
  * Created by Daniel Hoogen on 25/02/2016.

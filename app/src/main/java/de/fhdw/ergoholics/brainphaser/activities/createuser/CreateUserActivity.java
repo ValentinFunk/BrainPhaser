@@ -91,9 +91,9 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
         });
 
         ImageView avatar = (ImageView) findViewById(R.id.avatar);
-        if (getIntent().getAction() == Intent.ACTION_EDIT) {
+        if (getIntent().getAction().equals(Intent.ACTION_EDIT)) {
             // Read user to edit
-            long userId = getIntent().getLongExtra(KEY_USER_ID, -1l);
+            long userId = getIntent().getLongExtra(KEY_USER_ID, -1L);
             User user = mUserDataSource.getById(userId);
             if (BuildConfig.DEBUG && user == null) {
                 throw new AssertionError();
@@ -114,7 +114,7 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
      * Validate username and update GUI with errors
      */
     private boolean validateUsernameLength() {
-        boolean isValid = true;
+        boolean isValid;
         String username = mUsernameInput.getText().toString().trim();
         if (username.length() == 0) {
             mUsernameInput.setError(getString(R.string.empty_username));
@@ -217,7 +217,6 @@ public class CreateUserActivity extends BrainPhaserActivity implements TextView.
             mUserDataSource.create(user);
 
             // Login user and change to category selection
-            BrainPhaserApplication app = (BrainPhaserApplication) getApplication();
             mUserManager.switchUser(user);
 
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
