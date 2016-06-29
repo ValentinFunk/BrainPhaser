@@ -1,5 +1,7 @@
 # BrainPhaser
 
+[![Build Status](https://travis-ci.org/Kamshak/BrainPhaser.svg?branch=master)](https://travis-ci.org/Kamshak/BrainPhaser)
+
 Android Quiz App in Material Design made with Java. Designed for tablets in landscape or smartphones in portrait.
 
 <p align="center">
