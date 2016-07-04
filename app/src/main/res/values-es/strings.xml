@@ -3,17 +3,17 @@
     <string name="app_name">Brain Phaser</string>
     <string name="title_activity_main">ActividadPrincipal</string>
 
-    <string name="dialog_pick_avatar">Elija su avatar</string>
+    <string name="dialog_pick_avatar">Elije tu avatar</string>
     <string name="cancel">Cancelar</string>
     <string name="select">Seleccionar</string>
-    <string name="create_profile">Guarde su progreso en el perfil.</string>
+    <string name="create_profile">Guarda tu progreso en tu perfil.</string>
     <string name="welcome">Bienvenido a BrainPhaser.</string>
     <string name="username">Nombre de usuario</string>
-    <string name="empty_username">El nombre de usuario no puede estar vacío.</string>
-    <string name="too_long_username">El nombre de usuario es demasiado largo.</string>
-    <string name="taken_username">El nombre de usuario ya lo ha elegido otra persona.</string>
+    <string name="empty_username">Tu nombre de usuario no puede estar vacío.</string>
+    <string name="too_long_username">Tu nombre de usuario es demasiado largo.</string>
+    <string name="taken_username">Este nombre de usuario ya lo ha elegido otra persona.</string>
 
-    <string name="import_challenge_text">¿Está seguro de que desea importar la biblioteca?</string>
+    <string name="import_challenge_text">¿Estás seguro de que deseas importar esta biblioteca?</string>
     <string name="select_user">Selección del usuario</string>
     <string name="add_user">Agregar usuario</string>
 
@@ -32,11 +32,11 @@
     <string name="end_Challenge">Fin</string>
     <string name="self_test_right">Sí</string>
     <string name="self_test_wrong">No</string>
-    <string name="self_test">Piense en su respuesta a este reto y no la olvide. Después pulse el botón para verificar su respuesta.</string>
+    <string name="self_test">Piensa en tu respuesta a este reto y no la olvides. Después pulsa el botón para verificar tu respuesta.</string>
     <string name="answer">Respuesta</string>
     <string name="empty_answer">La respuesta no puede estar vacía.</string>
     <string name="correct_answer">Respuestas correctas:</string>,
-    <string name="query_correct_answer">¿Era correcta su respuesta?</string>
+    <string name="query_correct_answer">¿Era correcta tu respuesta?</string>
     <string name="stage_num">Curso %d</string>
     <string name="multiple_choice">Opción múltiple</string>
     <string name="self_check">Autocontrol</string>
@@ -46,8 +46,8 @@
     <string name="well_done">¡Bien hecho!</string>
     <string name="enjoy_day">No hay retos pendientes. Tiempo para un descanso.</string>
 
-    <string name="switch_user">Usuario del interruptor</string>
-    <string name="switch_user_short">Interruptor</string>
+    <string name="switch_user">Cambiar de usuario</string>
+    <string name="switch_user_short">Cambiar</string>
     <string name="settings">Configuración</string>
     <string name="about">Acerca de</string>
     <string name="logged_in_as">%1$s con sesión iniciada.</string>
@@ -71,10 +71,10 @@
     <string name="statistics_most_played">La mayoría respondió:</string>
     <string name="statistics_most_failed">En su mayor parte incorrectos</string>
     <string name="statistics_most_succeeded">En su mayor parte correctos</string>
-    <string name="statistics_no_challenge_selected">Por favor, elija un reto en el gráfico circular.</string>
-    <string name="statistics_most_played_information_text">Toque una parte del gráfico circular para mostrar el reto.</string>
+    <string name="statistics_no_challenge_selected">Por favor, elije un reto en el gráfico circular.</string>
+    <string name="statistics_most_played_information_text">Toca una parte del gráfico circular para mostrar el reto.</string>
 
-    <string name="stages_desc">Aquí puede cambiar los intervalos de tiempo de los cursos.</string>
+    <string name="stages_desc">Aquí puedes cambiar los intervalos de tiempo de los cursos.</string>
     <string name="months">Meses</string>
     <string name="weeks">Semanas</string>
     <string name="days">Días</string>
@@ -101,7 +101,7 @@
 
     <string name="error_less_than_previous">El período de tiempo debe ser mayor que el del curso anterior.</string>
     <string name="error_more_than_next">El período de tiempo debe ser menor que el del curso siguiente.</string>
-    <string name="error_zero_value">El período de tiempo debe ser no nulo.</string>
+    <string name="error_zero_value">El período de tiempo no puede ser igual a cero.</string>
 
     <string name="about_teamMembers">Valentin Funk \nDaniel Hoogen \nChristian Kost \nLars Kahra \nThomas Stückel</string>
     <string name="title_about">Licencias de software e imagen:</string>
