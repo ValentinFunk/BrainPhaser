@@ -8,10 +8,10 @@ import de.greenrobot.daogenerator.ToMany;
 import de.greenrobot.daogenerator.ToOne;
 
 public class BrainphaserDaoGenerator {
-    public static int DATABASE_VERSION = 7;
+    public static int DATABASE_VERSION = 1;
 
     public static void main(String args[]) throws Exception {
-        Schema schema = new Schema(1, "de.fhdw.ergoholics.brainphaser.model");
+        Schema schema = new Schema(DATABASE_VERSION, "de.fhdw.ergoholics.brainphaser.model");
 
         // Create entities
         Entity userEntity = createUserEntity(schema);
